@@ -1,0 +1,4 @@
+django
+django-versatileimagefield
+psycopg2
+django-admin-sortable2
