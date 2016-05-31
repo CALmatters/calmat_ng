@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-from article import Article
+from pages.models import Article
 from sites.models import Named, Publishable, TimeStamped
 from sites.models.publishable import CONTENT_STATUS_DRAFT
 

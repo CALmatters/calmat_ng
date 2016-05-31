@@ -10,7 +10,7 @@ from django.db import models
 
 from versatileimagefield.fields import VersatileImageField
 
-from atom import Atom
+from .atom import Atom
 from business.models import Partner, Author
 
 from categories.models import Category
@@ -453,7 +453,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
                         'post': self})
                     shortcode_html = t.render(c)
                     shortcode_html = shortcode_html
-                except Exception, e:
+                except Exception as e:
                     shortcode_html = ''
                 text = text.replace(atom_shortcode, shortcode_html)
                 # Remove <p> tags wraped around inserted div.

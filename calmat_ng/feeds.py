@@ -2,7 +2,7 @@ from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 from django.utils.feedgenerator import Rss201rev2Feed, Atom1Feed
 
-from pages.models import Article
+from pages.models.article import Article
 
 
 class ArticleFeed(Feed):

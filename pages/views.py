@@ -74,10 +74,10 @@ def article_list(
         cust_p_types = []
         for c in settings.CUSTOM_POST_TYPE_CHOICES:
             cust_p_types.append(c[0])
-        print cust_p_types
+        print(cust_p_types)
 
         if custom_post_type not in cust_p_types:
-            print 'Raise'
+            print('Raise')
             raise Http404('Test')
         else:
             articles = articles.filter(custom_post_type=custom_post_type)

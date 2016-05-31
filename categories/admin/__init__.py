@@ -1,1 +1,1 @@
-from category import CategoryAdmin
+from .category import CategoryAdmin
