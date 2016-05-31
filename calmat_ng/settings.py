@@ -95,7 +95,9 @@ WSGI_APPLICATION = 'calmat_ng.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'calmat_ng'
+        'NAME': 'calmat_ng',
+        'USER': 'calmatters',
+        'PASSWORD': 'calmatters_db1'
     }
 }
 
