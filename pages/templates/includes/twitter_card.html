@@ -1,0 +1,17 @@
+<!--load mezzanine_tags-->
+
+<!-- Twitter Card -->
+<meta name="twitter:site" content="@calmatters" />
+<meta name="twitter:title" content="{{ blog_post.title }}" />
+<meta name="twitter:description" content="{{ blog_post.description|truncatewords_html:30|safe }}" />
+
+{% if blog_post.featured_image %}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://calmatters.org{{ MEDIA_URL }}/{{ blog_post.featured_image.thumbnail.694x372 }}">
+
+{% else %}
+
+<meta name="twitter:card" content="summary" />
+
+{% endif %}

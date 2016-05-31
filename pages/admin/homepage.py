@@ -1,0 +1,135 @@
+from copy import copy
+
+from django.core.checks import messages
+from django.utils.translation import ugettext_lazy as _
+from django.contrib import admin
+
+from pages.models import HomePage
+
+
+# Todo:  Fix this.  It shouldn't take anything thin the queryset
+# Todo:  This should find the latest one and publish it. - needs work
+from sites.models.publishable import (CONTENT_STATUS_DRAFT,
+                                      CONTENT_STATUS_PUBLISHED)
+
+
+# Todo:  Publishing will be done through publish date, update this.
+# Todo:  publishing should cause the publish date to be set to now()
+# Todo:  And no other
+def make_published(modeladmin, request, queryset):
+    if queryset.count() != 1:
+        msg = ("Only a single home page can be published at a time.  "
+               "Please attempt to publish a single Home Page, "
+               "all others will be set to draft.")
+        modeladmin.message_user(request, msg, level=messages.WARNING)
+
+    HomePage.objects.update(status=CONTENT_STATUS_DRAFT)
+
+    homepage = queryset.all()[0]
+    homepage.status = CONTENT_STATUS_PUBLISHED
+    homepage.save()
+make_published.short_description = "Publish Home Page"
+
+
+def clone(modeladmin, request, queryset):
+    if queryset.count() != 1:
+        msg = "Only a single home page can be cloned at a time."
+        modeladmin.message_user(request, msg, level=messages.WARNING)
+
+    homepage = queryset.all()[0]
+    homepage.clone()
+clone.short_description = "Duplicate"
+
+
+class HomePageAdmin(admin.ModelAdmin):
+
+    actions = [clone]
+
+    list_display = [
+        "title",
+        "status",
+        "created",
+        "updated",
+    ]
+    readonly_fields = ('slug', 'status')
+
+    list_filter = (
+        "status",
+    )
+
+    actions = (make_published, clone)
+    fieldsets = (
+        (None, {
+            "fields": (
+                "status",
+                "title",
+            )
+        }),
+        (_("General"), {
+            "fields": (
+                "masthead_copy",
+            )
+        }),
+        (_("In the Works Left"), {
+            "fields": (
+                "works_display_one",
+                "works_url_one",
+            )
+         }),
+        (_("In the Works center-left"), {
+            "fields": (
+                "works_display_two",
+                "works_url_two",
+            )
+         }),
+        (_("In the Works center"), {
+            "fields": (
+                "works_display_three",
+                "works_url_three",
+            )
+        }),
+        (_("In the Works center-right"), {
+            "fields": (
+                "works_display_four",
+                "works_url_four",
+            )
+        }),
+        (_("In the Works right"), {
+            "fields": (
+                "works_display_five",
+                "works_url_five",
+            )
+        }),
+        (_("Main Articles"), {
+            "fields": (
+                "primary_article",
+                "secondary_article_left",
+                "secondary_article_right",
+            )
+        }),
+        (_("The Basics"), {
+            "fields": (
+                "the_basics_one",
+                "the_basics_two",
+                "the_basics_three",
+                "the_basics_four",
+            )
+        }),
+    )
+
+
+
+
+    # def category_list(self, obj):
+    #     """Used in list_display above."""
+    #     return ', '.join([c.title for c in obj.categories.all()])
+    # category_list.short_description = "Categories"
+
+    # def save_form(self, request, form, change):
+    #     """
+    #     Super class ordering is important here - user must get saved first.
+    #     """
+    #     OwnableAdmin.save_form(self, request, form, change)
+    #     return DisplayableAdmin.save_form(self, request, form, change)
+
+admin.site.register(HomePage, HomePageAdmin)

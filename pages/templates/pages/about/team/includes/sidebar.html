@@ -1,0 +1,14 @@
+{% load pages_tags mezzanine_tags blog_tags %}
+
+	<aside class="sidebar">
+		<h1>Team</h1>
+		<div class="about">
+			<p>A non-profit, nonpartisan media venture producing compelling stories on policies, personalities, and money in Sacramento.</p>
+		</div>
+		<ul>
+			<li class="{% if slug == "staff" %}current{% endif %}"><a href="/about/staff/">STAFF</a></li>
+			<li class="{% if slug == "board-of-directors" %}current{% endif %}"><a href="/about/board-of-directors/">BOARD OF DIRECTORS</a></li>
+			<li class="{% if slug == "advisory-board" %}current{% endif %}"><a href="/about/advisory-board/">ADVISORY BOARD</a></li>
+		</ul>
+	</aside>
+	<!-- / sidebar -->

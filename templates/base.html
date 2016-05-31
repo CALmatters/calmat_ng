@@ -1,0 +1,115 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    
+    <title>{% block meta_title %}CALmatters{% endblock %}</title>
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+
+    <link rel="shortcut icon" href="{% static 'theme/img/favicon.png' %}">
+
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'rss_article_feed' %}" >
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url 'atom_article_feed' %}" >
+
+
+        <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/stackicons/css/stackicons-social-minimal.min.css' %}">
+        <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/font-awesome-4.5.0/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/general.css' %}">
+        <link rel="stylesheet" media="screen" href="{% static 'theme/frontend/js/magnificpopup-1.0.0/magnific-popup.min.css' %}">
+        <link rel="stylesheet" media="screen" href="{% static 'theme/frontend/css/style.css' %}?version=1.4.7">
+        <link rel="stylesheet" media="print" href="{% static 'theme/frontend/css/print.css' %}?version=1.4.7">
+        {% block extra_css %}{% endblock %}
+
+    {% comment %}
+    {% compress css %}
+    {% endcompress %}
+    {% endcomment %}
+
+    <script src="//use.typekit.net/let5ryr.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+    {% block extra_head %}
+    {% include 'includes/analytics.html' %}
+    
+    {% include 'includes/facebook_pixel.html' %}
+    {% endblock %}
+
+</head>
+
+<body id="{% block body_id %}{% endblock %}" class="{% block body_classs %}{% endblock %}">
+
+  {% include 'includes/google_tag_manager.html' %}
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1542163812735494&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+
+	<div class="mask"></div>
+	<div class="main-wrapper">
+        <div class="inner-wrapper">
+
+
+            {% include 'includes/left_scroll_menu.html' %}
+
+
+            {% include 'includes/navigations.html' %}
+
+    	    <div class="breadcrumbs up">
+    	        <div class="container">
+                    {% if request.get_full_path = "/" %}
+                        {% block 'home_breadcrumb' %}{% endblock %}
+                    {% else %}
+    	            <ol class="breadcrumb">
+    	                {% spaceless %}
+    	                {% block breadcrumb_menu %}
+                            <!--page_menu "pages/menus/breadcrumb.html"-->
+                        {% endblock %}
+    	                {% endspaceless %}
+    	            </ol>
+                    {% endif %}
+    	        </div>
+    	    </div>
+
+        	{% block article_detail_featured_image %}{% endblock %}
+
+    	    <div id="body">
+    	        <div class="container">
+
+    	            {% block main %}{% endblock %}
+
+                </div><!-- .container -->
+            </div><!-- .body -->
+
+            {% block above_footer %}{% endblock %}
+
+        </div><!-- .inner_wrapper -->
+	</div><!-- main wrapper -->
+
+    {% include 'includes/footer.html' %}
+
+    {# jQuery cannot be compressed by Django-Compressor! #}
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+{#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>#}
+        {%  include 'includes/base_javascript.html' %}
+        {% block extra_js %}{% endblock %}
+
+    {% comment %}
+
+      {% compress js %}
+      {% endcompress %}
+    {% endcomment %}
+</body>
+</html>

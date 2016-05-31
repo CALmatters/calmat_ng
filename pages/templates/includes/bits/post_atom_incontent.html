@@ -1,0 +1,24 @@
+<!--load mezzanine_tags comment_tags keyword_tags rating_tags i18n future disqus_tags blog_tags-->
+
+{% if display_type == 'incontent' %}
+
+	<div class="post_atom_incontent">           
+			<h3>{{ atom.headline }}</h3>
+			<div style="padding:5px 20px 0px; margin:0 auto;">
+				{{ atom.content|richtext_filters|safe }}
+				{{ atom.embedded_content|richtext_filters|safe }}
+			</div>
+	</div>
+
+{% else %}
+
+	<div id="atom_display_container_{{ atom.id }}">
+    	<div class="atom_moveable_element">
+
+            {% include 'blog/includes/bits/post_atom.html' %}
+
+		</div>
+	</div>
+
+{% endif %}
+

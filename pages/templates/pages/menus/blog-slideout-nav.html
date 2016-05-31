@@ -1,0 +1,35 @@
+{#load pages_tags mezzanine_tags i18n future staticfiles#}
+
+
+{% for story in blog_post.get_parent_stories %}
+    <h3 class="stories-single"><span onclick="location.href='{{ story.get_absolute_url }}'" style="cursor:pointer; text-transform:uppercase; ">{{ story.title }}</span></h3>
+{% endfor %}
+
+{% if more_articles %}
+<div class="accordion-item related_stories">
+    <h3 class="stories">RELATED STORIES</h3>
+    <div class="info">
+        <section>
+            {% for post in more_articles %}
+                {% if post.custom_post_type != 'external' %}
+                    <article>
+                        <a href="{{ post.get_absolute_url }}">
+
+                            {% if post.featured_image %}
+                            <div class="image related">
+                                <img src="{{ MEDIA_URL }}/{{ post.featured_image.thumbnail.236x142 }}" alt="">
+                            </div>
+                            {% endif %}
+
+                            <span class="hold">
+                                <span class="top-line">{{ post.get_custom_post_type_title|upper }} <span class="date">{{ post.published|date:"m.d.Y" }}</span></span>
+                                <span class="text">{{ post.title }}</span>
+                            </span>
+                        </a>
+                    </article>
+                {% endif %}
+            {% endfor %}
+        </section>
+    </div>
+</div>
+{% endif %}

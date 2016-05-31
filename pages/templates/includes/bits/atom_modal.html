@@ -1,0 +1,62 @@
+
+    <div id="atompop_{{ atom.id }}" class="mfp-hide atompop">
+        <div class="atompop_header">
+            <h2><a href="{{ atom.get_absolute_url }}" title="{{ atom.headline }}">{{ atom.headline }}</a></h2>
+        </div>
+        <div class="atompop_body">
+            
+            <div class="atompop_left">
+
+                {%  comment %}
+                Todo:  Clean the atom text in a menthod on Atom
+                {%  endcomment %}
+                {% if atom.modal_layout == 'featured_left' %}
+                    <img src="{{ atom.featured_image.url }}"
+                         alt="{{ atom.headline }}"
+                         width="{{ atom.featured_image.width }}"
+                         height="{{ atom.featured_image.height }}">
+                {% elif atom.modal_layout == 'content_left' %}
+{#                    atom.content|richtext_filters|safe #}
+                    {{ atom.content|safe }}
+                {% elif atom.modal_layout == 'content_html_left' %}
+{#                     atom.content|richtext_filters|safe #}
+{#                     atom.embedded_content|richtext_filters|safe #}
+                    {{ atom.content|safe }}
+                    {{ atom.embedded_content|safe }}
+                {% elif atom.modal_layout == 'html_left' %}
+                    {{ atom.embedded_content|richtext_filters|safe }}
+                {% endif %}
+
+            </div>
+            <div class="atompop_right">
+
+                {% if atom.modal_layout_right == 'desc_right' %}
+                    {{ atom.description }}
+                {% elif atom.modal_layout_right == 'content_right' %}
+{#                    atom.content|richtext_filters|safe#}
+                    {{ atom.content|safe }}
+                {% elif atom.modal_layout_right == 'empty_right' %}
+                
+                {% endif %}
+
+                <div class="atompop_right_bottom">
+                    <a class="viewmore" href="{{ atom.get_absolute_url }}"
+                       title="{{ atom.headline }}">View More</a>
+                    <div class="atomshare">
+                        <div class="text">SHARE</div>
+                        {% comment %}
+                        Todo:  Make this work.
+                        {%  endcomment %}
+{#                        get_formatted_sharing_urls atom.headline atom.headline atom.get_absolute_url as sharing_urls#}
+{#                        <a href="{{ sharing_urls.facebook }}" class="st-icon-facebook st-icon-square" target="_blank">Facebook</a>#}
+{#                        <a href="{{ sharing_urls.twitter }}" class="st-icon-twitter st-icon-square" target="_blank">Twitter</a>#}
+{#                        <a href="{{ sharing_urls.email }}" class="st-icon-email st-icon-square" target="_blank">Email</a>#}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+    </div>

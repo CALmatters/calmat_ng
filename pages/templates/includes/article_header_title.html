@@ -1,0 +1,75 @@
+
+
+{% if article.featured_image %}
+
+
+    {# Output image use with FB opengraph #}
+    {% if article.facebook_share_image %}
+        <img style="position:absolute; left=-9999px;" src="{{ article.facebook_share_image.thumbnail.1200x1200 }}" width="0" height="0">
+    {% else %}
+        <img style="position:absolute; left=-9999px;" src="{{ article.featured_image.thumbnail.1200x1200 }}" width="0" height="0">
+    {% endif %}
+
+
+
+    {% if article.headline_layout == 'over' %}
+
+        <div class="post-image {{ article.featured_image_title_position }} {{ article.featured_image_title_shade }}"
+            style="background-image: url({{ article.featured_image.thumbnail.1200x1200 }})">
+            <div class="container">
+                <h1 class="">{{ article.title }}</h1>
+                <div class="meta">
+                    {{ article.featured_image_description }}
+                    {% if article.featured_image_credit %}
+                        <span style="text-transform: uppercase;">PHOTOGRAPH BY {{ article.featured_image_credit }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% elif article.headline_layout == 'above' %}
+
+        <div class="post-image headline_off_image headline_above">
+            <div class="container">
+                <h1 class="{{ article.headline_layout }}">{{ article.title }}</h1>
+            </div>
+            <div class="headline_image" style="background-image: url({{ article.featured_image.thumbnail.1200x1200 }})"></div>
+            <div class="meta">
+                <div class="container">
+                    {{ article.featured_image_description }}
+                    {% if article.featured_image_credit %}
+                        <span style="text-transform: uppercase;">PHOTOGRAPH BY {{ article.featured_image_credit }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+
+
+        <div class="post-image headline_off_image headline_below">
+            <div class="headline_image" style="background-image: url({{ article.featured_image.thumbnail.1200x1200 }})"></div>
+            <div class="meta">
+                <div class="container">
+                    {{ article.featured_image_description }}
+                    {% if article.featured_image_credit %}
+                        <span style="text-transform: uppercase;">PHOTOGRAPH BY {{ article.featured_image_credit }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="container">
+                <h1 class="{{ article.headline_layout }}">{{ article.title }}</h1>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% else %}
+
+    <div class="post-image type-2">
+        <div class="container">
+            <h1>{{ article.title }}</h1>
+        </div>
+    </div>
+
+{% endif %}
