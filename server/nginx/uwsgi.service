@@ -3,7 +3,7 @@ Description=uWSGI Emperor service
 
 [Service]
 ExecStartPre=/bin/bash -c 'mkdir -p /run/uwsgi; chown www-data:www-data /run/uwsgi'
-ExecStart=/home/calmatters/virtualenvs/calmat_ng/binuwsgi  --emperor /home/calmatters/calmatters/server/nginx/vassals/
+ExecStart=/home/calmatters/virtualenvs/calmat_ng/bin/uwsgi  --emperor /home/calmatters/calmatters/server/nginx/vassals/
 Restart=always
 KillSignal=SIGQUIT
 Type=notify
