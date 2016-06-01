@@ -2,7 +2,7 @@ from copy import copy
 
 from django.contrib import admin
 
-
+from categories.mixins import AdminCatListMixin
 from pages.models import Atom
 
 
@@ -46,7 +46,7 @@ def duplicate_atom(modeladmin, request, queryset):
 duplicate_atom.short_description = "Duplicate Atom"
 
 
-class AtomAdmin(AdminThumbMixin, admin.ModelAdmin):
+class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
     # inlines = (RelatedAtomsInline,)
 
     # Todo:  Move to Admin super class parallel with ContentContainer is Sites
@@ -68,6 +68,8 @@ class AtomAdmin(AdminThumbMixin, admin.ModelAdmin):
         'publish_date',
         'default_display_type',
         'admin_thumb',
+        'category_list',
+
         # 'admin_link',
     )
     list_editable = ('status', 'default_display_type',)
