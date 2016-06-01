@@ -2,10 +2,14 @@ from copy import copy
 
 from django.contrib import admin
 
+
 from pages.models import Atom
 
 
 # Todo:  Generalize clone completely
+from sites.mixins.admin_thumb import AdminThumbMixin
+
+
 def duplicate_atom(modeladmin, request, queryset):
     """
     Add duplication as a dropdown option on admin page listing objets.
@@ -42,7 +46,7 @@ def duplicate_atom(modeladmin, request, queryset):
 duplicate_atom.short_description = "Duplicate Atom"
 
 
-class AtomAdmin(admin.ModelAdmin):
+class AtomAdmin(AdminThumbMixin, admin.ModelAdmin):
     # inlines = (RelatedAtomsInline,)
 
     # Todo:  Move to Admin super class parallel with ContentContainer is Sites
@@ -63,7 +67,7 @@ class AtomAdmin(admin.ModelAdmin):
         'status',
         'publish_date',
         'default_display_type',
-        # 'admin_thumb',
+        'admin_thumb',
         # 'admin_link',
     )
     list_editable = ('status', 'default_display_type',)
@@ -88,6 +92,9 @@ class AtomAdmin(admin.ModelAdmin):
             'description',
         )}),
     )
+
+    admin_thumb_field = 'featured_image'
+
     filter_horizontal = ('categories',)
     # filters in right column
     list_filter = ("categories",)
