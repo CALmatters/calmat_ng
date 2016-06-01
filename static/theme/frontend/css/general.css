@@ -1,0 +1,347 @@
+/*------------------------------------------------------------------------------
+    :: Sticky Footer
+       -- http://galengidman.com/2014/03/25/responsive-flexible-height-sticky-footers-in-css/
+------------------------------------------------------------------------------*/
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+div.main-wrapper {
+    width: 100%;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0px 0px -40px 0px;
+}
+
+div.inner-wrapper {
+    width: 100%;
+    padding: 0px 0px 40px 0px;
+}
+
+div#footer {
+    width: 100%;
+    height: 40px;
+}
+
+/*------------------------------------------------------------------------------
+    :: Footer
+------------------------------------------------------------------------------*/
+
+#footer {
+    text-transform: uppercase;
+    padding: 6px 0;
+    letter-spacing: .7px;
+    clear: both;
+    color: #cdd0d1;
+    font-size: 12px;
+    background: #211f1f;
+    font-weight: 500;
+    overflow: hidden;
+}
+
+#footer p {
+    float: left;
+    margin: 0;
+}
+
+#footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: right;
+}
+
+#footer ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+}
+
+#footer ul li + li:before {
+    content: "|";
+    padding: 0 11px;
+    float: left;
+}
+
+#footer a {
+    color: inherit;
+}
+
+@media screen and (max-width: 767px) {
+    #footer {
+        margin-top: 30px;
+    }
+
+    #footer p {
+        font-size: 11px;
+    }
+
+    #footer ul {
+        display: none;
+    }
+}
+
+/*------------------------------------------------------------------------------
+    :: Fonts
+------------------------------------------------------------------------------*/
+
+@font-face {
+    font-family: 'GearedSlab';
+    src: url('../fonts/gearedslab-light-webfont.eot');
+    src: url('../fonts/gearedslab-light-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/gearedslab-light-webfont.woff2') format('woff2'), url('../fonts/gearedslab-light-webfont.woff') format('woff'), url('../fonts/gearedslab-light-webfont.ttf') format('truetype'), url('../fonts/gearedslab-light-webfont.svg#geared_slabthin') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GearedSlab';
+    src: url('../fonts/gearedslab-extrabold-webfont.eot');
+    src: url('../fonts/gearedslab-extrabold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/gearedslab-extrabold-webfont.woff2') format('woff2'), url('../fonts/gearedslab-extrabold-webfont.woff') format('woff'), url('../fonts/gearedslab-extrabold-webfont.ttf') format('truetype'), url('../fonts/gearedslab-extrabold-webfont.svg#geared_slabextrabold') format('svg');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GearedSlab';
+    src: url('../fonts/gearedslab-bold-webfont.eot');
+    src: url('../fonts/gearedslab-bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/gearedslab-bold-webfont.woff2') format('woff2'), url('../fonts/gearedslab-bold-webfont.woff') format('woff'), url('../fonts/gearedslab-bold-webfont.ttf') format('truetype'), url('../fonts/gearedslab-bold-webfont.svg#geared_slabbold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GearedSlab';
+    src: url('../fonts/GearedSlab.eot');
+    src: url('../fonts/GearedSlab.eot') format('embedded-opentype'), url('../fonts/GearedSlab.woff2') format('woff2'), url('../fonts/GearedSlab.woff') format('woff'), url('../fonts/GearedSlab.ttf') format('truetype'), url('../fonts/GearedSlab.svg#GearedSlab') format('svg');
+    font-weight: normal;
+}
+@import url("//hello.myfonts.net/count/2de805");
+
+/* regular
+
+@font-face {font-family: 'Neusa';src: url('../fonts/2DE805_0_0.eot');src: url('../fonts/2DE805_0_0.eot?#iefix') format('embedded-opentype'),url('../fonts/2DE805_0_0.woff2') format('woff2'),url('../fonts/2DE805_0_0.woff') format('woff'),url('../fonts/2DE805_0_0.ttf') format('truetype');}
+
+*/
+
+/* medium */
+@font-face {font-family: 'Neusa';src: url('../fonts/2DE805_1_0.eot');src: url('../fonts/2DE805_1_0.eot?#iefix') format('embedded-opentype'),url('../fonts/2DE805_1_0.woff2') format('woff2'),url('../fonts/2DE805_1_0.woff') format('woff'),url('../fonts/2DE805_1_0.ttf') format('truetype');}
+
+
+/*------------------------------------------------------------------------------
+    :: Bootstrap Carousel (fullstack labs)
+------------------------------------------------------------------------------*/
+
+/* Override controls position */
+
+.carousel-controls-container {
+    position: relative;
+    width: 30px;
+    padding-bottom: 5px;
+    margin: 0 auto;
+}
+.carousel-control.left, .carousel-control.right {
+    background-image: none
+}
+.carousel-control {
+    z-index: 10;
+}
+
+/* Support Us page testimonials */
+.testimonial {padding: 0 15px 0 15px;}
+.testimonial .name-inner h4 {font-size:14px;}
+.testimonial .full-name {margin-bottom:3px;}
+.testimonial .job-title {margin:0;}
+.testimonial .message p {font-family: "ff-meta-serif-web-pro";font-size:16px;}
+ 
+@media(max-width:767px){
+    .carousel-controls {
+        position: relative;
+        top: 15px;
+        left: 130px;
+    }
+    .testimonial .name-outer {
+        position:relative;
+        height:130px;
+    }
+    .testimonial .name-inner {
+        position:absolute;
+        bottom:0;
+        left:0;
+    }
+}
+@media(min-width:768px){
+    .carousel-controls {
+        position: relative;
+        top: 15px;
+        left: 260px;
+    }
+    .testimonial .name-outer {
+        position:relative;
+        height:145px;
+    }
+    .testimonial .name-inner {
+        position:absolute;
+        bottom:0;
+        left:0;
+    }
+}
+@media(min-width:992px){
+    .carousel-controls {
+        position: relative;
+        top: 15px;
+        left: 100px;
+    }
+    .testimonial .name-outer {
+        position:relative;
+        height:90px;
+    }
+    .testimonial .name-inner {
+        position:absolute;
+        bottom:0;
+        left:0;
+    }
+}
+@media(min-width:1200px){
+    .carousel-controls {
+        position: relative;
+        top: 15px;
+        left: 130px;
+    }
+    .testimonial .name-outer {
+        position:relative;
+        height:130px;
+    }
+    .testimonial .name-inner {
+        position:absolute;
+        bottom:0;
+        left:0;
+    }
+}
+
+
+
+/*------------------------------------------------------------------------------
+    :: Bootstrap Modal (fullstack labs)
+------------------------------------------------------------------------------*/
+
+.modal-content {
+  position: relative;
+  padding: 20px;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+  border: 5px solid #EA601A;
+  border: 5px solid rgba(234, 96, 26, 1.0);
+  border-radius: 0px;
+  outline: 0;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+          box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-title {
+    font-family: 'GearedSlab';
+    font-weight: bold;
+    border-bottom: 6px solid #000;
+}
+
+.modal-body {
+    font-family: "ff-meta-serif-web-pro",serif;
+}
+
+/*------------------------------------------------------------------------------
+    :: Bootstrap Misc. (fullstack labs)
+------------------------------------------------------------------------------*/
+
+/* turn off number spinners */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+::-webkit-input-placeholder {
+    font-family: "Neusa", sans-serif;
+}
+ 
+::-moz-placeholder {
+    font-family: "Neusa", sans-serif;
+}
+
+/* Support Us page intro */
+#support-intro {
+    font-family: "ff-meta-serif-web-pro", serif;
+    margin-top:20px;
+    padding-top:0px;
+    border: 8px solid #EA601A;
+}
+#support-intro .message-text {
+    font-style:normal;
+    font-weight:500;
+    font-size:15pt;
+    line-height:135%;
+    padding-bottom:10px;
+} 
+#support-intro .message-attribution {
+    font-family: "Neusa", sans-serif;
+    padding-bottom:10px;
+}
+#support-intro .message-thumbnail {
+    margin: 0;
+    padding-left: 8px;
+}
+#support-intro .message-thumbnail img {
+    width: 95px;
+    margin: 20px 0 0 25px;
+}
+
+.btn-group-lg>.btn, .donate-btn {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 12px 16px 10px 16px;
+  -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+
+/*------------------------------------------------------------------------------
+    :: Parsley (fullstack labs)
+------------------------------------------------------------------------------*/
+
+input.parsley-success,select.parsley-success,textarea.parsley-success {
+    color: #468847;
+    background-color: #DFF0D8;
+    border: 1px solid #D6E9C6;
+}
+
+input.parsley-error,select.parsley-error,textarea.parsley-error {
+    color: #B94A48;
+    background-color: #F2DEDE;
+    border: 1px solid #EED3D7;
+}
+
+.parsley-errors-list {
+    margin: 2px 0 3px;
+    padding: 0;
+    list-style-type: none;
+    font-size: 0.9em;
+    line-height: 0.9em;
+    opacity: 0;
+
+    transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -webkit-transition: all .3s ease-in;
+}
+
+.parsley-errors-list.filled {
+    opacity: 1;
+}

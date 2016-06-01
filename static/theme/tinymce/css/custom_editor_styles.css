@@ -1,0 +1,14 @@
+body {}
+
+/*--------------- Editor Styles ---------------*/
+
+.cm_largest { font-size: 27px;}
+.cm_large { font-size: 18px;}
+.cm_small { font-size: 11px;}
+
+.cm_orange { color: #f17521;}
+.cm_green { color: #7cc143;}
+.cm_blue { color: #0eb8c8;}
+.cm_gray { color: #211f1f;}
+
+img.cm_img_use_size { width: auto !important; }

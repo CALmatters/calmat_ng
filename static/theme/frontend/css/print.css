@@ -1,0 +1,192 @@
+/*------------------------------------------------------------------------------
+    :: Delete / Remove
+------------------------------------------------------------------------------*/
+
+.breadcrumbs,
+.caption,
+.crolled-nav,
+.entry img,
+.entry .post_atom_incontent,
+iframe,
+.headline_image,
+.left-scroll-menu,
+.meta,
+.newsletter,
+.pin-holder,
+.pswp,
+.btns,
+.zplaceholder 
+{
+    display: none;
+}
+
+.navbar-default {
+    display: block;
+}
+.navbar-default .search,
+.navbar-default .social,
+.navbar-default .navbar-collapse {
+    display: none !important;
+}
+
+
+/*------------------------------------------------------------------------------
+    :: General
+------------------------------------------------------------------------------*/
+
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-family: "GearedSlab";
+}
+
+body {
+    font-family: "Neusa", sans-serif;
+    font-size: 18px;
+    line-height: 28px;
+    color: #211f1f;
+    background: #fff;
+    -webkit-text-size-adjust: none;
+}
+
+
+a[href]:after {
+    color: #999 !important;
+    font-size: 0.85em;
+}
+
+.bx-wrapper .slides .item {
+    float: none !important;
+    width: auto !important;
+    position: static !important;
+}
+
+/*--------------- Typography ---------------*/
+
+blockquote,
+.columnist h3,
+.crf-sm li,
+.entry,
+.features p,
+.featured-intr p,
+.graph-row .orange p,
+.op_ed_question h4,
+.op_ed_question p,
+.headlines .item h3,
+.jobs p,
+.more-stories p,
+.orange-moved p,
+.people .text p,
+.reactions p,
+.recent-stories p,
+.right-c-s .orange p,
+.sidebar .about,
+.speakers .left-side p,
+.speakers .peoples p,
+.staff h4,
+.form-control,
+.team textarea,
+.team input,
+.team .crf-s .option,
+.team .pics a .first,
+.team-list h4,
+.quote {
+    font-family: "ff-meta-serif-web-pro";
+}
+
+.content h2,
+.columnist .black,
+.columnist li,
+.columnist ul,
+.entry h3,
+.featured-intr h2,
+.featured-intr2 h2,
+.graph-row .orange h4,
+.headlines h2,
+.keywords p,
+.more-stories h3,
+.newsletter h2,
+.orange-moved h3,
+.post-image h1,
+.people h4,
+.recent-stories h3,
+.related-side h3,
+.right-c-s .orange h3,
+.sidebar h1,
+.sidebar .about h4,
+.speakers .left-side h3,
+.speakers .peoples h4,
+.stories h1 {
+    font-family: "GearedSlab";
+}
+
+a.btn-primary,
+.btn-success,
+input, textarea, select, button,
+.columnist h4,
+.caption,
+.features h3,
+.graph-row .orange h4,
+.grey-car h3,
+.op_ed_question h3,
+.featured-intr p.by,
+.featured-intr2 p.by,
+.keywords h3,
+.keywords h4,
+.more-stories .by,
+.more-stories h3,
+.partner-author p,
+.people p,
+.reactions h4,
+.recent-stories h3,
+.recent-stories .by,
+.recent-stories.se .inverts h4,
+.recent-stories.se .inverts p,
+.related-side h4,
+.related-side .by,
+.search-title,
+.search-title input,
+.search-title.alone input,
+.search-title .result_count,
+.sidebar a.btn-primary,
+.sidebar .who-side a,
+.speakers h2,
+.speakers .left-side h3,
+.stories h1,
+.team-list .more a,
+.who-side h4 {
+    font-family: "Neusa", sans-serif;
+}
+
+.featured-intr p.by,
+.featured-intr2 p.by,
+.more-stories .by,
+.post-meta .author p,
+.related-side .by {
+    text-transform: uppercase;
+}
+
+/*------------------------------------------------------------------------------
+    :: Specifics
+------------------------------------------------------------------------------*/
+
+.navbar-brand {
+    font-family: "GearedSlab";
+    font-size: 35px;
+    line-height: 1em;
+}
+.navbar-brand:after {
+    display: none;
+}
+
+.grey-car {
+    border-top: 1px solid #999;
+    margin: 30px 0;
+    padding: 30px 0;
+}
+
+.partner_logo_in_content {
+    max-width: auto;
+    max-height: 20px;
+}
