@@ -152,7 +152,7 @@ class ArticleAdmin(SortableAdminMixin, admin.ModelAdmin):
     def authors_list(self, obj):
         authors = []
         if obj.guest_author:
-            authors.append(self.guest_author)
+            authors.append(obj.guest_author)
 
         if obj.authors.exists():
             for a in obj.authors.all():
