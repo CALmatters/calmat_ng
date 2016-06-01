@@ -5,8 +5,8 @@
 	<div class="post_atom_incontent">           
 			<h3>{{ atom.headline }}</h3>
 			<div style="padding:5px 20px 0px; margin:0 auto;">
-				{{ atom.content|richtext_filters|safe }}
-				{{ atom.embedded_content|richtext_filters|safe }}
+				{{ atom.content|safe }}
+				{{ atom.embedded_content|safe }}
 			</div>
 	</div>
 
@@ -15,7 +15,7 @@
 	<div id="atom_display_container_{{ atom.id }}">
     	<div class="atom_moveable_element">
 
-            {% include 'blog/includes/bits/post_atom.html' %}
+            {% include 'includes/bits/post_atom.html' %}
 
 		</div>
 	</div>

@@ -16,15 +16,12 @@
                          width="{{ atom.featured_image.width }}"
                          height="{{ atom.featured_image.height }}">
                 {% elif atom.modal_layout == 'content_left' %}
-{#                    atom.content|richtext_filters|safe #}
                     {{ atom.content|safe }}
                 {% elif atom.modal_layout == 'content_html_left' %}
-{#                     atom.content|richtext_filters|safe #}
-{#                     atom.embedded_content|richtext_filters|safe #}
                     {{ atom.content|safe }}
                     {{ atom.embedded_content|safe }}
                 {% elif atom.modal_layout == 'html_left' %}
-                    {{ atom.embedded_content|richtext_filters|safe }}
+                    {{ atom.embedded_content|safe }}
                 {% endif %}
 
             </div>

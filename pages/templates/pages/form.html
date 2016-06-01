@@ -25,7 +25,7 @@
             <h2>Contact Us</h2>
             <div class="">
                 <div class="entry">
-                    {{ page.form.content|richtext_filters|safe }}
+                    {{ page.form.content|safe }}
                 </div>
             </div>
 
@@ -33,7 +33,7 @@
 
                 {% if request.GET.sent %}
 
-                    {{ page.form.response|richtext_filters|safe }}
+                    {{ page.form.response|safe }}
 
                 {% else %}
 
