@@ -98,7 +98,7 @@ DATABASES = {
         'NAME': 'calmat_ng',
         'USER': 'calmatters',
         'PASSWORD': 'calmatters_db1',
-	'HOST': 'localhost',
+        'HOST': 'localhost',
     }
 }
 
@@ -170,3 +170,8 @@ DEFAULT_ARTICLE_IMAGE="/static/theme/frontend/img/featured-image-default.jpg"
 ARTICLES_PER_PAGE = 2
 
 
+try:
+    from .local_settings import *
+except ImportError:
+    print("Must configure a local_settings.py module, even if it's empty.")
+    raise
