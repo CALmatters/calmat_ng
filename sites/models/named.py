@@ -88,5 +88,5 @@ class Named(models.Model):
             self.slug = self.generate_unique_slug()
         super(Named, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title

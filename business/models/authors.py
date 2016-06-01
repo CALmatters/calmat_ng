@@ -45,14 +45,11 @@ class Author(Named, Publishable, TimeStamped):
         # Todo:  When there's a Author landing page.
         return '/'
 
-    def __unicode__(self):
+    def __str__(self):
         s = self.full_name
         if not s:
             s = self.username
         return s
-
-    def __str__(self):
-        return str(self.__unicode__())
 
     @property
     def first_name(self):

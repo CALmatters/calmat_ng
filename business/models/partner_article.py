@@ -47,5 +47,5 @@ class PartnerArticle(models.Model):
 
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"%s (%s)" % (self.article, self.partner)

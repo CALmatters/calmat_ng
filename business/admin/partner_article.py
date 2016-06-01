@@ -30,5 +30,4 @@ class PartnerArticleAdmin(admin.ModelAdmin):
             return obj.notes
     note_first_chars.short_description = 'Notes'
 
-
 admin.site.register(PartnerArticle, PartnerArticleAdmin)

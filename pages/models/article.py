@@ -57,9 +57,12 @@ class RelatedArticle(models.Model):
     related_article = models.ForeignKey(
         "pages.Article", related_name='related_post')
 
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
     class Meta:
         verbose_name = _("Related Article")
         verbose_name_plural = _("Related Articles")
+        ordering = ('order', )
 
 
 class Article(Named, Publishable, ContentContainer, TimeStamped):
@@ -202,7 +205,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         verbose_name_plural = _("Articles")
         ordering = ('order', )
 
-    def __unicode__(self):
+    def __str__(self):
         return u'{0}: {1}'.format(self.get_custom_post_type_title(), self.title)
 
     def clone(self):

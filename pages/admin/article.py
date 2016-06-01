@@ -19,7 +19,7 @@ class RelatedArticleInline(SortableInlineAdminMixin, TabularInline):
     model = RelatedArticle
     fk_name = 'article'
     fields = (
-        'title', 'order')
+        'article', 'related_article', 'order')
     max_num = 100
     extra = 0
 

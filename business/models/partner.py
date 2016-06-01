@@ -64,3 +64,6 @@ class Partner(Named, TimeStamped):
     def get_absolute_url(self):
         return "article_list_partner", (), {"partner": self.slug}
 
+    def __str__(self):
+        return u"{}".format(self.title)
+
