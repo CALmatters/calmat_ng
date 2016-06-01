@@ -7,7 +7,7 @@ FULL_OR_MENTION_CHOICES = (
     ('Not Specified', 'Not Specified'),
     ('Full Text Publish', 'Full Text Publish'),
     ('Mention/Aggregation', 'Mention/Aggregation'))
-DEFAULT_FULL_OR_MENTION_CHOICES = FULL_OR_MENTION_CHOICES[0]
+DEFAULT_FULL_OR_MENTION_CHOICES = FULL_OR_MENTION_CHOICES[1][0]
 
 
 class PartnerArticle(models.Model):
@@ -38,10 +38,11 @@ class PartnerArticle(models.Model):
 
     print_publish = models.NullBooleanField()
 
-    radio_broadcast = models.NullBooleanField()
+    radio_broadcast = models.NullBooleanField(default=False)
 
     properly_credited = models.NullBooleanField(
-        verbose_name="Properly credited?")
+        verbose_name="Properly credited?",
+        default=True)
 
     notes = models.TextField(blank=True, default='')
 
