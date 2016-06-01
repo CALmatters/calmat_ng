@@ -242,11 +242,11 @@
 {% block above_footer %}
 
 {% if prev %}
-<a href="{% url 'story' prev.slug %}" class="page-prev" title="Previous: {{ prev.text }}"></a>
+<a href="{% url 'project_detail' prev.slug %}" class="page-prev" title="Previous: {{ prev.text }}"></a>
 {% endif %}
 
 {% if next %}
-<a href="{% url 'story' next.slug %}" class="page-next" title="Next: {{ next.text }}"></a>
+<a href="{% url 'project_detail' next.slug %}" class="page-next" title="Next: {{ next.text }}"></a>
 {% endif %}
 
 {% endblock %}

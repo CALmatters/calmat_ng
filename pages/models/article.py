@@ -282,7 +282,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
 
     def get_post_type_url(self):
         if self.custom_post_type != 'articles':
-            return reverse('blog_post_list_custom_post_type',
+            return reverse('article_list_custom_post_type',
                            kwargs={'custom_post_type': self.custom_post_type})
         else:
             if self.news_analysis:
