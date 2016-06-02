@@ -20,7 +20,7 @@ urlpatterns = [
     url('category/(?P<category>.*)/$',
         article_list,
         name='article_list_category'),
-    url('^/(?P<custom_post_type>.*)/all$',
+    url('^(?P<custom_post_type>.*)/all$',
         article_list,
         name='article_list_custom_post_type'),
     url('(?P<slug>[a-zA-Z0-9_-]+)/$', article_view, name='article_detail'),

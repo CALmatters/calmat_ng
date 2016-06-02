@@ -18,7 +18,6 @@ class AuthorAdmin(admin.ModelAdmin):
                 'user')}),
         ('Profile Image',
          {'fields': (
-             'content',
              'job_title',
              'profile_image',
              'twitter',

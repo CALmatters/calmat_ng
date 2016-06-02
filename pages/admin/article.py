@@ -1,11 +1,16 @@
-from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
+
+from django.core.urlresolvers import reverse
 from django.contrib.admin import TabularInline
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
+from django.utils.safestring import mark_safe
+
+from adminsortable2.admin import SortableInlineAdminMixin
 
 from business.models.partner_article import PartnerArticle
 from pages.models import Article
 from pages.models.article import RelatedArticle
+from sites.mixins.admin_thumb import AdminThumbMixin
 
 
 def clone(modeladmin, request, queryset):
@@ -33,13 +38,14 @@ class PartnerArticleInline(SortableInlineAdminMixin, TabularInline):
 
 
 #  Todo:  Twitter support
-class ArticleAdmin(SortableAdminMixin, admin.ModelAdmin):
+class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
 
     # Todo:  Move to Admin super class parallel with ContentContainer is Sites
     class Media:
         js = (
-            'https://cdn.tinymce.com/4/tinymce.min.js',
-            'theme/js/tinymce_ng.js'
+            'https://cdn.tinymce.com/4/tinymce.js',
+            'theme/js/atom_chooser_plugin.js',
+            'theme/js/tinymce_ng.js',
         )
         css = {
             'all': (
@@ -49,20 +55,20 @@ class ArticleAdmin(SortableAdminMixin, admin.ModelAdmin):
     actions = [clone]
 
     list_display = [
-        "title",
-        "status",
-        "publish_date",
         "custom_post_type",
-        "news_analysis",
         "category_list",
+        "title",
         "creator",
         "authors_list",
-        # "atoms_list",
-        # "admin_thumb",
+        "atoms_list",
+        "status",
+        "admin_thumb",
         # "admin_link"
     ]
-    readonly_fields = ('slug', )
-    list_editable = ('status', 'news_analysis')
+
+    list_display_links = ('title', )
+    readonly_fields = ('view_url', )
+    list_editable = ('status', )
 
     list_filter = (
         "status",
@@ -70,7 +76,7 @@ class ArticleAdmin(SortableAdminMixin, admin.ModelAdmin):
         "custom_post_type",
         "news_analysis",
         "atoms",
-        # "partners",
+        "partners",
         "authors")
 
     inlines = (
@@ -82,28 +88,37 @@ class ArticleAdmin(SortableAdminMixin, admin.ModelAdmin):
         "categories", "related_posts", "atoms", "authors",)
 
     fieldsets = (
-        ("Control", {
-            "fields": (
-                "status",
-                "custom_post_type",
-                "slug",
-                "news_analysis",
-                "publish_date",
-            )
-        }),
-        ("General", {
+        (None, {
+            "classes": ("wide",),
             "fields": (
                 "title",
                 "social_title",
-                "description",
+                "layout",
                 "headline_layout",
-
+                "custom_post_type",
+                "view_url",
+                "news_analysis",
+                ("status", "publish_date"),
             )
         }),
-        (_("Content and Images"), {
-            # "classes": ("collapse-closed",),
+
+        ("Description", {
+            "classes": ("collapse",),
+            "fields": (
+                "description",
+            )
+        }),
+
+        (_("Content"), {
+
             "fields": (
                 "content",
+            )
+        }),
+
+        (_("Featured Image"), {
+            "classes": ("collapse",),
+            "fields": (
                 "featured_image",
                 "featured_image_description",
                 "featured_image_credit",
@@ -112,10 +127,7 @@ class ArticleAdmin(SortableAdminMixin, admin.ModelAdmin):
                 "facebook_share_image",
             )
         }),
-        (_("Layout"), {
-            # "classes": ("collapse-open",),
-            "fields": ("layout",)
-        }),
+
         (_("Authors"), {
             "classes": ("collapse-open",),
             "fields": (
@@ -123,31 +135,42 @@ class ArticleAdmin(SortableAdminMixin, admin.ModelAdmin):
                 "guest_author"
             )
         }),
-        (_("Tagging"), {
+        (_("Categories"), {
             # "classes": ("collapse-open",),
             "fields": (
                 "categories",
             )
         }),
-        (_("Related Content"), {
+        (_("Related Atoms"), {
             "classes": ("collapse-open",),
             "fields": (
                 "atoms",
-                # "related_persons",
             )
         }),
         (_("External Info"), {
-            # "classes": ("collapse-closed",),
+            "classes": ("collapse",),
             "fields": (
                 "custom_source",
                 "custom_link",)
         }),
     )
 
+    admin_thumb_field = 'featured_image'
+
     def category_list(self, obj):
         """Used in list_display above."""
         return ', '.join([c.title for c in obj.categories.all()])
     category_list.short_description = "Categories"
+
+    def view_url(self, obj):
+        if obj.slug:
+            url = reverse('article_detail', kwargs=dict(slug=obj.slug))
+            return mark_safe(
+                "View Article:  <a href={url}>{slug}</a>".format(
+                    url=url, slug=obj.title))
+        else:
+            return ""
+    view_url.short_description = "View Article"
 
     def authors_list(self, obj):
         authors = []

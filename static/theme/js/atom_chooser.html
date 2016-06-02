@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Choose Atoms</title>
+</head>
+<body>
+
+<form action="#">
+	<p><b>First, chose atoms for this post in the "tagging" section below.</b></p>
+	<p>Then, position them in your content by selecting them here.</p>
+
+	<select id="atomSelect" name="atomselect">
+    	<option value="">-- No atoms chosen yet --</option>
+	</select>
+
+	<p>Choose how this atom with display itself in this post.</p>
+
+	<select id="atomDisplaySelect" name="atomdisplayselect">
+    	<option value="text">Display atom's headline and text</option>
+    	<option value="image">Display atom's featured image</option>
+    	<option value="incontent">Display atom in content only</option>
+	</select>
+
+	<div class="mceActionPanel">
+		<input type="button" id="insert" name="insert" value="Insert"/>
+		<input type="button" id="cancel" name="cancel" value="Cancel" onclick="top.tinymce.activeEditor.windowManager.close();" />
+	</div>
+</form>
+
+<script type="text/javascript" src="atom_controls.js"></script>
+</body>
+</html>
