@@ -21,8 +21,8 @@ LICENSE_CHOICES = (
 class MediaSource(models.Model):
     title = models.CharField(max_length=255)
 
-    # def __str__(self):
-    #     return self.title
+    def __str__(self):
+        return self.title
 
 
 def resize_image(image_path):
