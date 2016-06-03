@@ -18,6 +18,9 @@ class AdminThumbMixin(object):
             thumb = getattr(obj, self.admin_thumb_field, "")
         if not thumb:
             return ""
-        return '<img src="{}" />'.format(thumb.thumbnail['50x50'].url)
+        try:
+            return '<img src="{}" />'.format(thumb.thumbnail['50x50'].url)
+        except OSError:
+            return ""
     admin_thumb.allow_tags = True
     admin_thumb.short_description = "Featured Image"

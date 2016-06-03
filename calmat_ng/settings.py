@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'sites',
     'pages',
     'business',
+    'media_manager',
     'debug_toolbar'
 ]
 
