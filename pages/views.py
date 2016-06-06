@@ -156,11 +156,11 @@ def article_view(request, slug, template="article_two_column.html"):
     # Use single column layout if: article is `newsanalysis` type
     # and layout == singlecolumn
     if article.layout == 'singlecolumn' and article.news_analysis:
-        templates = ['blog/column_post_detail.html'] + templates
+        templates = ['article_one_column.html'] + templates
         # Add `Author` if attached to first User
         try:
             columnist = article.authors.all()
-            context['columnist'] = columnist[0].author
+            context['columnist'] = columnist[0]
         except:
             context['columnist'] = False
 

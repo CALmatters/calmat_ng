@@ -81,6 +81,8 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
         "partners",
         "authors")
 
+    search_fields = ('title', )
+
     inlines = (
         RelatedArticleInline,
         PartnerArticleInline,
