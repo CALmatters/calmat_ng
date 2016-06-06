@@ -124,12 +124,13 @@ def article_view(request, slug, template="article_two_column.html"):
         for_user=request.user).select_related()
     article = get_object_or_404(articles, slug=slug)
 
+    #  Note:  The article-article rel is used backward, hence using relate_name
     if request.user.is_staff:
         #  Admin logged in, so show all related articles
-        more_articles = article.related_posts.all()
+        more_articles = article.contained_in_related.all()
     else:
         #  regular user, probably anonymous, show only published.
-        more_articles = article.related_posts.filter(
+        more_articles = article.contained_in_related.filter(
             status=CONTENT_STATUS_PUBLISHED)
 
     # subscribe = SubscribeForm(request.POST or None, article_slug=slug)

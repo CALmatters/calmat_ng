@@ -165,7 +165,7 @@
                 <article>
                     <div class="image">
                         {% if article.featured_image %}
-                            <img src="{{MEDIA_URL}}{{ article.featured_image.thumbnail.700x700 }}" alt="{{ article.title }}">
+                            <img src="{{ article.featured_image.thumbnail.700x700 }}" alt="{{ article.title }}">
                         {% else %}
                             <img src="{{ settings.DEFAULT_POST_IMAGE }}" />
                         {% endif %}
@@ -184,7 +184,7 @@
                         </h3>
 
                         {% if article.get_authors %}
-                        <p class="by">by {{ article.get_authors|safe }}</p>
+                            <p class="by">by {{ article.get_authors|safe }}</p>
                         {% endif %}
 
                     </div>

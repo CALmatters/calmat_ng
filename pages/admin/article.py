@@ -22,10 +22,10 @@ clone.short_description = "Duplicate"
 
 class RelatedArticleInline(SortableInlineAdminMixin, TabularInline):
     model = RelatedArticle
-    fk_name = 'article'
+    fk_name = 'related_article'
     fields = (
         'article', 'related_article', 'order')
-    max_num = 100
+    max_num = 3
     extra = 0
 
 
