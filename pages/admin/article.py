@@ -47,7 +47,7 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
         js = (
             'https://cdn.tinymce.com/4/tinymce.js',
             'theme/js/atom_chooser_plugin.js',
-            'theme/js/tinymce_ng.js',
+            'theme/js/tinymce_ng_atom.js',
         )
         css = {
             'all': (

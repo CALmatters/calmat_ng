@@ -426,7 +426,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
 
         ATOM_SHORTCODE_NAME = 'atom'
         ATOM_SHORTCODE_TEMPLATE_PATH = (
-            'blog/includes/bits/post_atom_incontent.html')
+            'includes/bits/post_atom_incontent.html')
         code_pattern = r'\[\s?{0}\s\d+\sdisplay\=[A-Za-z]+\s?\]'.format(
             ATOM_SHORTCODE_NAME)
 #         clean_pattern = r'\<p\>\s?{0}\s?\<\/p\>'.format(code_pattern)
