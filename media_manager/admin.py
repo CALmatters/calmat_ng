@@ -12,9 +12,9 @@ def _fb_file_link(obj):
     See popup_<ver>.js for this buttons click event
     """
 
-    fb_link = ('<button data-media-upload-url="/static/media/%s">'
-               'Select</button>')
-    return mark_safe(fb_link % obj.file)
+    fb_link = mark_safe(
+        '<button data-media-upload-url="{}">Select</button>'.format(obj.id))
+    return fb_link
 _fb_file_link.short_description = "Select"
 
 
@@ -40,8 +40,10 @@ admin.site.register(MediaSource, MediaSourceAdmin)
 
 class MediaItemAdmin(AdminThumbMixin, admin.ModelAdmin):
 
-    class Media:
-        js = ("popup_v1.js",)
+    list_per_page = 20
+
+    # class Media:
+    #     js = ("popup_v1.js",)
 
     adm_list_display = (
         'caption',
@@ -56,6 +58,7 @@ class MediaItemAdmin(AdminThumbMixin, admin.ModelAdmin):
     adm_list_display_links = ('caption', )
 
     list_filter = ('source', 'creator', 'image_type', 'license')
+    readonly_fields = ('image_preview', )
     search_fields = (
         'caption',
         'source__title',
@@ -63,9 +66,14 @@ class MediaItemAdmin(AdminThumbMixin, admin.ModelAdmin):
         'image_type',
         'alt_tag',
         'license',
-        'file')
+        'file',
+        'image_preview')
 
     admin_thumb_field = 'file'
+
+    def image_preview(self, obj):
+        return mark_safe('<img src="{}" />'.format(obj.file.url))
+    image_preview.short_description = "Image Preview"
 
     def get_list_display(self, request):
         """Conditionally display the images in a list in the change_list

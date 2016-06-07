@@ -1,3 +1,5 @@
+from django.utils.safestring import mark_safe
+
 class AdminThumbMixin(object):
     """Provides a 50x50 thumbnail for VersitalImageFields.
 
@@ -11,6 +13,7 @@ class AdminThumbMixin(object):
     """
 
     admin_thumb_field = None
+    admin_thumb_ref = None
 
     def admin_thumb(self, obj):
         thumb = ""
@@ -24,3 +27,17 @@ class AdminThumbMixin(object):
             return ""
     admin_thumb.allow_tags = True
     admin_thumb.short_description = "Featured Image"
+
+    def admin_thumb_reference(self, obj):
+        thumb_ref = getattr(obj, self.admin_thumb_ref, "")
+        thumb = getattr(thumb_ref, self.admin_thumb_field, "")
+        if not thumb:
+            return ""
+        try:
+            return mark_safe(
+                '<img src="{}" />'.format(thumb.thumbnail['50x50'].url))
+        except OSError:
+            return ""
+
+    admin_thumb_reference.allow_tags = True
+    admin_thumb_reference.short_description = "Featured Image"

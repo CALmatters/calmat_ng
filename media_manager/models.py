@@ -19,6 +19,11 @@ LICENSE_CHOICES = (
 
 
 class MediaSource(models.Model):
+
+    class Meta:
+        verbose_name = "Media Source"
+        verbose_name_plural = "Media Sources"
+
     title = models.CharField(max_length=255)
 
     def __str__(self):
@@ -48,6 +53,10 @@ class MediaItem(models.Model):
     This class defines the metadata to track for each file uploaded.
     """
 
+    class Meta:
+        verbose_name = "Media Item"
+        verbose_name_plural = "Media Items"
+
     source = models.ForeignKey(MediaSource, null=True)
     creator = models.CharField(
         max_length=255, verbose_name="Photographer / creator")
@@ -65,4 +74,4 @@ class MediaItem(models.Model):
         resize_image(self.file.path)
 
     def __str__(self):
-        return self.caption
+        return self.caption[:20]

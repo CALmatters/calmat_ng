@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from versatileimagefield.fields import VersatileImageField
 
-from sites.models import Named, Publishable, TimeStamped, ContentContainer
+from media_manager.models import MediaItem
+from sites.models import Named, Publishable, TimeStamped
 
 
 class Author(Named, Publishable, TimeStamped):
@@ -23,6 +24,8 @@ class Author(Named, Publishable, TimeStamped):
         upload_to='authors/',
         null=True,
         blank=True)
+
+    image = models.ForeignKey(MediaItem, null=True, blank=True)
 
     twitter = models.CharField(
         verbose_name='Twitter @',

@@ -40,7 +40,7 @@ class PartnerArticleInline(SortableInlineAdminMixin, TabularInline):
 #  Todo:  Twitter support
 class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
 
-    list_per_page = 10
+    list_per_page = 20
 
     # Todo:  Move to Admin super class parallel with ContentContainer is Sites
     class Media:

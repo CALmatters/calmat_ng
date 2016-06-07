@@ -4,15 +4,16 @@ var file_glue = (function(){
     var run = {
         
         init: function(){
-            //minimalize_controls_for_popup();
+            minimalize_controls_for_popup();
             remove_all_a_href();
 
         },
         
         selectClicked: function($this){
             var imgUrl = getSelectedImgUrl($this);
+            var thumb = getSelectedImgThumb($this);
 
-            insertImgUrlIntoInput(imgUrl);
+            insertImgUrlIntoInput(imgUrl, thumb);
             closeMedia_ManagerWindow();
         }
     }
@@ -21,16 +22,16 @@ var file_glue = (function(){
     //  selection dialog.  Needed for popup version, but should not be used,
     //  nor any javascript from here, in the admin version.
     function minimalize_controls_for_popup() {
-        jQuery("#header").remove();
-        jQuery("#side-panel").remove();
-        jQuery(".object-tools").remove();
-        jQuery(".action-checkbox").remove();
+        django.jQuery("#header").remove();
+        django.jQuery("#side-panel").remove();
+        django.jQuery(".object-tools").remove();
+        django.jQuery(".action-checkbox").remove();
     }
 
     // Removes all a href's that wrap the result-list buttons. This is a hacky way of resolving the problem.
     // Would be ideal to look into a way of removing these a href's server-side.
     function remove_all_a_href(){
-        var buttons = document.querySelectorAll(".result-list a[href*='media_manager'] button");
+        var buttons = document.querySelectorAll(".results a[href*='media_manager'] button");
         
         // loops through all buttons and replace's it's parentNode with the button element itself.
         for (var i=0; i < buttons.length; i++){
@@ -48,9 +49,16 @@ var file_glue = (function(){
         return imgUrl;
     };
 
+    function getSelectedImgThumb($this){
+        var thumb = django.jQuery($this.parents('tr').find('.field-admin_thumb img')).attr('src');
+
+        console.log("Thumb:  "+thumb);
+
+        return thumb
+    }
 
     // Inserts the image url into the 'Image URL' input field in the 'Insert/Edit Image' popup window.
-    function insertImgUrlIntoInput(imgUrl){
+    function insertImgUrlIntoInput(imgUrl, thumb){
         
         function getInsertEditIframeID(){
             return '#' + parent.window.document.querySelectorAll("iframe[id^='mce_']")[0].getAttribute("id");
@@ -69,21 +77,20 @@ var file_glue = (function(){
             //  This section is largely copied from FB_FileBrowseField.FileSubmit
             //  FileBrowser.show() is opening the window, but this code is
             //  handling the submit.
-            var input_id = window.name;
-            var input_id_selector = "#" + input_id;
-            var help_id_selector = '#help_' + input_id;
-            var link_id_selector = '#link_' + input_id;
-            var preview_id_selector = '#image_' + input_id;
-            var clear_id_selector = '#clear_' + input_id;
+            // var input_id = window.name;
+            var input_id_selector = "#id_image";
+            // var help_id_selector = '#help_' + input_id;
+            var preview_link_selector = '#preview_image';
+            var preview_img_selector = '#preview_image img';
+            var clear_id_selector = '#clear_image';
 
-            opener.document.querySelector(preview_id_selector).src = imgUrl;
-            opener.document.querySelector(link_id_selector).href = imgUrl;
-            opener.document.querySelector(input_id_selector).value = imgUrl;
+            opener.document.querySelector(preview_img_selector).src = thumb;
+            opener.document.querySelector(preview_link_selector).href = imgUrl;
+            opener.document.querySelectorAll(input_id_selector)[0].value = imgUrl;
 
-            jQuery(opener.document.querySelector(preview_id_selector)).show();
-            jQuery(opener.document.querySelector(help_id_selector)).show();
-            jQuery(opener.document.querySelector(clear_id_selector)).attr('style', 'display:inline; margin:0 10px;');
-            jQuery(opener.document.querySelector(link_id_selector)).show();
+            django.jQuery(opener.document.querySelector(preview_link_selector)).show();
+            django.jQuery(opener.document.querySelector(clear_id_selector)).show();
+            django.jQuery(opener.document.querySelector(preview_img_selector)).show();
         }
     };
     
@@ -111,15 +118,17 @@ var file_glue = (function(){
 })();
 
 
-jQuery(document).ready(function(){
+django.jQuery(document).ready(function(){
     
     file_glue.init();
     
-    jQuery(".result-list button").click(function(evt){
+    django.jQuery(".results button").click(function(evt){
         evt.preventDefault();
 
-        var $this = jQuery(this);
-        
+        var $this = django.jQuery(this);
+
+        console.log('Button Clicked');
+
         file_glue.selectClicked($this);
     });
     
