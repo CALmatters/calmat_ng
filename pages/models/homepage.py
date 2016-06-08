@@ -25,54 +25,69 @@ class HomePage(Named, Publishable, TimeStamped):
     # IN THE WORKS
     # Todo:  Validate that if a url or display is filled in, other needs to be
     works_display_one = models.CharField(
-        verbose_name="Label",
-        max_length=20,
-        blank=True, default='')
+        verbose_name="Works 1 Label",
+        max_length=25,
+        help_text="25 characters max",
+        blank=True,
+        default='')
     works_url_one = models.CharField(
-        verbose_name="URL",
-        max_length=20,
+        verbose_name="Works 1 URL",
+        max_length=500,
         help_text="A valid http:// or https:// link",
-        blank=True, default='')
+        blank=True,
+        default='')
 
     works_display_two = models.CharField(
-        verbose_name="Label",
-        max_length=20,
-        blank=True, default='')
+        verbose_name="Works 2 Label",
+        max_length=25,
+        help_text="25 characters max",
+        blank=True,
+        default='')
     works_url_two = models.CharField(
-        verbose_name="URL",
-        max_length=20,
+        verbose_name="Works 2 URL",
+        max_length=500,
         help_text="A valid http:// or https:// link",
-        blank=True, default='')
+        blank=True,
+        default='')
 
     works_display_three = models.CharField(
-        verbose_name="Label",
-        max_length=20,
-        blank=True, default='')
+        verbose_name="Works 3 Label",
+        max_length=25,
+        help_text="25 characters max",
+        blank=True,
+        default='')
     works_url_three = models.CharField(
-        verbose_name="URL",
-        max_length=20,
+        verbose_name="Works 3 URL",
+        max_length=500,
         help_text="A valid http:// or https:// link",
-        blank=True, default='')
+        blank=True,
+        default='')
 
     works_display_four = models.CharField(
-        verbose_name="Label",
-        max_length=20,
-        blank=True, default='')
+        verbose_name="Works 4 Label",
+        max_length=25,
+        help_text="25 characters max",
+        blank=True,
+        default='')
     works_url_four = models.CharField(
-        verbose_name="URL",
-        max_length=20,
+        verbose_name="Works 4 URL",
+        max_length=500,
         help_text="A valid http:// or https:// link",
-        blank=True, default='')
+        blank=True,
+        default='')
 
     works_display_five = models.CharField(
-        verbose_name="Label",
-        max_length=20,
-        blank=True, default='')
+        verbose_name="Works 5 Label",
+        max_length=25,
+        help_text="25 characters max",
+        blank=True,
+        default='')
     works_url_five = models.CharField(
-        verbose_name="URL",
-        max_length=20,
+        verbose_name="Works 5 URL",
+        max_length=500,
         help_text="A valid http:// or https:// link",
-        blank=True, default='')
+        blank=True,
+        default='')
 
     primary_article = models.ForeignKey(
         Article,
@@ -142,6 +157,25 @@ class HomePage(Named, Publishable, TimeStamped):
 
     def get_absolute_url(self):
         return "/"
+
+    def has_in_the_works(self):
+        return any(bool(d['label'] and d['url'])
+                   for d in self.yield_in_the_works_titles())
+
+    def yield_in_the_works_titles(self):
+        """Iterator for the 0-5 in the works label/url pairs
+
+        Todo:  this isn't DRY or scalable.  Watch it for improvements.
+        """
+
+        for idx in ['one', 'two', 'three', 'four', 'five']:
+            label_attr = 'works_display_{}'.format(idx)
+            url_attr = 'works_url_{}'.format(idx)
+            label = getattr(self, label_attr, None)
+            url = getattr(self, url_attr, None)
+            if label and url:
+                yield dict(label=label, url=url)
+
 
     class Meta:
         verbose_name = _("Home Page")

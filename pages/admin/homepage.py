@@ -70,36 +70,15 @@ class HomePageAdmin(admin.ModelAdmin):
                 "masthead_copy",
             )
         }),
-        (_("In the Works Left"), {
+        (_("In the Works"), {
             "fields": (
-                "works_display_one",
-                "works_url_one",
+                ("works_display_one", "works_url_one",),
+                ("works_display_two", "works_url_two",),
+                ("works_display_three", "works_url_three", ),
+                ("works_display_four", "works_url_four", ),
+                ("works_display_five", "works_url_five", )
             )
          }),
-        (_("In the Works center-left"), {
-            "fields": (
-                "works_display_two",
-                "works_url_two",
-            )
-         }),
-        (_("In the Works center"), {
-            "fields": (
-                "works_display_three",
-                "works_url_three",
-            )
-        }),
-        (_("In the Works center-right"), {
-            "fields": (
-                "works_display_four",
-                "works_url_four",
-            )
-        }),
-        (_("In the Works right"), {
-            "fields": (
-                "works_display_five",
-                "works_url_five",
-            )
-        }),
         (_("Main Articles"), {
             "fields": (
                 "primary_article",

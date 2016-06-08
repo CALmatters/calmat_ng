@@ -35,21 +35,8 @@
     <script>try{Typekit.load();}catch(e){}</script>
 
     {% block extra_head %}
-    {% include 'includes/analytics.html' %}
-    
-    {% include 'includes/facebook_pixel.html' %}
-
-        <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@calmatters" />
-    <meta name="twitter:title" content="CALmatters.org" />
-    <meta name="twitter:description" content="A nonprofit, nonpartisan media venture producing compelling stories on policies, personalities and money in Sacramento" />
-        <meta property="og:site_name" content="CALmatters"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:title" content="CALmatters | CA Policies Unveiled" />
-    <meta property="og:url" content="https://calmatters.org" />
-    <meta property="og:description" content="A nonprofit, nonpartisan media venture explaining California&#39;s policies and politics." />
-
+        {% include 'includes/analytics.html' %}
+        {% include 'includes/facebook_pixel.html' %}
     {% endblock %}
 
 

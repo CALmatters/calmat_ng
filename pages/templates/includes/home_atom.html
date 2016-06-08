@@ -1,0 +1,49 @@
+
+
+{% if home.atom_layout == 'image' %}
+
+    <div class="home_atom image_home_atom">
+        <div class="img">
+            <a href="{{ atom.get_absolute_url }}" title="View {{ atom.headline }}">
+                <img src="{{ MEDIA_URL }}{{ atom.featured_image }}" alt="{{ atom.headline }}" width="{{ atom.featured_image.width }}" height="{{ atom.featured_image.height }}">
+            </a>
+        </div>
+    </div>
+
+{% elif home.atom_layout == 'content' %}
+
+    <div class="home_atom content_home_atom">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="img">
+                    <a href="{{ atom.get_absolute_url }}" title="View {{ atom.headline }}">
+                        <img src="{{ MEDIA_URL }}{{ atom.featured_image }}" alt="{{ atom.headline }}" width="{{ atom.featured_image.width }}" height="{{ atom.featured_image.height }}">
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="atom_content">
+                    <h3>
+                        <a href="{{ atom.get_absolute_url }}" title="View {{ atom.headline }}">
+                            {{ atom.headline }}
+                        </a>
+                    </h3>
+                    <div class="text">
+                        {{ atom.content|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% elif home.atom_layout == 'embedded' %}
+
+    <div class="home_atom embedded_home_atom">
+        <div class="atom_embedded_content">
+            <div class="text">
+                {{ atom.embedded_content|safe }}
+            </div>
+        </div>
+    </div>
+
+{% endif %}

@@ -6,6 +6,15 @@
     <link rel="stylesheet" media="screen" href="{%  static 'css/style.css'  %}">
 {%  endblock %}
 
+{%  block extra_head %}
+    {% include 'includes/twitter_card_home.html' %}
+    {% include 'includes/facebook_open_graph.html' %}
+{%  endblock %}
+
+{% block 'home_breadcrumb' %}
+    <p>{{ home.masthead_copy }}</p>
+{% endblock %}
+
 {% block main %}
     <div id="body">
         <div class="container">
@@ -14,10 +23,17 @@
                 <div class="text">
                     <p class="itw_title">IN THE WORKS</p>
                     <div class="itw_list">
-                        <div class="itw_links"><a href="#">Prescription Drug Pricing</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">Building Effeciency</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">Education is Fun</a></div>
+                        <div class="itw_links">
+                            {%  for itw_block in home.yield_in_the_works_titles %}
+                                <a href="{{  itw_block.url }}">{{  itw_block.label }}</a>
+                                {%  if not forloop.last %}&nbsp;&nbsp;|&nbsp;&nbsp;{%  endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div><!-- In the Works Section Full Site-->
+        {%  if home.has_in_the_works %}
+        {%  endif %}
 
     
     <div id="upper_articles">
