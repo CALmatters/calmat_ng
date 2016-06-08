@@ -26,7 +26,7 @@
                     <div class="itw_list">
                         <div class="itw_links">
                             {%  for itw_block in home.yield_in_the_works_titles %}
-                                <a href="{{  itw_block.url }}">{{  itw_block.label }}</a>
+                                <a href="{{  itw_block.url }}" target="_blank">{{  itw_block.label }}</a>
                                 {%  if not forloop.last %}&nbsp;&nbsp;|&nbsp;&nbsp;{%  endif %}
                             {% endfor %}
                         </div>
@@ -38,41 +38,56 @@
     
     <div id="upper_articles">
         <div id="main_article" class="featured-intr">
-            <img src="https://calmatters.org/static/media//uploads/.thumbnails/VallejoHigh_0320.jpg/VallejoHigh_0320-1200x0.jpg" alt="Featured background one" />
+            {%  comment %}
+                Todo:  featured_image will be a reference to Media, and this will need to be updated
+                Todo:  to featured_image.file.url
+            {%  endcomment %}
+            <img src="{{ home.primary_article.featured_image.url }}" alt="Featured background one" />
             <div id="main_article_text" class="text">
                 <h2>
-
-                        <a href="/articles/education-advocates-fight-over-shades-of-democrat-in-june-election/">Education fight ‘over shades of Democrat’ </a>
+                        {% if home.primary_article.custom_post_type == 'external' %}
+                            <a href="{{ home.primary_article.custom_link }}" target="_blank"> {{ home.primary_article.title }} </a>
+                        {% else %}
+                            <a href="{{ home.primary_article.get_absolute_url }}">{{ home.primary_article.title }} </a>
+                        {%  endif %}
 
                 </h2>
                 <p>
-                    Money flows from business-backed school reform group in several northern California races. 
+                    {{ home.primary_article.description|truncatewords_html:20|safe }}
                 </p>
                 <p class="by">
-
-                    by <a href="/about/staff/laurel-rosenhall" title="Laurel Rosenhall">Laurel Rosenhall</a>
-
+                        {% if home.primary_article.custom_post_type == 'external' %}
+                            {{ home.primary_article.custom_source }}
+                        {% elif home.primary_article.get_authors %}
+        	                by {{ home.primary_article.get_authors|safe }}
+                        {% endif %}
                 </p>
             </div>
         </div>
         <div class="sub_articles">
             <div id="second_article" class="featured-intr">
-                <img src="https://calmatters.org/static/media//uploads/.thumbnails/Suspended_3.jpg/Suspended_3-1200x0.jpg" alt="Featured background one" />
+                <img src="{{ home.secondary_article_left.featured_image.url }}" alt="Featured background two" />
                 <div id="second_article_text" class="text">
                     <h2>
-                        
-                            <a href="/articles/prop-50-the-weirdest-measure-on-the-ballot-this-year/">Prop 50: The weirdest measure on the ballot this year</a>
-                        
+                        {% if home.secondary_article_left.custom_post_type == 'external' %}
+                            <a href="{{ home.secondary_article_left.custom_link }}" target="_blank"> {{ home.secondary_article_left.title }} </a>
+                        {% else %}
+                            <a href="{{ home.secondary_article_left.get_absolute_url }}">{{ home.secondary_article_left.title }} </a>
+                        {%  endif %}
                     </h2>
                 </div>
             </div>
         
             <div id="third_article"  class="featured-intr">
-                <img src="https://calmatters.org/static/media//uploads/.thumbnails/Bixby.jpg/Bixby-1200x0.jpg" alt="Featured background one" />
+                <img src="{{ home.secondary_article_right.featured_image.url }}" alt="Featured background three" />
                 <div id="third_article_text" class="text">
                     <h2>
                         
-                            <a href="/articles/how-some-schools-extend-accountability-beyond-test-scores/">What happens when you look past school test scores?</a>
+                        {% if home.secondary_article_right.custom_post_type == 'external' %}
+                            <a href="{{ home.secondary_article_right.custom_link }}" target="_blank"> {{ home.secondary_article_right.title }} </a>
+                        {% else %}
+                            <a href="{{ home.secondary_article_right.get_absolute_url }}">{{ home.secondary_article_right.title }} </a>
+                        {%  endif %}
                         
                     </h2>
                 </div>

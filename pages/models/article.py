@@ -156,9 +156,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
 
     featured_image = VersatileImageField(
         verbose_name=_("Featured Image"),
-        upload_to='posts/',
-        null=True,
-        blank=True)
+        upload_to='posts/')
 
     featured_image_title_position = models.CharField(
         verbose_name=_("Position"),

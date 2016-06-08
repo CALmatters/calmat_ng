@@ -42,7 +42,7 @@
                         {% if feature.custom_post_type == 'external' %}
                             {{ feature.custom_source }}
                         {% elif feature.get_authors %}
-        	            by {{ feature.get_authors|safe }}
+        	                by {{ feature.get_authors|safe }}
                         {% endif %}
                     </p>
                 </div>
