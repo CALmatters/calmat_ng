@@ -1685,9 +1685,12 @@ div.itw_links a:visited{
 
 .partner_img{
     float: left;
-    width: auto;
-    height: 58px;
-    padding: 0 10px;
+    /*width: auto;*/
+    /*height: 58px;*/
+    /*padding: 0 10px;*/
+    height: 20px;
+    /*margin: 0px 10px 10px 0px;*/
+}
 }
 
 #news_partners_basics{

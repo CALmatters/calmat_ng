@@ -1,10 +1,13 @@
+import random
+
+from datetime import date, timedelta
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from versatileimagefield.fields import VersatileImageField
 
 from business.models.partner_owner import PartnerOwner
 from categories.models import Category
-from sites.models import Named, TimeStamped, ContentContainer
+from sites.models import Named, TimeStamped
 
 PARTNER_TYPES = (
     ('distribution', 'Distribution'),
@@ -20,6 +23,8 @@ class Partner(Named, TimeStamped):
 
     link_to_articles = models.BooleanField(
         default=True, help_text='Add link to article list')
+
+    featured = models.BooleanField(default=False)
 
     featured_image = VersatileImageField(
         verbose_name=_("Featured Image"),
@@ -54,6 +59,35 @@ class Partner(Named, TimeStamped):
             return self.owner.title
         else:
             return ""
+
+    @staticmethod
+    def partners():
+        """Randomly choose 3 partners, return as tuple.
+
+        1.  Chosen from featured=True partners
+        2.  Chsoen from partners that are part of a radio distribution
+        3.  Chosen from parnets with most number of distributions in
+        last 30 days
+
+        all 3 partners distinct.
+        """
+
+        featured_partner = Partner.objects.filter(
+            featured=True).order_by('?')[0]
+
+        from business.models.partner_article import PartnerArticle
+
+        radio_partner = PartnerArticle.objects.filter(
+            radio_broadcast=True).exclude(
+            partner=featured_partner).select_related().order_by('?')[0].partner
+
+        recent_partner = PartnerArticle.objects.filter(
+            date_published__gt=date.today()-timedelta(days=30)
+        ).exclude(
+            partner=featured_partner).exclude(
+            partner=radio_partner).order_by('?')[0].partner
+
+        return featured_partner, radio_partner, recent_partner
 
     class Meta:
         verbose_name = _("Partner")

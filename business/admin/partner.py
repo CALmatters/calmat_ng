@@ -19,7 +19,10 @@ class PartnerAdmin(admin.ModelAdmin):
         'title',
         'partner_type',
         'link_to_articles',
-        'partner_owner')
+        'partner_owner',
+        'featured')
+
+    list_editable = ("featured", )
 
     fieldsets = (
         ("Title", {
@@ -42,6 +45,6 @@ class PartnerAdmin(admin.ModelAdmin):
     filter_horizontal = ('categories',)
 
     # filters in right column
-    list_filter = ("categories", "partner_type", "owner")
+    list_filter = ("categories", "featured", "partner_type", "owner")
 
 admin.site.register(Partner, PartnerAdmin)

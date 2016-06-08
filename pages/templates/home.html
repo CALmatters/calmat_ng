@@ -94,18 +94,23 @@
             </div>
         </div>
     </div>
-     
-    <div id="itw_mobile" class="intheworks">
-        <div class="text">
-            <p class="itw_title">IN THE WORKS</p>
-            <div class="itw_list">
-                <div class="itw_links"><a href="#">Prescription Drug Pricing</a></div>
-                <div class="itw_links"><a href="#">Building Effeciency</a></div>
-                <div class="itw_links"><a href="#">Education is Fun</a></div>
+
+    {%  if home.has_in_the_works %}
+        <div id="itw_mobile" class="intheworks">
+            <div class="text">
+                <p class="itw_title">IN THE WORKS</p>
+                <div class="itw_list">
+                    {%  for itw_block in home.yield_in_the_works_titles %}
+                        <div class="itw_links">
+                                <a href="{{  itw_block.url }}" target="_blank">{{  itw_block.label }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    </div><!-- In the Works Section Mobile-->
-    
+        </div><!-- In the Works Section Full Site-->
+    {%  endif %}
+
+
     <div id="news_partners_basics">
         <div id="news_partners">
             <div class="newsletter">
@@ -119,9 +124,11 @@
             <div class="partners">
                 <div id="partners_text" class="text"><p>We publish with over 50 partners including:</p></div>
                     <div class="partner_logos">
-                        <a target="_blank" href="http://www.latimes.com/"><img class="partner_img" src="../img/la_times_logo.png" alt="LA Times Logo"></a>
-                        <a target="_blank" href="http://www.scpr.org/"><img class="partner_img" src="../img/kpcc_logo.png" alt="KPCC Logo"></a>
-                        <a target="_blank" href="http://www.mercurynews.com/"><img class="partner_img" src="../img/mercury_news_logo.png" alt="The Mercury News Logo"></a>
+                        {% for partner in home.partners %}
+                            <a target="_blank" href="{{ partner.get_absolute_url }}">
+                                <img class="partner_img" src="{{ partner.featured_image.url}}"
+                                     alt="{{ partner.title }}"></a>
+                        {%  endfor %}
                         <a href="#"><div id="more_partners_link">MORE PARTNERS</div></a>
                     </div>
                 </div>

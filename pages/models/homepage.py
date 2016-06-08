@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
+from business.models import Partner
 from pages.models import Article
 from sites.models import Named, Publishable, TimeStamped
 from sites.models.publishable import CONTENT_STATUS_DRAFT
@@ -176,6 +177,9 @@ class HomePage(Named, Publishable, TimeStamped):
             if label and url:
                 yield dict(label=label, url=url)
 
+    @property
+    def partners(self):
+        return Partner.partners()
 
     class Meta:
         verbose_name = _("Home Page")
