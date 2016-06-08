@@ -66,8 +66,7 @@ class MediaItemAdmin(AdminThumbMixin, admin.ModelAdmin):
         'image_type',
         'alt_tag',
         'license',
-        'file',
-        'image_preview')
+        'file')
 
     admin_thumb_field = 'file'
 
