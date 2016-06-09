@@ -1745,41 +1745,60 @@ div.itw_links a:visited{
     vertical-align: middle;
     text-align: center;
     text-shadow: 0px 0px 12.75px rgba(0, 0, 0, 0.3);
-    padding: 1em 4.5em;
+}
+
+.basics_img{
+    width: 100%;
+}
+
+#basics_text1 {
+    position: absolute;
+    top: 25%;
+    margin: 0 25%;
+    color: white;
+}
+
+#basics_text2 {
+    position: absolute;
+    top: 25%;
+    margin: 0 25%;
+    color: white;
+}
+
+#basics_text3 {
+    position: absolute;
+    top: 25%;
+    margin: 0 25%;
+    color: white;
+}
+
+#basics_text4 {
+    position: absolute;
+    top: 25%;
+    margin: 0 25%;
+    color: white;
 }
 
 #basic1{
-    /*background: url(../img/basics_windmill.png);*/
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    position: relative;
     height: 102px;
     width: auto;
 }
 
 #basic2{
-    /*background: url(../img/basics_school.png);*/
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    position: relative;
     height: 102px;
     width: auto;
 }
 
 #basic3{
-    /*background: url(../img/basics_roads.png);*/
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    position: relative;
     height: 102px;
     width: auto;
 }
 
 #basic4{
-    /*background: url(../img/basics_poverty.png);*/
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    position: relative;
     height: 102px;
     width: auto;
 }
