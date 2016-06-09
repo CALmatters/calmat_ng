@@ -1,17 +1,18 @@
-from copy import copy
-
 from django.core.checks import messages
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
+from django.contrib.admin import TabularInline
+
+from adminsortable2.admin import SortableInlineAdminMixin
 
 from pages.models import HomePage
 
-
-# Todo:  Fix this.  It shouldn't take anything thin the queryset
-# Todo:  This should find the latest one and publish it. - needs work
+from pages.models.homepage import RelatedHeadlineArticle
 from sites.models.publishable import (CONTENT_STATUS_DRAFT,
                                       CONTENT_STATUS_PUBLISHED)
 
+# Todo:  Fix this.  It shouldn't take anything thin the queryset
+# Todo:  This should find the latest one and publish it. - needs work
 
 # Todo:  Publishing will be done through publish date, update this.
 # Todo:  publishing should cause the publish date to be set to now()
@@ -41,9 +42,14 @@ def clone(modeladmin, request, queryset):
 clone.short_description = "Duplicate"
 
 
-class HomePageAdmin(admin.ModelAdmin):
+class RelatedHeadlineArticleInline(SortableInlineAdminMixin, TabularInline):
+    model = RelatedHeadlineArticle
+    fields = ('article', 'order')
+    max_num = 3
+    extra = 0
 
-    actions = [clone]
+
+class HomePageAdmin(admin.ModelAdmin):
 
     list_display = [
         "title",
@@ -58,6 +64,9 @@ class HomePageAdmin(admin.ModelAdmin):
     )
 
     actions = (make_published, clone)
+
+    inlines = (RelatedHeadlineArticleInline, )
+
     fieldsets = (
         (None, {
             "fields": (

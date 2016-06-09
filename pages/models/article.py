@@ -1,5 +1,6 @@
 import re
 from copy import copy
+from django.utils.timezone import now
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -7,6 +8,8 @@ from django.template import Context
 from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Q
+
 
 from versatileimagefield.fields import VersatileImageField
 
@@ -15,7 +18,8 @@ from business.models import Partner, Author
 
 from categories.models import Category
 from sites.models import Named, Publishable, TimeStamped, ContentContainer
-from sites.models.publishable import CONTENT_STATUS_DRAFT
+from sites.models.publishable import CONTENT_STATUS_DRAFT, \
+    CONTENT_STATUS_PUBLISHED
 
 CUSTOM_POST_TYPE_CHOICES = (
     ('articles', 'Articles'),
@@ -277,6 +281,28 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
             "slug": self.slug,
         }
         return reverse(url_name, kwargs=kwargs)
+
+    def _yield_ordered_related_articles(self, published_only):
+        """Get headlines in order of RelatedHeadlineArticle.order"""
+
+        qs = RelatedArticle.objects.filter(
+            related_article=self).select_related('article')
+
+        # Todo:  Dry this out, this is duplicated in Publishable.
+        if published_only:
+            qs.filter(
+                Q(article__publish_date__lte=now()) |
+                Q(article__publish_date__isnull=True),
+                Q(article__status=CONTENT_STATUS_PUBLISHED)).order_by(
+                '-publish_date')
+
+        return [a.article for a in qs.all()]
+
+    def yield_published_ordered_related_articles(self):
+        self._yield_ordered_related_articles(published_only=True)
+
+    def yield_ordered_related_articles(self):
+        self._yield_ordered_related_articles(published_only=False)
 
     def get_post_type_url(self):
         if self.custom_post_type != 'articles':

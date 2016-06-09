@@ -14,7 +14,6 @@ from sites.mixins.admin_thumb import AdminThumbMixin
 
 
 def clone(modeladmin, request, queryset):
-
     for article in queryset.all():
         article.clone()
 clone.short_description = "Duplicate"

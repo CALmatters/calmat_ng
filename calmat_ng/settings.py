@@ -172,7 +172,7 @@ LOGGING = {
 }
 
 DEFAULT_ARTICLE_IMAGE="/static/theme/frontend/img/featured-image-default.jpg"
-ARTICLES_PER_PAGE = 2
+ARTICLES_PER_PAGE = 20
 
 
 try:

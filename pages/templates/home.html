@@ -213,60 +213,38 @@
             </div>
         </div>
     </div>
-    
 
-
-    
-        
-
-
-
+    {%  comment %}
     <div class="home_atom embedded_home_atom">
         <div class="atom_embedded_content">
             <div class="text">
                 <iframe src="/iframes/low_energy_home/" width=900 height=450></iframe>
-
             </div>
         </div>
     </div>
+    {%  endcomment %}
 
 
 
     <div class="headlines">
         <h2>More Headlines</h2>
         <div class="slides">
-
-            
-                <div class="item tem1">
-                    <h3><a href="/articles/citys-benchmarking-was-first-in-california-statewide-program-to-follow/">San Francisco&#39;s &#39;benchmarking&#39; was first in California; state will follow</a></h3>
-
-                    
-                    <p>by <a href="/about/staff/julie-cart" title="Julie Cart">Julie Cart</a></p>
-                    
-
-                </div>
-            
-                <div class="item tem2">
-                    <h3><a href="/articles/a-zero-energy-vision-for-california-homes-but-that-doesnt-mean-going-off-the-grid/">A &#39;zero net energy&#39; vision for California homes doesn’t mean going off the grid</a></h3>
-
-                    
-                    <p>by <a href="/about/staff/julie-cart" title="Julie Cart">Julie Cart</a></p>
-                    
-
-                </div>
-            
-                <div class="item tem3">
-                    <h3><a href="/articles/california-officials-say-going-green-will-cost-you-a-little-save-you-a-lot/">California officials say going green will cost you some, save you some</a></h3>
-
-                    
-                    <p>by <a href="/about/staff/julie-cart" title="Julie Cart">Julie Cart</a></p>
-                    
-
-                </div>
-            
-
+            {%  for article in home.yield_ordered_headline_articles %}
+            <div class="item tem1">
+                <h3><a href="{{ article.get_absolute_url }}">
+                    {{ article.title }}</a></h3>
+                <p class="by">
+                    {% if article.custom_post_type == 'external' %}
+                        {{ article.custom_source }}
+                    {% elif article.get_authors %}
+                        by {{ article.get_authors|safe }}
+                    {% endif %}
+                </p>
+            </div>
+        {%  endfor %}
         </div>
     </div>
+
 
     <div class="recent-stories articles">
 

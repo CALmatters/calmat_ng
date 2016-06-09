@@ -2,13 +2,27 @@ from copy import copy
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
 from django.db import models
 
 from business.models import Partner
 from pages.models import Article
 from sites.models import Named, Publishable, TimeStamped
 from sites.models.publishable import CONTENT_STATUS_DRAFT
+
+
+class RelatedHeadlineArticle(models.Model):
+
+    homepage = models.ForeignKey(
+        "pages.HomePage", related_name='related_headline_articles_as_homepage')
+    article = models.ForeignKey(
+        "pages.Article", related_name='related_headline_articles_as_homepage')
+
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    class Meta:
+        verbose_name = _("Related Headline Article")
+        verbose_name_plural = _("Related Headline Articles")
+        ordering = ('order', )
 
 
 class HomePage(Named, Publishable, TimeStamped):
@@ -140,6 +154,34 @@ class HomePage(Named, Publishable, TimeStamped):
         related_name='basics_four_on_homepages',
     )
 
+    featured_2 = models.ForeignKey(
+        Article,
+        verbose_name='Second Feature',
+        blank=True,
+        null=True,
+        related_name='home_featured_2')
+
+    headlines = models.ManyToManyField(
+        Article,
+        blank=True,
+        verbose_name='More Headlines',
+        through='RelatedHeadlineArticle',
+        related_name='home_more_headlines')
+
+    #  TODO:  Atoms will be m2m an displayed in a carousel
+    # atom = models.ForeignKey(
+    #     Atom,
+    #     verbose_name='Home Atom',
+    #     blank=True,
+    #     null=True,
+    #     related_name='home_atom',
+    #     help_text='Appears below external link carousel.')
+    #
+    # atom_layout = models.CharField(max_length=20,
+    #                                choices=HOME_ATOM_LAYOUT_CHOICES,
+    #                                help_text='Home atom layout',
+    #                                default='image')
+
     def clone(self):
         _clone = copy(self)
         _clone.pk = None
@@ -186,6 +228,13 @@ class HomePage(Named, Publishable, TimeStamped):
             article = getattr(self, attr, None)
             yield article
 
+    def yield_ordered_headline_articles(self):
+        """Get headlines in order of RelatedHeadlineArticle.order"""
+
+        return [a.article for a in RelatedHeadlineArticle.objects.filter(
+            homepage=self).select_related('article')]
+
+
     @staticmethod
     def yield_recent_projects():
         """Iterate out the top five most recent projects"""
@@ -194,6 +243,7 @@ class HomePage(Named, Publishable, TimeStamped):
 
         for p in Project.objects.all().order_by('-publish_date')[:5]:
             yield p
+
 
     @property
     def partners(self):
