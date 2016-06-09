@@ -137,11 +137,17 @@
         <div class="thebasics">
             <div class="basics_title">The Basics</div>
             {%  for article in home.yield_the_basics %}
-                <div id="basic{{ forloop.counter }}" class="basics_text">{{ article.title }}</div>
+                <div id="basic_{{ forloop.counter }}" class="basics_text">{{ article.title }}</div>
             {%  endfor %}
         </div>
     </div>
     <div style="clear:both;"></div>
+
+    <script type="application/javascript">
+        {%  for project in home.yield_recent_projects %}
+            console.log("{{  project.title }}");
+        {% endfor %}
+    </script>
 
     <div id="recent_projects" class="intheworks">
         <div class="text">
