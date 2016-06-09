@@ -8,7 +8,7 @@
                     <span></span>
                 </div>
 
-                <a class="logo" href="/"><img src="{% static "theme/frontend/img/logo.png" %}" alt="CALmatters" width="174" height="42" /></a>
+
                 <ul class="follow">
                     {% if blog_post or story %}
                         <li class="rss"><a class="custom_follow_element"></a></li>
@@ -27,9 +27,9 @@
         
             <nav class="navbar navbar-default">
                 <div class="container">
-                    <div class="search">
-                        <a href="/search/"><img src="{% static "theme/frontend/img/ico_search.png" %}" alt="Search" width="19" height="18"></a>
-                    </div>
+{#                    <div class="search">#}
+{#                        <a href="/search/"><img src="{% static "theme/frontend/img/ico_search.png" %}" alt="Search" width="19" height="18"></a>#}
+{#                    </div>#}
                     <div class="social">
                         <ul>
                             {% if settings.SOCIAL_FACEBOOK_URL %}
@@ -56,11 +56,13 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/">CALmatters</a>
+{#                        <a class="navbar-brand" href="/">CALmatters</a>#}
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
                         <ul class="nav navbar-nav">
+                            <li><a class="logo" href="/"><img src="{% static "theme/frontend/img/logo.png" %}" alt="CALmatters" width="174" height="42" /></a></li>
                             <li class="dropdown">
                                 <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
                                     class="dropdown-toggle">POLICY<span class="caret"></span></a>
