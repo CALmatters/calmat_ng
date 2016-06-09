@@ -39,7 +39,7 @@ class Publishable(models.Model):
     status = models.IntegerField(
         _("Status"),
         choices=CONTENT_STATUS_CHOICES,
-        default=CONTENT_STATUS_PUBLISHED,
+        default=CONTENT_STATUS_DRAFT,
         help_text=_("With Draft chosen, will only be shown for "
                     "admin users on the site."))
 

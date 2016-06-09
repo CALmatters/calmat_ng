@@ -48,12 +48,6 @@ class RelatedHeadlineArticleInline(SortableInlineAdminMixin, TabularInline):
     max_num = 4
     extra = 0
 
-    # class Meta:
-    #     help_text = ("First headline is the primary one, displayed large.  "
-    #                  "The remaining 3 are displayed under the main large "
-    #                  "headline.")
-
-
 class HomePageAdmin(admin.ModelAdmin):
 
     list_display = [
@@ -62,7 +56,8 @@ class HomePageAdmin(admin.ModelAdmin):
         "created",
         "updated",
     ]
-    readonly_fields = ('slug', 'status')
+    readonly_fields = ('slug',)
+    list_editable = ('status', )
 
     list_filter = (
         "status",

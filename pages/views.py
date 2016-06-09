@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 def homepage(request, template='home.html'):
 
-    #  There should only ever be one published HomePage
+    #  For now, get the first Published one.
     homepage_obj = HomePage.objects.published()[0]
 
     context = {
