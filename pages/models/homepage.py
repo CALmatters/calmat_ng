@@ -19,9 +19,13 @@ class RelatedHeadlineArticle(models.Model):
 
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
+    def __str__(self):
+        return u''
+
     class Meta:
         verbose_name = _("Related Headline Article")
-        verbose_name_plural = _("Related Headline Articles")
+        verbose_name_plural = _("Related Headline Articles "
+                                "- first one is large")
         ordering = ('order', )
 
 

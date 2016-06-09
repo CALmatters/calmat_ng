@@ -44,9 +44,14 @@ clone.short_description = "Duplicate"
 
 class RelatedHeadlineArticleInline(SortableInlineAdminMixin, TabularInline):
     model = RelatedHeadlineArticle
-    fields = ('article', 'order')
-    max_num = 3
+    exlude= ('article', 'order')
+    max_num = 4
     extra = 0
+
+    # class Meta:
+    #     help_text = ("First headline is the primary one, displayed large.  "
+    #                  "The remaining 3 are displayed under the main large "
+    #                  "headline.")
 
 
 class HomePageAdmin(admin.ModelAdmin):

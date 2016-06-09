@@ -225,11 +225,25 @@
     {%  endcomment %}
 
 
+    <div class="featured-intr2">
+
+        {%  with main_headline=home.yield_ordered_headline_articles|first %}
+        <img src="{{ main_headline.featured_image.thumbnail.1200x1200 }}" alt="Featured background two" />
+        <div class="text">
+            <h2><a href="{{ main_headline.get_absolute_url }}">{{ main_headline.title }}</a></h2>
+
+            {% if main_headline.get_authors %}
+                <p class="by">by {{ main_headline.get_authors|safe }}</p>
+            {% endif %}
+        </div>
+        {%  endwith %}
+    </div>
+
 
     <div class="headlines">
         <h2>More Headlines</h2>
         <div class="slides">
-            {%  for article in home.yield_ordered_headline_articles %}
+            {%  for article in home.yield_ordered_headline_articles|slice:"1:" %}
             <div class="item tem1">
                 <h3><a href="{{ article.get_absolute_url }}">
                     {{ article.title }}</a></h3>
