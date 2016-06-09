@@ -53,8 +53,7 @@ class HomePageAdmin(admin.ModelAdmin):
     list_display = [
         "title",
         "status",
-        "created",
-        "updated",
+        "publish_date",
     ]
     readonly_fields = ('slug',)
     list_editable = ('status', )
@@ -71,6 +70,7 @@ class HomePageAdmin(admin.ModelAdmin):
         (None, {
             "fields": (
                 "status",
+                "publish_date",
                 "title",
             )
         }),
