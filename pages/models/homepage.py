@@ -2,6 +2,7 @@ from copy import copy
 
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from business.models import Partner
@@ -176,6 +177,23 @@ class HomePage(Named, Publishable, TimeStamped):
             url = getattr(self, url_attr, None)
             if label and url:
                 yield dict(label=label, url=url)
+
+    def yield_the_basics(self):
+        """Iterator for the 4 'the basics' articles"""
+
+        for idx in ['one', 'two', 'three', 'four']:
+            attr = 'the_basics_{}'.format(idx)
+            article = getattr(self, attr, None)
+            yield article
+
+    @staticmethod
+    def yield_recent_projects():
+        """Iterate out the top five most recent projects"""
+
+        from pages.models import Project
+
+        for p in Project.objects.all().order_by('-publish_date')[:5]:
+            yield p
 
     @property
     def partners(self):

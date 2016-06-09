@@ -136,10 +136,9 @@
 
         <div class="thebasics">
             <div class="basics_title">The Basics</div>
-            <div id="basic1" class="basics_text">Top questions on climate change</div>
-            <div id="basic2" class="basics_text">Top questions on school spending</div>
-            <div id="basic3" class="basics_text">Top questions on transportation</div>
-            <div id="basic4" class="basics_text">Top questions on poverty</div>
+            {%  for article in home.yield_the_basics %}
+                <div id="basic{{ forloop.counter }}" class="basics_text">{{ article.title }}</div>
+            {%  endfor %}
         </div>
     </div>
     <div style="clear:both;"></div>
@@ -148,7 +147,13 @@
         <div class="text">
             <p class="itw_title">RECENT PROJECTS</p>
             <div class="itw_list">
-                <div class="itw_links"><a href="#">California's Climate Policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">Working Poor</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">Crumbling Infrastructure</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">Education Budget Fight</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">Prescription Drug Pricing</a></div>
+                <div class="itw_links">
+                {%  for project in home.yield_recent_projects %}
+                    <a href="{{  project.get_absolute_url }}">{{  project.title }}</a>
+                    {%  if not forloop.last %}&nbsp;&nbsp;|&nbsp;&nbsp;{%  endif %}
+                {% endfor %}
+                </div>
+
             </div>
         </div>
     </div>
@@ -156,19 +161,27 @@
     <div class="mid_section_links">
         <div id="education_box">
             <div id="education_title" class="text">Education</div>
-            <img class="mid_section_img" src="../img/education_classroom.png">
+            <a href="{% url 'article_list_category' 'education' %}">
+                <img class="mid_section_img" src="{%  static 'img/education_classroom.png' %}">
+            </a>
         </div>
         <div id="finance_box">
             <div id="finance_title" class="text">Finance</div>
-            <img class="mid_section_img" src="../img/finance_computer.png">
+            <a href="{% url 'article_list_category' 'education' %}">
+                <img class="mid_section_img" src="{%  static 'img/finance_computer.png' %}">
+            </a>
         </div>
         <div id="health_box">
             <div id="health_title" class="text">Health</div>
-            <img class="mid_section_img" src="../img/health_stethoscope.png">
+            <a href="{% url 'article_list_category' 'healthcare' %}">
+                <img class="mid_section_img" src="{%  static 'img/health_stethoscope.png' %}">
+            </a>
         </div>
         <div id="environment_box">
             <div id="environment_title" class="text">Environment</div>
-            <img class="mid_section_img" src="../img/environment_windturbine.png">
+            <a href="{% url 'article_list_category' 'environment-1' %}">
+                <img class="mid_section_img" src="{%  static 'img/environment_windturbine.png' %}">
+            </a>
         </div>
     </div>
 <div style="clear:both;"></div>
