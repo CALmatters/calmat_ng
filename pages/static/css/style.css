@@ -1735,6 +1735,14 @@ div.itw_links a:visited{
         max-width: 430px;
     }
 
+.newsletter{
+    background-image: url(../img/lines.png);
+}
+
+#more_partners_link{
+    background-image: url(../img/lines.png);
+}
+
 .partners {
     margin: 0 auto 2em;
     max-width: 430px;
