@@ -130,7 +130,6 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
                 "facebook_share_image",
             )
         }),
-
         (_("Authors"), {
             "classes": ("collapse-open",),
             "fields": (

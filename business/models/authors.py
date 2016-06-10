@@ -19,11 +19,11 @@ class Author(Named, Publishable, TimeStamped):
         blank=True
     )
 
-    profile_image = VersatileImageField(
-        verbose_name='Author Image',
-        upload_to='authors/',
-        null=True,
-        blank=True)
+    # profile_image = VersatileImageField(
+    #     verbose_name='Author Image',
+    #     upload_to='authors/',
+    #     null=True,
+    #     blank=True)
 
     image = models.ForeignKey(MediaItem, null=True, blank=True)
 

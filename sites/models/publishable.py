@@ -25,7 +25,7 @@ class PublishableManager(models.Manager):
         """
 
         if for_user is not None and for_user.is_staff:
-            return self.all()
+            return self.all().order_by('-publish_date')
         return self.filter(
             Q(publish_date__lte=now()) | Q(publish_date__isnull=True),
             Q(status=CONTENT_STATUS_PUBLISHED)).order_by('-publish_date')

@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-from business.models import Partner
+from business.models import Partner, Author
 from pages.models import Article
 from sites.models import Named, Publishable, TimeStamped
 from sites.models.publishable import CONTENT_STATUS_DRAFT
@@ -171,6 +171,15 @@ class HomePage(Named, Publishable, TimeStamped):
         verbose_name='More Headlines',
         through='RelatedHeadlineArticle',
         related_name='home_more_headlines')
+
+    politics_author = models.ForeignKey(Author, blank=True, null=True)
+
+    politics_quote = models.TextField(max_length=500, default='', blank=True)
+
+    def recent_politics_articles(self):
+        """Return most recent 3 published politics articles"""
+
+        return Article.objects.published().filter(news_analysis=True)[:3]
 
     #  TODO:  Atoms will be m2m an displayed in a carousel
     # atom = models.ForeignKey(

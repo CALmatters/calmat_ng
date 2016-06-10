@@ -1,5 +1,4 @@
 from django.core.checks import messages
-from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from django.contrib.admin import TabularInline
 
@@ -10,6 +9,7 @@ from pages.models import HomePage
 from pages.models.homepage import RelatedHeadlineArticle
 from sites.models.publishable import (CONTENT_STATUS_DRAFT,
                                       CONTENT_STATUS_PUBLISHED)
+
 
 # Todo:  Fix this.  It shouldn't take anything thin the queryset
 # Todo:  This should find the latest one and publish it. - needs work
@@ -48,6 +48,7 @@ class RelatedHeadlineArticleInline(SortableInlineAdminMixin, TabularInline):
     max_num = 4
     extra = 0
 
+
 class HomePageAdmin(admin.ModelAdmin):
 
     list_display = [
@@ -74,12 +75,12 @@ class HomePageAdmin(admin.ModelAdmin):
                 "title",
             )
         }),
-        (_("General"), {
+        ("General", {
             "fields": (
                 "masthead_copy",
             )
         }),
-        (_("In the Works"), {
+        ("In the Works", {
             "fields": (
                 ("works_display_one", "works_url_one",),
                 ("works_display_two", "works_url_two",),
@@ -88,14 +89,14 @@ class HomePageAdmin(admin.ModelAdmin):
                 ("works_display_five", "works_url_five", )
             )
          }),
-        (_("Main Articles"), {
+        ("Main Articles", {
             "fields": (
                 "primary_article",
                 "secondary_article_left",
                 "secondary_article_right",
             )
         }),
-        (_("The Basics"), {
+        ("The Basics", {
             "fields": (
                 "the_basics_one",
                 "the_basics_two",
@@ -103,10 +104,14 @@ class HomePageAdmin(admin.ModelAdmin):
                 "the_basics_four",
             )
         }),
+        ("Politics", {
+            "fields": (
+                "politics_author",
+                "politics_quote"
+            )
+        }),
+
     )
-
-
-
 
     # def category_list(self, obj):
     #     """Used in list_display above."""

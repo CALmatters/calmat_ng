@@ -189,27 +189,32 @@
             </a>
         </div>
     </div>
-<div style="clear:both;"></div>
-<div class="politics">
-        <div class="politics_heading">Politics</div>
-        <a href="/newsanalysis/laurel-rosenhall/"><img class="politics_img" src="https://calmatters.org/static/media/uploads/bios/.thumbnails/rosenhall_headshot_12072015.jpg/rosenhall_headshot_12072015-320x217.jpg" alt=""></a>
-        <div class="columnist col">
-            <ul>
-                <li><a href="/articles/education-advocates-fight-over-shades-of-democrat-in-june-election/">Education fight ‘over shades of Democrat’ </a></li>
-                <li><a href="/articles/prop-50-the-weirdest-measure-on-the-ballot-this-year/">Prop 50: The weirdest measure on the ballot this year</a></li>
-                <li><a href="/articles/california-ponders-expanding-cap-and-trade-to-brazil/">California ponders expanding cap and trade to Brazil</a></li>
-            </ul>
-        </div>
-        <div class="quote_full">
-            <div class="politics_quote">
-                “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.”
+    <div style="clear:both;"></div>
+
+    {%  if home.politics_author %}
+        <div class="politics">
+            <div class="politics_heading">Politics</div>
+            <a href="{{ home.politics_author.get_absolute_url }}">
+                <img class="politics_img" src="{{ home.politics_author.image.file.thumbnail.250x250}}" alt="Politic author image">
+            </a>
+            <div class="columnist col">
+                <ul>
+                    {% for article in home.recent_politics_articles %}
+                        <li><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></li>
+                    {%  endfor %}
+                </ul>
             </div>
-            <div class="quote_cred">
-                LAUREL ROSENHALL
+            <div class="quote_full">
+                <div class="politics_quote">
+                    {{ home.politics_quote }}
+                </div>
+                <div class="quote_cred">
+                    {{ home.politics_author.full_name }}
+                </div>
             </div>
         </div>
-    </div>
-  <div style="clear:both;"></div>
+      <div style="clear:both;"></div>
+    {% endif %}
 
     {%  comment %}
     <div class="home_atom embedded_home_atom">
