@@ -1,0 +1,99 @@
+{% load staticfiles %}
+<!--theme_extras -->
+
+            <div class="crolled-nav">
+                <div class="trigger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+
+                <ul class="follow">
+                    {% if blog_post or story %}
+                        <li class="rss"><a class="custom_follow_element"></a></li>
+                    {% endif %}
+                    <li class="facebook">
+                        <a href="{{ sharing_url_facebook }}" onclick="trackOutboundLink('{{ sharing_url_facebook }}'); return false;" target="_blank"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="twitter">
+                        <a href="{{ sharing_url_twitter }}" onclick="trackOutboundLink('{{ sharing_url_twitter }}'); return false;" target="_blank"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="mail">
+                        <a href="{{ sharing_url_email }}" onclick="trackOutboundLink('{{ sharing_url_email }}'); return false;" target="_blank"><i class="fa fa-envelope"></i></a>
+                    </li>
+                </ul>
+            </div>
+        
+            <nav class="navbar navbar-default">
+                <div class="container">
+{#                    <div class="search">#}
+{#                        <a href="/search/"><img src="{% static "theme/frontend/img/ico_search.png" %}" alt="Search" width="19" height="18"></a>#}
+{#                    </div>#}
+                    <div class="social">
+                        <ul>
+                            {% if settings.SOCIAL_FACEBOOK_URL %}
+                                <li><a href="https://www.facebook.com/{{ settings.SOCIAL_FACEBOOK_URL }}" onclick="trackOutboundLink('https://www.facebook.com/{{ settings.SOCIAL_FACEBOOK_URL }}'); return false;" class="st-icon-facebook st-icon-square" target="_blank"></a></li>
+                            {% endif %}
+                            {% if settings.SOCIAL_TWITTER_URL %}
+                                <li><a href="https://twitter.com/{{ settings.SOCIAL_TWITTER_URL }}" onclick="trackOutboundLink('https://twitter.com/{{ settings.SOCIAL_TWITTER_URL }}'); return false;" class="st-icon-twitter st-icon-square" target="_blank"></a></li>
+                            {% endif %}
+                            {% if settings.SOCIAL_INSTAGRAM_URL %}
+                                <li><a href="http://www.instagram.com/{{ settings.SOCIAL_INSTAGRAM_URL }}" onclick="trackOutboundLink('http://www.instagram.com/{{ settings.SOCIAL_INSTAGRAM_URL }}'); return false;" class="st-icon-instagram st-icon-square" target="_blank"></a></li>
+                            {% endif %}
+                            {% if settings.SOCIAL_YOUTUBE_URL %}
+                                <li><a href="http://www.youtube.com/{{ settings.SOCIAL_YOUTUBE_URL }}" onclick="trackOutboundLink('http://www.youtube.com/{{ settings.SOCIAL_YOUTUBE_URL }}'); return false;" class="st-icon-youtube-alt st-icon-square" target="_blank"></a></li>
+                            {% endif %}
+                            {% if settings.SOCIAL_TUMBLR_URL %}
+                                <li><a href="http://www.tumblr.com/{{ settings.SOCIAL_TUMBLR_URL }}" onclick="trackOutboundLink('http://www.tumblr.com/{{ settings.SOCIAL_TUMBLR_URL }}'); return false;" class="st-icon-tumblr st-icon-square" target="_blank"></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+{#                        <a class="navbar-brand" href="/">CALmatters</a>#}
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        <ul class="nav navbar-nav">
+                            <li><a class="logo" href="/"><img src="{% static "theme/frontend/img/logo.png" %}" alt="CALmatters" width="174" height="42" /></a></li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                    class="dropdown-toggle">POLICY<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        {% for category in categories %}
+                                            <li><a href="{{ category.url }}">{{ category.display_name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                            </li>
+
+                            {% comment %}
+                            <li class="{% if request.path == "/" %}active{% endif %}"><a href="/">HOME</a></li>
+                            {% endcomment %}
+
+                            <!--was:  href=url 'columns_list' NEW ANALYSIS-->
+                            <li class="{% if request.path|slice:":7" == "/politics/" %}active{% endif %}"><a href="/politics/">POLITICS</a></li>
+
+                            <li class="dropdown {% if request.path|slice:":9" == "/projects/" %}active{% endif %}">
+                                <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                    class="dropdown-toggle">PROJECTS<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    {% for project in projects %}
+                                        <li><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+
+                            <li class="{% if request.path|slice:":7" == "/about/" %}active{% endif %}"><a href="/about/">ABOUT</a></li>
+                            <li class="{% if request.path|slice:":9" == "/contact/" %}active{% endif %}"><a href="/contact/">CONTACT US</a></li>
+                            <li class="{% if request.path|slice:":12" == "/donate/" %}active{% endif %}"><a href="/donate/">DONATE</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>

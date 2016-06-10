@@ -1,0 +1,99 @@
+{% extends "pages/page.html" %}
+{% load static from staticfiles %}
+
+{% load pages_tags mezzanine_tags %}
+
+{% block main %}
+
+    <div class="bio_page">
+
+        <div class="pin-holder staff">
+
+            {% include "pages/about/team/includes/sidebar.html" with slug=page.bio.parent.slug|cut:"about/" %}
+
+            <div class="content">
+                <h2>{{ page.bio.parent.title }}</h2>
+                {% if page.bio.featured_image %}
+                    <img src="{{ MEDIA_URL }}{{ page.bio.featured_image }}" alt="" align="right" class="bio_style2_image" />
+                {% endif %}
+                <h3>{{ page.bio.custom_jobtitle }}</h3>
+                <h4 style="padding-bottom: 10px;">{{ page.title }}</h4>
+                {% if page.bio.custom_twitter or page.bio.custom_email %}
+                <ul class="links">
+                    {% if page.bio.custom_twitter %}
+                    <li><a href="http://twitter.com/{{ page.bio.custom_twitter }}/" class="ico-tw">@{{ page.bio.custom_twitter }}</a></li>
+                    {% endif %}
+                    {% if page.bio.custom_email %}
+                    <li><a href="mailto:{{ page.bio.custom_email }}" class="ico-email">{{ page.bio.custom_email }}</a></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+                <div class="entry">
+                    {{ page.bio.content|safe }}
+                </div>
+            </div>
+        </div>
+
+        {% if recent_stories %}
+        <div class="pin-holder recent-stories se">
+                
+            <div class="content">
+                <h2>Recent Stories</h2>
+                
+                <section>
+                    {% for story in recent_stories %}
+                    <article>
+                        <div class="image responsive_image">
+                            <a href="{{ story.get_absolute_url }}">
+                                {% if story.featured_image %}
+                                    <img src="{{ MEDIA_URL }}/{% thumbnail story.featured_image 158 111 %}" />
+                                {% else %}
+                                    <img src="{% static story.DEFAULT_ARTICLE_IMAGE %}">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="wrap">
+                            <div class="meta">
+                                {{ story.post_type_link|safe }}
+                                {% if story.custom_post_type != 'external' %}
+                                {{ story.publish_date|date:"m.d.Y" }}
+                                {% endif %}
+                            </div>
+                            <h3><a href="{{ story.get_absolute_url }}">{{ story.title }}</a></h3>
+                            <p>{{ story.description|truncatewords_html:20|safe }}</p>
+
+                            {% if story.get_authors %}
+                            <p class="by">by {{ story.get_authors|safe }}</p>
+                            {% endif %}
+                            
+                            {% if story.related_persons.exists %}
+                            <div class="inverts">
+                            {% for person in story.related_persons.all %}
+                                {% if person.featured_image %}
+                                <div class="item">
+                                    <a href="#"><img src="{{MEDIA_URL}}{% thumbnail person.featured_image 55 55 %}" alt=""></a>
+                                    <p><a href="#">{{person.type|upper}}</a></p>
+                                    <h4>{{person.name}}</h4>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+                            {% endif %}
+
+                        </div>
+                    </article>
+                    {% endfor %}
+                </section>
+
+                {% pagination_for recent_stories %}
+
+            </div><!-- .content -->
+
+            {% endif %}
+        
+            <aside class="sidebar"></aside><!-- .sidebar -->
+        </div>
+
+    </div><!-- .bio_page -->
+
+{% endblock %}

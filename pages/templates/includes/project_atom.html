@@ -1,0 +1,30 @@
+
+{% if project.atom_layout == 'image' %}
+
+    <a href="{{ project.atom.get_absolute_url }}" title="View {{ project.atom.headline }}">
+        <img src="{{ project.atom.featured_image.url }}" alt="{{ project.atom.headline }}" width="{{ project.atom.featured_image.width }}"
+            height="{{ project.atom.featured_image.height }}" style="max-width:100%;">
+    </a>
+
+{% elif project.atom_layout == 'image-headline' %}
+
+    <a href="{{ project.atom.get_absolute_url }}" title="View {{ project.atom.headline }}">
+        <img src="{{  project.atom.featured_image.url }}" alt="{{ project.atom.headline }}" width="{{ project.atom.featured_image.width }}"
+            height="{{ project.atom.featured_image.height }}" style="max-width:100%;">
+    </a>
+    <div class="caption"><p>{{ project.atom.headline }}</p></div>
+
+{% elif project.atom_layout == 'atom-block' %}
+
+    <div class="atom_block">           
+        <h4>
+            <a class="atom-link" href="{{ project.atom.get_absolute_url }}">{{ project.atom.headline }}</a>
+        </h4>
+        <p>{{ project.atom.content|safe }}</p>
+    </div>
+
+{% elif project.atom_layout == 'embedded' %}
+
+    {{ project.atom.embedded_content|safe }}
+
+{% endif %}

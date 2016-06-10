@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+ <!--pages_tags mezzanine_tags -->
+
+{% block meta_title %}CALmatters{% endblock %}
+{% block meta_description %}{{ home.description }}{% endblock %}
+
+{% block extra_head %}
+    {% comment %}
+
+    {% include 'theme/includes/twitter_card_home.html' %}
+    {% include 'theme/includes/facebook_open_graph.html' %}
+    {% endcomment %}
+
+{% endblock %}
+
+{% block 'home_breadcrumb' %}
+    <p>{{ settings.THEME_HOME_PAGE_BREADCRUMB }}</p>
+{% endblock %}
+
+{% block body_id %}home{% endblock %}
+
+{% block main %}
+
+    {% if large_stories %}
+        {% for feature in large_stories %}
+            <div class="featured-intr">
+                <img src="{{ MEDIA_URL }}/{{ feature.featured_image.thumbnail.1200.1200 }}" alt="Featured background one" />
+                <div class="text">
+                    <h2>
+                        {% if feature.custom_post_type == 'external' %}
+                            <a href="{{ feature.custom_link }}" target="_blank"> {{ feature.title }} </a>
+                        {% else %}
+                            <a href="{{ feature.get_absolute_url }}">{{ feature.title }}</a>
+                        {% endif %}
+                    </h2>
+                    <p>
+                        {{ feature.description|truncatewords_html:20|safe }}
+                    </p>
+                    <p class="by">
+                        {% if feature.custom_post_type == 'external' %}
+                            {{ feature.custom_source }}
+                        {% elif feature.get_authors %}
+        	                by {{ feature.get_authors|safe }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="featured-intr2">
+        <img src="{{ MEDIA_URL }}/{{ featured_2.featured_image.thumbnail.1200x1200 }}" alt="Featured background two" />
+        <div class="text">
+            <h2><a href="{{ featured_2.get_absolute_url }}">{{ featured_2.title }}</a></h2>
+
+            {% if featured_2.get_authors %}
+            <p class="by">by {{ featured_2.get_authors|safe }}</p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="headlines">
+        <h2>More Headlines</h2>
+        <div class="slides">
+
+            {% for headline in more_headlines %}
+                <div class="item tem{{forloop.counter}}">
+                    <h3><a href="{{ headline.get_absolute_url }}">{{ headline.title }}</a></h3>
+
+                    {% if headline.get_authors %}
+                    <p>by {{ headline.get_authors|safe }}</p>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    {# Newsletter Form #}
+    {% comment %}
+    {% include "theme/includes/newsletter_form.html" %}
+    {% endcomment %}
+
+    <div class="columnist">
+        <h4><!--Columnist-->&nbsp;</h4>
+        <div class="set">
+            <div class="col">
+                {% if columnist_link %}
+                <a href="{{ columnist_link }}" class="black">{{ columnist_title }}</a>
+                {% else %}
+                <a class="black">{{ columnist_title }}</a>
+                {% endif %}
+            </div>
+            <div class="col">
+                <h3>{{ columnist.get_full_name }}</h3>
+                <a href="/newsanalysis/{{ columnist.first_name|lower }}-{{ columnist.last_name|lower }}/"><img src="{{ MEDIA_URL }}{{ columnist.bio.featured_image.thumbnail.320x217 }}" alt=""></a>
+            </div>
+            <div class="col">
+                <ul>
+                    {% for col in columnist_articles %}
+                    <li><a href="{{ col.get_absolute_url }}">{{ col.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+{% comment %}
+
+
+    {% if external_links %}
+    <div class="grey-car">
+        <div class="slides">
+            {% for link in external_links %}
+                <div class="item">
+                    <h4>{{ link.custom_source }}</h4>
+                    <h3><a href="{{ link.custom_link }}" target="_blank" title="{{ link.title }}">{{ link.title }}</a></h3>
+                </div>
+            {% endfor %}
+        </div>
+    </div>  
+    {% endif %}
+
+{% endcomment %}
+
+    {% if atom %}
+        {% include 'theme/includes/home_atom.html' %}
+    {% endif %}
+
+    <div class="recent-stories articles">
+
+        <div class="content">
+            <h2>Articles</h2>
+
+            <section>
+                {% for article in article_list %}
+                    <article>
+                        <div class="image">
+                            {% if article.featured_image %}
+                                <img src="{{ MEDIA_URL }}{{  article.featured_image.thumbnail.310x220 }}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="wrap">
+                            <div class="meta"><a href="{{ article.get_post_type_url }}">{{article.get_custom_post_type_title|upper}}</a> {{ article.publish_date|date:"m.d.Y" }}</div>
+                            <h3>
+                                {% if article.custom_post_type == 'external' %}
+                                    <a href="{{ article.custom_link }}" target="_blank"> {{ article.title }} </a>
+                                {% else %}
+                                    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                                {% endif %}
+                            </h3>
+                            <p>{{ article.description|truncatewords_html:20|safe }}</p>
+
+                            {% if article.get_authors %}
+                            <p class="by">by {{ article.get_authors|safe }}</p>
+                            {% endif %}
+
+                        </div>
+                    </article>
+                {% endfor %}
+
+                <div class="more_articles">
+                    <a href="/articles/" title="More Articles">More Articles</a>
+                <div>
+
+            </section>
+
+        </div><!-- .content -->
+    </div><!-- .recent-stories.articles -->
+
+{% endblock %}
+
+
+{% block extra_js %}{% endblock %}

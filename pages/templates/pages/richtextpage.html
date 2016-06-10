@@ -1,0 +1,23 @@
+{% extends "pages/page.html" %}
+
+{% load pages_tags mezzanine_tags blog_tags %}
+
+{% block main %}
+
+	<div class="pin-holder">
+			
+		<aside class="sidebar">
+			<div class="stories">
+	            <h1 style="padding-top:0px;">{{ page.title}}</h1>
+	        </div>
+		</aside>		
+	
+		<div class="content">
+			<div class="entry">
+				{{ page.richtextpage.content|safe }}
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}

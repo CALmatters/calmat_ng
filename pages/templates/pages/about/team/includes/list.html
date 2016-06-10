@@ -1,0 +1,48 @@
+{% load i18n future pages_tags mezzanine_tags %}
+
+{% spaceless %}
+{% if page_branch_in_menu %}
+  {% for page in page_branch %}
+    {% if page.in_menu %}
+      {% if slug in page.parent.slug %}
+        {% if not page.bio.archived %}
+          <article>
+            {% if page.bio.featured_image %}
+            <div class="image">
+              {% if page.bio.content %}<a href="{{ page.get_absolute_url }}">{% endif %}
+                <img src="{{ MEDIA_URL}}{% thumbnail page.bio.featured_image 290 0 %}" alt="">
+              {% if page.bio.content %}</a>{% endif %}
+            </div>
+            {% endif %}
+            <div class="left-side">
+              <h3>{{ page.bio.custom_jobtitle }}</h3>
+              <h4 {% if page.bio.content %}
+                      style="cursor:pointer;" onclick="location.href='{{ page.get_absolute_url }}'"
+              {% endif %}>{{ page.title }}</h4>
+              {% if page.bio.custom_twitter or page.bio.custom_email %}
+              <ul class="links">
+                {% if page.bio.custom_twitter %}
+                <li><a href="https://twitter.com/{{ page.bio.custom_twitter }}" class="ico-tw"></a></li>
+                {% endif %}
+                {% if page.bio.custom_email %}
+                <li><a href="mailto:{{ page.bio.custom_email }}" class="ico-email"></a></li>
+                {% endif %}
+              </ul>
+              {% endif %}
+              {% if page.bio.custom_excerpt %}
+              <div class="entry">
+                <p>{{ page.bio.custom_excerpt }}</p>
+              </div>
+              {% endif %}
+              {% if page.bio.content %}
+                  <p class="more"><a href="{{ page.get_absolute_url }}">MORE »</a></p>
+              {% endif %}
+            </div>
+          </article>
+        {% endif %}
+      {% endif %}
+      {% if page.has_children_in_menu %}{% page_menu page %}{% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% endspaceless %}

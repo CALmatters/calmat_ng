@@ -1,0 +1,22 @@
+{% extends "pages/page.html" %}
+
+{% load pages_tags mezzanine_tags blog_tags %}
+
+{% block main %}
+
+	<div class="pin-holder team-list">
+			
+		{% include "pages/about/team/includes/sidebar.html" %}
+
+
+		<div class="content">
+			<h2>{{ page.title }}</h2>
+			<section>
+				{% page_menu page "pages/about/team/includes/list.html" %}
+			</section>
+		</div>
+		<!-- / content -->
+	
+	</div>
+
+{% endblock %}

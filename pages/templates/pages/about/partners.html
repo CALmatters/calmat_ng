@@ -1,0 +1,74 @@
+{% extends "pages/page.html" %}
+
+{% load pages_tags mezzanine_tags blog_tags %}
+
+{% block main %}
+
+    <div class="pin-holder mission">
+        
+    <aside class="sidebar">
+        <h1>Partners</h1>
+        <div class="about">
+            <p>A non-profit, nonpartisan media venture producing compelling stories on policies, personalities, and money in Sacramento.</p>
+        </div>
+    </aside>
+    <!-- / sidebar -->
+    
+    <div class="content">
+        <div class="filter">
+            <p>SHOW:</p>
+            <ul id="filters">
+                <li><button data-filter="*" href="#">ALL</button></li>
+                <li><button data-filter=".item-distribution" href="#">DISTRIBUTION PARTNERS</button></li>
+                <li><button data-filter=".item-data" href="#">DATA PARTNERS</button></li>
+            </ul>
+        </div>
+
+        <div class="logos">
+            <ul id="filter-con">
+                {% blog_partners_all as partners %}
+                {% for partner in partners %}
+                    <li class="item item-{{ partner.partner_type }}">
+
+                        {% if partner.link_to_articles %}
+                            <a href="{% url 'article_list_partner' partner.slug %}" style="background-image: url({{ MEDIA_URL }}{{ partner.featured_image_large }})" title="{{ partner.title }}">
+                                {{ partner.title }}
+                            </a>
+                        {% else %}
+                            <span style="background-image: url({{ MEDIA_URL }}{{ partner.featured_image_large }})">
+                                {{ partner.title }}
+                            </span>
+                        {% endif %}
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+    <!-- / content -->
+
+</div>
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+    <script>
+        jQuery(window).load(function(){
+            resize_partners_logos();
+
+            jQuery(window).resize(function(){
+                resize_partners_logos();
+            });
+        });
+        function resize_partners_logos(){
+            var ratio = 0.5;
+            $partners = jQuery('li.item');
+            var width = $partners.first().width();
+            var height = width * ratio;
+            $partners.height(height);
+        }
+    </script>
+{% endblock %}

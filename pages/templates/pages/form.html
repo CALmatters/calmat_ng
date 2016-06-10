@@ -1,0 +1,71 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags %}
+
+{% comment %}
+
+    THIS FILE HAS BEEN HIJACKED FOR THE CONTACT FORM.  SORRY.  RON
+    NOT SURE WHAT TO DO IF WE HAVE ANOTHER FORM ON THE SITE?
+
+{% endcomment %}
+
+{% block main %}
+
+    
+    <div class="pin-holder team teams contacts">
+                            
+        <aside class="sidebar">
+            <h1>Contact</h1>
+            <div class="about">
+                <p>CALmatters is a nonprofit, nonpartisan media venture dedicated to explaining California policies and politics.</p>
+            </div>
+            {% include "pages/includes/sidebar_subscribe.html" %}
+        </aside>
+        
+        <div class="content">
+            <h2>Contact Us</h2>
+            <div class="">
+                <div class="entry">
+                    {{ page.form.content|safe }}
+                </div>
+            </div>
+
+            <div class="pics" style="font-size:inherit;">
+
+                {% if request.GET.sent %}
+
+                    {{ page.form.response|safe }}
+
+                {% else %}
+
+                    <div style="margin-right:20px;">{% errors_for form %}</div>
+
+                    <form class="mezzanine-form contact_page_form" method="post" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+                        {% fields_for form %}
+                        <div class="form-actions">
+                            <button type="submit" class="btn-success">{{ page.form.button_text }}</button>
+                        </div>
+                    </form>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+        <!-- / content -->
+
+        
+
+    </div>
+    
+{% endblock %}
+
+
+{% block extra_js %}
+
+    {{ block.super }}
+
+    <script>
+        $(function() {$('.mezzanine-form :input:visible:enabled:first').focus();});
+    </script>
+
+{% endblock %}

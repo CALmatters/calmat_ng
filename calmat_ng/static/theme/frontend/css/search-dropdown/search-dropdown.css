@@ -1,0 +1,51 @@
+/* This stylesheet is specifically created for the searchDropdown module currently being
+    called in mezzcms/templates/admin/base_site.html. The styling is purposley designed
+    to match the native admin panel design and color sceme.
+*/
+
+.zelect {
+    background-color: #F8F8F8;
+    font-weight: normal;
+    position: relative;
+    display: inline-block;
+}
+
+.zelected {
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 7px 26px 7px 7px;
+}
+
+.zelect .zearch-container > input.zearch {
+    width: 80%;
+    margin: 15px 0px 0px 0px;
+    padding: 8px;
+}
+
+.zelect .dropdown {
+    padding: 0px 20px;
+}
+
+.zelect ul li {
+    padding: 5px 5px;
+}
+
+.zelect ul li:hover {
+    background-color: #5897FB;
+    cursor: pointer;
+}
+
+.zelect img.arrow{
+    width: 7px;
+    position: absolute;
+    right: 9px;
+}
+
+.zelect .zelect__up-arrow {
+    top: 10px;
+}
+
+.zelect .zelect__down-arrow {
+    top: 19px;
+    transform: rotate(180deg);
+}

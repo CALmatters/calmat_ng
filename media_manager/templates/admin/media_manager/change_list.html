@@ -1,0 +1,30 @@
+{% extends "admin/change_list.html" %}
+
+{% load static from staticfiles %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {% if is_popup %}
+
+
+        <script src="{%  static 'popup_v1.js'  %}"></script>
+
+        <script type="text/javascript">
+        (function($) {
+            $(document).ready(function($) {
+                //  Shameless removal of unwanted UX.  Should find away
+                //  to never have rendered these bits.  Todo: See templates
+                $("#header").remove();
+                $("#side-panel").remove();
+                $(".action-checkbox").remove();
+
+                //  Removing the Add button for now, for popups.
+                //  Tehnically could let the users do this
+                //  Todo:  Let them, but needs find tuning.
+                // $(".object-tools").remove();
+            });
+        })(django.jQuery);
+        </script>
+    {% endif %}
+{% endblock %}
+

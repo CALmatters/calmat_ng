@@ -1,0 +1,6 @@
+django
+django-versatileimagefield
+psycopg2
+django-admin-sortable2
+django-debug-toolbar
+uwsgi

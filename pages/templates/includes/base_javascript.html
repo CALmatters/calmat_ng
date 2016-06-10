@@ -1,0 +1,88 @@
+{% load staticfiles %}
+<!--load pages_tags mezzanine_tags i18n future staticfiles blog_tags subscription_tags-->
+
+    <script src="{% static 'theme/frontend/js/jquery.scrolldepth.min.js' %}"></script>
+    <script src="{% static 'theme/frontend/js/plugins.js' %}"></script>
+    <script src="{% static 'theme/frontend/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'theme/frontend/js/magnificpopup-1.0.0/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'theme/frontend/js/main.js' %}?version=1.3.9"></script>
+    <script src="{% static 'theme/frontend/js/main-custom-follow.js' %}?version=1.4.1"></script>
+    <script src="{% static 'theme/frontend/js/fluidvids/fluidvids.min.js' %}"></script>
+    <script src="{% static 'theme/frontend/js/idm-ga-followeventtracker/idm-ga-followeventtracker.js' %}?version=1.4.7"></script>
+
+{#    <script>#}
+{##}
+{#        {% comment %}var custom_follow_csrf_token = "{% nevercache %}{% csrf_token %}{% endnevercache %}"; // global for internal custom follow#}
+{#        {% endcomment %}#}
+{#        var custom_follow_csrf_token = "{% csrf_token %}"; // global for internal custom follow#}
+{##}
+{#        jQuery(document).ready(function(){#}
+{#            #}
+{#            /* bootstrap popover (tooltips) */#}
+{#            jQuery('[data-toggle="popover"]').popover(); #}
+{##}
+{#            /* google analytics plugin */#}
+{#            jQuery(function() {#}
+{#              jQuery.scrollDepth();#}
+{#            });#}
+{##}
+{#            /* responsive videos */#}
+{#            {% comment %}#}
+{#                TODO: remove calmatters 'players' once iframes get figured out#}
+{#            {% endcomment %}#}
+{#            fluidvids.init({#}
+{#        	   selector: ['iframe', 'object'], // runs querySelectorAll()#}
+{#    	       players: ['www.youtube.com', 'player.vimeo.com', 'calmatters.org', 'ext.calmatters.org', 'stage.calmatters.org'] // players to support#}
+{#            });#}
+{##}
+{#            /* wrap content images with caption */#}
+{#            jQuery(".content .entry img, .pin-holder .sidebar img").each(function() {#}
+{#                if(this.alt.length > 0 || this.title.length > 0) {#}
+{#                    if(this.alt.length > 0) newalt = this.alt + '&nbsp;';#}
+{#                    jQuery(this).replaceWith(''#}
+{#                        + '<div class="caption">'#}
+{#                        + jQuery(this)[0].outerHTML#}
+{#                        + ' <p style="padding-bottom:0px;">' + newalt + '<span>' + this.title +'</span></p>'#}
+{#                        + '</div>'#}
+{#                    );#}
+{#                } // if alt or title#}
+{#              }); #}
+{##}
+{#            /* force external links to new windows */#}
+{#            jQuery(".content .entry a, .pin-holder .sidebar p a").each(function() {#}
+{#                // if no target already set, and it's an external link#}
+{#                if(this.target.length == 0 && this.href.match(/^((ft|htt)ps?:)?\/\/(?!calmatters\.org)/i)) {#}
+{#                    this.target = '_blank';#}
+{#                }#}
+{#              }); #}
+{##}
+{#            /* custom follow for internal */#}
+{#            {% if blog_post %}#}
+{#                {% is_following_content 'article' blog_post.id as is_following %}#}
+{#                {% if is_following %}#}
+{#                    custom_follow_show_following('article', {{ blog_post.id }});#}
+{#                    jQuery('.newsletter_as_shortcode').hide(); // hide if already following#}
+{#                {% else %}#}
+{#                    custom_follow_show_follow('article', {{ blog_post.id }});#}
+{#                {% endif %}#}
+{#                {% subscriber_gets_newsletter as gets_newsletter %}#}
+{#                {% if gets_newsletter %}#}
+{#                      jQuery('.newsletter_as_shortcode').hide(); // hide if already following#}
+{#                {% endif %}#}
+{##}
+{#            {% elif story %}#}
+{#                {% is_following_content 'story' story.id as is_following %}#}
+{#                {% if is_following %}#}
+{#                    custom_follow_show_following('story', {{ story.id }});#}
+{#                {% else %}#}
+{#                    custom_follow_show_follow('story', {{ story.id }});#}
+{#                {% endif %}#}
+{#            {% endif %}#}
+{##}
+{#            /* track all follow elements */#}
+{#            idm_GA_FollowEventTracker.init();#}
+{##}
+{#        });#}
+{##}
+{##}
+{#    </script>#}

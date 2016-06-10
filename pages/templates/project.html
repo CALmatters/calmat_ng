@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Projects{% endblock %}
+
+{% block meta_description %}{{ project.title }} Articles{% endblock %}
+
+{% block extra_head %}
+    {% include 'includes/twitter_card.html' %}
+{% endblock %}
+
+{% block body_classs %}project{% endblock %}
+
+{% block breadcrumb_menu %}
+    <li><a href="{% url 'projects' %}" title="Projects">Projects</a></li>
+    <li><a href="{% url 'project_detail' project.slug %}" title="{{ project.title }}">{{ project.title }}</a></li>
+{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+
+        <div class="clearfix">
+            <span class="story_page_title">{{ project.title }}&nbsp;</span>
+{#            <div class="story_page_title_follow"><div class="btns"><a class="custom_follow_element"></a></div></div>#}
+        </div>
+
+        <div class="featured-intr" style="margin:25px 0px 0px;">
+            <img src="{{ project.featured_image.thumbnail.1200x1200 }}" />
+            <div class="text story_page_content">
+                <h2>{{ project.description|truncatewords_html:20|safe }}</h2>
+            </div>
+        </div>
+                
+        <div class="headlines">
+            <h2>Feature Projects</h2>
+            <div class="slides">
+
+                {% for article in featured_articles %}
+                    <div class="item tem{{ forloop.counter }}">
+                        <h3>
+                            {% if article.custom_post_type == 'external' %}
+                                <a href="{{ article.custom_link }}" target="_blank">{{ article.title }}</a>
+                            {% else %}
+                                <a href="{{ article.get_absolute_url }}" title="{{ article.title }}">{{ article.title }}</a>
+                            {% endif %}
+                        </h3>
+
+                        {% if article.custom_post_type == 'external' %}
+                            <p class="by">
+                                {{ article.custom_source }}
+                            </p>
+                        {% elif article.get_authors %}
+                        	<p>by {{ article.get_authors|safe }}</p>
+                        {% endif %}
+                        
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <br /><br />
+
+        <div class="clearfix story_page_onramp_atom_row">
+
+            <div class="left-side">
+                {% if project.onramp %}
+                    <div style="border: 1px solid #ccc; border-top: 7px solid #f47522; padding:10px 27px 15px; background-color:#ede9e8;">
+                        <div style='    font-weight: bold;
+        font-size: 1em;
+        letter-spacing: 0.1em;'>ON RAMP &gt;</div>
+                        <div style='padding:15px 0px 25px; color: #221f1f;
+        font-family: "GearedSlab";
+        letter-spacing: 1.2px;
+        line-height: 58px;
+        font-size: 48px;'>{{ project.onramp.title }}</div>
+                        <div style="width:64px; border-top:2px solid #000;"></div>
+                        <div class="story_page_onramp" style="padding:25px 0px 10px;">{{ project.onramp.content|safe }}</div>
+                        <div style="border-top:3px solid #000; text-align:right; padding-top:5px;">
+                            {% if project.onramp.custom_link %}
+                                <a class="story_page_more_link" href="{{ project.onramp.custom_link }}">&gt; MORE</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="right-c-s" style="padding-top:0px;">
+                {% if project.atom %}
+                    {% include 'includes/project_atom.html' %}
+                {% endif %}
+            </div>
+
+        </div>
+        <br /><br />
+
+        {% if quotes %}
+            <div class="row" style="margin:0px; padding:30px 9% 0px; 
+                    border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; 
+                    background-color:#ede9e8;">
+                {% for quote in quotes %}
+                    <div class="col-sm-{{ quotes_column_width }}" style="padding:0px 7% 30px;">
+                        <div class="story_page_reader_reaction" style="padding:10px 0px 0px;">{{ quote.content|safe }}</div>
+                        <div style='
+                                font-size: 16px;
+                                letter-spacing: 0.5px;
+                                margin-bottom: 20px;'> - {{ quote.attribution }}</div>
+                        <div style="border-top:3px solid #000; text-align:right; padding-top:5px;">
+                            {% if quote.custom_link %}
+                                <a class="story_page_more_link story_page_more_link_small"
+                                   href="{{ quote.custom_link }}">&gt; MORE</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <br /><br />
+        {% endif %}
+
+
+        {% if partners %}
+            <h4 style="text-align: center; border-bottom: 8px solid #000; font-size: 16px; padding-bottom: 8px; font-weight: bold;">IN PARTNERSHIP WITH</h4>    
+            <div class="grey-car" style="background:none; border-bottom:4px solid #000;">
+                <div class="slides">
+                    {% for p in partners %}
+                        <div class="item">
+                            {% if p.link_to_articles %}
+                                <a href="{% url 'article_list_partner' p.slug %}">
+                            {% endif %}
+                                <img src="{{ p.featured_image.url }}" alt="{{ p.title }}" style="max-height:78px; max-width:100%;">
+                            {% if p.link_to_articles %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>  
+            <br /><br /><br />
+        {% endif %}
+
+
+        <ul class="story_page_tabs nav nav-tabs">
+          <li><a data-toggle="tab" href="#story_page_tab_all">All</a></li>
+          <li class="active"><a data-toggle= "tab" href="#story_page_tab_articles">CALmatters Articles</a></li>
+          {% if visualizations %}<li><a data-toggle="tab" href="#story_page_tab_visualizations">Infographs</a></li>{% endif %}
+          {% if expert_perspectives_articles %}<li><a data-toggle="tab" href="#story_page_tab_perspectives">Experts</a></li>{% endif %}
+          {% if reader_reactions_articles %}<li><a data-toggle="tab" href="#story_page_tab_reactions">Reader Reactions</a></li>{% endif %}
+          {% if updates_articles %}<li><a data-toggle="tab" href="#story_page_tab_updates">Updates</a></li>{% endif %}
+        </ul>
+
+        <div class="tab-content" style="min-height:800px;">
+            <div id="story_page_tab_all" class="story_page_tab_content tab-pane fade">
+                <div class="recent-stories articles">
+                    <div class="content">
+                        <section>
+                            {% for article in all_articles_sorted %}
+                                {% if article.custom_post_type %}
+                                    {% include "includes/project_tab_article.html" %}
+                                {% else %}
+                                    {% include "includes/project_tab_visualization.html" %}
+                                {% endif %}
+                            {% endfor %}
+                        </section>
+                    </div><!-- .content -->
+                </div>
+            </div>
+            <div id="story_page_tab_articles" class="story_page_tab_content tab-pane fade in active">
+                <div class="story_page_tabs_hidden_title">CALmatters Articles</div>
+                <div class="recent-stories articles">
+                    <div class="content">
+                        <section>
+                            {% for article in related_articles %}
+                                {% include "includes/project_tab_article.html" %}
+                            {% endfor %}
+                        </section>
+                    </div><!-- .content -->
+                </div>
+            </div>
+            {% if visualizations %}
+            <div id="story_page_tab_visualizations" class="story_page_tab_content tab-pane fade">
+                <div class="story_page_tabs_hidden_title">Infographs</div>
+                <div class="recent-stories articles">
+                    <div class="content">
+                        <section>
+                            {% for article in visualizations %}
+                                {% include "includes/project_tab_visualization.html" %}
+                            {% endfor %}
+                        </section>
+                    </div><!-- .content -->
+                </div>
+            </div>
+            {% endif %}
+            {% if expert_perspectives_articles %}
+            <div id="story_page_tab_perspectives" class="story_page_tab_content tab-pane fade">
+                <div class="story_page_tabs_hidden_title">Experts</div>
+                <div class="recent-stories articles">
+                    <div class="content">
+                        <section>
+                            {% for article in expert_perspectives_articles %}
+                                {% include "includes/project_tab_article.html" %}
+                            {% endfor %}
+                        </section>
+                    </div><!-- .content -->
+                </div>
+            </div>
+            {% endif %}
+            {% if reader_reactions_articles %}
+            <div id="story_page_tab_reactions" class="story_page_tab_content tab-pane fade">
+                <div class="story_page_tabs_hidden_title">Reader Reactions</div>
+                <div class="recent-stories articles">
+                    <div class="content">
+                        <section>
+                            {% for article in reader_reactions_articles %}
+                                {% include "includes/project_tab_article.html" %}
+                            {% endfor %}
+                        </section>
+                    </div><!-- .content -->
+                </div>
+            </div>
+            {% endif %}
+            {% if updates_articles %}
+            <div id="story_page_tab_updates" class="story_page_tab_content tab-pane fade">
+                <div class="story_page_tabs_hidden_title">Updates</div>
+                <div class="recent-stories articles">
+                    <div class="content">
+                        <section>
+                            {% for article in updates_articles %}
+                                {% include "includes/project_tab_article.html" %}
+                            {% endfor %}
+                        </section>
+                    </div><!-- .content -->
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <br /><br /><br /><br />
+
+    </div><!-- .container -->
+
+{% endblock %}
+
+{% block above_footer %}
+
+{% if prev %}
+<a href="{% url 'project_detail' prev.slug %}" class="page-prev" title="Previous: {{ prev.text }}"></a>
+{% endif %}
+
+{% if next %}
+<a href="{% url 'project_detail' next.slug %}" class="page-next" title="Next: {{ next.text }}"></a>
+{% endif %}
+
+{% endblock %}

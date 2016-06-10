@@ -1,0 +1,201 @@
+{% extends "pages/page.html" %}
+
+{% load pages_tags mezzanine_tags blog_tags %}
+
+{% block main %}
+
+	<div class="pin-holder mission">
+
+		<aside class="sidebar">
+			<div class="stories">
+	            <h1 style="padding-top:25px; padding-bottom:25px;">About</h1>
+	        </div>
+			<div class="about">
+				<p>{{about.tagline}}</p>
+			</div>
+		</aside>		
+		<!-- / sidebar -->
+		
+        {% if about.mission %}
+		<div class="content">
+			<h2>Mission</h2>
+			<div class="entry">
+				{{about.mission|safe}}
+			</div>
+	
+		</div>
+		<!-- / content -->
+		{% endif %}
+	
+	</div>
+	<div class="pin-holder team teams">
+			
+		<div class="content">
+			<h2><span>Team</span></h2>
+			<div class="pics">
+				<ul>
+					{% page_menu page "pages/about/includes/about-team-list.html" %}
+				</ul>
+			</div>
+		</div>
+		<!-- / content -->
+        
+        <aside class="sidebar">
+            <div class="set">
+                <a href="/about/staff/" class="btn-success">Staff</a>
+                <a href="/about/board-of-directors/" class="btn-success">BOARD OF DIRECTORS</a>
+                <a href="/about/advisory-board/" class="btn-success">ADVISORY BOARD</a>
+            </div>
+			<div class="jobs">
+				<h4>JOBS</h4>
+				{% if about.jobs_message %}
+				<p>{{about.jobs_message}}</p>
+				{% endif %}
+				<a href="/jobs/" class="btn-primary">APPLY NOW</a>
+			</div>
+		</aside>
+		<!-- / sidebar -->
+		
+	</div>
+
+	<div class="pin-holder team partners">
+			
+		
+		<div class="content">
+			<h2><span onclick="location.href='/about/partners/'" style="cursor:pointer;">Partners</span></h2>
+
+            {% if about.partners %}
+            <div class="entry">
+                {{about.partners|safe}}
+            </div>
+            {% endif %}
+
+			<div class="pics">
+				<ul>
+				{% for partner in partner_logos %}
+                    <li>
+                    {% if partner.partner.link_to_articles %}
+    					<a href="{% url 'article_list_partner' partner.partner.slug %}" style="background-image: url({{ MEDIA_URL }}{{ partner.partner.featured_image_large }});" title="{{ partner.title }}">{{ partner.title }}</a>
+                        </a>
+                    {% else %}
+                        <span style="background-image: url({{ MEDIA_URL }}{{ partner.partner.featured_image_large }});">
+                            {{ partner.title }}
+                        </span>
+                    {% endif %}
+                    </li>
+				{% endfor %}
+				</ul>
+				<a class="link_dark" style="display:block; float:right; font-size:initial; margin-bottom:50px; clear:both;" href="/about/partners/">view all partners &raquo;</a>
+			</div>
+		</div>
+		<!-- / content -->
+
+		<aside class="sidebar">
+			{% include "pages/includes/sidebar_subscribe.html" %}
+		</aside>
+
+
+	</div>
+
+	<div class="pin-holder team funders">
+
+		<div class="content" style="margin-bottom:30px;">
+			<h2>Funders / Supporters</h2>
+
+			{% if about.funders %}
+			<div class="entry">
+    			{{ about.funders|safe }}
+			</div>
+			{% endif %}
+
+			<div class="entry">
+			    <div class="row">
+			        <strong>{{ about.funders_list|safe }}</strong>
+			    </div>
+			</div>
+
+		</div>
+
+		<!-- / content -->
+
+		<aside class="sidebar">
+			<div class="jobs">
+				<h4>SUPPORT US</h4>
+				<p>{{about.donate_message|safe}}</p>
+				<a href="/support-us/" class="btn-primary">DONATE NOW</a>
+			</div>
+		</aside>
+		<!-- / sidebar -->
+	
+	</div>
+
+	<div class="pin-holder recent-stories se">
+		<div class="content">
+			<h2><span onclick="location.href='/articles/press/all'" style="cursor:pointer;">Press</span></h2>
+	        {% blog_recent_posts limit=3 custom_post_type="press" as recent_press %}
+            {% for blog_post in recent_press %}
+                <article class="about_press">
+                    <div class="image">
+                        <a href="{{ blog_post.custom_link }}">
+                        {% if blog_post.featured_image %}
+                            <img src="{{MEDIA_URL}}{% thumbnail blog_post.featured_image 140 0 %}" style="margin-bottom: 30px;">
+                        {% endif %}
+                        </a>
+                    </div>
+                    <div class="wrap">
+                        <h3><a href="{{ blog_post.custom_link }}">{{ blog_post.title }}</a></h3>
+                        <p>{{ blog_post.description|truncatewords_html:20|safe }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+
+            {% if recent_press %}
+            <div class="more_articles press_more_articles">
+                <a href="/articles/press/all" title="View more press releases">View More</a>
+            <div>
+            {% endif %}
+
+        </div>
+        <!-- / content -->
+
+    </div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        jQuery(document).ready(function(){
+            resize_partners_logos();
+
+            jQuery(window).resize(function(){
+                resize_partners_logos();
+            });
+        });
+        function resize_partners_logos(){
+            var ratio = 0.5;
+            $partners = jQuery('.team.partners .pics li');
+            var width = $partners.first().width();
+            var height = width * ratio;
+            $partners.height(height);
+        }
+        // function resize_partners_logos(){
+        //     var max = 0;
+        //     $partners = jQuery('.team.partners .pics li');
+        //     $partners.height('auto');
+        //     $partners.each(function(){
+        //                 max = max > jQuery(this).height() ? max : jQuery(this).height();
+        //             });
+
+        //     $partners.each(function(index){
+        //         var $this = jQuery(this);
+        //         $this.height(max);
+        //         var $img = $this.find('img');
+        //         var height = $img.height();
+        //         if( height < max ){
+        //             $img.css('padding-top', (max - height) / 2 );
+        //         }
+        //     });
+        // }
+    </script>
+{% endblock %}

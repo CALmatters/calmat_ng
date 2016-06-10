@@ -1,0 +1,34 @@
+{% if display_type == 'image' and atom.featured_image %}
+
+    <div>
+
+    {% if MEDIA_URL %}
+        <a href="{{ atom.featured_image.url }}"
+           title="{{ atom.headline }}"
+           class="magnific" data-mfp-src="#atompop_{{ atom.id }}">
+            <img src="{{ atom.featured_image.url }}"
+                 alt="{{ atom.headline }}"
+                 width="{{ atom.featured_image.width }}"
+                 height="{{ atom.featured_image.height }}">
+        </a>
+    {% else %}
+        <a href="{{ atom.featured_image.url }}"
+           title="{{ atom.headline }}" class="magnific" data-mfp-src="#atompop_{{ atom.id }}">
+            <img src="{{ atom.featured_image.url }}" alt="{{ atom.headline }}">
+        </a>
+    {% endif %}
+    
+    </div>
+    
+    {% include 'includes/bits/atom_modal.html' %}
+
+{% else %}
+    
+    <div class="atom_block">           
+        <h4>
+            <a class="atom-link" href="{{ atom.get_absolute_single_url }}">{{ atom.headline }}</a>
+        </h4>
+        <p>{{ atom.content|safe }}</p>
+    </div>
+    
+{% endif %}

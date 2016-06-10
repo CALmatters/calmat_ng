@@ -1,0 +1,19 @@
+<!--load mezzanine_tags-->
+
+<!-- Facebook Opengraph -->
+<meta property="og:site_name" content="CALmatters"/>
+<meta property="og:title" content="{{ blog_post.title }}" />
+<meta property="og:type" content="website" />
+<meta property="og:description" content="{{ blog_post.description|truncatewords_html:30|safe }}" />
+
+{% if blog_post.facebook_share_image %}
+    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}{{  blog_post.facebook_share_image.thumbnail.1200x630 }}">
+{% elif blog_post.featured_image %}
+    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}{{ blog_post.featured_image.thumbnail.1200x630 }}">
+{% else %}
+    <meta property="og:image" content="https://calmatters.org/static/theme/frontend/img/logo.png">
+{% endif %}
+
+{% if facebook_author_url  %}
+    <meta property="article:author" content="{{ facebook_author_url }}" />
+{% endif %}
