@@ -58,13 +58,11 @@
         	                by {{ home.primary_article.get_authors|safe }}
                         {% endif %}
                 </p>
-				<hr class="main_article_rule">
-				<p>Our partners: Contra Costa Times, Daily Breeze, 89.3 KPCC, and 22 others</p>
             </div>
         </div>
         <div class="sub_articles">
             <div id="second_article" class="featured-intr">
-                <img class="secondary_article_imgs" src="{{ home.secondary_article_left.featured_image.url }}" alt="Featured background two" />
+                <img src="{{ home.secondary_article_left.featured_image.url }}" alt="Featured background two" />
                 <div id="second_article_text" class="text">
                     <h2>
                         {% if home.secondary_article_left.custom_post_type == 'external' %}
@@ -77,7 +75,7 @@
             </div>
         
             <div id="third_article"  class="featured-intr">
-                <img class="secondary_article_imgs" src="{{ home.secondary_article_right.featured_image.url }}" alt="Featured background three" />
+                <img src="{{ home.secondary_article_right.featured_image.url }}" alt="Featured background three" />
                 <div id="third_article_text" class="text">
                     <h2>
                         
