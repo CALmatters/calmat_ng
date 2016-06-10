@@ -137,7 +137,7 @@
         <div class="thebasics">
             <div class="basics_title">The Basics</div>
             {%  for article in home.yield_the_basics %}
-            <div id="basic_{{ forloop.counter }}" class="basics_text">
+            <div id="basic{{ forloop.counter }}" class="basics_text">
                 <a href="{{ article.get_absolute_url }}">
                     <img class="basics_img" src="{{ article.featured_image.url }}">
                     <div id="basics_text{{ forloop.counter }}">{{ article.title }}</div>
