@@ -2,10 +2,6 @@
 
 {% load static from staticfiles %}
 
-{%  block extra_css %}
-    <link rel="stylesheet" media="screen" href="{%  static 'css/style.css'  %}">
-{%  endblock %}
-
 {%  block extra_head %}
     {% include 'includes/twitter_card_home.html' %}
     {% include 'includes/facebook_open_graph.html' %}

@@ -67,12 +67,12 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'calmat_ng.urls'
 
-GLOBAL_TEMPLATES = os.path.join(BASE_DIR, 'templates/')
+# GLOBAL_TEMPLATES = os.path.join(BASE_DIR, 'templates/')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [GLOBAL_TEMPLATES, ],
+        'DIRS': [],  # GLOBAL_TEMPLATES, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,7 +142,7 @@ USE_TZ = True
 
 STATICFILES_DIRS = [
     # Directory in the git tree
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "calmat_ng", "static"),
 ]
 
 # Directory above git root
