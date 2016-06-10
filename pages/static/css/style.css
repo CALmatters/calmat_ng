@@ -1833,7 +1833,7 @@ div.itw_links a:visited{
 :-ms-input-placeholder { font-size: 1em !important; } /* ie */
 input:-moz-placeholder { font-size: 1em !important; }
 
-@media screen and (max-width: 1600px){
+@media screen and (max-width: 3600px){
     .content {
         width: 63.65%;
     }
@@ -3782,7 +3782,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     padding: 6px 0 0;
 }
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 3600px) {
     .newsletter_in_article .newsletter h2 {
         float: none;
         width: auto;
