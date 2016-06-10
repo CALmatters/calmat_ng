@@ -18,7 +18,8 @@ from pages.models.project import ProjectSortableQuotes, ProjectSortablePartners,
     ProjectSortableExpertPerspectivesArticle, \
     ProjectSortableReaderReactionsArticle, ProjectSortableUpdatesArticles, \
     ProjectSortableVisualizations
-from sites.models.publishable import CONTENT_STATUS_PUBLISHED
+
+from pages.models.article import CUSTOM_POST_TYPE_CHOICES
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +73,7 @@ def article_list(
         # If not a valid custom_post_type, return 404 to move URL matching
         # to next match in mezzcms.urls
         cust_p_types = []
-        for c in settings.CUSTOM_POST_TYPE_CHOICES:
+        for c in CUSTOM_POST_TYPE_CHOICES:
             cust_p_types.append(c[0])
         print(cust_p_types)
 
