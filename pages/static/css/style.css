@@ -4020,6 +4020,37 @@ input:-moz-placeholder { font-size: 1em !important; }
     padding-left: 60px;
 }
 
+.politics{
+    background-color: #f0f0f0;
+    width: auto;
+    height: auto;
+    padding-bottom: 18px;
+}
+
+.politics_heading {
+    padding: .6em;
+    font-family: GearedSlab;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.politics_img {
+    max-width: 320px;
+}
+
+.politics_quote {
+    font-family: MetaSerif;
+    font-weight: 300;
+    margin: 1em;
+}
+
+.quote_cred {
+    font-family: Neusa;
+    font-weight: 500;
+    font-size: .7em;
+    margin: 10px 20px;
+}
+
 @media screen and (max-width: 3600px){
 
     .columnist ul {
@@ -4044,7 +4075,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     }
 
     .politics {
-        height: 300px;
+        height: 340px;
     }
 }
 
