@@ -181,6 +181,11 @@ class HomePage(Named, Publishable, TimeStamped):
 
         return Article.objects.published().filter(news_analysis=True)[:3]
 
+    def recent_non_politics_articles(self):
+        """Return most recent 3 published politics articles"""
+
+        return Article.objects.published().exclude(news_analysis=True)[:3]
+
     #  TODO:  Atoms will be m2m an displayed in a carousel
     # atom = models.ForeignKey(
     #     Atom,
