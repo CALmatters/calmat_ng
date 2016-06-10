@@ -54,6 +54,7 @@ FEATURED_IMAGE_TITLE_SHADE = (
 )
 
 
+
 class RelatedArticle(models.Model):
 
     article = models.ForeignKey(
@@ -70,6 +71,8 @@ class RelatedArticle(models.Model):
 
 
 class Article(Named, Publishable, ContentContainer, TimeStamped):
+
+    DEFAULT_ARTICLE_IMAGE = "theme/frontend/img/featured-image-default.jpg"
 
     custom_post_type = models.CharField(
         verbose_name=_("Content Type"),

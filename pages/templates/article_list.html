@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<!--load i18n future mezzanine_tags blog_tags keyword_tags disqus_tags-->
+{% load static from staticfiles %}
 
 
 
@@ -116,7 +116,7 @@ Blog
                                 {% if article.featured_image %}
                                     <img src="{{ article.featured_image.thumbnail.200x200}}">
                                 {% else %}
-                                    <img src="{{ settings.DEFAULT_ARTICLE_IMAGE }}">
+                                    <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                                 {% endif %}
 
                                 </a>
@@ -138,9 +138,9 @@ Blog
                             <div class="image">
                                 <a href="{{ article.custom_link }}">
                                 {% if article.featured_image %}
-                                        <img src="{{ MEDIA_URL }}/{{ article.featured_image.thumbnail.158x76 }}">
+                                        <img src="{{ article.featured_image.thumbnail.158x76 }}">
                                 {% else %}
-                                        <img src="{{ settings.DEFAULT_POST_IMAGE }}">
+                                        <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                                 {% endif %}
                                 </a>
                             </div>

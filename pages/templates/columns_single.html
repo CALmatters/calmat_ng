@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{#load pages_tags mezzanine_tags#}
+{% load static from staticfiles %}
 
 {% block meta_title %}{{ full_name }} {% endblock %}
 
@@ -29,7 +29,7 @@
                                     {% if blog_post.featured_image %}
                                             <img src="{{ blog_post.featured_image.url }}">
                                     {% else %}
-                                            <img src="{{ settings.DEFAULT_POST_IMAGE }}">
+                                        <img src="{% static blog_post.DEFAULT_ARTICLE_IMAGE %}">
                                     {% endif %}
                                     </a>
                                 </div>

@@ -269,6 +269,8 @@
                         <div class="image">
                             {% if article.featured_image %}
                                 <img src="{{ article.featured_image.thumbnail.310x220 }}" alt="">
+                            {% else %}
+                                <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                             {% endif %}
                         </div>
                         <div class="wrap">

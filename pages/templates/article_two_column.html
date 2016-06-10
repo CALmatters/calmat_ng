@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static from staticfiles %}
 
 {% block meta_title %}{{ article.meta_title }}{% endblock %}
 
@@ -103,9 +104,9 @@
                     <article>
                     <div class="image">
                         {% if post.featured_image %}
-                            <img src="{{MEDIA_URL}}{% thumbnail post.featured_image 60 60 }}" />
+                            <img src="{{ post.featured_image.thumbnail.60x60 }}" />
                         {% else %}
-                            <img src="{{ settings.DEFAULT_POST_IMAGE }}" style="max-width:60px;" />
+                                <img src="{% static post.DEFAULT_ARTICLE_IMAGE %}">
                         {% endif %}
                     </div>
                     <div class="wrap">
@@ -167,7 +168,7 @@
                         {% if article.featured_image %}
                             <img src="{{ article.featured_image.thumbnail.700x700 }}" alt="{{ article.title }}">
                         {% else %}
-                            <img src="{{ settings.DEFAULT_POST_IMAGE }}" />
+                                <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                         {% endif %}
                     </div>
                     <div class="wrap">

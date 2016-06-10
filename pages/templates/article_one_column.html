@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static from staticfiles %}
+
 
 {% block meta_title %}{{ article.meta_title }}{% endblock %}
 
@@ -114,7 +116,7 @@
                         {% if article.featured_image %}
                             <img src="{{ article.featured_image.thumbnail.700x700 }}" alt="{{ article.title }}">
                         {% else %}
-                            <img src="{{ settings.DEFAULT_POST_IMAGE }}" />
+                                <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                         {% endif %}
                     </div>
                     <div class="wrap">
