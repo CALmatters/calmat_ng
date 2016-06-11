@@ -1682,7 +1682,7 @@ a.button-bordered:hover {
 }
 
 .secondary_article_imgs {
-    height: 230px;
+    height: 230px !important;
 }
 
 .intheworks{
@@ -1862,7 +1862,8 @@ div.itw_links a:visited{
 }
 
 #education_title, #finance_title, #health_title, #environment_title {
-    font-family: MetaSerif;
+    font-family: "MetaSerif", serif;
+    font-size: 20px;
     font-weight: 700;
     background-color: #000000;
     color: #ffffff;
@@ -1875,7 +1876,7 @@ div.itw_links a:visited{
 }
 
 .mid_section_links {
-    margin-top: 80px;
+    margin-top: 108px;
 }
 
 .mid_section_img {
@@ -1980,7 +1981,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     }
 
     .thebasics {
-        max-width: 85%;
+        max-width: 88%;
         margin: 15px 0 0 auto;
     }
 
@@ -2114,7 +2115,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     }
 
     .thebasics {
-        max-width: 85%;
+        max-width: 88%;
         margin: 15px 0 0 auto;
     }
 
@@ -4059,13 +4060,13 @@ input:-moz-placeholder { font-size: 1em !important; }
 }
 
 .politics_quote {
-    font-family: MetaSerif;
+    font-family: "MetaSerif", serif;
     font-weight: 300;
     margin: 1em;
 }
 
 .quote_cred {
-    font-family: Neusa;
+    font-family: "Neusa", sans-serif;
     font-weight: 500;
     font-size: .7em;
     margin: 10px 20px;
