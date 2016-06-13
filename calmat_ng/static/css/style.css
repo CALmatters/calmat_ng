@@ -478,7 +478,7 @@ body.active-left > .mask {
         margin: 0;
         border: 0;
         border-radius: 0;
-        left: -10px;
+        left: 5px;
         top: 9px;
         cursor: pointer;
         width: 25px;
@@ -522,31 +522,6 @@ body.active-left > .mask {
         float: none;
         background: #fff;
         padding: 5px 0;
-    }
-    /* MS */
-    #third_article {
-        padding-top: 150px;
-        height: 446px;
-    }
-
-    #second_article h2, /* MS */
-    #third_article h2, /* MS */
-
-    /* MS */
-    #news_partners_basics .newsletter,
-    #news_partners_basics .partners,
-    #recent_projects,
-    .mid_section_links,
-    .featured-intr2,
-    .headlines {
-        display: none;
-        position: absolute;
-        left: -9999px;
-    }
-
-    /* MS */
-    .columnist .set {
-        margin-left: 0;
     }
 
     #footer .container:first-child p {
@@ -1094,17 +1069,17 @@ body.active-left > .mask {
 }
 
 .breadcrumbs p {
-	font-family: "MetaSerif", serif;
+	font-family: "ff-meta-serif-web-pro", serif;
     color: #fff;
     margin: 0;
     text-align: center;
     line-height: 30px;
     font-size: 16px;
-    text-transform: uppercase;
+	font-weight: 300;
 }
 
 .breadcrumbs.up {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 .breadcrumbs ul {
@@ -1147,9 +1122,15 @@ body.active-left > .mask {
     .breadcrumbs p {
         height: auto;
         line-height: normal;
-        font-size: 13px;
+        font-size: 16px;
         letter-spacing: 0;
     }
+}
+
+@media screen and (max-width: 990px){
+		.breadcrumbs {
+			margin-top: 20px;
+		}
 }
 
 @media screen and (max-width: 767px) {
@@ -1697,17 +1678,23 @@ a.button-bordered:hover {
 }
 
 .intheworks p.itw_title {
-	font-family: "MetaSerif", serif;
+	font-family: "Neusa", sans-serif;
     width: auto;
-    font-size: .8em;
-    padding: 18px;
+    font-size: 14px;
+	font-weight: 500;
+    padding: 18px 0 8px 18px;
     margin-bottom: 0px;
     color: #979797;
 }
 
 .itw_list {
-    font-family: "MetaSerif", serif;
+    font-family: "ff-meta-serif-web-pro", serif;
+    color: #231f20;
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: 1px;
 }
+
 .itw_links {
     padding-left: 18px;
 }
@@ -1766,7 +1753,7 @@ div.itw_links a:visited{
 }
 
 #partners_text {
-    font-family: "MetaSerif", serif;
+    font-family: "ff-meta-serif-web-pro", serif;
 }
 
 #more_partners_link{
@@ -1785,7 +1772,9 @@ div.itw_links a:visited{
 }
 
 .basics_title {
-    font-family: "MetaSerif", serif;
+    font-family: "ff-meta-serif-web-pro", serif;
+	font-weight: 700;
+    font-size: 18px;
     background-color: #000;
     color: #fff;
     padding: .2em 1em;
@@ -1861,8 +1850,8 @@ div.itw_links a:visited{
 }
 
 #education_title, #finance_title, #health_title, #environment_title {
-    font-family: "MetaSerif", serif;
-    font-size: 20px;
+    font-family: "ff-meta-serif-web-pro", serif;
+    font-size: 18px;
     font-weight: 700;
     background-color: #000000;
     color: #ffffff;
@@ -2242,7 +2231,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     }
 
     .featured-intr {
-        margin: 1em 0 !important;
+        margin: 1em 0 0 0 !important;
     }
 
     #news_partners_basics {
@@ -2258,6 +2247,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     .thebasics{
         width: 45%;
         float: right;
+		margin: 0 0 0 auto;
     }
 
     #partners_text {
@@ -2319,14 +2309,16 @@ input:-moz-placeholder { font-size: 1em !important; }
         width: 100%;
         float: none;
         margin-top: 0;
-        height: 340px;
+        height: auto;
+		margin-bottom: 18px !important;
+		overflow: hidden;
     }
 
     #third_article {
         width: 100%;
         float: none;
         margin-top: 0;
-        height: 340px;
+        height: auto;
     }
 
     #second_article h2 {
@@ -2350,7 +2342,6 @@ input:-moz-placeholder { font-size: 1em !important; }
 
     #third_article_text {
         padding: .4em 1em;
-        margin-top: -90px;
     }
 	
 	.secondary_article_imgs {
@@ -2418,12 +2409,6 @@ input:-moz-placeholder { font-size: 1em !important; }
 @media screen and (max-width: 576px){
     #second_article_text {
         padding: .4em 1em;
-        margin-top: auto;
-    }
-
-    #third_article_text {
-        padding: .4em 1em;
-        margin-top: auto;
     }
 
     #education_box, #finance_box, #health_box, #environment_box {
@@ -2438,9 +2423,6 @@ input:-moz-placeholder { font-size: 1em !important; }
 }
 
 @media screen and (max-width: 406px){
-    .basics_text{
-        padding: 2em 4.5em;
-    }
 
     #main_article_text {
         margin-left: auto;
@@ -2451,12 +2433,14 @@ input:-moz-placeholder { font-size: 1em !important; }
         width: 100%;
         height: auto;
         float: none;
+		overflow: hidden;
     }
 
     #third_article {
         width: 100%;
         height: auto;
         float: none;
+		overflow: hidden;
     }
 
      #second_article h2 {
@@ -2469,6 +2453,11 @@ input:-moz-placeholder { font-size: 1em !important; }
         font-size: 1em;
         font-weight: 600;
         line-height: 1.4em;
+    }
+	
+    #third_article_text {
+        padding: .4em 1em;
+		margin-top: -90px
     }
 	
 	.secondary_article_imgs {
@@ -4087,8 +4076,9 @@ input:-moz-placeholder { font-size: 1em !important; }
 }
 
 .politics_quote {
-    font-family: "MetaSerif", serif;
+    font-family: "ff-meta-serif-web-pro", serif;
     font-weight: 300;
+	text-align: justify;
     margin: 1em;
 }
 
@@ -4198,7 +4188,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     }
 }
 
-@media screen and (max-width: 406px){
+@media screen and (max-width: 576px){
 	.politics_img {
 		float: none;
 	}
@@ -4830,7 +4820,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     }
 
     .recent-stories.articles h2 {
-        margin-left: 60px;
+        margin-left: 25px;
         margin-right: 25px;
     }
 
@@ -4867,7 +4857,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     .recent-stories.articles .image {
         width: 25%;
         margin-right: 0;
-        padding-left: 60px;
+        padding-left: 25px;
     }
 
     .recent-stories .wrap {

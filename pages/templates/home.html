@@ -98,11 +98,12 @@
             <div class="text">
                 <p class="itw_title">IN THE WORKS</p>
                 <div class="itw_list">
-                    {%  for itw_block in home.yield_in_the_works_titles %}
-                        <div class="itw_links">
-                                <a href="{{  itw_block.url }}" target="_blank">{{  itw_block.label }}</a>
-                        </div>
-                    {% endfor %}
+                    <div class="itw_links">
+						{%  for itw_block in home.yield_in_the_works_titles %}
+							<a href="{{  itw_block.url }}" target="_blank">{{  itw_block.label }}</a>
+							{%  if not forloop.last %}&nbsp;&nbsp;|&nbsp;&nbsp;{%  endif %}
+						{% endfor %}
+					</div>
                 </div>
             </div>
         </div><!-- In the Works Section Full Site-->
