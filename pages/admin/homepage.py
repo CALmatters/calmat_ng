@@ -2,6 +2,8 @@ from django.core.checks import messages
 from django.contrib import admin
 from django.contrib.admin import TabularInline
 from django.utils.timezone import now
+from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 
 from adminsortable2.admin import SortableInlineAdminMixin
 
@@ -29,11 +31,20 @@ class RelatedHeadlineArticleInline(SortableInlineAdminMixin, TabularInline):
 
 class HomePageAdmin(admin.ModelAdmin):
 
+    class Media:
+        js = ()
+        css = {
+            'all': (
+                'theme/frontend/css/font-awesome-4.5.0/css/font-awesome.css',
+            )
+        }
+
     list_display = [
         "title",
         "can_go_live",
         "go_live_on_date",
-        "current_live"
+        "current_live",
+        "preview"
     ]
     readonly_fields = ('slug',)
     list_editable = ('can_go_live', )
@@ -92,6 +103,14 @@ class HomePageAdmin(admin.ModelAdmin):
 
     )
 
+    def preview(self, obj):
+        return mark_safe(
+            "<a target='_blank' href={}>Click to view "
+            "<i class='fa fa-external-link' aria-hidden='true'>"
+            "</i></a>".format(reverse(
+                'home_page_preview', args=(obj.id,)), obj.title))
+    preview.short_description = "Preview HomePage "
+
     def current_live(self, obj):
 
         try:
@@ -102,7 +121,7 @@ class HomePageAdmin(admin.ModelAdmin):
         if not obj.can_go_live:
             return ""
         elif live_obj and obj == live_obj:
-            return 'LIVE HOMEPAGE'
+            return 'CURRENT LIVE HOMEPAGE'
         elif obj.go_live_on_date < now():
             return ""
         elif obj.go_live_on_date > now():
@@ -110,7 +129,7 @@ class HomePageAdmin(admin.ModelAdmin):
             return "{} days, {} hours, {} minutes TO LIVE".format(
                 dt.days, int(dt.seconds / 3600), dt.seconds % 60)
 
-    current_live.short_description = "Current Live home page"
+    current_live.short_description = "Live Status"
 
     # def category_list(self, obj):
     #     """Used in list_display above."""

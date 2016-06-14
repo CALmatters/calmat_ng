@@ -19,14 +19,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
-from pages.views import (homepage, columns, columns_single, project_view,
+from pages.views import (homepage_view, columns, columns_single, project_view,
                          article_list)
 
 urlpatterns = [
 
-    url("^$", homepage, name="home"),
+    url("^$", homepage_view, name="home"),
     url(r'^admin/', admin.site.urls),
-    url("^articles/", include("pages.urls"), name="articles"),
+    url("^pages/", include("pages.urls"), name="pages"),
     url("^projects/$",
         project_view,
         name="projects"),

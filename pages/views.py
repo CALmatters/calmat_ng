@@ -9,25 +9,35 @@ from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
+
 
 from business.models import Partner, Author
 from categories.models import Category
 from pages.models import HomePage, Article, Atom, Project
-from pages.models.project import ProjectSortableQuotes, ProjectSortablePartners, \
-    ProjectSortableFeaturedArticle, ProjectSortableRelatedArticle, \
-    ProjectSortableExpertPerspectivesArticle, \
-    ProjectSortableReaderReactionsArticle, ProjectSortableUpdatesArticles, \
-    ProjectSortableVisualizations
+from pages.models.project import (
+    ProjectSortableQuotes, ProjectSortablePartners,
+    ProjectSortableFeaturedArticle, ProjectSortableRelatedArticle,
+    ProjectSortableExpertPerspectivesArticle,
+    ProjectSortableReaderReactionsArticle, ProjectSortableUpdatesArticles,
+    ProjectSortableVisualizations)
 
 from pages.models.article import CUSTOM_POST_TYPE_CHOICES
 
 logger = logging.getLogger(__name__)
 
 
-def homepage(request, template='home.html'):
+def homepage_view(request, homepage_id=None, template='home.html'):
 
-    #  For now, get the first Published one.
-    homepage_obj = HomePage.objects.get_live_object()
+    if homepage_id:
+        if request.user.is_staff:
+            #  journalist previewing specific home page
+            homepage_obj = HomePage.objects.get(id=homepage_id)
+        else:
+            raise PermissionDenied
+    else:
+        #  anyone viewing single published home page
+        homepage_obj = HomePage.objects.get_live_object()
 
     context = {
         'home': homepage_obj,
