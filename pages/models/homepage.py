@@ -37,9 +37,6 @@ class HomePageManager(models.Manager):
     def get_live_object(self):
 
         n = now()
-        print(n, n.tzinfo)
-        for o in self.all():
-            print(o.title, o.go_live_on_date, o.go_live_on_date.tzinfo)
 
         objs = self.filter(
             can_go_live=True,
@@ -231,11 +228,10 @@ class HomePage(Named, TimeStamped):
         _clone.pk = None
         _clone.title = "{} copy".format(self.title)
         _clone.can_go_live = False
-        _clone._go_live_on_date = now()
+        _clone.go_live_on_date = now()
         _clone.created = None
         _clone.updated = None
         _clone.slug = None
-        _clone.publish_date = None
 
         _clone.save()
 
