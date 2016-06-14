@@ -1,35 +1,13 @@
 from django.core.checks import messages
 from django.contrib import admin
 from django.contrib.admin import TabularInline
+from django.utils.timezone import now
 
 from adminsortable2.admin import SortableInlineAdminMixin
 
 from pages.models import HomePage
 
 from pages.models.homepage import RelatedHeadlineArticle
-from sites.models.publishable import (CONTENT_STATUS_DRAFT,
-                                      CONTENT_STATUS_PUBLISHED)
-
-
-# Todo:  Fix this.  It shouldn't take anything thin the queryset
-# Todo:  This should find the latest one and publish it. - needs work
-
-# Todo:  Publishing will be done through publish date, update this.
-# Todo:  publishing should cause the publish date to be set to now()
-# Todo:  And no other
-def make_published(modeladmin, request, queryset):
-    if queryset.count() != 1:
-        msg = ("Only a single home page can be published at a time.  "
-               "Please attempt to publish a single Home Page, "
-               "all others will be set to draft.")
-        modeladmin.message_user(request, msg, level=messages.WARNING)
-
-    HomePage.objects.update(status=CONTENT_STATUS_DRAFT)
-
-    homepage = queryset.all()[0]
-    homepage.status = CONTENT_STATUS_PUBLISHED
-    homepage.save()
-make_published.short_description = "Publish Home Page"
 
 
 def clone(modeladmin, request, queryset):
@@ -53,26 +31,27 @@ class HomePageAdmin(admin.ModelAdmin):
 
     list_display = [
         "title",
-        "status",
-        "publish_date",
+        "can_go_live",
+        "go_live_on_date",
+        "current_live"
     ]
     readonly_fields = ('slug',)
-    list_editable = ('status', )
+    list_editable = ('can_go_live', )
 
     list_filter = (
-        "status",
+        "can_go_live",
     )
 
-    actions = (make_published, clone)
+    actions = (clone, )
 
     inlines = (RelatedHeadlineArticleInline, )
 
     fieldsets = (
         (None, {
             "fields": (
-                "status",
-                "publish_date",
                 "title",
+                "can_go_live",
+                "go_live_on_date",
             )
         }),
         ("General", {
@@ -112,6 +91,26 @@ class HomePageAdmin(admin.ModelAdmin):
         }),
 
     )
+
+    def current_live(self, obj):
+
+        try:
+            live_obj = HomePage.objects.get_live_object()
+        except IndexError:
+            live_obj = None
+
+        if not obj.can_go_live:
+            return ""
+        elif live_obj and obj == live_obj:
+            return 'LIVE HOMEPAGE'
+        elif obj.go_live_on_date < now():
+            return ""
+        elif obj.go_live_on_date > now():
+            dt = obj.go_live_on_date - now()
+            return "{} days, {} hours, {} minutes TO LIVE".format(
+                dt.days, int(dt.seconds / 3600), dt.seconds % 60)
+
+    current_live.short_description = "Current Live home page"
 
     # def category_list(self, obj):
     #     """Used in list_display above."""

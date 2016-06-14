@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 def homepage(request, template='home.html'):
 
     #  For now, get the first Published one.
-    homepage_obj = HomePage.objects.published()[0]
+    homepage_obj = HomePage.objects.get_live_object()
 
     context = {
         'home': homepage_obj,

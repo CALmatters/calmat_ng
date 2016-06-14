@@ -1,13 +1,13 @@
 from copy import copy
 
+from django.utils.timezone import now
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 from business.models import Partner, Author
 from pages.models import Article
-from sites.models import Named, Publishable, TimeStamped
-from sites.models.publishable import CONTENT_STATUS_DRAFT
+from sites.models import Named, TimeStamped
 
 
 class RelatedHeadlineArticle(models.Model):
@@ -29,12 +29,38 @@ class RelatedHeadlineArticle(models.Model):
         ordering = ('order', )
 
 
-class HomePage(Named, Publishable, TimeStamped):
+class HomePageManager(models.Manager):
+
+    def in_go_live_order(self):
+        return self.filter(can_go_live=True).order_by('-go_live_on_date')
+
+    def get_live_object(self):
+
+        n = now()
+        print(n, n.tzinfo)
+        for o in self.all():
+            print(o.title, o.go_live_on_date, o.go_live_on_date.tzinfo)
+
+        objs = self.filter(
+            can_go_live=True,
+            go_live_on_date__lt=n).order_by('-go_live_on_date')
+
+        return objs[0]
+
+
+class HomePage(Named, TimeStamped):
     """The HomePage is a special page with it's one design.
 
     The HomePage may change dailing.  Only one HomePage at a time can
     be published.  Any number can be draft (not published).
     """
+
+    objects = HomePageManager()
+
+    can_go_live = models.BooleanField(default=False)
+    go_live_on_date = models.DateTimeField(
+        help_text="Times are in {}".format(settings.TIME_ZONE),
+        unique=True)
 
     masthead_copy = models.CharField(
         max_length=125,
@@ -204,7 +230,8 @@ class HomePage(Named, Publishable, TimeStamped):
         _clone = copy(self)
         _clone.pk = None
         _clone.title = "{} copy".format(self.title)
-        _clone.status = CONTENT_STATUS_DRAFT
+        _clone.can_go_live = False
+        _clone._go_live_on_date = now()
         _clone.created = None
         _clone.updated = None
         _clone.slug = None
@@ -270,4 +297,4 @@ class HomePage(Named, Publishable, TimeStamped):
     class Meta:
         verbose_name = _("Home Page")
         verbose_name_plural = _("Home Pages")
-        ordering = ("status", )
+        ordering = ("-go_live_on_date", )
