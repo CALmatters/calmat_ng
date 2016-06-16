@@ -4,6 +4,7 @@ from django.db import models
 from versatileimagefield.fields import VersatileImageField
 
 from categories.models import Category
+from media_manager.models import MediaItem
 from sites.models import Named, Publishable, TimeStamped, ContentContainer
 
 ATOM_DEFAULT_DISPLAY_TYPE_CHOICES = (
@@ -43,10 +44,17 @@ class Atom(Named, Publishable, ContentContainer, TimeStamped):
                   'This can be overridden in the parent article.')
 
     featured_image = VersatileImageField(
-        verbose_name=_("Featured Image"),
+        verbose_name=_("Old Featured Image"),
         upload_to='atoms/',
         null=True,
         blank=True)
+
+    image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Featured Image",
+        null=True,
+        blank=True,
+        related_name="atom_with_image")
 
     categories = models.ManyToManyField(
         Category,

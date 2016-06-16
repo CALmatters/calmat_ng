@@ -6,6 +6,10 @@ tinymce.init({
     'searchreplace visualblocks code fullscreen',
     'insertdatetime media table contextmenu paste code'
   ],
+  // file_browser_callback: ImageLibraryBrowser,
+  file_picker_callback: function(callback, value, meta) {
+        ImageLibraryPicker(callback, value, meta);
+  },
   contextmenu: "image atoms",
   toolbar: 'atoms insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
   content_css: [

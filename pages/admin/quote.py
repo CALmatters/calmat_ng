@@ -9,6 +9,7 @@ class QuoteAdmin(admin.ModelAdmin):
     class Media:
         js = (
             'https://cdn.tinymce.com/4/tinymce.min.js',
+            'theme/js/image_file_picker.js',
             'theme/js/tinymce_ng.js'
         )
         css = {

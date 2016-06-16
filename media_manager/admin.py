@@ -13,7 +13,8 @@ def _fb_file_link(obj):
     """
 
     fb_link = mark_safe(
-        '<button data-media-upload-url="{}">Select</button>'.format(obj.id))
+        '<button data-media-upload-id={} data-media-upload-url="{}">'
+        'Select</button>'.format(obj.id, obj.file.url))
     return fb_link
 _fb_file_link.short_description = "Select"
 

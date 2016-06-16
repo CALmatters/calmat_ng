@@ -7,6 +7,7 @@ from versatileimagefield.fields import VersatileImageField
 
 from business.models.partner_owner import PartnerOwner
 from categories.models import Category
+from media_manager.models import MediaItem
 from sites.models import Named, TimeStamped
 
 PARTNER_TYPES = (
@@ -25,6 +26,18 @@ class Partner(Named, TimeStamped):
         default=True, help_text='Add link to article list')
 
     featured = models.BooleanField(default=False)
+
+    image = models.OneToOneField(
+        MediaItem,
+        null=True,
+        blank=True,
+        related_name="partner_with_image")
+
+    image_large = models.OneToOneField(
+        MediaItem,
+        null=True,
+        blank=True,
+        related_name="partner_with_large_image")
 
     featured_image = VersatileImageField(
         verbose_name=_("Featured Image"),

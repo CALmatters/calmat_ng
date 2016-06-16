@@ -1,3 +1,4 @@
+from django import forms
 
 from django.core.urlresolvers import reverse
 from django.contrib.admin import TabularInline
@@ -8,6 +9,7 @@ from django.utils.safestring import mark_safe
 from adminsortable2.admin import SortableInlineAdminMixin
 
 from business.models.partner_article import PartnerArticle
+from media_manager.widgets import PopupSelect
 from pages.models import Article
 from pages.models.article import RelatedArticle
 from sites.mixins.admin_thumb import AdminThumbMixin
@@ -36,8 +38,20 @@ class PartnerArticleInline(SortableInlineAdminMixin, TabularInline):
     extra = 0
 
 
+class ArticleAdminForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        widgets = {
+            'image': PopupSelect(),
+            'facebook_image': PopupSelect(),
+        }
+        exclude = ()
+
+
 #  Todo:  Twitter support
 class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
+
+    form = ArticleAdminForm
 
     list_per_page = 20
 
@@ -46,6 +60,7 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
         js = (
             'https://cdn.tinymce.com/4/tinymce.js',
             'theme/js/atom_chooser_plugin.js',
+            'theme/js/image_file_picker.js',
             'theme/js/tinymce_ng_atoms.js',
         )
         css = {
@@ -63,7 +78,7 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
         "authors_list",
         "atoms_list",
         "status",
-        "admin_thumb",
+        "admin_thumb_reference",
         # "admin_link"
     ]
 
@@ -122,12 +137,12 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
         (_("Featured Image"), {
             "classes": ("collapse",),
             "fields": (
-                "featured_image",
+                "image",
                 "featured_image_description",
                 "featured_image_credit",
                 "featured_image_title_position",
                 "featured_image_title_shade",
-                "facebook_share_image",
+                "facebook_image",
             )
         }),
         (_("Authors"), {
@@ -157,7 +172,8 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
         }),
     )
 
-    admin_thumb_field = 'featured_image'
+    admin_thumb_ref = "image"
+    admin_thumb_field = 'file'
 
     def category_list(self, obj):
         """Used in list_display above."""

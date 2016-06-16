@@ -1,7 +1,5 @@
 from django import forms
 from django.contrib import admin
-from django.template.loader import get_template
-from django.utils.safestring import mark_safe
 
 from business.models.authors import Author
 from media_manager.widgets import PopupSelect
@@ -30,13 +28,14 @@ class AuthorAdmin(AdminThumbMixin, admin.ModelAdmin):
         ('General', {
             'fields': (
                 'status',
+                'user',
                 'full_name',
-                'email',
-                'user')}),
-        ('Profile Image',
+                'job_title',
+                'image',
+                'email'
+            )}),
+        ('Social',
          {'fields': (
-             'job_title',
-             'image',
              'twitter',
              'facebook_url')}),
     )

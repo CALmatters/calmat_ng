@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 
 from versatileimagefield.fields import VersatileImageField
 
+from media_manager.models import MediaItem
 from sites.models import Named, TimeStamped, Publishable
 
 from business.models import Partner
@@ -21,11 +22,18 @@ PROJECT_ATOM_LAYOUT_CHOICES = (
 class Project(Named, Publishable, TimeStamped):
 
     featured_image = VersatileImageField(
-        verbose_name="Featured Image",
+        verbose_name="Old Featured Image",
         upload_to="project_images/",
         null=True,
         blank=True
     )
+
+    image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Featured Image",
+        null=True,
+        blank=True,
+        related_name="project_with_image")
 
     # Top featured articles
     features = models.ManyToManyField(

@@ -1,8 +1,10 @@
 from copy import copy
 
 from django.contrib import admin
+from django import forms
 
 from categories.mixins import AdminCatListMixin
+from media_manager.widgets import PopupSelect
 from pages.models import Atom
 
 
@@ -46,13 +48,24 @@ def duplicate_atom(modeladmin, request, queryset):
 duplicate_atom.short_description = "Duplicate Atom"
 
 
+class AtomAdminForm(forms.ModelForm):
+    class Meta:
+        model = Atom
+        widgets = {
+            'image': PopupSelect(),
+        }
+        exclude = ()
+
+
 class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
-    # inlines = (RelatedAtomsInline,)
+
+    form = AtomAdminForm
 
     # Todo:  Move to Admin super class parallel with ContentContainer is Sites
     class Media:
         js = (
             'https://cdn.tinymce.com/4/tinymce.min.js',
+            'theme/js/image_file_picker.js',
             'theme/js/tinymce_ng.js'
         )
         css = {
@@ -67,18 +80,21 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
         'status',
         'publish_date',
         'default_display_type',
-        'admin_thumb',
+        'admin_thumb_ref',
         'category_list',
-
         # 'admin_link',
     )
+    filter_horizontal = ('categories',)
+    list_filter = ("categories",)
     list_editable = ('status', 'default_display_type',)
+
+    # inlines = (RelatedAtomsInline,)
 
     fieldsets = (
         ('Content', {"fields": (
             "title",
             "headline",
-            "featured_image",
+            "image",
             "content",
             "embedded_content",
             "categories",
@@ -95,9 +111,7 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
         )}),
     )
 
-    admin_thumb_field = 'featured_image'
+    admin_thumb_ref = "image"
+    admin_thumb_field = 'file'
 
-    filter_horizontal = ('categories',)
-    # filters in right column
-    list_filter = ("categories",)
 admin.site.register(Atom, AtomAdmin)

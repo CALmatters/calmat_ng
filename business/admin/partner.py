@@ -1,13 +1,28 @@
+from django import forms
 from django.contrib import admin
 
 from business.models import Partner
+from media_manager.widgets import PopupSelect
+
+
+class PartnerAdminForm(forms.ModelForm):
+    class Meta:
+        model = Partner
+        widgets = {
+            'image': PopupSelect(),
+            'image_large': PopupSelect(),
+        }
+        exclude = ()
 
 
 class PartnerAdmin(admin.ModelAdmin):
 
+    form = PartnerAdminForm
+
     class Media:
         js = (
             'https://cdn.tinymce.com/4/tinymce.min.js',
+            'theme/js/image_file_picker.js',
             'theme/js/tinymce_ng.js'
         )
         css = {
@@ -34,8 +49,8 @@ class PartnerAdmin(admin.ModelAdmin):
         }),
         ("Featured Image", {
             "fields": (
-                "featured_image",
-                "featured_image_large")
+                "image",
+                "image_large")
         }),
         ("Categories", {
             "fields": (

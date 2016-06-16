@@ -13,6 +13,7 @@ from django.db.models import Q
 
 from versatileimagefield.fields import VersatileImageField
 
+from media_manager.models import MediaItem
 from .atom import Atom
 from business.models import Partner, Author
 
@@ -165,6 +166,13 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         verbose_name=_("Featured Image"),
         upload_to='posts/')
 
+    image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Featured Image",
+        null=True,
+        blank=True,
+        related_name="article_with_image")
+
     featured_image_title_position = models.CharField(
         verbose_name=_("Position"),
         max_length=30,
@@ -196,6 +204,12 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         blank=True,
         help_text='Image size should be 600 x 315 '
                   'for best results (or 1200 x 630 for high resolution)')
+
+    facebook_image = models.ForeignKey(
+        MediaItem,
+        null=True,
+        blank=True,
+        related_name="article_with_facebook_image")
 
     show_subscription_form = models.BooleanField(
         verbose_name=_("Show Subscription Form"),
