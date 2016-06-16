@@ -34,11 +34,7 @@
     
     <div id="upper_articles">
         <div id="main_article" class="featured-intr">
-            {%  comment %}
-                Todo:  featured_image will be a reference to Media, and this will need to be updated
-                Todo:  to featured_image.file.url
-            {%  endcomment %}
-            <img src="{{ home.primary_article.featured_image.url }}" alt="Featured background one" />
+            <img src="{{ home.primary_article.image.file.url }}" alt="Featured background one" />
             <div id="main_article_text" class="text">
                 <h2>
                         {% if home.primary_article.custom_post_type == 'external' %}
@@ -64,7 +60,7 @@
         </div>
         <div class="sub_articles">
             <div id="second_article" class="featured-intr">
-                <img class="secondary_article_imgs" src="{{ home.secondary_article_left.featured_image.url }}" alt="Featured background two" />
+                <img class="secondary_article_imgs" src="{{ home.secondary_article_left.image.file.url }}" alt="Featured background two" />
                 <div id="second_article_text" class="text">
                     <h2>
                         {% if home.secondary_article_left.custom_post_type == 'external' %}
@@ -77,7 +73,7 @@
             </div>
         
             <div id="third_article"  class="featured-intr">
-                <img class="secondary_article_imgs" src="{{ home.secondary_article_right.featured_image.url }}" alt="Featured background three" />
+                <img class="secondary_article_imgs" src="{{ home.secondary_article_right.image.file.url }}" alt="Featured background three" />
                 <div id="third_article_text" class="text">
                     <h2>
                         
@@ -138,7 +134,7 @@
             {%  for article in home.yield_the_basics %}
             <div id="basic{{ forloop.counter }}" class="basics_text">
                 <a href="{{ article.get_absolute_url }}">
-                    <img class="basics_img" src="{{ article.featured_image.url }}">
+                    <img class="basics_img" src="{{ article.image.file.url }}">
                     <div id="basics_text{{ forloop.counter }}">{{ article.title }}</div>
                 </a>
             </div>
@@ -229,7 +225,7 @@
     <div class="featured-intr2">
 
         {%  with main_headline=home.yield_ordered_headline_articles|first %}
-        <img src="{{ main_headline.featured_image.thumbnail.1200x1200 }}" alt="Featured background two" />
+        <img src="{{ main_headline.image.file.thumbnail.1200x1200 }}" alt="Featured background two" />
         <div class="text">
             <h2><a href="{{ main_headline.get_absolute_url }}">{{ main_headline.title }}</a></h2>
 
@@ -270,8 +266,8 @@
                 {% for article in home.recent_non_politics_articles %}
                     <article>
                         <div class="image">
-                            {% if article.featured_image %}
-                                <img src="{{ article.featured_image.thumbnail.310x220 }}" alt="">
+                            {% if article.image %}
+                                <img src="{{ article.image.file.thumbnail.310x220 }}" alt="">
                             {% else %}
                                 <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                             {% endif %}
