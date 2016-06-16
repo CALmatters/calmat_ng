@@ -80,7 +80,7 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
         'status',
         'publish_date',
         'default_display_type',
-        'admin_thumb_ref',
+        'admin_thumb_reference',
         'category_list',
         # 'admin_link',
     )

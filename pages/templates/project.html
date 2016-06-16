@@ -25,7 +25,7 @@
         </div>
 
         <div class="featured-intr" style="margin:25px 0px 0px;">
-            <img src="{{ project.featured_image.thumbnail.1200x1200 }}" />
+            <img src="{{ project.image.file.thumbnail.1200x1200 }}" />
             <div class="text story_page_content">
                 <h2>{{ project.description|truncatewords_html:20|safe }}</h2>
             </div>
@@ -126,7 +126,7 @@
                             {% if p.link_to_articles %}
                                 <a href="{% url 'article_list_partner' p.slug %}">
                             {% endif %}
-                                <img src="{{ p.featured_image.url }}" alt="{{ p.title }}" style="max-height:78px; max-width:100%;">
+                                <img src="{{ p.image.file.url }}" alt="{{ p.title }}" style="max-height:78px; max-width:100%;">
                             {% if p.link_to_articles %}
                                 </a>
                             {% endif %}

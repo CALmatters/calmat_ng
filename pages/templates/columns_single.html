@@ -26,8 +26,8 @@
                         <article class="">
                                 <div class="image">
                                     <a href="{{ blog_post.get_absolute_url }}">
-                                    {% if blog_post.featured_image %}
-                                            <img src="{{ blog_post.featured_image.url }}">
+                                    {% if blog_post.image %}
+                                            <img src="{{ blog_post.image.file.url }}">
                                     {% else %}
                                         <img src="{% static blog_post.DEFAULT_ARTICLE_IMAGE %}">
                                     {% endif %}

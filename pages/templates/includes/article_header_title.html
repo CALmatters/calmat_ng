@@ -1,13 +1,13 @@
 
 
-{% if article.featured_image %}
+{% if article.image %}
 
 
     {# Output image use with FB opengraph #}
-    {% if article.facebook_share_image %}
-        <img style="position:absolute; left=-9999px;" src="{{ article.facebook_share_image.thumbnail.1200x1200 }}" width="0" height="0">
+    {% if article.facebook_image %}
+        <img style="position:absolute; left=-9999px;" src="{{ article.facebook_image.file.thumbnail.1200x1200 }}" width="0" height="0">
     {% else %}
-        <img style="position:absolute; left=-9999px;" src="{{ article.featured_image.thumbnail.1200x1200 }}" width="0" height="0">
+        <img style="position:absolute; left=-9999px;" src="{{ article.image.file.thumbnail.1200x1200 }}" width="0" height="0">
     {% endif %}
 
 
