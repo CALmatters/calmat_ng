@@ -7,3 +7,7 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
+
+MAILCHIMP_API_KEY = 'bbd4a11d712364e23fee69e0b89e63a6-us11'
+MAILCHIMP_MAIN_LIST_ID = 'faa7be558d'
+MAILCHIMP_GROUPING_NAME = u'Subject Interest'

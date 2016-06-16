@@ -74,7 +74,9 @@
                     {% else %}
     	            <ol class="breadcrumb">
     	                {% spaceless %}
-    	                {% block breadcrumb_menu %}
+    	                {% block breadcrumb_menu_disabled %}
+                            <!-- sub-templates are specializing  breadcrumb_menu
+                                 added _disabled to prevent from displaying -->
                             <!--page_menu "pages/menus/breadcrumb.html"-->
                         {% endblock %}
     	                {% endspaceless %}
@@ -102,14 +104,17 @@
 
     {# jQuery cannot be compressed by Django-Compressor! #}
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-{#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>#}
-        {%  include 'includes/base_javascript.html' %}
-        {% block extra_js %}{% endblock %}
+{#  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>#}
+    {%  include 'includes/base_javascript.html' %}
 
-    {% comment %}
+     <script src="{%  static 'js/subscribe.js' %}"></script>
 
-      {% compress js %}
-      {% endcompress %}
+     {% block extra_js %}{% endblock %}
+
+     {% comment %}
+
+     {% compress js %}
+     {% endcompress %}
     {% endcomment %}
 </body>
 </html>

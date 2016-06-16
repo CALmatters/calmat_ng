@@ -195,6 +195,11 @@ IMAGES_UPLOADED_MAX_WIDTH_PX = 1200
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 
+SEND_SUBSCRIPTIONS_TO_MAIL_CHIMP = False
+MAILCHIMP_API_KEY = ''
+MAILCHIMP_MAIN_LIST_ID = ''
+MAILCHIMP_GROUPING_NAME = u'Subject Interest'
+
 try:
     from .local_settings import *
 except ImportError:

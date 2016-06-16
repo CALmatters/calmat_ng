@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^admin_tools/', include('admin_tools.urls')),
     url("^$", homepage_view, name="home"),
     url(r'^admin/', admin.site.urls),
+
     url('articles/(?P<slug>[a-zA-Z0-9_-]+)/$',
         article_view,
         name='article_detail'),
@@ -59,6 +60,9 @@ urlpatterns = [
         name='article_list_category'),
 
     # url("^pages/", include("pages.urls"), name="pages"),
+
+    url("^bus/", include("business.urls"), name="business"),
+
     url("^projects/$",
         project_view,
         name="projects"),
