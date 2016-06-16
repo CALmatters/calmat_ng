@@ -43,9 +43,6 @@ class MediaItemAdmin(AdminThumbMixin, admin.ModelAdmin):
 
     list_per_page = 20
 
-    # class Media:
-    #     js = ("popup_v1.js",)
-
     adm_list_display = (
         'caption',
         'admin_thumb',
@@ -54,7 +51,7 @@ class MediaItemAdmin(AdminThumbMixin, admin.ModelAdmin):
         'image_type',
         'alt_tag',
         'license',
-        'date')
+        'date',)
     popup_list_display = (_fb_file_link, ) + adm_list_display
     adm_list_display_links = ('caption', )
 

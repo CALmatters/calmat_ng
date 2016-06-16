@@ -19,12 +19,6 @@ class Author(Named, Publishable, TimeStamped):
         blank=True
     )
 
-    # profile_image = VersatileImageField(
-    #     verbose_name='Author Image',
-    #     upload_to='authors/',
-    #     null=True,
-    #     blank=True)
-
     image = models.OneToOneField(
         MediaItem, null=True, blank=True, related_name="author")
 

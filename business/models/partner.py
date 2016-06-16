@@ -27,13 +27,13 @@ class Partner(Named, TimeStamped):
 
     featured = models.BooleanField(default=False)
 
-    image = models.OneToOneField(
+    image = models.ForeignKey(
         MediaItem,
         null=True,
         blank=True,
         related_name="partner_with_image")
 
-    image_large = models.OneToOneField(
+    image_large = models.ForeignKey(
         MediaItem,
         null=True,
         blank=True,

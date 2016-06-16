@@ -59,9 +59,20 @@ class MediaItem(models.Model):
 
     source = models.ForeignKey(MediaSource, null=True)
     creator = models.CharField(
-        max_length=255, verbose_name="Photographer / creator")
-    image_type = models.CharField(max_length=30, choices=IMAGE_TYPE_CHOICES)
-    license = models.CharField(max_length=30, choices=LICENSE_CHOICES)
+        max_length=255,
+        verbose_name="Photographer / creator",
+        blank=False,
+        null=True)
+    image_type = models.CharField(
+        max_length=30,
+        choices=IMAGE_TYPE_CHOICES,
+        blank=False,
+        null=True)
+    license = models.CharField(
+        max_length=30,
+        choices=LICENSE_CHOICES,
+        blank=False,
+        null=True)
     caption = models.CharField(max_length=255)
     alt_tag = models.CharField(max_length=255)
     date = models.DateField(verbose_name="Date taken", null=True, blank=True)

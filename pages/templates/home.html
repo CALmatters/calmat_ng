@@ -125,7 +125,7 @@
                     <div class="partner_logos">
                         {% for partner in home.partners %}
                             <a target="_blank" href="{{ partner.get_absolute_url }}">
-                                <img class="partner_img" src="{{ partner.featured_image.url}}"
+                                <img class="partner_img" src="{{ partner.image.file.url}}"
                                      alt="{{ partner.title }}"></a>
                         {%  endfor %}
                         <a href="#"><div id="more_partners_link">MORE PARTNERS</div></a>
