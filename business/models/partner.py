@@ -3,7 +3,7 @@ import random
 from datetime import date, timedelta
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from versatileimagefield.fields import VersatileImageField
+# from versatileimagefield.fields import VersatileImageField
 
 from business.models.partner_owner import PartnerOwner
 from categories.models import Category
@@ -39,17 +39,17 @@ class Partner(Named, TimeStamped):
         blank=True,
         related_name="partner_with_large_image")
 
-    featured_image = VersatileImageField(
-        verbose_name=_("Featured Image"),
-        upload_to="partners/",
-        null=True,
-        blank=True)
+    # featured_image = VersatileImageField(
+    #     verbose_name=_("Featured Image"),
+    #     upload_to="partners/",
+    #     null=True,
+    #     blank=True)
 
-    featured_image_large = VersatileImageField(
-        verbose_name=_("Featured Image - Large"),
-        upload_to="partners/",
-        null=True,
-        blank=True)
+    # featured_image_large = VersatileImageField(
+    #     verbose_name=_("Featured Image - Large"),
+    #     upload_to="partners/",
+    #     null=True,
+    #     blank=True)
 
     categories = models.ManyToManyField(
         Category,

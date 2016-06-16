@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from versatileimagefield.fields import VersatileImageField
+# from versatileimagefield.fields import VersatileImageField
 
 from media_manager.models import MediaItem
 from sites.models import Named, Publishable, TimeStamped

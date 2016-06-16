@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-from versatileimagefield.fields import VersatileImageField
+# from versatileimagefield.fields import VersatileImageField
 
 from categories.models import Category
 from media_manager.models import MediaItem
@@ -43,11 +43,11 @@ class Atom(Named, Publishable, ContentContainer, TimeStamped):
                   'or the headline and content. '
                   'This can be overridden in the parent article.')
 
-    featured_image = VersatileImageField(
-        verbose_name=_("Old Featured Image"),
-        upload_to='atoms/',
-        null=True,
-        blank=True)
+    # featured_image = VersatileImageField(
+    #     verbose_name=_("Old Featured Image"),
+    #     upload_to='atoms/',
+    #     null=True,
+    #     blank=True)
 
     image = models.ForeignKey(
         MediaItem,

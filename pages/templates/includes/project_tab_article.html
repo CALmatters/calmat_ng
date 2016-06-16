@@ -3,7 +3,7 @@
 <article>
     <div class="image">
         <a href="{{ article.get_absolute_url }}">
-        {% if article.featured_image %}
+        {% if article.image %}
                 <img src="{{ article.image.file.thumbnail.310x220 }}">
         {% else %}
                 <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">

@@ -2,15 +2,15 @@
 {% if project.atom_layout == 'image' %}
 
     <a href="{{ project.atom.get_absolute_url }}" title="View {{ project.atom.headline }}">
-        <img src="{{ project.atom.featured_image.url }}" alt="{{ project.atom.headline }}" width="{{ project.atom.featured_image.width }}"
-            height="{{ project.atom.featured_image.height }}" style="max-width:100%;">
+        <img src="{{ project.atom.image.file.url }}" alt="{{ project.atom.headline }}" width="{{ project.atom.image.file.width }}"
+            height="{{ project.atom.image.file.height }}" style="max-width:100%;">
     </a>
 
 {% elif project.atom_layout == 'image-headline' %}
 
     <a href="{{ project.atom.get_absolute_url }}" title="View {{ project.atom.headline }}">
-        <img src="{{  project.atom.featured_image.url }}" alt="{{ project.atom.headline }}" width="{{ project.atom.featured_image.width }}"
-            height="{{ project.atom.featured_image.height }}" style="max-width:100%;">
+        <img src="{{ project.atom.image.url }}" alt="{{ project.atom.headline }}" width="{{ project.atom.image.width }}"
+            height="{{ project.atom.image.height }}" style="max-width:100%;">
     </a>
     <div class="caption"><p>{{ project.atom.headline }}</p></div>
 

@@ -11,7 +11,7 @@ from django.db import models
 from django.db.models import Q
 
 
-from versatileimagefield.fields import VersatileImageField
+# from versatileimagefield.fields import VersatileImageField
 
 from media_manager.models import MediaItem
 from .atom import Atom
@@ -162,9 +162,9 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         choices=HEADLINE_LAYOUT_CHOICES,
         default='below')
 
-    featured_image = VersatileImageField(
-        verbose_name=_("Featured Image"),
-        upload_to='posts/')
+    # featured_image = VersatileImageField(
+    #     verbose_name=_("Featured Image"),
+    #     upload_to='posts/')
 
     image = models.ForeignKey(
         MediaItem,
@@ -197,19 +197,21 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         default='',
         blank=True)
 
-    facebook_share_image = VersatileImageField(
-        verbose_name=_("Facebook Share Image"),
-        upload_to='posts/',
-        null=True,
-        blank=True,
-        help_text='Image size should be 600 x 315 '
-                  'for best results (or 1200 x 630 for high resolution)')
+    # facebook_share_image = VersatileImageField(
+    #     verbose_name=_("Facebook Share Image"),
+    #     upload_to='posts/',
+    #     null=True,
+    #     blank=True,
+    #     )
 
     facebook_image = models.ForeignKey(
         MediaItem,
         null=True,
         blank=True,
-        related_name="article_with_facebook_image")
+        related_name="article_with_facebook_image",
+        help_text='Image size should be 600 x 315 '
+                  'for best results (or 1200 x 630 for high resolution)'
+    )
 
     show_subscription_form = models.BooleanField(
         verbose_name=_("Show Subscription Form"),

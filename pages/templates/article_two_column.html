@@ -165,8 +165,8 @@
             {% for article in more_articles %}
                 <article>
                     <div class="image">
-                        {% if article.featured_image %}
-                            <img src="{{ article.featured_image.thumbnail.700x700 }}" alt="{{ article.title }}">
+                        {% if article.image %}
+                            <img src="{{ article.image.thumbnail.700x700 }}" alt="{{ article.title }}">
                         {% else %}
                                 <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                         {% endif %}

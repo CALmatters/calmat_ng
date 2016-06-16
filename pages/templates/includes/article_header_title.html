@@ -33,7 +33,7 @@
             <div class="container">
                 <h1 class="{{ article.headline_layout }}">{{ article.title }}</h1>
             </div>
-            <div class="headline_image" style="background-image: url({{ article.featured_image.thumbnail.1200x1200 }})"></div>
+            <div class="headline_image" style="background-image: url({{ article.image.file.thumbnail.1200x1200 }})"></div>
             <div class="meta">
                 <div class="container">
                     {{ article.featured_image_description }}
@@ -48,7 +48,7 @@
 
 
         <div class="post-image headline_off_image headline_below">
-            <div class="headline_image" style="background-image: url({{ article.featured_image.thumbnail.1200x1200 }})"></div>
+            <div class="headline_image" style="background-image: url({{ article.image.file.thumbnail.1200x1200 }})"></div>
             <div class="meta">
                 <div class="container">
                     {{ article.featured_image_description }}

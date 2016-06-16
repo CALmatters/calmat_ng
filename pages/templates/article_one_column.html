@@ -114,7 +114,7 @@
                 <article>
                     <div class="image">
                         {% if article.featured_image %}
-                            <img src="{{ article.featured_image.thumbnail.700x700 }}" alt="{{ article.title }}">
+                            <img src="{{ article.image.file.thumbnail.700x700 }}" alt="{{ article.title }}">
                         {% else %}
                                 <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                         {% endif %}
