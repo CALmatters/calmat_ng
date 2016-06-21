@@ -211,16 +211,12 @@
       <div style="clear:both;"></div>
     {% endif %}
 
-    {%  comment %}
-    <div class="home_atom embedded_home_atom">
-        <div class="atom_embedded_content">
-            <div class="text">
-                <iframe src="/iframes/low_energy_home/" width=900 height=450></iframe>
-            </div>
-        </div>
+    <div class="atoms" style="padding-top: 100px">
+{#    {% if atom %}#}
+        {% include 'includes/home_atom_multiple.html' %}
+{#    {% endif %}#}
     </div>
-    {%  endcomment %}
-
+        <div style="clear:both;"></div>
 
     <div class="featured-intr2">
 
