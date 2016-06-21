@@ -4,3 +4,4 @@ from .homepage import HomePage
 from .quote import Quote
 from .project import Project
 from .onramp import OnRamp
+from .about import About

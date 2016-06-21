@@ -1,6 +1,4 @@
-{% extends "pages/page.html" %}
-
-{% load pages_tags mezzanine_tags blog_tags %}
+{% extends "base.html" %}
 
 {% block main %}
 
@@ -34,7 +32,7 @@
 			<h2><span>Team</span></h2>
 			<div class="pics">
 				<ul>
-					{% page_menu page "pages/about/includes/about-team-list.html" %}
+					{%  include 'pages/about/includes/about-team-list.html' %}
 				</ul>
 			</div>
 		</div>
@@ -132,13 +130,12 @@
 	<div class="pin-holder recent-stories se">
 		<div class="content">
 			<h2><span onclick="location.href='/articles/press/all'" style="cursor:pointer;">Press</span></h2>
-	        {% blog_recent_posts limit=3 custom_post_type="press" as recent_press %}
             {% for blog_post in recent_press %}
                 <article class="about_press">
                     <div class="image">
                         <a href="{{ blog_post.custom_link }}">
                         {% if blog_post.featured_image %}
-                            <img src="{{MEDIA_URL}}{% thumbnail blog_post.featured_image 140 0 %}" style="margin-bottom: 30px;">
+                            <img src="{{ blog_post.featured_image.thumbnail.140x140 }}" style="margin-bottom: 30px;">
                         {% endif %}
                         </a>
                     </div>

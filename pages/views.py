@@ -14,7 +14,7 @@ from django.core.exceptions import PermissionDenied
 
 from business.models import Partner, Author
 from categories.models import Category
-from pages.models import HomePage, Article, Atom, Project
+from pages.models import HomePage, Article, Atom, Project, About
 from pages.models.project import (
     ProjectSortableQuotes, ProjectSortablePartners,
     ProjectSortableFeaturedArticle, ProjectSortableRelatedArticle,
@@ -427,3 +427,14 @@ def project_view(request, slug=None, template='project.html'):
     }
 
     return render(request, template, context)
+
+
+def about_view(request, template='pages/about.html'):
+
+    #  Todo: blog_recent_posts limit=3 custom_post_type="press" as recent_press --> context
+
+    about_instance = About.objects.all().order_by("-created")[0]
+    context = dict(about=about_instance)
+
+    return render(request, template, context)
+
