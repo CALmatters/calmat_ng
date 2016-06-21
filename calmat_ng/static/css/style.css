@@ -7576,3 +7576,102 @@ a.atom-link {
 
 
 
+
+
+
+
+/*------------------------------------------------------------------------------
+    :: Thomas June 20, 2016
+------------------------------------------------------------------------------*/
+
+
+@media (max-width: 640px) {
+
+#news_partners,
+#recent_projects,
+.mid_section_links,
+.featured-intr2,
+.headlines {
+display:none;
+}
+
+.politics {
+float:left;
+width:90% !important;
+padding-right:30px;
+}
+
+}
+
+.politics {
+float:left;
+width:100%;
+}
+
+.partner_logos a {
+width:90px;
+}
+
+.partner_img {
+width:100%;
+height:auto;
+padding:15px 5px;
+float:left;
+}
+
+#partners_text {
+text-align:left;
+}
+
+
+#more_partners_link {
+height: 58px;
+width: 70px;
+font-size: .8em;
+background-color: #01b4c6;
+color: #ffffff;
+float: right;
+padding: 15px 10px;
+line-height:15px;
+-webkit-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.35);
+-moz-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.35);
+box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.35);
+position:relative;
+left:-6px;
+background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAAXNSR0IArs4c6QAAADxJREFUCB1jZJj/4j8DOmAECnx7zcCELs4AlWDgFEWTRJIAaULoRJNASGKRQEgCLQfZgQ6YGL5jlwApBAB0eBB17iPJWQAAAABJRU5ErkJggg==) repeat;
+}
+
+#more_partners_link:hover {
+background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAAXNSR0IArs4c6QAAADVJREFUCB1jNNj09j8DFvDw00cGJiziDCAJeT5+TEmYBEgTik5kCRRJdAm4JDYJsCQuCZAkAGbFF6A7mthDAAAAAElFTkSuQmCC) repeat;
+}
+
+#basic1:before,
+#basic2:before,
+#basic3:before,
+#basic4:before {
+content: "";
+display: block;
+position: absolute;
+top: 0;
+bottom: -10px;
+left: 0;
+right: 0;
+background: rgba(0, 0, 0, .4);
+transition: background .3s linear;
+}
+
+#basic1,
+#basic2,
+#basic3,
+#basic4 {
+border-top:solid 1px white;
+margin-bottom:10px;
+}
+
+#basics_text1,
+#basics_text2,
+#basics_text3,
+#basics_text4 {
+font-size:26px !important;
+margin:0 5%;
+}
