@@ -222,6 +222,9 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     class Meta:
+        permissions = (
+            ("can_change_article_status", "Can change status of articles"),
+        )
         verbose_name = _("Article")
         verbose_name_plural = _("Articles")
         ordering = ('order', )

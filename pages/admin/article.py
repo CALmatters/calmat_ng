@@ -84,7 +84,6 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
 
     list_display_links = ('title', )
     readonly_fields = ('view_url', )
-    list_editable = ('status', )
 
     list_filter = (
         "status",
@@ -174,6 +173,14 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
 
     admin_thumb_ref = "image"
     admin_thumb_field = 'file'
+
+    def get_readonly_fields(self, request, obj=None):
+
+        extra_ro = ()
+        if not request.user.has_perm('pages.can_change_article_status'):
+            extra_ro = ('status', 'publish_date')
+
+        return self.readonly_fields + extra_ro
 
     def category_list(self, obj):
         """Used in list_display above."""
