@@ -108,4 +108,12 @@ class ProjectAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
     admin_thumb_ref = "image"
     admin_thumb_field = 'file'
 
+    def get_readonly_fields(self, request, obj=None):
+        extra_ro = ()
+        if not request.user.has_perm('pages.can_change_project_status'):
+            extra_ro = ('status', 'publish_date')
+
+        return self.readonly_fields + extra_ro
+
+
 admin.site.register(Project, ProjectAdmin)

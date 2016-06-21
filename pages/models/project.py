@@ -147,6 +147,9 @@ class Project(Named, Publishable, TimeStamped):
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     class Meta:
+        permissions = (
+            ("can_change_project_status", "Can change status of projects"),
+        )
         verbose_name = 'Project'
         verbose_name_plural = 'Projects'
         ordering = ('order', '-publish_date',)
