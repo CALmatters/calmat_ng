@@ -2,10 +2,17 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from media_manager.models import MediaItem
-from sites.models import Named, Publishable, TimeStamped
+from sites.models import Named, TimeStamped
 
 
 class Person(Named, TimeStamped):
+
+    staff_member = models.BooleanField(
+        default=False, help_text="Staff/Team member")
+    director_board_member = models.BooleanField(
+        default=False, help_text="On Board of Directors")
+    advisory_board = models.BooleanField(
+        default=False, help_text="On Advisory Board")
 
     user = models.OneToOneField(
         User,
@@ -36,6 +43,8 @@ class Person(Named, TimeStamped):
         blank=True,
         help_text="Adding a Facebook url will enable Facebook authoring.  "
                   "i.e. https://www.facebook.com/your_name")
+
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     def get_absolute_url(self):
         # Todo:  When there's a Author landing page.
@@ -75,3 +84,4 @@ class Person(Named, TimeStamped):
     class Meta:
         verbose_name = 'Person'
         verbose_name_plural = 'People'
+        ordering = ('order', )

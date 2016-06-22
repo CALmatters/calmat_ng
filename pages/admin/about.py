@@ -3,18 +3,12 @@ from django.contrib.admin import TabularInline
 
 from adminsortable2.admin import SortableInlineAdminMixin
 
-from pages.models.about import AboutPartner, About, AboutStaff
+from pages.models.about import AboutPartner, About
 
 
 class AboutPartnerInline(SortableInlineAdminMixin, TabularInline):
     model = AboutPartner
     fields = ('partner', 'order')
-    extra = 0
-
-
-class AboutStaffInline(SortableInlineAdminMixin, TabularInline):
-    model = AboutStaff
-    fields = ('person', 'order')
     extra = 0
 
 
@@ -32,7 +26,7 @@ class AboutAdmin(admin.ModelAdmin):
 
     list_display = ('name',)
 
-    inlines = [AboutPartnerInline, AboutStaffInline]
+    inlines = [AboutPartnerInline, ]
 
     fieldsets = (
         ('Title', {

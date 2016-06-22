@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib import admin
 
+from adminsortable2.admin import SortableAdminMixin
+
 from business.models import Person
 from media_manager.widgets import PopupSelect
 from sites.mixins.admin_thumb import AdminThumbMixin
@@ -15,7 +17,7 @@ class PersonAdminForm(forms.ModelForm):
         exclude = ()
 
 
-class PersonAdmin(AdminThumbMixin, admin.ModelAdmin):
+class PersonAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
 
     form = PersonAdminForm
 
@@ -25,10 +27,15 @@ class PersonAdmin(AdminThumbMixin, admin.ModelAdmin):
         'first_name',
         'last_name',
         'user',
-        'email']
+        'email',
+        'staff_member',
+        'director_board_member',
+        'advisory_board',
+    ]
     list_display_links = ('username', 'first_name','last_name')
+    list_editable = ['staff_member', 'director_board_member', 'advisory_board',]
 
-    readonly_fields = ('email', 'slug', 'full_name')
+    readonly_fields = ('email', 'slug', 'full_name',)
     fieldsets = (
         ('General', {
             'fields': (
@@ -36,7 +43,10 @@ class PersonAdmin(AdminThumbMixin, admin.ModelAdmin):
                 'full_name',
                 'job_title',
                 'image',
-                'email'
+                'email',
+                'staff_member',
+                'director_board_member',
+                'advisory_board',
             )}),
         ('Social',
          {'fields': (

@@ -17,19 +17,6 @@ class AboutPartner(models.Model):
         ordering = ('order',)
 
 
-class AboutStaff(models.Model):
-
-    about = models.ForeignKey('About')
-    person = models.ForeignKey(Person)
-
-    order = models.PositiveIntegerField(default=0, blank=False, null=False)
-
-    class Meta:
-        verbose_name = "Staff Person"
-        verbose_name_plural = "Staff People"
-        ordering = ('order',)
-
-
 class About(TimeStamped):
 
     name = models.CharField(
@@ -78,11 +65,6 @@ class About(TimeStamped):
         blank=True,
         verbose_name='Partner Logos',
         through='AboutPartner')
-
-    staff = models.ManyToManyField(
-        Person,
-        blank=True,
-        through='AboutStaff')
 
     donate_message = models.CharField(max_length=300, blank=True)
     jobs_message = models.CharField(max_length=300, blank=True)

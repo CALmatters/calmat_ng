@@ -31,7 +31,7 @@
 			<h2><span>Team Section</span></h2>
 			<div class="pics">
 				<ul>
-                    {% for person in about.staff.all %}
+                    {% for person in staff %}
                         <li>
                             <a href="{{ person.get_absolute_url }}">
                                 {% if person.image %}
