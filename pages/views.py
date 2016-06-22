@@ -434,7 +434,9 @@ def about_view(request, template='pages/about.html'):
     #  Todo: blog_recent_posts limit=3 custom_post_type="press" as recent_press --> context
 
     about_instance = About.objects.all().order_by("-created")[0]
-    context = dict(about=about_instance)
+    recent_press = Article.objects.published().filter(
+        custom_post_type="press").order_by("-publish_date")[:3]
+    context = dict(about=about_instance, recent_press=recent_press)
 
     return render(request, template, context)
 

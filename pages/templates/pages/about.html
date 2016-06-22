@@ -81,13 +81,15 @@
 
 			<div class="pics">
 				<ul>
-				{% for partner in partner_logos %}
+				{% for partner in about.partner_logos.all %}
                     <li>
-                    {% if partner.partner.link_to_articles %}
-    					<a href="{% url 'article_list_partner' partner.partner.slug %}" style="background-image: url({{ MEDIA_URL }}{{ partner.partner.featured_image_large }});" title="{{ partner.title }}">{{ partner.title }}</a>
+                    {% if partner.link_to_articles %}
+    					<a href="{% url 'article_list_partner' partner.slug %}"
+                           style="background-image: url({{ partner.image_large.file.url }});"
+                           title="{{ partner.title }}">{{ partner.title }}</a>
                         </a>
                     {% else %}
-                        <span style="background-image: url({{ MEDIA_URL }}{{ partner.partner.featured_image_large }});">
+                        <span style="background-image: url({{ partner.image_large.file.url }});">
                             {{ partner.title }}
                         </span>
                     {% endif %}
@@ -145,8 +147,8 @@
                 <article class="about_press">
                     <div class="image">
                         <a href="{{ blog_post.custom_link }}">
-                        {% if blog_post.featured_image %}
-                            <img src="{{ blog_post.featured_image.thumbnail.140x140 }}" style="margin-bottom: 30px;">
+                        {% if blog_post.image %}
+                            <img src="{{ blog_post.image.file.thumbnail.140x140 }}" style="margin-bottom: 30px;">
                         {% endif %}
                         </a>
                     </div>
