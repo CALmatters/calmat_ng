@@ -12,7 +12,7 @@ from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 
 
-from business.models import Partner, Author
+from business.models import Partner, Person
 from categories.models import Category
 from pages.models import HomePage, Article, Atom, Project, About
 from pages.models.project import (
@@ -168,7 +168,7 @@ def article_view(request, slug, template="article_two_column.html"):
     # and layout == singlecolumn
     if article.layout == 'singlecolumn' and article.news_analysis:
         templates = ['article_one_column.html'] + templates
-        # Add `Author` if attached to first User
+        # Add `Person` if attached to first User
         try:
             columnist = article.authors.all()
             context['columnist'] = columnist[0]
@@ -184,7 +184,7 @@ def columns(request):
     """
 
     first_published_columnist_author = None
-    authors = Author.objects.published().order_by(
+    authors = Person.objects.published().order_by(
         'user__last_name', 'user__first_name')
 
     for author in authors:
@@ -226,7 +226,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     first_name = first_name.capitalize()
     last_name = slug.split('-', 1)[1]  # remaining half of split a -
     last_name = last_name.capitalize()
-    columnist = Author.objects.filter(
+    columnist = Person.objects.filter(
         user__first_name=first_name, user__last_name=last_name)
     columnist = columnist[0] if columnist else False
 
@@ -265,7 +265,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
         return HttpResponseRedirect('/newsanalysis/')
 
     # Get prev/next columnists that have written newsanalysis articles
-    authors = Author.objects.filter(
+    authors = Person.objects.filter(
         authors_articles__custom_post_type='articles',
         authors_articles__news_analysis=True
     ).order_by(

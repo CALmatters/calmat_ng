@@ -5,7 +5,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-from business.models import Partner, Author
+from business.models import Partner, Person
 from pages.models import Article, Atom
 from sites.models import Named, TimeStamped
 
@@ -231,7 +231,7 @@ class HomePage(Named, TimeStamped):
         related_name='homepages_with_atom',
         through='RelatedAtom')
 
-    politics_author = models.ForeignKey(Author, blank=True, null=True)
+    politics_author = models.ForeignKey(Person, blank=True, null=True)
 
     politics_quote = models.TextField(max_length=500, default='', blank=True)
 

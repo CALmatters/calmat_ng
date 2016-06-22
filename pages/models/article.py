@@ -11,11 +11,9 @@ from django.db import models
 from django.db.models import Q
 
 
-# from versatileimagefield.fields import VersatileImageField
-
 from media_manager.models import MediaItem
 from .atom import Atom
-from business.models import Partner, Author
+from business.models import Partner, Person
 
 from categories.models import Category
 from sites.models import Named, Publishable, TimeStamped, ContentContainer
@@ -142,8 +140,8 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         related_name="blogposts")
 
     authors = models.ManyToManyField(
-        Author,
-        verbose_name=_("Author"),
+        Person,
+        verbose_name=_("By Person"),
         blank=True,
         related_name="authors_articles",
         help_text='Choices limited to users who are staff (is_staff=True).')
