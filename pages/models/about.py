@@ -1,7 +1,7 @@
 from django.db import models
 
-from business.models import Partner
-from sites.models import Named, TimeStamped
+from business.models import Partner, Person
+from sites.models import TimeStamped
 
 
 class AboutPartner(models.Model):
@@ -14,6 +14,19 @@ class AboutPartner(models.Model):
     class Meta:
         verbose_name = "Partner Logo"
         verbose_name_plural = "Partner Logos"
+        ordering = ('order',)
+
+
+class AboutStaff(models.Model):
+
+    about = models.ForeignKey('About')
+    person = models.ForeignKey(Person)
+
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    class Meta:
+        verbose_name = "Staff Person"
+        verbose_name_plural = "Staff People"
         ordering = ('order',)
 
 
@@ -65,6 +78,11 @@ class About(TimeStamped):
         blank=True,
         verbose_name='Partner Logos',
         through='AboutPartner')
+
+    staff = models.ManyToManyField(
+        Person,
+        blank=True,
+        through='AboutStaff')
 
     donate_message = models.CharField(max_length=300, blank=True)
     jobs_message = models.CharField(max_length=300, blank=True)
