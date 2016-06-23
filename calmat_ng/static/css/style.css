@@ -4072,7 +4072,7 @@ input:-moz-placeholder { font-size: 1em !important; }
 }
 
 .politics_img {
-    /*max-width: 320px;*/ /*Disabled by thomas to allow image to shrink properly on mobile size.*/
+    max-width: 320px; 
 }
 
 .politics_quote {
