@@ -15,6 +15,7 @@ from django.core.exceptions import PermissionDenied
 from business.models import Partner, Person
 from categories.models import Category
 from pages.models import HomePage, Article, Atom, Project, About
+from pages.models.homepage import RelatedAtom
 from pages.models.project import (
     ProjectSortableQuotes, ProjectSortablePartners,
     ProjectSortableFeaturedArticle, ProjectSortableRelatedArticle,
@@ -39,8 +40,11 @@ def homepage_view(request, homepage_id=None, template='home.html'):
         #  anyone viewing single published home page
         homepage_obj = HomePage.objects.get_live_object()
 
+    related_atoms = RelatedAtom.objects.filter(homepage=homepage_obj)
+
     context = {
         'home': homepage_obj,
+        'related_atoms': related_atoms,
     }
 
     return render(request, template, context)
