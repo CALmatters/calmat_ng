@@ -211,14 +211,15 @@
       <div style="clear:both;"></div>
     {% endif %}
 
-{% comment %}
+    <!-- Atom Section -->
     <div class="atoms" style="padding-top: 100px">
-{#    {% if atom %}#}
-        {% include 'includes/home_atom_multiple.html' %}
-{#    {% endif %}#}
+        {% if home.atoms.exists %}
+            {% include 'includes/home_atom.html' %}
+        {% endif %}
     </div>
-        <div style="clear:both;"></div>
-{% endcomment %}
+    <div style="clear:both;"></div>
+    <!-- Atom Section end -->
+
 
     <div class="featured-intr2">
 
