@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from pages.views import article_list, article_view, homepage_view
+from pages.views import article_list, article_view, homepage_view, about_view
 
 urlpatterns = [
     url('category/(?P<category>.*)/$',
@@ -32,6 +32,8 @@ urlpatterns = [
     url('homepage/preview/(?P<homepage_id>\d+)/$',
         homepage_view,
         name='home_page_preview'),
+
+    url('about/$', about_view, name='about_view'),
 
     url('$', article_list, name='article_list'),
 ]

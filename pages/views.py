@@ -12,9 +12,10 @@ from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 
 
-from business.models import Partner, Author
+from business.models import Partner, Person
 from categories.models import Category
-from pages.models import HomePage, Article, Atom, Project
+from pages.models import HomePage, Article, Atom, Project, About
+from pages.models.homepage import RelatedAtom
 from pages.models.project import (
     ProjectSortableQuotes, ProjectSortablePartners,
     ProjectSortableFeaturedArticle, ProjectSortableRelatedArticle,
@@ -39,8 +40,11 @@ def homepage_view(request, homepage_id=None, template='home.html'):
         #  anyone viewing single published home page
         homepage_obj = HomePage.objects.get_live_object()
 
+    related_atoms = RelatedAtom.objects.filter(homepage=homepage_obj)
+
     context = {
         'home': homepage_obj,
+        'related_atoms': related_atoms,
     }
 
     return render(request, template, context)
@@ -168,7 +172,7 @@ def article_view(request, slug, template="article_two_column.html"):
     # and layout == singlecolumn
     if article.layout == 'singlecolumn' and article.news_analysis:
         templates = ['article_one_column.html'] + templates
-        # Add `Author` if attached to first User
+        # Add `Person` if attached to first User
         try:
             columnist = article.authors.all()
             context['columnist'] = columnist[0]
@@ -184,7 +188,7 @@ def columns(request):
     """
 
     first_published_columnist_author = None
-    authors = Author.objects.published().order_by(
+    authors = Person.objects.published().order_by(
         'user__last_name', 'user__first_name')
 
     for author in authors:
@@ -226,7 +230,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     first_name = first_name.capitalize()
     last_name = slug.split('-', 1)[1]  # remaining half of split a -
     last_name = last_name.capitalize()
-    columnist = Author.objects.filter(
+    columnist = Person.objects.filter(
         user__first_name=first_name, user__last_name=last_name)
     columnist = columnist[0] if columnist else False
 
@@ -265,7 +269,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
         return HttpResponseRedirect('/newsanalysis/')
 
     # Get prev/next columnists that have written newsanalysis articles
-    authors = Author.objects.filter(
+    authors = Person.objects.filter(
         authors_articles__custom_post_type='articles',
         authors_articles__news_analysis=True
     ).order_by(
@@ -427,3 +431,19 @@ def project_view(request, slug=None, template='project.html'):
     }
 
     return render(request, template, context)
+
+
+def about_view(request, template='pages/about.html'):
+
+    about_instance = About.objects.all().order_by("-created")[0]
+    recent_press = Article.objects.published().filter(
+        custom_post_type="press").order_by("-publish_date")[:3]
+    context = dict(
+        about=about_instance,
+        recent_press=recent_press,
+        staff=Person.objects.filter(staff_member=True),
+        directors=Person.objects.filter(director_board_member=True),
+        advisors = Person.objects.filter(advisory_board=True))
+
+    return render(request, template, context)
+

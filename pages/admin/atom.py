@@ -87,6 +87,7 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
     filter_horizontal = ('categories',)
     list_filter = ("categories",)
     list_editable = ('status', 'default_display_type',)
+    search_fields = ('title', 'headline', 'content')
 
     # inlines = (RelatedAtomsInline,)
 
@@ -94,15 +95,21 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
         ('Content', {"fields": (
             "title",
             "headline",
+        )}),
+        ('Featured Image', {'fields': (
             "image",
-            "content",
-            "embedded_content",
-            "categories",
         )}),
         ('Options', {'fields': (
+            "categories",
             'default_display_type',
             'modal_layout',
             'modal_layout_right',
+        )}),
+        ('Content', {'fields': (
+            "content",
+        )}),
+        ('Embedded Content', {'fields': (
+            "embedded_content",
         )}),
         ('Meta', {'fields': (
             'status',

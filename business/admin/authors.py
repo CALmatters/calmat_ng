@@ -44,4 +44,4 @@ class AuthorAdmin(AdminThumbMixin, admin.ModelAdmin):
     admin_thumb_field = 'file'
 
 
-admin.site.register(Author, AuthorAdmin)
+# admin.site.register(Author, AuthorAdmin)

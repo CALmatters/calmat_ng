@@ -43,12 +43,6 @@ class Atom(Named, Publishable, ContentContainer, TimeStamped):
                   'or the headline and content. '
                   'This can be overridden in the parent article.')
 
-    # featured_image = VersatileImageField(
-    #     verbose_name=_("Old Featured Image"),
-    #     upload_to='atoms/',
-    #     null=True,
-    #     blank=True)
-
     image = models.ForeignKey(
         MediaItem,
         verbose_name="Featured Image",

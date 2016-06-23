@@ -5,9 +5,38 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-from business.models import Partner, Author
-from pages.models import Article
+from business.models import Partner, Person
+from pages.models import Article, Atom
 from sites.models import Named, TimeStamped
+
+HOME_ATOM_LAYOUT_CHOICES = (
+    ('image', 'Image Layout'),
+    ('embedded', 'Embedded HTML')
+)
+
+
+class RelatedAtom(models.Model):
+
+    homepage = models.ForeignKey(
+        "pages.HomePage", related_name='related_atom_homepages')
+    atom = models.ForeignKey(
+        "pages.Atom", related_name='related_atom_atoms')
+
+    atom_layout = models.CharField(
+        max_length=20,
+        choices=HOME_ATOM_LAYOUT_CHOICES,
+        
+        default='image')
+
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    def __str__(self):
+        return u''
+
+    class Meta:
+        verbose_name = _("Related Atom")
+        verbose_name_plural = _("Related Atoms")
+        ordering = ('order', )
 
 
 class RelatedHeadlineArticle(models.Model):
@@ -195,7 +224,14 @@ class HomePage(Named, TimeStamped):
         through='RelatedHeadlineArticle',
         related_name='home_more_headlines')
 
-    politics_author = models.ForeignKey(Author, blank=True, null=True)
+    atoms = models.ManyToManyField(
+        Atom,
+        verbose_name='Related Atoms',
+        blank=True,
+        related_name='homepages_with_atom',
+        through='RelatedAtom')
+
+    politics_author = models.ForeignKey(Person, blank=True, null=True)
 
     politics_quote = models.TextField(max_length=500, default='', blank=True)
 
@@ -208,20 +244,6 @@ class HomePage(Named, TimeStamped):
         """Return most recent 3 published politics articles"""
 
         return Article.objects.published().exclude(news_analysis=True)[:3]
-
-    #  TODO:  Atoms will be m2m an displayed in a carousel
-    # atom = models.ForeignKey(
-    #     Atom,
-    #     verbose_name='Home Atom',
-    #     blank=True,
-    #     null=True,
-    #     related_name='home_atom',
-    #     help_text='Appears below external link carousel.')
-    #
-    # atom_layout = models.CharField(max_length=20,
-    #                                choices=HOME_ATOM_LAYOUT_CHOICES,
-    #                                help_text='Home atom layout',
-    #                                default='image')
 
     def clone(self):
         _clone = copy(self)

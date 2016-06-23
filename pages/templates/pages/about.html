@@ -1,6 +1,4 @@
-{% extends "pages/page.html" %}
-
-{% load pages_tags mezzanine_tags blog_tags %}
+{% extends "base.html" %}
 
 {% block main %}
 
@@ -29,12 +27,23 @@
 	
 	</div>
 	<div class="pin-holder team teams">
-			
 		<div class="content">
-			<h2><span>Team</span></h2>
+			<h2><span>Team Section</span></h2>
 			<div class="pics">
 				<ul>
-					{% page_menu page "pages/about/includes/about-team-list.html" %}
+                    {% for person in staff %}
+                        <li>
+                            <a href="{{ person.get_absolute_url }}">
+                                {% if person.image %}
+                                    <img src="{{ person.image.file.url }}" alt="{{  person.image.alt }}">
+                                {% endif %}
+                                <span class="over">
+                                    <span class="title">{{ person.job_title }}</span>
+                                    <span class="first">{{ person.full_name}}</span>
+                                </span>
+                            </a>
+                        </li>
+                    {% endfor %}
 				</ul>
 			</div>
 		</div>
@@ -72,13 +81,15 @@
 
 			<div class="pics">
 				<ul>
-				{% for partner in partner_logos %}
+				{% for partner in about.partner_logos.all %}
                     <li>
-                    {% if partner.partner.link_to_articles %}
-    					<a href="{% url 'article_list_partner' partner.partner.slug %}" style="background-image: url({{ MEDIA_URL }}{{ partner.partner.featured_image_large }});" title="{{ partner.title }}">{{ partner.title }}</a>
+                    {% if partner.link_to_articles %}
+    					<a href="{% url 'article_list_partner' partner.slug %}"
+                           style="background-image: url({{ partner.image_large.file.url }});"
+                           title="{{ partner.title }}">{{ partner.title }}</a>
                         </a>
                     {% else %}
-                        <span style="background-image: url({{ MEDIA_URL }}{{ partner.partner.featured_image_large }});">
+                        <span style="background-image: url({{ partner.image_large.file.url }});">
                             {{ partner.title }}
                         </span>
                     {% endif %}
@@ -132,13 +143,12 @@
 	<div class="pin-holder recent-stories se">
 		<div class="content">
 			<h2><span onclick="location.href='/articles/press/all'" style="cursor:pointer;">Press</span></h2>
-	        {% blog_recent_posts limit=3 custom_post_type="press" as recent_press %}
             {% for blog_post in recent_press %}
                 <article class="about_press">
                     <div class="image">
                         <a href="{{ blog_post.custom_link }}">
-                        {% if blog_post.featured_image %}
-                            <img src="{{MEDIA_URL}}{% thumbnail blog_post.featured_image 140 0 %}" style="margin-bottom: 30px;">
+                        {% if blog_post.image %}
+                            <img src="{{ blog_post.image.file.thumbnail.140x140 }}" style="margin-bottom: 30px;">
                         {% endif %}
                         </a>
                     </div>
@@ -165,20 +175,20 @@
 
 {% block extra_js %}
     <script>
-        jQuery(document).ready(function(){
-            resize_partners_logos();
-
-            jQuery(window).resize(function(){
-                resize_partners_logos();
-            });
-        });
-        function resize_partners_logos(){
-            var ratio = 0.5;
-            $partners = jQuery('.team.partners .pics li');
-            var width = $partners.first().width();
-            var height = width * ratio;
-            $partners.height(height);
-        }
+//        jQuery(document).ready(function(){
+//            resize_partners_logos();
+//
+//            jQuery(window).resize(function(){
+//                resize_partners_logos();
+//            });
+//        });
+//        function resize_partners_logos(){
+//            var ratio = 0.5;
+//            $partners = jQuery('.team.partners .pics li');
+//            var width = $partners.first().width();
+//            var height = width * ratio;
+//            $partners.height(height);
+//        }
         // function resize_partners_logos(){
         //     var max = 0;
         //     $partners = jQuery('.team.partners .pics li');

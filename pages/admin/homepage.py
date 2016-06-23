@@ -9,7 +9,7 @@ from adminsortable2.admin import SortableInlineAdminMixin
 
 from pages.models import HomePage
 
-from pages.models.homepage import RelatedHeadlineArticle
+from pages.models.homepage import RelatedHeadlineArticle, RelatedAtom
 
 
 def clone(modeladmin, request, queryset):
@@ -26,6 +26,13 @@ class RelatedHeadlineArticleInline(SortableInlineAdminMixin, TabularInline):
     model = RelatedHeadlineArticle
     exlude= ('article', 'order')
     max_num = 4
+    extra = 0
+
+
+class RelatedAtomInline(SortableInlineAdminMixin, TabularInline):
+    model = RelatedAtom
+    fields = ('atom', 'atom_layout', 'order')
+    exlude= ('article', )
     extra = 0
 
 
@@ -55,7 +62,7 @@ class HomePageAdmin(admin.ModelAdmin):
 
     actions = (clone, )
 
-    inlines = (RelatedHeadlineArticleInline, )
+    inlines = (RelatedHeadlineArticleInline, RelatedAtomInline)
 
     fieldsets = (
         (None, {

@@ -91,7 +91,7 @@ class ProjectAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
     list_display = (
         'title', 'slug', 'status', 'publish_date', 'admin_thumb_reference')
     filter_horizontal = ('categories', 'partners')
-    readonly_fields = ('slug', 'order')
+    readonly_fields = ('slug', )
 
     # filters in right column
     list_filter = ("categories",)
