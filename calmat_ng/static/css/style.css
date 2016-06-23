@@ -4072,7 +4072,7 @@ input:-moz-placeholder { font-size: 1em !important; }
 }
 
 .politics_img {
-    max-width: 320px;
+    /*max-width: 320px;*/ /*Disabled by thomas to allow image to shrink properly on mobile size.*/
 }
 
 .politics_quote {
@@ -7581,7 +7581,7 @@ a.atom-link {
 
 
 /*------------------------------------------------------------------------------
-    :: Thomas June 20, 2016
+    :: Thomas 
 ------------------------------------------------------------------------------*/
 
 
@@ -7597,7 +7597,6 @@ display:none;
 
 .politics {
 float:left;
-width:90% !important;
 padding-right:30px;
 }
 
@@ -7606,6 +7605,12 @@ padding-right:30px;
 .politics {
 float:left;
 width:100%;
+}
+
+.politics .quote_cred {
+text-transform:uppercase;
+font-size:15px;
+letter-spacing:1px;
 }
 
 .partner_logos a {
@@ -7672,25 +7677,49 @@ margin-bottom:10px;
 #basics_text2,
 #basics_text3,
 #basics_text4 {
-font-size:26px !important;
+font-size:24px !important;
 margin:0 5%;
 }
 
 
-
-/*-- June 22, 2016 --*/
 @media (max-width: 960px) and (min-width: 320px) {
 #basics_text2 {
 font-size:26px !important;
 margin:0 11%;
 }
 
+@media (max-width:780px) {
+.recent-stories article .wrap {
+padding-left:30px;
+}
+.recent-stories article .image img {
+min-width:70px !important;
+min-height:50px !important;
+}
+}
+
+
+@media (max-width:380px) {
+
+.featured-intr {
+margin-top:0 !important;
+}
+
+.featured-intr img {
+height:auto !important;
+}
+
+#second_article_text {
+top:-45px;
+}
+
+#main_article {
+height:245px;
+}
+}
 
 
 
-/*------------------------------------- 
-                Vj code 
--------------------------------------*/
 .featured-intr p {
   font-family: "Neusa", sans-serif;
   font-size: 14px;
