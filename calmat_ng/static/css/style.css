@@ -7720,6 +7720,35 @@ height:245px;
 
 
 
+/*-- add logo on mobile nav --*/
+@media (max-width:767px) {
+nav.navbar:after {
+background:url("/static/theme/frontend/img/logo.png");
+height:65px;
+width:100%;
+background-size:174px 42px !important;
+background-position:center;
+background-repeat:no-repeat;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .featured-intr p {
   font-family: "Neusa", sans-serif;
   font-size: 14px;
