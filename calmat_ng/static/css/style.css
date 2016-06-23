@@ -7696,6 +7696,11 @@ padding-left:30px;
 min-width:70px !important;
 min-height:50px !important;
 }
+
+#main_article hr.main_article_rule {
+display:none;
+}
+
 }
 
 
@@ -7734,6 +7739,13 @@ background-repeat:no-repeat;
 }
 
 
+/*-- mobile : remove HR rule on main article --*/
+@media (max-width:770px) {
+#main_article hr.main_article_rule {
+display:none;
+}
+
+}
 
 
 
