@@ -6,12 +6,10 @@
   <div class="carousel-inner" role="listbox">
 
     {%  for related_atom in related_atoms %}
-
-
+        {% with atom=related_atom.atom %}
             <div class="item {% if forloop.first %}active {% endif %}">
               <div class="item-wrapper">
                 <div class="col-md-8 left-col">
-                  {% with atom=related_atom.atom %}
                       {% if related_atom.atom_layout == 'image' %}
                           <!-- image atom -->
                           <img src="{{ atom.image.file.url }}" alt="{{  atom.image.file.alt_tag }}">
@@ -21,14 +19,15 @@
                           {{ atom.embedded_content|safe }}
                           <!-- embedded atom end -->
                       {% endif %}
-                  {% endwith %}
+
                 </div>
                 <div class="col-md-4 right-col">
-                  <div class="carousel-header">{{ atom.title.headline }}</div>
-                  <div class="carousel-body">{{ atom.title.content|safe }}</div>
+                  <div class="carousel-header">{{ atom.headline }}</div>
+                  <div class="carousel-body">{{ atom.content|safe }}</div>
                 </div>
               </div>
             </div>
+        {% endwith %}
     {%  endfor %}
 
   <!-- Controls -->
