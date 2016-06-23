@@ -66,7 +66,7 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
         js = (
             'https://cdn.tinymce.com/4/tinymce.min.js',
             'theme/js/image_file_picker.js',
-            'theme/js/tinymce_ng.js'
+            'theme/js/tinymce_ng_specific_text_areas.js'
         )
         css = {
             'all': (
@@ -95,6 +95,7 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
         ('Content', {"fields": (
             "title",
             "headline",
+            'description',
         )}),
         ('Featured Image', {'fields': (
             "image",
@@ -105,16 +106,25 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
             'modal_layout',
             'modal_layout_right',
         )}),
-        ('Content', {'fields': (
-            "content",
-        )}),
-        ('Embedded Content', {'fields': (
-            "embedded_content",
-        )}),
+        ('Content', {
+            'fields': (
+                "content",
+            ),
+            'classes': (
+                "tinymce-editable",
+            )
+        }),
+        ('Embedded Content', {
+            'fields': (
+                "embedded_content",
+            ),
+            'classes': (
+                "tinymce-editable",
+            )
+        }),
         ('Meta', {'fields': (
             'status',
             'publish_date',
-            'description',
         )}),
     )
 
