@@ -7749,6 +7749,25 @@ display:none;
 }
 
 
+
+
+
+div#carousel-example-generic.slide {
+background:#ECEBEC;
+padding:0px 15px 20px 0;
+}
+
+div#carousel-example-generic.slide div.carousel_heading {
+padding: .6em;
+font-family: GearedSlab;
+font-weight: 700;
+font-size: 28px;
+margin-bottom:18px;
+}
+
+
+/*- added media query min-width because it wasn't sticking at larger screensizes -*/
+@media (min-width:300px) {
 #main_article_text p:nth-last-child(1) {
 font-family: Neusa, sans-serif;
 text-transform:uppercase;
@@ -7761,31 +7780,7 @@ hr.main_article_rule {
 border-top: 1px solid black;
 margin-bottom:5px;
 }
-
-
-#carousel-example-generic {
-background:#ECEBEC;
-padding:0px 15px 20px 0;
 }
-
-#carousel-example-generic .carousel_heading {
-padding: .6em;
-font-family: GearedSlab;
-font-weight: 700;
-font-size: 28px;
-margin-bottom:18px;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -7812,6 +7807,11 @@ margin-bottom:18px;
     min-height: inherit;
   }
 }
+
+
+
+
+
 
 
 
