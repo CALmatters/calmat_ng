@@ -2862,7 +2862,7 @@ input:-moz-placeholder { font-size: 1em !important; }
 }
 
 .featured-intr p.by {
-    font-size: 14px;
+    font-size:15px;
     margin: 0;
     font-family: "Neusa", sans-serif;
     text-transform: uppercase;
@@ -7678,7 +7678,8 @@ margin-bottom:10px;
 #basics_text3,
 #basics_text4 {
 font-size:24px !important;
-margin:0 5%;
+margin:0 10%;
+letter-spacing:0.5px;
 }
 
 
@@ -7745,6 +7746,34 @@ background-repeat:no-repeat;
 display:none;
 }
 
+}
+
+
+#main_article_text p:nth-last-child(1) {
+font-family: Neusa, sans-serif;
+text-transform:uppercase;
+font-weight:400;
+font-size:15px;
+color:#9B9B9B;
+}
+
+hr.main_article_rule {
+border-top: 1px solid black;
+margin-bottom:5px;
+}
+
+
+#carousel-example-generic {
+background:#ECEBEC;
+padding:0px 15px 20px 0;
+}
+
+#carousel-example-generic .carousel_heading {
+padding: .6em;
+font-family: GearedSlab;
+font-weight: 700;
+font-size: 28px;
+margin-bottom:18px;
 }
 
 
