@@ -60,10 +60,12 @@
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <div class="social-wrapper">
-                        <span class="social-icon icon-search">&nbsp;</span>
-                        <a href="#" class="social-icon icon-fb">&nbsp;</a>
-                        <a href="#" class="social-icon icon-twitter">&nbsp;</a>
+                    <div class="social">
+                        <ul>
+                            <span class="social-icon icon-search">&nbsp;</span>
+                            <li><a href="https://www.facebook.com/calmatters" onclick="trackOutboundLink('https://www.facebook.com/calmatters'); return false;" class="st-icon-facebook st-icon-square" target="_blank"></a></li>
+                            <li><a href="https://twitter.com/calmatters" onclick="trackOutboundLink('https://twitter.com/calmatters'); return false;" class="st-icon-twitter st-icon-square" target="_blank"></a></li>
+                        </ul>
                     </div>
                         <ul class="nav navbar-nav">
                             <li><a class="logo" href="/"><img src="{% static "theme/frontend/img/logo.png" %}" alt="CALmatters" width="174" height="42" /></a></li>
