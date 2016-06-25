@@ -7752,17 +7752,17 @@ display:none;
 
 
 
-div#carousel-example-generic.slide {
-background:#ECEBEC;
-padding:0px 15px 20px 0;
+div.atoms div#carousel-example-generic.slide {
+background:#ECEBEC !important;
+padding:0px 15px 20px 0 !important;
 }
 
-div#carousel-example-generic.slide div.carousel_heading {
-padding: .6em;
-font-family: GearedSlab;
-font-weight: 700;
-font-size: 28px;
-margin-bottom:18px;
+div.atoms div#carousel-example-generic.slide div.carousel_heading {
+padding: .6em !important;
+font-family: GearedSlab !important;
+font-weight: 700 !important;
+font-size: 28px !important;
+margin-bottom:18px !important;
 }
 
 
