@@ -1871,6 +1871,13 @@ div.itw_links a:visited{
     height: auto;
 }
 
+/*-- row of 4 column images: fix distortion on images --*/
+.mid_section_links a img {
+height:auto;
+width:100%;
+}
+
+
 ::-webkit-input-placeholder { font-size: 1em !important; }
 ::-moz-placeholder { font-size: 1em !important; } /* firefox 19+ */
 :-ms-input-placeholder { font-size: 1em !important; } /* ie */
@@ -7753,7 +7760,9 @@ position:relative;
 left:10px;
 }
 }
-
+/*-----------------------------------------------
+         END Articles block
+-----------------------------------------------*/
 
 
 
@@ -7863,7 +7872,9 @@ margin-bottom:5px !important;
 
 
 
-/*-- social icons in white nav --*/
+/*---------------------------------------------
+        social icons in white nav
+---------------------------------------------*/
 
 .navbar-default .search {
 position:absolute;
@@ -7876,6 +7887,10 @@ right:90px;
 display:none;
 }
 }
+/*---------------------------------------------
+        END social icons in white nav
+---------------------------------------------*/
+
 
 
 
