@@ -7628,6 +7628,16 @@ letter-spacing:1px;
 }
 
 
+/*-- Fix distortion on 2 sub articles --*/
+.sub_articles img {
+height:auto !important;
+width:100% !important;
+}
+
+
+
+
+
 /*------------------------------
         Partners
 ------------------------------*/
