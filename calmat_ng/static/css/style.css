@@ -2198,9 +2198,10 @@ input:-moz-placeholder { font-size: 1em !important; }
         line-height: 1.4em;
     }
 	
-	.main_article_rule {
+/* thomas
+    .main_article_rule { 
 		border-top: 1px solid #000000;
-	}
+	}*/
 
     #second_article_text {
         padding: .4em 1em;
@@ -7683,11 +7684,18 @@ letter-spacing:0.5px;
 }
 
 
-@media (max-width: 960px) and (min-width: 320px) {
+@media (min-width: 320px) and (max-width: 960px){
 #basics_text2 {
 font-size:26px !important;
 margin:0 11%;
 }
+}
+
+
+
+/*-----------------------------------------------
+         Articles block
+-----------------------------------------------*/
 
 @media (max-width:780px) {
 .recent-stories article .wrap {
@@ -7701,11 +7709,26 @@ min-height:50px !important;
 #main_article hr.main_article_rule {
 display:none;
 }
+}
 
+@media (max-width:380px) {
+.recent-stories article .wrap h3 {
+margin-bottom:5px;
+}
+
+.recent-stories article:after {
+position:relative;
+left:10px;
+}
 }
 
 
-@media (max-width:380px) {
+
+
+
+
+
+@media (min-width:1px) and (max-width:380px) {
 
 .featured-intr {
 margin-top:0 !important;
@@ -7768,7 +7791,7 @@ margin-bottom:18px !important;
 
 /*- added media query min-width because it wasn't sticking at larger screensizes -*/
 @media (min-width:300px) {
-#main_article_text p:nth-last-child(1) {
+#main_article_text p.article_partners {
 font-family: Neusa, sans-serif;
 text-transform:uppercase;
 font-weight:400;
@@ -7777,19 +7800,16 @@ color:#9B9B9B;
 }
 
 hr.main_article_rule {
-border-top: 1px solid black;
-margin-bottom:5px;
+border-top: 1px solid black !important;
+margin-bottom:5px !important;
 }
+
 }
 
 
 
 
-.featured-intr p {
-  font-family: "Neusa", sans-serif;
-  font-size: 14px;
-  color: #979797;
-}
+
 .columnist li,
 .columnist ul {
   line-height: 30px;
