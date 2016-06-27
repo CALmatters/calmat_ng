@@ -7588,12 +7588,18 @@ a.atom-link {
 
 @media (max-width: 640px) {
 
-#news_partners,
 #recent_projects,
 .mid_section_links,
 .featured-intr2,
 .headlines {
 display:none;
+}
+}
+
+@media (max-width: 767px) { 
+#news_partners {
+    display: none;
+}
 }
 
 .politics {
@@ -7614,6 +7620,10 @@ font-size:15px;
 letter-spacing:1px;
 }
 
+
+/*------------------------------
+        Partners
+------------------------------*/
 .partner_logos a {
 width:90px;
 }
@@ -7627,6 +7637,24 @@ float:left;
 
 #partners_text {
 text-align:left;
+}
+
+@media (min-width:990px) and (max-width:1245px) {
+.partners .partner_logos a:nth-child(1){
+display:none;
+}
+}
+
+@media (min-width:768px) and (max-width:989px) {
+
+#news_partners {
+width:48%;
+}
+
+#news_partners .newsletter {
+padding:5px 20px;
+width:100%;
+}
 }
 
 
@@ -7650,6 +7678,10 @@ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlf
 #more_partners_link:hover {
 background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAAXNSR0IArs4c6QAAADVJREFUCB1jNNj09j8DFvDw00cGJiziDCAJeT5+TEmYBEgTik5kCRRJdAm4JDYJsCQuCZAkAGbFF6A7mthDAAAAAElFTkSuQmCC) repeat;
 }
+
+/*------------------------------
+        END Partners
+------------------------------*/
 
 #basic1:before,
 #basic2:before,
@@ -7831,10 +7863,6 @@ margin-bottom:5px !important;
 
 
 
-
-
-
-
 /*-- social icons in white nav --*/
 
 .navbar-default .search {
@@ -7848,3 +7876,7 @@ right:90px;
 display:none;
 }
 }
+
+
+
+
