@@ -169,7 +169,7 @@ class HomePage(Named, TimeStamped):
         related_name='primary_on_homepages',
     )
 
-    secondary_article_left = models.ForeignKey(
+    secondary_article_left = PopupForeignKey(
         Article,
         help_text="Article displayed below primary article to the left",
         verbose_name='Left Secondary Article',

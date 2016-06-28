@@ -8,7 +8,7 @@
 {% load static from staticfiles %}
 
 
-<a style="padding:5px 16px;" class="fk_choose_btn">
+<a style="padding:5px 16px;" id="{{ field_id }}_btn" class="fk_choose_btn">
     <img src="{% static 'filebrowser_icon_show.gif' %}">
 </a>
 
@@ -17,23 +17,23 @@
     (function($) {
         $(document).ready(function() {
 
-            $('.fk_choose_btn').on('click', function (evt) {
+            $("#{{ field_id }}_btn").on('click', function (evt) {
 
                 evt.preventDefault();
 
                 var path = "{{ url }}";
 
-                popup_window = window.open(
+                window.save = function(fkID){
+                    window.document.querySelectorAll("#{{ field_id }}")[0].value = fkID;
+                    // alert("Saved: "+fkID);
+                };
+
+                var popup_window = window.open(
                         path,
                         "_blank",
                         "toolbar=yes,scrollbars=yes,resizable=yes,top=500, " +
                         "left=500,width=1250,height=800");
 
-                window.save = function(fkID){
-                    window.document.querySelectorAll("#{{ field_id }}")[0].value = fkID;
-                    // alert("Saved: "+fkID);
-                    popup_window.close();
-                };
             });
         });
     })(django.jQuery);

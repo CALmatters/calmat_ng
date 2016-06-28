@@ -12,6 +12,7 @@ var file_glue = (function(){
         selectClicked: function($this){
             var fkID = getFKID($this);
             window.opener.save(fkID);
+            window.close();
         }
     };
 
