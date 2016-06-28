@@ -91,9 +91,9 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
         # "keywords__keyword",
         "custom_post_type",
         "news_analysis",
+        "authors",
         "atoms",
-        "partners",
-        "authors")
+        "partners")
 
     search_fields = ('title', )
 
