@@ -4066,7 +4066,7 @@ input:-moz-placeholder { font-size: 1em !important; }
 
 .politics{
     background-color: #f0f0f0;
-    width: auto;
+    width: 100%;
     height: auto;
 	margin-top: 98px;
     padding-bottom: 18px;
@@ -7879,6 +7879,13 @@ margin-bottom:5px !important;
   }
 }
 
+
+@media (max-width:480px) {
+  .politics_img {
+    width:100%;
+    height:auto;
+}
+}
 
 
 
