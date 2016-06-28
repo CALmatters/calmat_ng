@@ -24,7 +24,7 @@ class FKChooserAdminMixin(admin.ModelAdmin):
         list_display = super(
                 FKChooserAdminMixin, self).get_list_display(request)
         if request.GET.get('_popup', False):
-            list_display = ['_fb_file_link', ] + list_display
+            list_display = ['_fb_file_link', ] + list(list_display)
         return list_display
 
     def get_list_display_links(self, request, list_display):

@@ -4,6 +4,7 @@ from django.contrib import admin
 from django import forms
 
 from categories.mixins import AdminCatListMixin
+from fkchooser.admin import FKChooserAdminMixin
 from media_manager.widgets import PopupSelect
 from pages.models import Atom
 
@@ -57,7 +58,8 @@ class AtomAdminForm(forms.ModelForm):
         exclude = ()
 
 
-class AtomAdmin(AdminThumbMixin, AdminCatListMixin, admin.ModelAdmin):
+class AtomAdmin(
+    AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin, admin.ModelAdmin):
 
     form = AtomAdminForm
 

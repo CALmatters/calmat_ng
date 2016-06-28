@@ -20,7 +20,7 @@ class RelatedAtom(models.Model):
 
     homepage = models.ForeignKey(
         "pages.HomePage", related_name='related_atom_homepages')
-    atom = models.ForeignKey(
+    atom = PopupForeignKey(
         "pages.Atom", related_name='related_atom_atoms')
 
     atom_layout = models.CharField(
@@ -44,7 +44,7 @@ class RelatedHeadlineArticle(models.Model):
 
     homepage = models.ForeignKey(
         "pages.HomePage", related_name='related_headline_articles_as_homepage')
-    article = models.ForeignKey(
+    article = PopupForeignKey(
         "pages.Article", related_name='related_headline_articles_as_homepage')
 
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
@@ -176,42 +176,42 @@ class HomePage(Named, TimeStamped):
         related_name='secondary_left_on_homepages',
     )
 
-    secondary_article_right = models.ForeignKey(
+    secondary_article_right = PopupForeignKey(
         Article,
         help_text="Article displayed below primary article to the right",
         verbose_name='Right Secondary Article',
         related_name='secondary_right_on_homepages',
     )
 
-    the_basics_one = models.ForeignKey(
+    the_basics_one = PopupForeignKey(
         Article,
         help_text="First Article in the The Basics",
         verbose_name='Top Article in The Basics',
         related_name='basics_one_on_homepages',
     )
 
-    the_basics_two = models.ForeignKey(
+    the_basics_two = PopupForeignKey(
         Article,
         help_text="Second Article in the The Basics",
         verbose_name='Second Article in The Basics',
         related_name='basics_two_on_homepages',
     )
 
-    the_basics_three = models.ForeignKey(
+    the_basics_three = PopupForeignKey(
         Article,
         help_text="Third Article in the The Basics",
         verbose_name='Third Article in The Basics',
         related_name='basics_three_on_homepages',
     )
 
-    the_basics_four = models.ForeignKey(
+    the_basics_four = PopupForeignKey(
         Article,
         help_text="Four Article in the The Basics",
         verbose_name='Bottom Article in The Basics',
         related_name='basics_four_on_homepages',
     )
 
-    featured_2 = models.ForeignKey(
+    featured_2 = PopupForeignKey(
         Article,
         verbose_name='Second Feature',
         blank=True,
