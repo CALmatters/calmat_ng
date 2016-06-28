@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 from business.models import Partner, Person
+from fkchooser.fields import PopupForeignKey
 from pages.models import Article, Atom
 from sites.models import Named, TimeStamped
 
@@ -161,7 +162,7 @@ class HomePage(Named, TimeStamped):
         blank=True,
         default='')
 
-    primary_article = models.ForeignKey(
+    primary_article = PopupForeignKey(
         Article,
         help_text="Article displayed front and center, largest",
         verbose_name='Primary Article',

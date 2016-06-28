@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'versatileimagefield',
     'adminsortable2',
+    'fkchooser',
     'categories',
     'calmat_ng',
     'sites',
@@ -179,7 +180,6 @@ LOGGING = {
 
 ARTICLES_PER_PAGE = 20
 IMAGES_UPLOADED_MAX_WIDTH_PX = 1200
-
 
 
 try:

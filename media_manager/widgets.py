@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 class PopupSelect(Select):
 
     class Media:
-        js = ('popup_launcher.js', )
+        js = ('popup_image_chooser_launcher.js', )
 
     def render(self, name, value, attrs=None, choices=()):
         elements = super(PopupSelect, self).render(name, value, attrs, choices)

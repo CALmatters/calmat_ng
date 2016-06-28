@@ -9,6 +9,7 @@ from django.utils.safestring import mark_safe
 from adminsortable2.admin import SortableInlineAdminMixin
 
 from business.models.partner_article import PartnerArticle
+from fkchooser.admin import FKChooserAdminMixin
 from media_manager.widgets import PopupSelect
 from pages.models import Article
 from pages.models.article import RelatedArticle
@@ -49,7 +50,7 @@ class ArticleAdminForm(forms.ModelForm):
 
 
 #  Todo:  Twitter support
-class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
+class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
 
     form = ArticleAdminForm
 
@@ -220,8 +221,13 @@ class ArticleAdmin(AdminThumbMixin, admin.ModelAdmin):
 
     def save_form(self, request, form, change):
         obj = form.save(commit=False)
-        if obj.creator is None:
+        try:
+            creator = obj.creator
+        except:
             obj.creator = request.user
+        else:
+            if creator is None:
+                obj.creator = request.user
         return super(ArticleAdmin, self).save_form(request, form, change)
 
 admin.site.register(Article, ArticleAdmin)

@@ -1,0 +1,40 @@
+{% comment %}
+    Loaded by the PopupSelect widget in render.  Shows an icon button.
+    See popup_launcher.js for the control code.
+
+    This code depends on the filebrowser_icon_show.gif to be in static.
+{% endcomment %}
+
+{% load static from staticfiles %}
+
+
+<a style="padding:5px 16px;" class="fk_choose_btn">
+    <img src="{% static 'filebrowser_icon_show.gif' %}">
+</a>
+
+
+<script type="application/javascript">
+    (function($) {
+        $(document).ready(function() {
+
+            $('.fk_choose_btn').on('click', function (evt) {
+
+                evt.preventDefault();
+
+                var path = "{{ url }}";
+
+                popup_window = window.open(
+                        path,
+                        "_blank",
+                        "toolbar=yes,scrollbars=yes,resizable=yes,top=500, " +
+                        "left=500,width=1250,height=800");
+
+                window.save = function(fkID){
+                    window.document.querySelectorAll("#{{ field_id }}")[0].value = fkID;
+                    // alert("Saved: "+fkID);
+                    popup_window.close();
+                };
+            });
+        });
+    })(django.jQuery);
+</script>

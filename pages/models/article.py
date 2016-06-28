@@ -160,10 +160,6 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         choices=HEADLINE_LAYOUT_CHOICES,
         default='below')
 
-    # featured_image = VersatileImageField(
-    #     verbose_name=_("Featured Image"),
-    #     upload_to='posts/')
-
     image = models.ForeignKey(
         MediaItem,
         verbose_name="Featured Image",
@@ -194,13 +190,6 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         max_length=255,
         default='',
         blank=True)
-
-    # facebook_share_image = VersatileImageField(
-    #     verbose_name=_("Facebook Share Image"),
-    #     upload_to='posts/',
-    #     null=True,
-    #     blank=True,
-    #     )
 
     facebook_image = models.ForeignKey(
         MediaItem,
