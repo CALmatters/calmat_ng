@@ -7847,6 +7847,27 @@ width:100% !important;
 height:auto;
 }
 
+div.atoms div#carousel-example-generic.slide .carousel-inner .item {
+margin-left:10%;
+}
+
+div.atoms div#carousel-example-generic.slide .carousel-inner .left.carousel-control {
+width:8%;
+}
+
+div.atoms div#carousel-example-generic.slide .carousel-inner .right.carousel-control {
+width:5%;
+}
+
+div.atoms div#carousel-example-generic.slide .carousel-inner .carousel-control .glyphicon {
+margin-top:-35px;
+}
+
+@media (max-width:1000px) {
+div.atoms div#carousel-example-generic.slide .carousel-inner .item {
+width:83%;
+}
+
 
 
 /*-----------------------------------------------
