@@ -328,15 +328,22 @@ def project_view(request, slug=None, template='project.html'):
     If no slug is given, redirect to first by `order` and `published`.
     """
 
+    is_staff = request.user.is_staff
+
     if not slug:
         # redirect to `first` story
-        project = Project.objects.published()[0]
+        if is_staff:
+            project = Project.objects.all()[0]
+        else:
+            project = Project.objects.published()[0]
+
         return HttpResponseRedirect(
             reverse('project_details', args=(project.slug,)))
-    try:
+
+    if is_staff:
         project = Project.objects.get(slug=slug)
-    except ObjectDoesNotExist:
-        project = Project.objects.published()[0]
+    else:
+        project = Project.objects.published().get(slug=slug)
 
     # Set prev/next story by publish date
     prev = {}
