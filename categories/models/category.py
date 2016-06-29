@@ -1,4 +1,3 @@
-from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 from sites.models import Named
@@ -7,10 +6,12 @@ from sites.models import TimeStamped
 
 class Category(Named, TimeStamped):
 
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
     class Meta:
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
-        ordering = ("title",)
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+        ordering = ('order',)
 
     @models.permalink
     def get_absolute_url(self):

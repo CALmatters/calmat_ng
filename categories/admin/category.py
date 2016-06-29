@@ -1,9 +1,11 @@
 from django.contrib import admin
 
+from adminsortable2.admin import SortableAdminMixin
+
 from categories.models import Category
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
 
     list_display = ("title", "slug")
 
