@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 
-
+from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
 from .atom import Atom
 from business.models import Partner, Person
@@ -27,6 +27,7 @@ CUSTOM_POST_TYPE_CHOICES = (
     ('press', 'Press Release'),
     ('readerreactions', 'Reader Reactions'),
     ('updates', 'Updates'),
+    ('basics', 'The Basics'),
 )
 
 BLOG_POST_LAYOUT_CHOICES = (
@@ -56,9 +57,9 @@ FEATURED_IMAGE_TITLE_SHADE = (
 
 class RelatedArticle(models.Model):
 
-    article = models.ForeignKey(
+    article = PopupForeignKey(
         "pages.Article", related_name='main_post')
-    related_article = models.ForeignKey(
+    related_article = PopupForeignKey(
         "pages.Article", related_name='related_post')
 
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
@@ -135,13 +136,13 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
 
     categories = models.ManyToManyField(
         Category,
-        verbose_name=_("Categories"),
+        verbose_name="Categories",
         blank=True,
         related_name="blogposts")
 
     authors = models.ManyToManyField(
         Person,
-        verbose_name=_("By Person"),
+        verbose_name="By Person",
         blank=True,
         related_name="authors_articles",
         help_text='Choices limited to users who are staff (is_staff=True).')

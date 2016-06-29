@@ -6,6 +6,7 @@ from django.db import models
 from categories.models import Category
 from media_manager.models import MediaItem
 from sites.models import Named, Publishable, TimeStamped, ContentContainer
+from sites.models.content_container import OptionalContentContainer
 
 ATOM_DEFAULT_DISPLAY_TYPE_CHOICES = (
     ('image', 'Image Only'),
@@ -26,7 +27,7 @@ ATOM_MODAL_LAYOUT_RIGHT = (
 )
 
 
-class Atom(Named, Publishable, ContentContainer, TimeStamped):
+class Atom(Named, Publishable, OptionalContentContainer, TimeStamped):
 
     headline = models.CharField(
         max_length=200,
@@ -83,8 +84,8 @@ class Atom(Named, Publishable, ContentContainer, TimeStamped):
         verbose_name=_("HTML and <iframe>"))
 
     class Meta:
-        verbose_name = _("Atom")
-        verbose_name_plural = _("Atoms")
+        verbose_name = "Atom"
+        verbose_name_plural = "Atoms"
 
     @models.permalink
     def get_absolute_url(self):

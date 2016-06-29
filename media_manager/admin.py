@@ -56,7 +56,7 @@ class MediaItemAdmin(AdminThumbMixin, admin.ModelAdmin):
     adm_list_display_links = ('caption', )
 
     list_filter = ('source', 'creator', 'image_type', 'license')
-    readonly_fields = ('image_preview', )
+
     search_fields = (
         'caption',
         'source__title',
@@ -71,6 +71,12 @@ class MediaItemAdmin(AdminThumbMixin, admin.ModelAdmin):
     def image_preview(self, obj):
         return mark_safe('<img src="{}" />'.format(obj.file.url))
     image_preview.short_description = "Image Preview"
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj is not None:
+            return 'image_preview',
+        else:
+            return ()
 
     def get_list_display(self, request):
         """Conditionally display the images in a list in the change_list

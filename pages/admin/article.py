@@ -112,7 +112,6 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
                 "title",
                 "social_title",
                 "layout",
-                "headline_layout",
                 "custom_post_type",
                 "view_url",
                 "news_analysis",
@@ -137,6 +136,7 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
         (_("Featured Image"), {
             "classes": ("collapse",),
             "fields": (
+                "headline_layout",
                 "image",
                 "featured_image_description",
                 "featured_image_credit",

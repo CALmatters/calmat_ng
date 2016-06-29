@@ -241,10 +241,15 @@ class HomePage(Named, TimeStamped):
 
         return Article.objects.published().filter(news_analysis=True)[:3]
 
-    def recent_non_politics_articles(self):
+    def recent_articles(self):
         """Return most recent 3 published politics articles"""
 
-        return Article.objects.published().exclude(news_analysis=True)[:3]
+        return Article.objects.published().exclude(
+            news_analysis=True).exclude(
+            custom_post_type='readerreactions').exclude(
+            custom_post_type='press').exclude(
+            custom_post_type='external').exclude(
+            custom_post_type='basics')[:3]
 
     def clone(self):
         _clone = copy(self)

@@ -3,7 +3,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 # from versatileimagefield.fields import VersatileImageField
-
+from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
 from sites.models import Named, TimeStamped, Publishable
 
@@ -204,7 +204,7 @@ class ProjectArticleSortableBase(models.Model):
     """
 
     project = models.ForeignKey(Project)
-    article = models.ForeignKey(Article)
+    article = PopupForeignKey(Article)
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     objects = OrderedManager('article')
@@ -270,7 +270,8 @@ class ProjectSortableQuotes(models.Model):
 
 class ProjectSortableAtomBase(models.Model):
     project = models.ForeignKey(Project)
-    atom = models.ForeignKey(Atom)
+    atom = PopupForeignKey(Atom)
+
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     objects = OrderedManager('atom')
