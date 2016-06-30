@@ -99,7 +99,7 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
 
     inlines = (
         RelatedArticleInline,
-        PartnerArticleInline,
+        # PartnerArticleInline,
     )
 
     filter_horizontal = (
