@@ -71,8 +71,7 @@ ROOT_URLCONF = 'calmat_ng.urls'
 # GLOBAL_TEMPLATES = os.path.join(BASE_DIR, 'templates/')
 
 
-ADMIN_TEMPLATES = os.path.join(
-    os.path.dirname(BASE_DIR), 'admin_templates')
+ADMIN_TEMPLATES = os.path.join(BASE_DIR, 'admin_templates/')
 
 TEMPLATES = [
     {

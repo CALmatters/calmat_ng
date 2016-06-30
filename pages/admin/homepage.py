@@ -77,7 +77,7 @@ class HomePageAdmin(admin.ModelAdmin):
                 "masthead_copy",
             )
         }),
-        ("In the Works - Four links that live in right sidebar", {
+        ("In the Works", {
             "fields": (
                 ("works_display_one", "works_url_one",),
                 ("works_display_two", "works_url_two",),
@@ -93,7 +93,7 @@ class HomePageAdmin(admin.ModelAdmin):
                 "secondary_article_right",
             )
         }),
-        ("The Basics", {
+        ("The Basics - Four links that live in right sidebar", {
             "fields": (
                 "the_basics_one",
                 "the_basics_two",
