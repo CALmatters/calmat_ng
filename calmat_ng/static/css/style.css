@@ -7770,6 +7770,80 @@ position:relative;
 left:10px;
 }
 }
+
+@media (min-width:480px) and (max-width:767px) {
+#main_article {
+}
+
+#main_article #main_article_text h2 {
+font-size:18px;
+padding:0px;
+}
+
+#main_article #main_article_text {
+padding:.4em 1em;
+}
+
+#main_article,
+#second_article,
+#third_article {
+margin:0em 0em 1.5em 0em !important;
+height:auto !important;
+}
+
+#main_article #main_article_text,
+#second_article #second_article_text,
+#third_article #third_article_text {
+margin:0px auto 0 auto;
+padding:.4em 1em;
+position:absolute;
+display:block;
+top:180px;
+height:auto;
+}
+
+.featured-intr .text {
+bottom:auto;
+}
+}
+
+
+
+@media (max-width:479px) {
+#main_article {
+}
+
+#main_article #main_article_text h2 {
+font-size:18px;
+padding:0px;
+}
+
+#main_article #main_article_text {
+padding:.4em 1em;
+}
+
+#main_article,
+#second_article,
+#third_article {
+margin:0em 0em 1.5em 0em !important;
+height:auto !important;
+}
+
+#main_article #main_article_text,
+#second_article #second_article_text,
+#third_article #third_article_text {
+margin:0px auto 0 auto;
+padding:.4em 1em;
+position:absolute;
+display:block;
+top:50px;
+height:auto;
+}
+
+.featured-intr .text {
+bottom:auto;
+}
+}
 /*-----------------------------------------------
          END Articles block
 -----------------------------------------------*/
@@ -7879,14 +7953,14 @@ width:83%;
 /*- added media query min-width because it wasn't sticking at larger screensizes -*/
 @media (min-width:300px) {
 #main_article_text p.article_partners {
-font-family: Neusa, sans-serif;
-text-transform:uppercase;
-font-weight:400;
-font-size:15px;
-color:#9B9B9B;
+font-family: Neusa, sans-serif !important;
+text-transform:uppercase !important;
+font-weight:400 !important;
+font-size:15px !important;
+color:#9B9B9B !important;
 }
 
-hr.main_article_rule {
+#main_article_text hr.main_article_rule {
 border-top: 1px solid black !important;
 margin-bottom:5px !important;
 }
@@ -7926,7 +8000,7 @@ margin-bottom:5px !important;
 
 
 /*---------------------------------------------
-        social icons in white nav
+        search & social icons in white nav
 ---------------------------------------------*/
 
 .navbar-default .search {
@@ -7935,13 +8009,23 @@ top:20px;
 right:90px;
 }
 
-@media (max-width:990px){
 .navbar-default .search {
+position:absolute;
+top:20px !important;
+right:83px;
+}
+
+@media (max-width:990px){
+.navbar-default .search,
+.navbar-default .social {
 display:none;
 }
 }
+
+
+
 /*---------------------------------------------
-        END social icons in white nav
+        END search & social icons in white nav
 ---------------------------------------------*/
 
 
