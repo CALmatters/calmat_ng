@@ -8003,7 +8003,7 @@ margin-bottom:5px !important;
         search & social icons in white nav
 ---------------------------------------------*/
 
-.navbar-default .search {
+.navbar-default .newsearch {
 position:absolute;
 top:20px;
 right:90px;
@@ -8016,7 +8016,7 @@ right:83px;
 }
 
 @media (max-width:990px){
-.navbar-default .search,
+.navbar-default .newsearch,
 .navbar-default .social {
 display:none;
 }
