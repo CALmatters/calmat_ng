@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db.models import ForeignKey
 from django.forms import ModelChoiceField
 from django.forms.widgets import Select
@@ -29,14 +28,17 @@ class PopupSelect(Select):
 
 def get_class(url_filter=None):
 
-    select_attrs = dict(url_filter=url_filter)
-    widget = type(
-        'FilteredPopupSelect_{}'.format(len(url_filter)),
-        (PopupSelect,), select_attrs)
+    if not url_filter:
+        widget = PopupSelect
+    else:
+        select_attrs = dict(url_filter=url_filter)
+        widget = type(
+            'FilteredPopupSelect_{}'.format(len(url_filter)),
+            (PopupSelect,), select_attrs)
 
     attrs = dict(widget=widget)
     return type(
-        'FilteredPopupModelChoiceField_{}'.format(len(url_filter)),
+        'FilteredPopupModelChoiceField_{}'.format(widget.__class__),
         (ModelChoiceField,), attrs)
 
 

@@ -196,15 +196,16 @@ class OrderedManager(models.Manager):
 
 
 class ProjectArticleSortableBase(models.Model):
-
     """
     Base Joining Class joining Stories to Article
     Contributes a order field to be used to order the relations
     The order is managed in the admin through Django-admin-stortable2
     """
 
+    url_filter = None
+
     project = models.ForeignKey(Project)
-    article = PopupForeignKey(Article)
+    article = PopupForeignKey(Article, url_filter)
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     objects = OrderedManager('article')
@@ -237,6 +238,10 @@ class ProjectSortableExpertPerspectivesArticle(ProjectArticleSortableBase):
         verbose_name = "Expert Perspective Article"
         verbose_name_plural = "Expert Perspectives Articles"
 
+#  A roundabout way to set the filter when the attr is defined in the super
+ProjectSortableExpertPerspectivesArticle._meta.get_field(
+    'article').url_filter = 'custom_post_type__exact=expertperspectives'
+
 
 class ProjectSortableReaderReactionsArticle(ProjectArticleSortableBase):
 
@@ -245,6 +250,10 @@ class ProjectSortableReaderReactionsArticle(ProjectArticleSortableBase):
         verbose_name = "Reader Reaction Article"
         verbose_name_plural = "Reader Reactions Articles"
 
+#  A roundabout way to set the filter when the attr is defined in the super
+ProjectSortableReaderReactionsArticle._meta.get_field(
+    'article').url_filter = 'custom_post_type__exact=readerreactions'
+
 
 class ProjectSortableUpdatesArticles(ProjectArticleSortableBase):
 
@@ -252,6 +261,10 @@ class ProjectSortableUpdatesArticles(ProjectArticleSortableBase):
         ordering = ('order',)
         verbose_name = "Update Articles"
         verbose_name_plural = "Updates Articles"
+
+#  A roundabout way to set the filter when the attr is defined in the super
+ProjectSortableUpdatesArticles._meta.get_field(
+    'article').url_filter = 'custom_post_type__exact=updates'
 
 
 class ProjectSortableQuotes(models.Model):
