@@ -24,6 +24,7 @@ from pages.views import (homepage_view, columns, columns_single, project_view,
 
 urlpatterns = [
 
+    url(r'^admin_tools/', include('admin_tools.urls')),
     url("^$", homepage_view, name="home"),
     url(r'^admin/', admin.site.urls),
     url("^pages/", include("pages.urls"), name="pages"),

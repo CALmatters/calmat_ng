@@ -37,6 +37,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_tools',
+    # 'admin_tools.theming',
+    # 'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,7 +81,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [ADMIN_TEMPLATES, ],
-        'APP_DIRS': True,
+        # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -87,6 +91,10 @@ TEMPLATES = [
                 'calmat_ng.context_processors.categories',
                 'calmat_ng.context_processors.projects',
             ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                'admin_tools.template_loaders.Loader']
         },
     },
 ]
@@ -184,6 +192,7 @@ LOGGING = {
 ARTICLES_PER_PAGE = 20
 IMAGES_UPLOADED_MAX_WIDTH_PX = 1200
 
+ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 
 try:
     from .local_settings import *
