@@ -185,6 +185,7 @@ class HomePage(Named, TimeStamped):
 
     the_basics_one = PopupForeignKey(
         Article,
+        url_filter='custom_post_type__exact=basics',
         help_text="First Article in the The Basics",
         verbose_name='Top Article in The Basics',
         related_name='basics_one_on_homepages',
@@ -192,6 +193,7 @@ class HomePage(Named, TimeStamped):
 
     the_basics_two = PopupForeignKey(
         Article,
+        url_filter='custom_post_type__exact=basics',
         help_text="Second Article in the The Basics",
         verbose_name='Second Article in The Basics',
         related_name='basics_two_on_homepages',
@@ -199,6 +201,7 @@ class HomePage(Named, TimeStamped):
 
     the_basics_three = PopupForeignKey(
         Article,
+        url_filter='custom_post_type__exact=basics',
         help_text="Third Article in the The Basics",
         verbose_name='Third Article in The Basics',
         related_name='basics_three_on_homepages',
@@ -206,6 +209,7 @@ class HomePage(Named, TimeStamped):
 
     the_basics_four = PopupForeignKey(
         Article,
+        url_filter='custom_post_type__exact=basics',
         help_text="Four Article in the The Basics",
         verbose_name='Bottom Article in The Basics',
         related_name='basics_four_on_homepages',
