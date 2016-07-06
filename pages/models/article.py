@@ -308,7 +308,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
                 Q(article__status=CONTENT_STATUS_PUBLISHED)).order_by(
                 '-publish_date')
 
-        return (a.article for a in qs.all())
+        return [a.article for a in qs.all()]
 
     def get_published_ordered_related_articles(self):
         return self._get_ordered_related_articles(published_only=True)
