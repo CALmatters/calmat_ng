@@ -112,7 +112,6 @@ Blog
 
                         {% if article.custom_post_type != 'external' and article.custom_post_type != 'press' %}
                             <div class="image">
-                                <hr>{{ article.image }}--</hr>
                                 <a href="{{ article.get_absolute_url }}">
                                 {% if article.image.file %}
                                     <img src="{{ article.image.file.thumbnail.200x200}}">
