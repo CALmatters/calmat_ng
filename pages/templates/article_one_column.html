@@ -62,10 +62,10 @@
 
                 {% if partner.link_to_articles %}
                     <a href="{{ partner.get_absolute_url }}">
-                        <img src="{{ partner.featured_image.url }}" class="partner_logo_in_content" />
+                        <img src="{{ partner.image.file }}" class="partner_logo_in_content" />
                     </a>
                 {% else %}
-                    <img src="{{ partner.featured_image.url }}" class="partner_logo_in_content" />
+                    <img src="{{ partner.image.file }}" class="partner_logo_in_content" />
                 {% endif %}
 
             {% endfor %}
@@ -75,7 +75,7 @@
 
             <div class="author_image">
                 {% if columnist %}
-                    <img src="{{ columnist.profile_image.thumbnail.200x200 }}" alt="">
+                    <img src="{{ columnist.image.file.thumbnail.200x200 }}" alt="">
                 {% else %}
                     <img src="{{ STATIC_URL }}/theme/frontend/img/default_person_icon.png" alt="">
                 {% endif %}
@@ -113,7 +113,7 @@
             {% for article in more_articles %}
                 <article>
                     <div class="image">
-                        {% if article.featured_image %}
+                        {% if article.image %}
                             <img src="{{ article.image.file.thumbnail.700x700 }}" alt="{{ article.title }}">
                         {% else %}
                                 <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">

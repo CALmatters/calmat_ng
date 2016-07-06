@@ -1,5 +1,7 @@
 import re
 from copy import copy
+
+import time
 from django.utils.timezone import now
 
 from django.utils.translation import ugettext_lazy as _
@@ -292,7 +294,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         }
         return reverse(url_name, kwargs=kwargs)
 
-    def _yield_ordered_related_articles(self, published_only):
+    def _get_ordered_related_articles(self, published_only):
         """Get headlines in order of RelatedHeadlineArticle.order"""
 
         qs = RelatedArticle.objects.filter(
@@ -306,13 +308,13 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
                 Q(article__status=CONTENT_STATUS_PUBLISHED)).order_by(
                 '-publish_date')
 
-        return [a.article for a in qs.all()]
+        return (a.article for a in qs.all())
 
-    def yield_published_ordered_related_articles(self):
-        self._yield_ordered_related_articles(published_only=True)
+    def get_published_ordered_related_articles(self):
+        return self._get_ordered_related_articles(published_only=True)
 
-    def yield_ordered_related_articles(self):
-        self._yield_ordered_related_articles(published_only=False)
+    def get_ordered_related_articles(self):
+        return self._get_ordered_related_articles(published_only=False)
 
     def get_post_type_url(self):
         if self.custom_post_type != 'articles':

@@ -19,6 +19,8 @@ class PartnerArticleAdmin(admin.ModelAdmin):
     list_filter = ('partner__owner', 'partner', 'radio_broadcast')
     readonly_fields = ('order', )
 
+    search_fields = ("article__title", 'partner__title', )
+
     def partner_owner(self, obj):
         return obj.partner.partner_owner()
 

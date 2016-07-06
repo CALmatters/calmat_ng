@@ -51,10 +51,10 @@
 
                 {% if partner.link_to_articles %}
                     <a href="{{ partner.get_absolute_url }}">
-                        <img src="{{ partner.featured_image.url }}" class="partner_logo_in_content" />
+                        <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
                     </a>
                 {% else %}
-                    <img src="{{ partner.featured_image.url }}" class="partner_logo_in_content" />
+                    <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
                 {% endif %}
 
             {% endfor %}
@@ -103,8 +103,8 @@
                 {% for post in article.related.all %}
                     <article>
                     <div class="image">
-                        {% if post.featured_image %}
-                            <img src="{{ post.featured_image.thumbnail.60x60 }}" />
+                        {% if post.image %}
+                            <img src="{{ post.image.file.thumbnail.60x60 }}" />
                         {% else %}
                                 <img src="{% static post.DEFAULT_ARTICLE_IMAGE %}">
                         {% endif %}
@@ -146,7 +146,7 @@
                     {% for person in article.related_persons.all %}
                     <article>
                         <div class="image">
-                            <img src="{{MEDIA_URL}}{{ person.featured_image.thumbnail.105x105 }}" alt="">
+                            <img src="{{MEDIA_URL}}{{ person.image.file.thumbnail.105x105 }}" alt="">
                             <a href="{{person.get_absolute_url}}" class="more"></a>
                         </div>
                         <a href="{{person.get_absolute_url}}">{{person.name}}</a>
@@ -166,7 +166,7 @@
                 <article>
                     <div class="image">
                         {% if article.image %}
-                            <img src="{{ article.image.thumbnail.700x700 }}" alt="{{ article.title }}">
+                            <img src="{{ article.image.file.thumbnail.700x700 }}" alt="{{ article.title }}">
                         {% else %}
                                 <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                         {% endif %}
