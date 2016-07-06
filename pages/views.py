@@ -3,7 +3,6 @@ from itertools import chain
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import Http404
@@ -188,7 +187,7 @@ def columns(request):
     """
 
     first_published_columnist_author = None
-    authors = Person.objects.published().order_by(
+    authors = Person.objects.all().order_by(
         'user__last_name', 'user__first_name')
 
     for author in authors:
