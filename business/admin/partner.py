@@ -37,6 +37,7 @@ class PartnerAdmin(admin.ModelAdmin):
         'partner_owner',
         'featured')
 
+    search_fields = ("title", )
     list_editable = ("featured", )
 
     fieldsets = (
