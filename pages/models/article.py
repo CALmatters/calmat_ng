@@ -322,7 +322,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
                            kwargs={'custom_post_type': self.custom_post_type})
         else:
             if self.news_analysis:
-                return '/articles/category/news-analysis/'
+                return '/pages/articles/category/news-analysis/'
             else:
                 return '/articles/'
 
