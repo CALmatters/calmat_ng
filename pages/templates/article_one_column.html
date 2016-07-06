@@ -62,10 +62,10 @@
 
                 {% if partner.link_to_articles %}
                     <a href="{{ partner.get_absolute_url }}">
-                        <img src="{{ partner.image.file }}" class="partner_logo_in_content" />
+                        <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
                     </a>
                 {% else %}
-                    <img src="{{ partner.image.file }}" class="partner_logo_in_content" />
+                    <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
                 {% endif %}
 
             {% endfor %}
