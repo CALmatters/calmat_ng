@@ -100,13 +100,13 @@
         <aside class="sidebar">
             <div class="related-side">
                 <h4>RELATED STORIES</h4>
-                {% for post in article.related.all %}
+                {% for post in more_articles %}
                     <article>
                     <div class="image">
                         {% if post.image %}
                             <img src="{{ post.image.file.thumbnail.60x60 }}" />
                         {% else %}
-                                <img src="{% static post.DEFAULT_ARTICLE_IMAGE %}">
+                                <img src="{% static post.DEFAULT_ARTICLE_IMAGE %} " style="max-width:60px;">
                         {% endif %}
                     </div>
                     <div class="wrap">
@@ -121,13 +121,12 @@
                             {% if post.custom_post_type == 'external' %}
                                 <a href="{{ post.custom_link }}" target="_blank"> {{ post.title }} </a>
                             {% else %}
-                                <h1> blah</h1>
                                 <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                             {% endif %}
                         </h3>
 
                         {% if post.get_authors %}
-                        <p class="by">by {{post.get_authors|safe}}</p>
+                            <p class="by">by {{post.get_authors|safe}}</p>
                         {% endif %}
 
                     </div>
