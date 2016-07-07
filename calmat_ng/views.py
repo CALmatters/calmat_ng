@@ -73,8 +73,8 @@ def search(request, template='search.html'):
     if not query or not has_results:
         # Features are "Story" pages, big landing pages for a subject
         features = Project.objects.published().order_by('order')[:3]
-        more_stories = Article.objects.published().order_by(
-            'rating', 'publish_date')[:3]
+        more_stories = Article.objects.published().filter(image__isnull=False).order_by(
+            'publish_date')[:3]
     else:
         features = False
         more_stories = False

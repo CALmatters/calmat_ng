@@ -1,4 +1,4 @@
-{% load static pages_tags mezzanine_tags %}
+{%  load staticfiles %}
 
         <div class="search-title alone">
 
@@ -22,14 +22,14 @@
         <div class="pin-holder ses">
 
             <div class="content">
-                <h2>Stories</h2>
+                <h2>Projects</h2>
                 
                 <section class="features">
 
                     {% for feature in features %}
-                        <article style="background-image: url({{ STATIC_URL }}theme/frontend/img/bg_h_1.jpg)">
-                            <h3><a href="{% url 'story' feature.slug %}">{{ feature.title }} »</a></h3>
-                            <p><a href="{% url 'story' feature.slug %}">{{ feature.content|truncatewords_html:20|striptags }}</a></p>
+                        <article style="background-image: url({%  static 'img/bg_h_1.jpg'  %})">
+                            <h3><a href="{% url 'project_detail' feature.slug %}">{{ feature.title }} »</a></h3>
+                            <p><a href="{% url 'project_detail' feature.slug %}">{{ feature.content|truncatewords_html:20|striptags }}</a></p>
                         </article>
                     {% endfor %}            
 
@@ -62,16 +62,17 @@
                             <article>
                                 <div class="image">
                                     <a href="{{ story.get_absolute_url }}">
-                                        {% if story.featured_image %}
-                                            <img src="{{ MEDIA_URL }}/{% thumbnail story.featured_image 158 111 %}" />
+                                        {% if story.image %}
+                                            <img src="{{ story.image.file.thumbnail.158x111 }}" />
                                         {% else %}
-                                            <img src="{{ settings.DEFAULT_POST_IMAGE }}" />
+                                            <img src="{{ settings.DEFAULT_ARTICLE_IMAGE }}" />
                                         {% endif %}
                                     </a>
                                 </div>
+
                                 <div class="wrap">
                                     <div class="meta">
-                                        <a href="{{ article.get_post_type_url }}">{{article.get_custom_post_type_title|upper}}</a>
+                                        <a href="{{ story.get_post_type_url }}">{{story.get_custom_post_type_title|upper}}</a>
                                         {{ story.publish_date|date:"m.d.Y"}}
                                     </div>
                                     <h3><a href="{{ story.get_absolute_url }}">{{ story.title }}</a></h3>
@@ -83,6 +84,8 @@
                                 </div>
                             </article>
                         {% endfor %}
+            {% comment %}
+            {% endcomment %}
 
                     </section>
                 </div><!-- .content -->
