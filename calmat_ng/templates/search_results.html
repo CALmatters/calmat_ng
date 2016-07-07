@@ -1,0 +1,224 @@
+
+
+        <div class="search-title results se">
+            <div class="content">
+                <span class="search_results_for">Search results for</span>
+                <form id="search_form" action="/search/">
+                    <input class="styled" type="text" name="q" value="{{ query }}" data-value="{{ query }}" />
+                    <button class="btn btn-primary" type="submit">Go</button>
+                </form>
+            </div>
+            {% if article_results %}
+            <div class="result_count">
+                {% with start=article_results.start_index end=article_results.end_index total=article_results.paginator.count %}
+                Showing {{ start }} to {{ end }} of {{ total }}
+                {% endwith %}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if page_results %}
+        <div class="pin-holder recent-stories page_results se">
+
+            <div class="content">
+                <h2>Pages</h2>
+                <section>
+
+                {% for result in page_results %}
+                    <article>
+                        <div class="image">
+                            <a href="{{ result.get_absolute_url }}" title="{{ result.title }}">
+                                {% if result.image %}
+                                    <img src="{{ result.image.file.thumbnail.158x111 }}" />
+                                {% else %}
+                                    <img src="{{ settings.DEFAULT_POST_IMAGE }}" />
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="wrap">
+                            <h3>
+                                <a href="{{ result.get_absolute_url }}" title="{{ result.title }}">{{ result.title }}</a>
+                            </h3>
+                            <p>{{ result.description|truncatewords_html:40|safe }}</p>
+                        </div>
+                    </article>
+                {% endfor %}
+                </section>
+            </div><!-- .content -->
+        </div><!-- .recent-stories "pages" -->
+        {% endif %}
+
+        {% if article_results %}
+        <div class="pin-holder recent-stories se">
+
+            <div class="content">
+                <h2>Articles</h2>
+                <section>
+
+                {% for result in article_results.object_list %}
+                    <article class="
+                            {% if forloop.counter > 5 %}hide{% endif %}
+                            {% if forloop.counter == 5 %}hidden_after{% endif %}
+                    ">
+
+                        {%comment%} if result == 'Article' and result.custom_post_type != 'external' {%endcomment%}
+                        {% if result.custom_post_type != 'external' %}
+                            <div class="image">
+                                <a href="{{ result.get_absolute_url }}" title="{{ result.title }}">
+                                    {% if result.image %}
+                                        <img src="{{ result.image.file.thumbnail.158x111 }}" />
+                                    {% else %}
+                                        <img src="{{ settings.DEFAULT_POST_IMAGE }}" />
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="wrap">
+                                <div class="meta">
+                                    <a href="{{ result.get_post_type_url }}" title="{{ result.get_custom_post_type_title|upper }}">{{result.get_custom_post_type_title|upper}}</a>
+                                    {{ result.publish_date|date:"m.d.Y" }}
+                                </div>
+                                <h3><a href="{{ result.get_absolute_url }}" title="{{ result.title }}">{{ result.title }}</a></h3>
+                                <p>{{ result.description|truncatewords_html:20|safe }}</p>
+
+                                {% if result.get_authors %}
+                                <p class="by">by {{ result.get_authors|safe }}</p>
+                                {% endif %}
+
+                        {% elif result == 'Bio' %}
+                            <div class="image">
+                                <a href="{{ result.get_absolute_url }}" title="{{ result.title }}">
+                                    {% if result.image %}
+                                        <img src="{{ result.image.file.thumbnail.158x111 }}" />
+                                    {% else %}
+                                        <img src="{{ settings.DEFAULT_RELATED_PERSON_ICON }}" />
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="wrap">
+                                <div class="meta">
+                                    <a href="{{ result.get_absolute_url }}" title="{{ result.title }}">JOURNALIST</a>
+                                </div>
+                                <h3><a href="{{ result.get_absolute_url }}" title="{{ result.title }}">{{ result.title }}</a></h3>
+                                <p>{{ result.description|truncatewords_html:20|safe }}</p>
+                        {% elif result.custom_post_type == 'external' %}
+                            <div class="image">
+                                <a href="{{ result.custom_link }}" title="{{ result.title }}">
+                                    {% if result.image %}
+                                        <img src="{{ result.image.file.thumbnail.158x111 }}" />
+                                    {% else %}
+                                        <img src="{{ settings.DEFAULT_POST_IMAGE }}" />
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="wrap">
+                                <div class="meta">
+                                    {{ result.custom_source|upper }}
+                                </div>
+                                <h3><a href="{{ result.custom_link }}" title="{{ result.title }}" target="_blank">{{ result.title }}</a></h3>
+                        {% endif %}
+
+                                
+                        {% if result.related_persons.exists %}
+
+                            <div class="inverts">
+                            {% for person in result.related_persons.all %}
+                                {% if person.image %}
+                                <div class="item">
+                                    <a href="#"><img src="{{ person.image.file.thumbnail.55x55 }}" alt=""></a>
+                                    <p><a href="#">{{person.type|upper}}</a></p>
+                                    <h4>{{person.name}}</h4>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+
+                        {% endif %}
+
+                        </div>
+                    </article>
+
+                {% endfor %}
+
+                {% if results.object_list|length > 5 %}
+                    <a href="#" class="btn-more mobile-only">More +</a>
+                {% endif %}
+
+                {% if related_people %}
+                    <div class="related_people mobile-only">
+                        <h2>People</h2>
+                        <div class="people">
+                            {% for person in related_people %}
+
+                                <div class="item {% if forloop.counter > 2 %}hide{% endif %}">
+                                    {% if person.image %}
+                                        <img src="{{ person.image.file.thumbnail.63x65 }}" alt="{{ person.name }}">
+                                    {% else %}
+                                        <img src="{{ settings.DEFAULT_RELATED_PERSON_ICON }}" alt="">
+                                    {% endif %}
+                                    <p>{{ person.type|upper }}</p>
+                                    <h4>{{ person.name }}</h4>
+                                    <div class="text">{{ person.content|safe }}</div>
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+                        {% if related_people|length > 2 %}
+                            <a href="#" class="btn-more mobile-only">More +</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                </section>
+            </div><!-- .content -->
+            
+            {% if external_results %}
+            <aside class="sidebar">
+                <div class="grey">
+                    <div class="grey-content">
+                    <h3>Related Articles</h3>  
+                    {% for r in external_results|slice:':3' %}
+                        {% if r.custom_link and r.custom_source %}
+                            <h4><a href="{{ r.custom_link }}">{{r.custom_source}}</a></h4>
+                            <p><a href="{{ r.custom_link }}" target="_blank">{{r.title}}</a></p>
+                        {% else %}
+                             <h4><a href="{{r.get_absolute_url}}">Article</a></h4>
+                            <p><a href="{{r.get_absolute_url}}">{{r.title}}</a></p>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>
+            </aside><!-- .sidebar -->
+            {% endif %}
+
+            {% if popular_results %}
+            <aside class="sidebar">
+                <div class="popular-wi">
+                    <div class="keywords">
+                        <h3>Popular Results</h3>   
+                        <h4><a href="#">Los Angeles Times</a></h4>
+                        <p>Tom Steyer's $1 million offer to pro-environment candidates</p>
+                    </div>
+                </div>
+            </aside><!-- .sidebar -->
+            {% endif %}
+
+        </div><!-- .recent-stories -->
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if article_results.has_previous %}
+                    <a href="?page={{ article_results.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ article_results.number }} of {{ article_results.paginator.num_pages }}.
+                </span>
+
+                {% if article_results.has_next %}
+                    <a href="?page={{ article_results.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+
+        {% endif %}

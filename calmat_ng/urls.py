@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
+from calmat_ng.views import search
 from pages.views import (homepage_view, columns, columns_single, project_view,
                          article_list)
 
@@ -51,6 +52,8 @@ urlpatterns = [
     url("^politics/(?P<slug>[a-zA-Z0-9\-\_]+)/$",
         columns_single,
         name="columns_single"),
+    url("^search/$", search, name="search"),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

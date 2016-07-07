@@ -56,7 +56,6 @@ FEATURED_IMAGE_TITLE_SHADE = (
 )
 
 
-
 class RelatedArticle(models.Model):
 
     article = PopupForeignKey(
@@ -75,6 +74,8 @@ class RelatedArticle(models.Model):
 class Article(Named, Publishable, ContentContainer, TimeStamped):
 
     DEFAULT_ARTICLE_IMAGE = "theme/frontend/img/featured-image-default.jpg"
+
+    SEARCH_FIELDS = ['title', 'description', 'content']
 
     custom_post_type = models.CharField(
         verbose_name=_("Content Type"),
@@ -324,7 +325,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
             if self.news_analysis:
                 return '/pages/articles/category/news-analysis/'
             else:
-                return '/articles/'
+                return '/pages/articles/'
 
     def get_social_title(self):
         """

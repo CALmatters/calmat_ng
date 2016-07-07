@@ -1,6 +1,7 @@
 import logging
 from itertools import chain
 
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -452,4 +453,3 @@ def about_view(request, template='pages/about.html'):
         advisors = Person.objects.filter(advisory_board=True))
 
     return render(request, template, context)
-

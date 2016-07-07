@@ -2,7 +2,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-# from versatileimagefield.fields import VersatileImageField
 from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
 from sites.models import Named, TimeStamped, Publishable

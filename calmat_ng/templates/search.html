@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block meta_title %}Search{% endblock %}
+
+{% block main %}
+
+    <div class="container search">
+        {% if not has_results %}
+            {% include 'search_new.html' %}
+        {% else %}
+            {% include 'search_results.html' %}
+        {% endif %}
+    </div><!-- .container -->
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $input = jQuery('#search_form input[type=text]');
+            $input.focus()
+                  .keyup(function(event){
+                      $this = jQuery(this);
+                      var data_value = $this.attr('data-value');
+                      if( $this.val() != data_value ){
+                          $this.parent().addClass('show_button');
+                      } else {
+                          $this.parent().removeClass('show_button');
+                      }
+                  });
+
+            jQuery('.btn-more').on('click', function(event){
+                event.preventDefault();
+                $this = jQuery(this);
+                $parent = $this.parent();
+                if( $parent.hasClass('show_all' ) ) {
+                    $parent.removeClass('show_all');
+                    $this.html('MORE +');
+                } else {
+                    $parent.addClass('show_all');
+                    $this.html('LESS -');
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
