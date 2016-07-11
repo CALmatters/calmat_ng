@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'sites',
     'pages',
     'business',
+    # 'donation', TODO: add donations app, migrate models -- MS 7.11.16
     'media_manager',
     'debug_toolbar'
 ]

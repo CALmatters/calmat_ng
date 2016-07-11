@@ -1,0 +1,229 @@
+
+            <link rel="stylesheet" media="all" href="{{ STATIC_URL }}theme/frontend/css/bootstrap.min.css">
+            <link rel="stylesheet" media="all" href="{{ STATIC_URL }}theme/frontend/css/font-awesome-4.5.0/css/font-awesome.min.css">
+            <link rel="stylesheet" media="all" href="{{ STATIC_URL }}theme/frontend/css/general.css">
+            <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}theme/frontend/css/style.css?version=1.4.7">
+            <link rel="stylesheet" media="print" href="{{ STATIC_URL }}theme/frontend/css/print.css?version=1.4.7">
+
+            <form class="clearfix" method="post" action="/donation/" id="donationForm" data-parsley-validate="">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="donationModalLabel">Donate</h3>
+                </div>
+      
+                <div class="modal-body">
+                    
+                    {{ form.errors }}
+
+                    <div class="donationErrors" role="alert"></div>
+                    
+                    <div class="bs-callout bs-callout-warning hidden">
+                        <div class="alert alert-danger" role="alert">
+                            Please check for errors below.
+                        </div>
+                    </div>
+                    
+                    <div class=""><span class="asterisk">*</span> = Required Field</div><br/>
+                    
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group form-group-sm {% if form.first_name.errors %}has-error{% endif %}">
+                                <input placeholder="FIRST NAME *" type="text" id="first_name" name="first_name" class="form-control" data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group form-group-sm {% if form.last_name.errors %}has-error{% endif %}">
+                                <input placeholder="LAST NAME *" type="text" id="last_name" name="last_name" class="form-control" data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group form-group-sm {% if form.stripe_email.errors %}has-error{% endif %}">
+                                <input placeholder="EMAIL *" type="email" id="stripe_email" name="stripe_email" class="form-control" data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group form-group-sm {% if form.phone.errors %}has-error{% endif %}">
+                                <input placeholder="PHONE *" type="text" id="phone" name="phone" class="form-control" data-parsley-phone data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group form-group-sm {% if form.address1.errors %}has-error{% endif %}">
+                                <input placeholder="ADDRESS 1 *" type="text" id="address1" name="address1" class="form-control" data-stripe="address_line1" data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group form-group-sm {% if form.address2.errors %}has-error{% endif %}">
+                                <input placeholder="ADDRESS 2" type="text" id="address2" name="address2" class="form-control" data-stripe="address_line2" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group form-group-sm {% if form.city.errors %}has-error{% endif %}">
+                                <input placeholder="CITY *" type="text" id="city" name="city" class="form-control" data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group form-group-sm {% if form.state.errors %}has-error{% endif %}">
+                                <input placeholder="STATE *" type="text" id="state" name="state" class="form-control" data-stripe="address_state" data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group form-group-sm {% if form.zip_code.errors %}has-error{% endif %}">
+                                <input placeholder="ZIP *" type="text" id="zip_code" name="zip_code" class="form-control" data-stripe="address_zip" data-parsley-zipcode data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group form-group-sm {% if form.stripe_amount.errors %}has-error{% endif %}">
+                        <label>DONATION AMOUNT *</label><br/>
+                        <label class="radio-inline"><input {% if amount == '100' %}checked{% endif %}{% if not amount %}checked{% endif %} type="radio" id="id_stripe_amount_0" name="stripe_amount" value="100">$100</label>
+                        <label class="radio-inline"><input {% if amount == '250' %}checked{% endif %} type="radio" id="id_stripe_amount_1" name="stripe_amount" value="250">$250</label>
+                        <label class="radio-inline"><input {% if amount == '1000' %}checked{% endif %} type="radio" id="id_stripe_amount_2" name="stripe_amount" value="1000">$1000</label>
+                        <label class="radio-inline"><input {% if amount == 'other' %}checked{% endif %} type="radio" id="id_stripe_amount_3" name="stripe_amount" value="0" class="other">Other</label>
+                    </div>
+                    
+                    <div class="form-group form-group-sm {% if amount != 'other' %}collapse{% endif %} other {% if form.stripe_amount_other.errors %}has-error{% endif %}">
+                        <input placeholder="ENTER A CUSTOM AMOUNT" type="number" id="stripe_amount_other" name="stripe_amount_other" class="form-control" data-parsley-errors-messages-disabled data-parsley-type="integer" />
+                    </div>
+                                    
+                    <div class="form-group form-group-sm {% if form.card.errors %}has-error{% endif %}">
+                        <input placeholder="CARD NUMBER *" type="text" id="card" name="card" class="form-control" data-stripe="number" data-parsley-errors-messages-disabled required=""/>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group form-group-sm {% if form.exp_month.errors %}has-error{% endif %}">
+                                <select class="form-control col-sm-2" name="exp_month" id="exp_month" data-stripe="exp-month" data-parsley-errors-messages-disabled required="">
+                                    <option value="">Month *</option>
+                                    <option value="01">Jan (01)</option>
+                                    <option value="02">Feb (02)</option>
+                                    <option value="03">Mar (03)</option>
+                                    <option value="04">Apr (04)</option>
+                                    <option value="05">May (05)</option>
+                                    <option value="06">June (06)</option>
+                                    <option value="07">July (07)</option>
+                                    <option value="08">Aug (08)</option>
+                                    <option value="09">Sep (09)</option>
+                                    <option value="10">Oct (10)</option>
+                                    <option value="11">Nov (11)</option>
+                                    <option value="12">Dec (12)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group form-group-sm {% if form.exp_year.errors %}has-error{% endif %}">
+                                <select class="form-control col-sm-2" name="exp_year" id="exp_year" data-stripe="exp-year" data-parsley-errors-messages-disabled="" required="">
+                                    <option value="">Year *</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group form-group-sm {% if form.exp_year.errors %}has-error{% endif %}">
+                                <input placeholder="CVC *" type="number" size="4" id="cvc" name="cvc" class="form-control" data-stripe="cvc" data-parsley-errors-messages-disabled required=""/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group pull-left">
+                        <div class="checkbox">
+                            <label><input type='checkbox' checked="checked" name='sub_newsletter' id='id_sub_newsletter'> Subscribe to CALmatters email updates</label>
+                        </div>
+                    </div>
+                    <div class="form-group pull-right">
+                        <button type="submit" id="submit-button" class="btn btn-black">DONATE</button>
+                    </div>        
+                </div>
+                    
+            </form>
+            
+            <script>
+                
+                Stripe.setPublishableKey('{{ publishable_key }}');
+                
+                // initialize the exp_yer dropdown.
+                var min = new Date().getFullYear(),
+                    max = min + 9,
+                    select = document.getElementById('exp_year');
+                $(function () {
+                    for (var i = min; i<=max; i++){
+                        var opt = document.createElement('option');
+                        opt.value = i;
+                        opt.innerHTML = i;
+                        select.appendChild(opt);
+                    }
+                });
+                
+                // stripe response handler.
+                var stripeResponseHandler = function(status, response) {
+                    var $form = $('#donationForm');
+                    
+                    if (response.error) {
+                        // Show the errors on the form
+                        $form.find('.donationErrors').text(response.error.message);
+                        $form.find('.donationErrors').addClass('alert alert-danger');
+                        $form.find('button').prop('disabled', false);
+                    } else {
+                        // token contains id, last4, and card type
+                        var token = response.id;
+                        // Insert the token into the form so it gets submitted to the server
+                        $form.append($('<input type="hidden" name="stripe_token" />').val(token));
+                        // and re-submit
+                        $form.get(0).submit();
+                    }
+                };
+                
+                // form validation using parsley.
+                $(function () {
+                    $('#donationForm').parsley().on('field:validated', function() {
+                        var ok = $('.parsley-error').length === 0;
+                        $('.bs-callout-info').toggleClass('hidden', !ok);
+                        $('.bs-callout-warning').toggleClass('hidden', ok);
+                    }).on('form:submit', function() {
+                        // On successful parsley validation, stripe get token & validate
+                        var $form = $('#donationForm');
+                        // Disable the submit button to prevent repeated clicks
+                        $form.find('#submit-button').prop('disabled', true);
+                        Stripe.createToken($form, stripeResponseHandler);
+                        // Prevent the form from submitting with the default action
+                        return false;
+                    });
+                });
+                window.ParsleyValidator
+                    .addValidator('phone', function (value, requirement) {
+                        var patt = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i;
+                        return patt.test(value);
+                    }, 32)
+                    .addMessage('en', 'phone', 'This value is incorrect');
+                window.ParsleyValidator
+                    .addValidator('zipcode', function (value, requirement) {
+                        var patt = /^\d{5}(?:[-\s]\d{4})?$/i;
+                        return patt.test(value);
+                    }, 32)
+                    .addMessage('en', 'zipcode', 'This value is incorrect');
+                    
+            
+                // when other is selected, show the other amount input field.
+                $('input[type=radio]').on('change', function () {
+                    if (!this.checked) return
+                    $('.collapse').not($('div.' + $(this).attr('class'))).slideUp();
+                    $('.collapse.' + $(this).attr('class')).slideDown();
+                });
+                
+                // Submit the form using jquery.forms.js
+                var form_options = {
+                    target: '.modal-content',
+                    success: function() { }
+                }
+                $('#donationForm').ajaxForm(form_options);
+
+            </script>
+            
