@@ -15,6 +15,12 @@ PARTNER_TYPES = (
     ('data', 'Data'),
 )
 
+PARTNER_TYPES_FOR_MAP = (
+    ('standard', 'Standard'),
+    ('radio', 'Radio'),
+    ('digital', 'Digital'),
+    ('national', 'National'),
+)
 
 # Todo:  Consider refactoring to a general concept:  organization
 class Partner(Named, TimeStamped):
@@ -62,6 +68,79 @@ class Partner(Named, TimeStamped):
         related_name="partners_by_owner",
         null=True,
         blank=True)
+
+    # Mapbox related
+    # --------------------------------------------------------------------------
+
+    show_on_map = models.BooleanField(
+        default=False,
+        verbose_name=_('Include in Map'),
+        help_text='Check to include on map and side list')
+
+    map_partner_type = models.CharField(
+        max_length=80,
+        choices=PARTNER_TYPES_FOR_MAP,
+        verbose_name=_('Map Partner Type'),
+        default='standard',
+        help_text='Digital and National partners \
+                   DO NOT show on the map, but are listed on the sidebar')
+
+    latitude = models.DecimalField(
+        blank=True, null=True, max_digits=12, decimal_places=8,
+        verbose_name=_('Latitude Decimal'),
+        help_text="""MUST be decimal format not degrees, i.e. 34.05197222 \
+                     not 34°03'07.1"N""")
+
+    longitude = models.DecimalField(
+        blank=True, null=True, max_digits=12, decimal_places=8,
+        verbose_name=_('Longitude Decimal'),
+        help_text="""MUST be decimal format not degrees, i.e. -118.2457222 \
+                     not 118°14'44.6"W<br>
+                     NOTE: North American logitude ending in "W" should be \
+                     a negative value!""")
+
+    short_description = models.TextField(
+        blank=True,
+        verbose_name=_('Map Description Text'),
+        help_text='Short description that shows in the map tooltip on hover')
+
+    # map_thumbnail = FileField(
+    #     verbose_name=_("Map Thumbnail"),
+    #     upload_to=upload_to(
+    #         "blog.BlogPartner.map_thumbnail", "partners"),
+    #     format="Image",
+    #     max_length=255,
+    #     null=True,
+    #     blank=True)
+
+    map_thumbnail = models.ForeignKey(
+        MediaItem,
+        null=True,
+        blank=True,
+        related_name="partner_map_tooltip_thumbnail")
+
+    def get_geojson_dict(self):
+        """
+        Return a dict in GeoJSON Feature format suitable to convert to GeoJSON
+        for use with Mapbox.
+        """
+        geojson_dict = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    self.longitude, # e.g. -118.2457222
+                    self.latitude   # e.g. 34.05197222
+                ]
+            },
+            "properties": {
+                "title": self.title,    # e.g. "LA Times"
+                "slug": self.slug,      # e.g. "la_times",
+                "description": self.short_description,
+                "url": self.get_absolute_url(),
+            }
+        }
+        return geojson_dict
 
     def partner_owner(self):
         """Lookup for admin display
