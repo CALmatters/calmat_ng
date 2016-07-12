@@ -1,3 +1,4 @@
+import json, decimal # to encode python decimal into json
 from copy import copy
 
 from django.utils.timezone import now
@@ -326,3 +327,74 @@ class HomePage(Named, TimeStamped):
         verbose_name = _("Home Page")
         verbose_name_plural = _("Home Pages")
         ordering = ("-go_live_on_date", )
+
+#-------------------------------------------------------------------------------
+#   :: Home Map / Mapbox
+#-------------------------------------------------------------------------------
+
+class HomePartnerMap:
+
+    def __init__(self):
+        """
+        Initialize data part of the Mapbox map:
+            1. Get all the partners for the map
+            2. Build the geojson Python dict object
+            3. Convert geojson Python dict object to JSON string
+        """
+        # Get all mapable partners
+        self.all_partners = Partner.objects.filter(show_on_map=True)
+
+        # Partners with markers on the map
+        self.partners = self.all_partners.filter(
+                map_partner_type__in=['standard', 'radio'])
+
+        # Partners in the Digital/National list (no map marker, but show in list)
+        self.digital_partners = self.all_partners.filter(
+                map_partner_type__in=['digital', 'national'])
+
+        self.geojson_dict = {
+            "type": "FeatureCollection",
+            "features": []
+        }
+
+        # Append each partner to geojson features list for markers
+        self._fill_features_list()
+
+        # Make GeoJSON string to serve to Mapbox
+        self.json = self._convert_to_json()
+
+    def _fill_features_list(self):
+        """
+        Get geojson_dict for each BlogPartner and append to 'features' list
+        in HomePartnerMap.geojson_dict.
+
+        Filter out digital/national parterns if is_digital=True
+        """
+
+        for partner in self.partners:
+            feature_dict = partner.get_geojson_dict()
+            self.geojson_dict['features'].append(feature_dict)
+
+    def _convert_to_json(self):
+        """
+        Uses DecimalEncoder (class below) to encode latitude/longitude
+        DecimalField values from BlogPartner for JSON output.
+        """
+        geojson = json.dumps(self.geojson_dict, cls=DecimalEncoder)
+        return geojson
+
+
+#-------------------------------------------------------------------------------
+#   :: Utility
+#-------------------------------------------------------------------------------
+
+class DecimalEncoder(json.JSONEncoder):
+    """
+    Custom encoder for Python decimals.
+    Used for HomePartnerMap to encode latitude/logitude DecimalFields values
+    to in json.dump().
+    """
+    def default(self, obj):
+        if isinstance(obj, decimal.Decimal):
+            return float(obj)
+        return super(DecimalEncoder, self).default(obj)

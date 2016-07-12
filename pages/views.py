@@ -15,7 +15,7 @@ from django.core.exceptions import PermissionDenied
 from business.models import Partner, Person
 from categories.models import Category
 from pages.models import HomePage, Article, Atom, Project, About
-from pages.models.homepage import RelatedAtom
+from pages.models.homepage import RelatedAtom, HomePartnerMap
 from pages.models.project import (
     ProjectSortableQuotes, ProjectSortablePartners,
     ProjectSortableFeaturedArticle, ProjectSortableRelatedArticle,
@@ -42,10 +42,16 @@ def homepage_view(request, homepage_id=None, template='home.html'):
 
     related_atoms = RelatedAtom.objects.filter(homepage=homepage_obj)
 
+    # Partner Mapbox map
+    partner_map = HomePartnerMap()
+
     context = {
         'home': homepage_obj,
         'related_atoms': related_atoms,
+        'partner_map': partner_map,
     }
+
+    print(partner_map)
 
     return render(request, template, context)
 
