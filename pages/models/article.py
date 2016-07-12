@@ -323,9 +323,9 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
                            kwargs={'custom_post_type': self.custom_post_type})
         else:
             if self.news_analysis:
-                return '/pages/articles/category/news-analysis/'
+                return '/category/news-analysis/'
             else:
-                return '/pages/articles/'
+                return '/articles/'
 
     def get_social_title(self):
         """

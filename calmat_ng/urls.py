@@ -17,17 +17,35 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
 from calmat_ng.views import search
 from pages.views import (homepage_view, columns, columns_single, project_view,
-                         article_list)
+                         article_list, article_view, about_view)
 
 urlpatterns = [
 
     url(r'^admin_tools/', include('admin_tools.urls')),
     url("^$", homepage_view, name="home"),
     url(r'^admin/', admin.site.urls),
+    url('articles/(?P<slug>[a-zA-Z0-9_-]+)/$',
+        article_view,
+        name='article_detail'),
+    url('^(?P<custom_post_type>.*)/all$',
+        article_list,
+        name='article_list_custom_post_type'),
+
+    url('homepage/preview/(?P<homepage_id>\d+)/$',
+        homepage_view,
+        name='home_page_preview'),
+
+    url('about/$', about_view, name='about_view'),
+
+    url('category/(?P<category>.*)/$',
+        article_list,
+        name='article_list_category'),
+
     url("^pages/", include("pages.urls"), name="pages"),
     url("^projects/$",
         project_view,
@@ -54,6 +72,13 @@ urlpatterns = [
         name="columns_single"),
     url("^search/$", search, name="search"),
 
+    #  Redirects for existing urls
+    url("^stories/$", RedirectView.as_view(pattern_name='projects')),
+    url("^stories/(?P<slug>[a-zA-Z0-9\-\_]+)/$",
+        RedirectView.as_view(pattern_name='project_detail')),
+    url("^newsanalysis/$", RedirectView.as_view(pattern_name='columns_list')),
+    url("^newsanalysis/(?P<slug>[a-zA-Z0-9\-\_]+)/$",
+        RedirectView.as_view(pattern_name='columns_single'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
