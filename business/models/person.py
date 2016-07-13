@@ -19,8 +19,15 @@ class Person(Named, TimeStamped, OptionalContentContainer):
 
     user = models.OneToOneField(
         User,
-        help_text='Connects the `author` object to a `User`'
-                  'to pull in the profile photo on a post.',)
+        blank=True,
+        null=True,
+        help_text='Connects the `Person` object to a `User` that can log in '
+                  'If no `User` is selected, you can supply names and '
+                  'email below',)
+
+    first_name = models.CharField('first name', max_length=30, blank=True)
+    last_name = models.CharField('last name', max_length=30, blank=True)
+    email = models.EmailField('email address', blank=True)
 
     job_title = models.CharField(
         max_length=100,
@@ -60,28 +67,27 @@ class Person(Named, TimeStamped, OptionalContentContainer):
         return s
 
     @property
-    def first_name(self):
-        return self.user.first_name
-
-    @property
-    def last_name(self):
-        return self.user.last_name
-
-    @property
-    def email(self):
-        return self.user.email
-
-    @property
     def username(self):
-        return self.user.username
+        if self.user:
+            return self.user.username
+        else:
+            ""
 
     @property
     def full_name(self):
         return "{0} {1}".format(
-            self.user.first_name, self.user.last_name).strip()
+            self.first_name, self.last_name).strip()
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+
+        try:
+            self.first_name = self.first_name or self.user.first_name
+            self.last_name = self.last_name or self.user.last_name
+            self.email = self.email or self.user.email
+        except AttributeError:
+            pass
+
         self.title = self.full_name
         super(Person, self).save(
             force_insert, force_update, using, update_fields)
