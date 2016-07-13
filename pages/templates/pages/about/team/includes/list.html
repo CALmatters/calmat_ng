@@ -25,7 +25,7 @@
                       <h3>{{ person.job_title }}</h3>
                       <h4 {% if person.content %}
                               style="cursor:pointer;" onclick="location.href='{{ person.get_absolute_url }}'"
-                      {% endif %}>{{ person.title }}</h4>
+                      {% endif %}>{{ person.full_name }}</h4>
                       {% if person.twitter or person.email %}
                       <ul class="links">
                         {% if person.twitter %}
