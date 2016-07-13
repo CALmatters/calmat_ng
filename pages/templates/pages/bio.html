@@ -1,7 +1,6 @@
-{% extends "pages/page.html" %}
-{% load static from staticfiles %}
+{% extends "base.html" %}
 
-{% load pages_tags mezzanine_tags %}
+{%  load staticfiles %}
 
 {% block main %}
 
@@ -9,29 +8,31 @@
 
         <div class="pin-holder staff">
 
-            {% include "pages/about/team/includes/sidebar.html" with slug=page.bio.parent.slug|cut:"about/" %}
+            {% include "pages/about/team/includes/sidebar.html" %}
 
+            {%  with person=people|first %}
             <div class="content">
-                <h2>{{ page.bio.parent.title }}</h2>
-                {% if page.bio.featured_image %}
-                    <img src="{{ MEDIA_URL }}{{ page.bio.featured_image }}" alt="" align="right" class="bio_style2_image" />
+                <h2>{{ team_filter }}</h2>
+                {% if person.image %}
+                    <img src="{{ person.image.file.url }}" alt="" align="right" class="bio_style2_image" />
                 {% endif %}
-                <h3>{{ page.bio.custom_jobtitle }}</h3>
-                <h4 style="padding-bottom: 10px;">{{ page.title }}</h4>
-                {% if page.bio.custom_twitter or page.bio.custom_email %}
+                <h3>{{ person.job_title }}</h3>
+                <h4 style="padding-bottom: 10px;">{{ person.full_name }}</h4>
+                {% if person.twitter or person.email %}
                 <ul class="links">
-                    {% if page.bio.custom_twitter %}
-                    <li><a href="http://twitter.com/{{ page.bio.custom_twitter }}/" class="ico-tw">@{{ page.bio.custom_twitter }}</a></li>
+                    {% if person.twitter %}
+                        <li><a href="http://twitter.com/{{ person.twitter }}/" class="ico-tw">@{{ person.twitter }}</a></li>
                     {% endif %}
-                    {% if page.bio.custom_email %}
-                    <li><a href="mailto:{{ page.bio.custom_email }}" class="ico-email">{{ page.bio.custom_email }}</a></li>
+                    {% if person.email %}
+                        <li><a href="mailto:{{ person.email }}" class="ico-email">{{ person.email }}</a></li>
                     {% endif %}
                 </ul>
                 {% endif %}
                 <div class="entry">
-                    {{ page.bio.content|safe }}
+                    {{ person.content|safe }}
                 </div>
             </div>
+            {%  endwith %}
         </div>
 
         {% if recent_stories %}
@@ -46,9 +47,9 @@
                         <div class="image responsive_image">
                             <a href="{{ story.get_absolute_url }}">
                                 {% if story.featured_image %}
-                                    <img src="{{ MEDIA_URL }}/{% thumbnail story.featured_image 158 111 %}" />
+                                    <img src="{{ story.image.thumbnail.158x111 }}" />
                                 {% else %}
-                                    <img src="{% static story.DEFAULT_ARTICLE_IMAGE %}">
+                                    <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
                                 {% endif %}
                             </a>
                         </div>
@@ -71,7 +72,7 @@
                             {% for person in story.related_persons.all %}
                                 {% if person.featured_image %}
                                 <div class="item">
-                                    <a href="#"><img src="{{MEDIA_URL}}{% thumbnail person.featured_image 55 55 %}" alt=""></a>
+                                    <a href="#"><img src="{{ person.image.file.thumbnail.55x55 }}" alt=""></a>
                                     <p><a href="#">{{person.type|upper}}</a></p>
                                     <h4>{{person.name}}</h4>
                                 </div>
@@ -85,7 +86,21 @@
                     {% endfor %}
                 </section>
 
-                {% pagination_for recent_stories %}
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if articles.has_previous %}
+                            <a href="?page={{ articles.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+                        </span>
+
+                        {% if articles.has_next %}
+                            <a href="?page={{ articles.next_page_number }}">next</a>
+                        {% endif %}
+                    </span>
+                </div>
 
             </div><!-- .content -->
 

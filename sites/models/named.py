@@ -43,7 +43,7 @@ class Named(models.Model):
         "Description (135 Chars)", max_length=135, blank=True, default='')
 
     slug = models.CharField(
-        _("URL"),
+        "Slug",
         max_length=2000,
         blank=True,
         null=True,
@@ -79,13 +79,15 @@ class Named(models.Model):
         raise NotImplementedError("The model %s does not have "
                                   "get_absolute_url defined" % name)
 
-    def save(self, *args, **kwargs):
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
         """
         If no slug is provided, generates one before saving.
         """
         if not self.slug:
             self.slug = self.generate_unique_slug()
-        super(Named, self).save(*args, **kwargs)
+        super(Named, self).save(
+            force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return self.title

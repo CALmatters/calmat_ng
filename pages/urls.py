@@ -17,6 +17,5 @@ from django.conf.urls import url
 from pages.views import article_list
 
 urlpatterns = [
-
     url('$', article_list, name='article_list'),
 ]

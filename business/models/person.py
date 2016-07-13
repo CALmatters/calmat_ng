@@ -3,9 +3,12 @@ from django.db import models
 
 from media_manager.models import MediaItem
 from sites.models import Named, TimeStamped
+from sites.models.content_container import OptionalContentContainer
 
 
-class Person(Named, TimeStamped):
+class Person(Named, TimeStamped, OptionalContentContainer):
+
+    exerpt = models.TextField("Excerpt", blank=True, null=True)
 
     staff_member = models.BooleanField(
         default=False, help_text="Staff/Team member")
@@ -48,7 +51,7 @@ class Person(Named, TimeStamped):
 
     def get_absolute_url(self):
         # Todo:  When there's a Author landing page.
-        return '/'
+        return '/about/staff/{}/'.format(self.slug)
 
     def __str__(self):
         s = self.full_name
@@ -77,9 +80,11 @@ class Person(Named, TimeStamped):
         return "{0} {1}".format(
             self.user.first_name, self.user.last_name).strip()
 
-    def save(self, *args, **kwargs):
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
         self.title = self.full_name
-        super(Named, self).save(*args, **kwargs)
+        super(Person, self).save(
+            force_insert, force_update, using, update_fields)
 
     class Meta:
         verbose_name = 'Person'

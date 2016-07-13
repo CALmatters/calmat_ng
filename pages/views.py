@@ -459,3 +459,45 @@ def about_view(request, template='pages/about.html'):
         advisors = Person.objects.filter(advisory_board=True))
 
     return render(request, template, context)
+
+
+def team_list(request,
+              team_filter,
+              individual = None,
+              template='pages/about/team/includes/list.html'):
+
+    context = dict()
+
+    people = None
+    if individual:
+        people = Person.objects.filter(slug=individual)
+        template = 'pages/bio.html'
+
+    if team_filter == 'staff':
+        if not people:
+            people = Person.objects.filter(staff_member=True)
+        title = "Staff"
+    elif team_filter == 'board-of-directors':
+        if not people:
+            people = Person.objects.filter(director_board_member=True)
+        title = 'Board of Directors'
+    elif team_filter == 'advisory-board':
+        if not people:
+            people = Person.objects.filter(advisory_board=True)
+        title = 'Advisory Board'
+    else:
+        title = team_filter
+
+    context = dict(people=people, title=title, team_filter=team_filter)
+
+    return render(request, template, context)
+
+
+
+def bio_view(request, person_slug, template='pages/bio.html'):
+
+    person = Person.objects.get(slug=person_slug)
+
+    context = dict(person=person)
+
+    return render(request, template, context)
