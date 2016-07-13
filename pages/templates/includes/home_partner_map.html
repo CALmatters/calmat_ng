@@ -1,0 +1,73 @@
+<div class="partnerMapboxWrap">
+    <div class="partnerMapHolder">
+        <div id="partnerMap"></div>
+        <div id="partnerInfo">
+            <h3>Select a Partner from the list or the map</h3>
+        </div>
+    </div>
+    <div id="partnerList">
+        <h2>Our Partners</h2>
+        <ul>
+
+            {% comment %}
+                List standard partners on the map WITH markers
+                i.e. show_on_map=True && map_partner_type='standard'
+            {% endcomment %}
+            {% for partner in partner_map.standard_partner_list %}
+                <li><a id="{{ partner.slug }}" href="#" class="maplink"><span>{{ partner.title }}</span></a></li>
+            {% endfor %}
+
+            {% comment %}
+                List radio partners on the map WITH markers
+                i.e. show_on_map=True && map_partner_type='radio'
+                Show tooltip if in_california, else link to partner page
+            {% endcomment %}
+            {% if partner_map.radio_partner_list %}
+                <li><h3>Radio Partners</h3></li>
+                {% for partner in partner_map.radio_partner_list %}
+                    <li>
+                        {% if partner.in_california %}
+                            <a id="{{ partner.slug }}" class="maplink" href="#">
+                                <span>{{ partner.title }}</span>
+                            </a>
+                        {% else %}
+                            <a id="{{ partner.slug }}" class="external" href="{{ partner.get_absolute_url }}" target="_blank">
+                                <span>{{ partner.title }}</span>
+                            </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            {% endif %}
+
+            {% comment %}
+                List digital and national partners, DO NOT have markers
+                i.e. show_on_map=True && map_partner_type__in=['digital', 'national']
+            {% endcomment %}
+            {% if partner_map.digital_national_partner_list %}
+                <li><h3>Digital &amp; National Partners</h3></li>
+                    {% for partner in partner_map.digital_national_partner_list %}
+                        <li>
+                            <a id="{{ partner.slug }}" class="external" href="{{ partner.get_absolute_url }}" target="_blank">
+                                <span>{{ partner.title }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+            {% endif %}
+
+        </ul>
+    </div>
+    <div id="partnerImgList">
+
+        {% for partner in partner_map.map_partners %}
+            {% if partner.map_thumbnail %}
+                <img id="{{ partner.slug }}" src="{{ partner.map_thumbnail.file.url }}" />
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+    <script type="text/javascript">
+        var geoJsonData = {{ partner_map.json|safe }};
+    </script>
+
+</div><!-- .partnerMapboxWrap -->

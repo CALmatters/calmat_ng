@@ -5,6 +5,7 @@
 {%  block extra_head %}
     {% include 'includes/twitter_card_home.html' %}
     {% include 'includes/facebook_open_graph.html' %}
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
 {%  endblock %}
 
 {% block 'home_breadcrumb' %}
@@ -255,6 +256,8 @@
         </div>
     </div>
 
+    {# Partner Map #}
+    {% include "includes/home_partner_map.html" %}
 
     <div class="recent-stories articles">
 
@@ -299,4 +302,9 @@
                 </div><!-- .container -->
             </div><!-- .body -->
 
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    <script type="text/javascript" src="{% static 'theme/frontend/js/home_partner_map.js' %}"></script>
 {% endblock %}

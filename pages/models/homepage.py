@@ -1,10 +1,13 @@
 import json, decimal # to encode python decimal into json
+import operator # reduce Q statements
 from copy import copy
+from functools import reduce
 
 from django.utils.timezone import now
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.db.models import Q
 
 from business.models import Partner, Person
 from fkchooser.fields import PopupForeignKey
@@ -341,16 +344,49 @@ class HomePartnerMap:
             2. Build the geojson Python dict object
             3. Convert geojson Python dict object to JSON string
         """
+
+        ca_lat = { # Approximate CA latitude range
+            'min': 32.0,
+            'max': 44.0,
+        }
+        ca_lon = { # Approximate CA longitude range
+            'min': -125.0,
+            'max': -114.0,
+        }
+
         # Get all mapable partners
-        self.all_partners = Partner.objects.filter(show_on_map=True)
+        self.show_partners = Partner.objects.filter(show_on_map=True)
 
-        # Partners with markers on the map
-        self.partners = self.all_partners.filter(
-                map_partner_type__in=['standard', 'radio'])
+        # Partners with markers on the map: 'standard' or 'radio' AND within california
+        self.map_partners = self.show_partners.filter(
+                map_partner_type__in=['standard', 'radio'],
+                latitude__range=(ca_lat['min'], ca_lat['max']),
+                longitude__range=(ca_lon['min'], ca_lon['max']))
 
-        # Partners in the Digital/National list (no map marker, but show in list)
-        self.digital_partners = self.all_partners.filter(
-                map_partner_type__in=['digital', 'national'])
+        # Sidebar list of standard partners, if in CA
+        self.standard_partner_list = self.show_partners.filter(
+                map_partner_type='standard',
+                latitude__range=(ca_lat['min'], ca_lat['max']),
+                longitude__range=(ca_lon['min'], ca_lon['max']))
+
+        # Sidebar list of radio partners, anywhere
+        self.radio_partner_list = self.show_partners.filter(
+                map_partner_type='radio')
+
+        # Sidebar list of digital/national or standard outside of CA, exclude radio
+        Q_map_partner_type = Q(map_partner_type__in=['digital', 'national'])
+        Q_list = [
+            # 'digital' or 'national'
+            Q(map_partner_type__in=['digital', 'national']),
+            # outside of California
+            Q(latitude__lt=ca_lat['min']),
+            Q(latitude__gt=ca_lat['max']),
+            Q(longitude__lt=ca_lon['min']),
+            Q(longitude__gt=ca_lon['max']),
+        ]
+        self.digital_national_partner_list = self.show_partners.filter(
+            reduce(operator.or_, Q_list)
+        ).exclude(map_partner_type='radio')
 
         self.geojson_dict = {
             "type": "FeatureCollection",
@@ -368,10 +404,10 @@ class HomePartnerMap:
         Get geojson_dict for each BlogPartner and append to 'features' list
         in HomePartnerMap.geojson_dict.
 
-        Filter out digital/national parterns if is_digital=True
+        Filter out digital/national partners.
         """
 
-        for partner in self.partners:
+        for partner in self.map_partners:
             feature_dict = partner.get_geojson_dict()
             self.geojson_dict['features'].append(feature_dict)
 

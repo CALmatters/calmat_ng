@@ -138,9 +138,35 @@ class Partner(Named, TimeStamped):
                 "slug": self.slug,      # e.g. "la_times",
                 "description": self.short_description,
                 "url": self.get_absolute_url(),
+                "partner_type": self.map_partner_type,
+                "icon": {
+                    "iconSize": [12, 12],
+                    "className": "partner-marker-{0}".format(self.map_partner_type),
+                    # "className": 'boom',
+                }
             }
         }
         return geojson_dict
+
+    def _in_california(self):
+        """
+        See if a partner is within California by latitude/longitude.
+        """
+        ca_lat = { # Approximate CA latitude range
+            'min': 32.0,
+            'max': 44.0,
+        }
+        ca_lon = { # Approximate CA longitude range
+            'min': -125.0,
+            'max': -114.0,
+        }
+
+        if ca_lat['min'] <= self.latitude <= ca_lat['max'] and \
+           ca_lon['min'] <= self.longitude <= ca_lon['max']:
+            return True
+        else:
+            return False
+    in_california = property(_in_california)
 
     def partner_owner(self):
         """Lookup for admin display
