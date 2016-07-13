@@ -7859,7 +7859,7 @@ margin:0 11%;
 }
 #partnerMap .leaflet-marker-icon:hover,
 #partnerMap .leaflet-marker-icon.active {
-    background-color: #f47522;
+    background-color: #0eb8c8;
     z-index: 2000 !important;
     box-shadow: 0 3px 4px rgba(0,0,0,0.3);
 }
