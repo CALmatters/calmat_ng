@@ -1,5 +1,5 @@
 
-
+{%  load staticfiles %}
         <div class="search-title results se">
             <div class="content">
                 <span class="search_results_for">Search results for</span>
@@ -31,7 +31,7 @@
                                 {% if result.image %}
                                     <img src="{{ result.image.file.thumbnail.158x111 }}" />
                                 {% else %}
-                                    <img src="{{ settings.DEFAULT_ARTICLE_IMAGE }}" />
+                                    <img src="{% static result.DEFAULT_ARTICLE_IMAGE  %}" />
                                 {% endif %}
                             </a>
                         </div>
@@ -55,7 +55,7 @@
                 <h2>Articles</h2>
                 <section>
 
-                {% for result in article_results.object_list %}
+                {% for result in article_results %}
                     <article class="
                             {% if forloop.counter > 5 %}hide{% endif %}
                             {% if forloop.counter == 5 %}hidden_after{% endif %}
@@ -68,7 +68,7 @@
                                     {% if result.image %}
                                         <img src="{{ result.image.file.thumbnail.158x111 }}" />
                                     {% else %}
-                                        <img src="{{ settings.DEFAULT_ARTICLE_IMAGE }}" />
+                                        <img src="{% static result.DEFAULT_ARTICLE_IMAGE  %}" />
                                     {% endif %}
                                 </a>
                             </div>
@@ -106,7 +106,7 @@
                                     {% if result.image %}
                                         <img src="{{ result.image.file.thumbnail.158x111 }}" />
                                     {% else %}
-                                        <img src="{{ settings.DEFAULT_ARTICLE_IMAGE }}" />
+                                        <img src="{% static result.DEFAULT_ARTICLE_IMAGE  %}" />
                                     {% endif %}
                                 </a>
                             </div>
