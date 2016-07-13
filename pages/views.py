@@ -15,6 +15,7 @@ from django.core.exceptions import PermissionDenied
 from business.models import Partner, Person
 from categories.models import Category
 from pages.models import HomePage, Article, Atom, Project, About
+from pages.models.about import AboutPartner
 from pages.models.homepage import RelatedAtom, HomePartnerMap
 from pages.models.project import (
     ProjectSortableQuotes, ProjectSortablePartners,
@@ -451,12 +452,25 @@ def about_view(request, template='pages/about.html'):
     about_instance = About.objects.all().order_by("-created")[0]
     recent_press = Article.objects.published().filter(
         custom_post_type="press").order_by("-publish_date")[:3]
+    partner_logos = AboutPartner.objects.filter(about=about_instance)
+    partner_logos = partner_logos.order_by('_order')
+
     context = dict(
         about=about_instance,
         recent_press=recent_press,
+        partner_logos=partner_logos,
         staff=Person.objects.filter(staff_member=True),
         directors=Person.objects.filter(director_board_member=True),
         advisors = Person.objects.filter(advisory_board=True))
+
+    return render(request, template, context)
+
+
+def about_partners_list(request, template='pages/about/partners.html'):
+
+    partners = Partner.objects.all()
+
+    context = dict(partners=partners)
 
     return render(request, template, context)
 
@@ -466,11 +480,23 @@ def team_list(request,
               individual = None,
               template='pages/about/team/includes/list.html'):
 
-    context = dict()
-
     people = None
+    articles = None
     if individual:
         people = Person.objects.filter(slug=individual)
+        recent_articles = Article.objects.published().filter(
+            authors=people).order_by('-publish_date')
+
+        print(recent_articles)
+
+        paginator = Paginator(recent_articles, 5)
+        try:
+            articles = paginator.page(request.GET.get("page", 1))
+        except PageNotAnInteger:
+            articles = paginator.page(1)
+        except EmptyPage:
+            articles = paginator.page(paginator.num_pages)
+
         template = 'pages/bio.html'
 
     if team_filter == 'staff':
@@ -488,16 +514,10 @@ def team_list(request,
     else:
         title = team_filter
 
-    context = dict(people=people, title=title, team_filter=team_filter)
-
-    return render(request, template, context)
-
-
-
-def bio_view(request, person_slug, template='pages/bio.html'):
-
-    person = Person.objects.get(slug=person_slug)
-
-    context = dict(person=person)
+    context = dict(
+        people=people,
+        title=title,
+        team_filter=team_filter,
+        recent_articles=articles)
 
     return render(request, template, context)

@@ -22,7 +22,8 @@ from django.views.generic import RedirectView
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
 from calmat_ng.views import search
 from pages.views import (homepage_view, columns, columns_single, project_view,
-                         article_list, article_view, about_view, team_list)
+                         article_list, article_view, about_view, team_list,
+                         about_partners_list)
 
 urlpatterns = [
 
@@ -32,7 +33,7 @@ urlpatterns = [
     url('articles/(?P<slug>[a-zA-Z0-9_-]+)/$',
         article_view,
         name='article_detail'),
-    url('^(?P<custom_post_type>.*)/all$',
+    url('^articles/(?P<custom_post_type>.*)/all$',
         article_list,
         name='article_list_custom_post_type'),
 
@@ -41,6 +42,7 @@ urlpatterns = [
         name='home_page_preview'),
 
     url('about/$', about_view, name='about_view'),
+    url('about/partners/$', about_partners_list, name='about_view'),
     url('about/(?P<team_filter>[a-zA-Z0-9\-\_]+)/(?P<individual>[a-zA-Z0-9\-\_]+)/$',
         team_list,
         name='about_team'),
