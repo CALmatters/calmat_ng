@@ -55,8 +55,9 @@ INSTALLED_APPS = [
     'sites',
     'pages',
     'business',
+    'employment',
     'media_manager',
-    'debug_toolbar'
+    'debug_toolbar',
 ]
 
 MIDDLEWARE_CLASSES = [

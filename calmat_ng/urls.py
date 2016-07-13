@@ -21,6 +21,7 @@ from django.views.generic import RedirectView
 
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
 from calmat_ng.views import search
+from employment.views import jobs_view, jobs_listing_view
 from pages.views import (homepage_view, columns, columns_single, project_view,
                          article_list, article_view, about_view, team_list,
                          about_partners_list)
@@ -49,6 +50,9 @@ urlpatterns = [
     url('about/(?P<team_filter>[a-zA-Z0-9\-\_]+)/$',
         team_list,
         name='about_individual'),
+
+    url('jobs/?$', jobs_view, name='job_view'),
+    url('job/(?P<slug>[a-zA-Z0-9\-\_]+)/?$', jobs_listing_view, name='job_view'),
 
     url('category/(?P<category>.*)/$',
         article_list,
