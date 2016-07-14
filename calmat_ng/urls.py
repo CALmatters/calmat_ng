@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import RedirectView
 
+from business.views import subscribe
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
 from calmat_ng.views import search
 from employment.views import jobs_view, jobs_listing_view
@@ -61,8 +62,6 @@ urlpatterns = [
 
     # url("^pages/", include("pages.urls"), name="pages"),
 
-    url("^bus/", include("business.urls"), name="business"),
-
     url("^projects/$",
         project_view,
         name="projects"),
@@ -94,7 +93,10 @@ urlpatterns = [
         RedirectView.as_view(pattern_name='project_detail')),
     url("^newsanalysis/$", RedirectView.as_view(pattern_name='columns_list')),
     url("^newsanalysis/(?P<slug>[a-zA-Z0-9\-\_]+)/$",
-        RedirectView.as_view(pattern_name='columns_single'))
+        RedirectView.as_view(pattern_name='columns_single')),
+
+    url('subscribe/$', subscribe, name='subscribe'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

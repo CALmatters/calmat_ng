@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    <div class="newsletter">
+        <h2>CALmatters Email Updates</h2>
+        <div class="form_holder">
+            <p>Sign up for new stories, and updates on the ones you care about, as they are released. You will receive one or two emails a week.</p>
+            <form action="/subscribe/" id="id-subscribe-form" method="post">
+                <div class="form-group">
+                    <label for="id_email" class="control-label  requiredField">Email<span class="asteriskField">*</span></label>
+                    <div class="controls ">
+                        <div class="input-group">
+                            <input class="textinput textInput form-control placeholder" id="id_email" name="email" placeholder="Enter your email" type="email">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn">SUBMIT</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

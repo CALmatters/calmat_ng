@@ -6,5 +6,5 @@ django-debug-toolbar
 uwsgi
 pytz
 django-admin-tools
-django-mailchimp-v1.3
+mailchimp
 # stripe==1.29.1

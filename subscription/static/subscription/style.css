@@ -1,0 +1,211 @@
+/*------------------------------------------------------------------------------
+    :: Follow Article / Follow Article Form
+------------------------------------------------------------------------------*/
+
+.follow_wrap {
+    border: 8px solid #231f20;
+    width: 580px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.follow_wrap h1 {
+    position: absolute;
+    left: -9999px;
+}
+
+.follow_wrap > div,
+.follow_wrap p,
+.follow_wrap form {
+    padding-left: 3em;
+    padding-right: 3em;
+}
+
+.follow_wrap .follow_logo {
+    margin: 0 auto;
+    padding-top: 2em;
+}
+.follow_wrap .follow_logo img {
+    max-width: 230px;
+    width: 70%;
+}
+
+.follow_featured_image {
+    padding-top: 1.5em;
+}
+
+.follow_featured_image img {
+    width: 100%;
+    height: auto;
+}
+
+.follow_wrap p {
+    font-family: 'ff-meta-serif-web-pro';
+    font-size: 1.1em;
+    line-height: 1.4em;
+    padding-top: 1.1em;
+    padding-bottom: 0.6em;
+}
+
+.follow_wrap form {
+    padding-bottom: 1em;
+}
+
+.follow_wrap form button {
+    background: #231f20;
+    border-radius: 0;
+    height: 37px;
+    color: white;
+}
+
+.follow_wrap form button:hover,
+.follow_wrap form button:focus {
+    color: white;
+}
+
+.follow_wrap .asteriskField {
+    color: white;
+}
+.follow_wrap input[type="text"] {
+    width: 100%;
+    margin: 0;
+    padding-right: 100px;
+    color: #000;
+    font-family: "Neusa";
+    font-size: 16px;
+    padding: 0 10px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    height: 37px;
+}
+
+.follow_wrap ::-webkit-input-placeholder { color: #a4a5a9;}
+.follow_wrap :-moz-placeholder { color: #a4a5a9;}
+.follow_wrap ::-moz-placeholder { color: #a4a5a9;}
+.follow_wrap :-ms-input-placeholder { color: #a4a5a9;}
+
+/*--------------- Thank You ---------------*/
+
+.follow_thanks {
+    padding-bottom: 1.8em;
+}
+
+.follow_thanks h1 {
+    color: black;
+    position: static;
+    left: auto;
+    font-family: "GearedSlab";
+    font-size: 3.3em;
+    padding: 0.8em 0 0;
+}
+
+.follow_thanks .see_more {
+    padding: 0 3em;
+}
+.follow_thanks .see_more a {
+    width: 190px;
+    display: block;
+    margin: 1.8em auto 0.8em;
+    font-family: "GearedSlab";
+    color: white;
+    background: #33a9ed;
+    font-size: 1.3em;
+    padding: 0.9em 0 0.8em;
+    letter-spacing: 1px;
+    line-height: 1em;
+}
+
+.follow_thanks .social a {
+    display: block;
+    font-family: "GearedSlab";
+    font-size: 1.5em;
+    border: 1px solid #231f20;
+    width: 49%;
+    color: black;
+    padding: 1.3em 0 0.9em 2.7em;
+    text-align: left;
+    position: relative;
+    opacity: 0.4;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.follow_thanks .social a:hover,
+.follow_thanks .social a:focus {
+    opacity: 1;
+}
+.follow_thanks .social a.facebook {
+    float: left;
+}
+.follow_thanks .social a.twitter {
+    float: right;
+    padding-left: 3.5em;
+}
+.follow_thanks .facebook span {
+    position: absolute;
+    font-size: 1.2em;
+    top: 0.75em;
+    left: 0.6em;
+}
+.follow_thanks .twitter span {
+    position: absolute;
+    font-size: 1.6em;
+    left: 0.6em;
+    top: 0.6em;
+}
+.follow_thanks .social span:hover:before,
+.follow_thanks .social span:focus:before {
+    opacity: 1;
+}
+.follow_thanks .social .facebook span:hover:before,
+.follow_thanks .social .facebook span:focus:before {
+    color: #3b5998;
+}
+.follow_thanks .social .twitter span:hover:before,
+.follow_thanks .social .twitter span:focus:before {
+    color: #00bcf6;
+}
+
+/*--------------- Media Queries ---------------*/
+
+@media screen and (max-width: 689px){
+    .follow_wrap {
+        width: auto;
+        margin: 0 3em;
+    }
+}
+@media screen and (max-width: 645px){
+    .follow_wrap h1 {
+        font-size: 2em;
+    }
+    .follow_thanks .social {
+        font-size: 0.7em;
+        padding: 0 1.4em;
+    }
+}
+@media screen and (max-width: 540px){
+    body,
+    .follow_wrap {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .follow_wrap p {
+        font-size: 1em;
+    }
+    .follow_thanks .see_more a {
+        width: 100%;
+        font-size: 1.1em;
+    }
+}
+@media screen and (max-width: 500px){
+    .follow_wrap > div,
+    .follow_wrap p,
+    .follow_wrap form,
+    .follow_thanks .see_more {
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+}
+
