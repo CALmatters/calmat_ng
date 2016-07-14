@@ -196,7 +196,7 @@ def columns(request):
 
     first_published_columnist_author = None
     authors = Person.objects.all().order_by(
-        'user__last_name', 'user__first_name')
+        'last_name', 'first_name')
 
     for author in authors:
         #  Todo:  Refactor into column object.  Column.getArticles()
@@ -231,7 +231,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     # require unique together on first/last
 
     if not slug:
-        return HttpResponseRedirect('/newsanalysis/')
+        return HttpResponseRedirect('/')
 
     first_name = slug.split('-', 1)[0]  # first half of split a -
     first_name = first_name.capitalize()
@@ -242,7 +242,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     columnist = columnist[0] if columnist else False
 
     if not columnist:
-        return HttpResponseRedirect('/newsanalysis/')
+        return HttpResponseRedirect('/politics/')
 
     # Todo:  Refactor into column object.  Column.getArticles()
     articles = Article.objects.published().filter(
@@ -254,7 +254,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     # need to fix the prev-next links first to filter out "unpublished"
     # columnists before uncommenting the next lines
     # if not articles:
-    #    return HttpResponseRedirect('/newsanalysis/')
+    #    return HttpResponseRedirect('/politics/')
 
     paginator = Paginator(articles, settings.ARTICLES_PER_PAGE)
 
@@ -273,7 +273,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     bio = columnist
 
     if not bio:
-        return HttpResponseRedirect('/newsanalysis/')
+        return HttpResponseRedirect('/politics/')
 
     # Get prev/next columnists that have written newsanalysis articles
     authors = Person.objects.filter(

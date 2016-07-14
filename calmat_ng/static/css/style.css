@@ -3738,6 +3738,7 @@ input:-moz-placeholder { font-size: 1em !important; }
     overflow: hidden;
 }
 .newsletter_as_shortcode .newsletter {
+    max-width: none;
     border: none;
     border-top: 3px solid #f27522;
     border-bottom: 3px solid #f27522;
@@ -3967,6 +3968,7 @@ input:-moz-placeholder { font-size: 1em !important; }
 }
 @media screen and (max-width: 570px){
     .newsletter_as_shortcode .newsletter {
+        max-width: none;
         padding-left: 5%;
         padding-right: 5%;
     }
