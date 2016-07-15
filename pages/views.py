@@ -447,6 +447,26 @@ def project_view(request, slug=None, template='project.html'):
     return render(request, template, context)
 
 
+def atom_detail(request, slug, template="atom_post_detail.html"):
+
+    atom_post = Atom.objects.get(slug=slug)
+
+    if not atom_post:
+        return Http404
+
+    more_atoms = atom_post.related.all()
+
+    context = {
+        'this_view_name': 'atom_detail',
+        'atom': atom_post,
+        'editable_obj': atom_post,
+        'CURRENT_HOST': request.get_host(),
+        'more_atoms': more_atoms,
+    }
+
+    return render(request, template, context)
+
+
 def about_view(request, template='pages/about.html'):
 
     about_instance = About.objects.all().order_by("-created")[0]
