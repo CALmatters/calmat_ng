@@ -3,13 +3,14 @@ import mailchimp
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import render
 from django.views.generic import FormView, TemplateView
 from django.views.generic.edit import CreateView
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
 
-from .models import StripeCustomer
+from .models import Donate, StripeCustomer
 from .forms import StripeCustomerForm
 from .mixins import StripeMixin
 
@@ -17,6 +18,24 @@ from pages.models import About
 
 # TODO: import new Subscriber model to add to subscription -- MS 7.11.16
 # from subscription.models import Subscriber
+
+def DonatePageView(request, template='donation/donate.html'):
+
+    about_instance = About.objects.all().order_by("-created")[0]
+
+    donate_instance = Donate.objects.all().order_by("-created")[0]
+
+    # TODO: get testimonials (where is it in ng?) - MS 7.14.16
+    testimonials = []
+
+    context = dict(
+        about=about_instance,
+        donate=donate_instance,
+        testimonials=testimonials,
+    )
+
+    return render(request, template, context)
+
 
 class DonationSuccessView(TemplateView):
     template_name = 'donation/donation_success.html'
@@ -27,7 +46,7 @@ class StripeCustomerView(StripeMixin, FormView):
     model = StripeCustomer
     template_name = 'donation/donation_form.html'
     form_class = StripeCustomerForm
-    success_url = reverse_lazy('blog_views_support_us')
+    success_url = reverse_lazy('donate') # in pages/views.py
     
     def get_context_data(self, **kwargs):
         # return the amount and About to the context
@@ -38,6 +57,7 @@ class StripeCustomerView(StripeMixin, FormView):
         return context
     
     def create_stripe_charge(self):
+        print('create_stripe_charge()')
         # create the Stripe charge. NEED BETTER ERROR HANDELING.
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
@@ -46,7 +66,7 @@ class StripeCustomerView(StripeMixin, FormView):
                 currency = "usd",
                 customer = self.customer.id,
             )
-            messages.info(self.request, 'Thank you for your donation of $%s to CALmatters.' % self.amount)
+            messages.info(self.request, 'Thank you for your donation of ${0} to CALmatters.'.format(self.amount))
         except:
             messages.info(self.request, 'There was a problem processing your payment.')
     

@@ -2,6 +2,43 @@ from django.contrib import admin
 
 from .models import *
 
+#-------------------------------------------------------------------------------
+#   :: Donate page
+#-------------------------------------------------------------------------------
+
+class DonateAdmin(admin.ModelAdmin):
+
+    class Media:
+        js = (
+            'https://cdn.tinymce.com/4/tinymce.js',
+            'theme/js/tinymce_ng.js'
+        )
+        css = {
+            'all': (
+                )
+        }
+
+    list_display = ('name', 'donation_values',)
+    fieldsets = (
+        ('Page Title', {
+            'fields': ('name',)
+            }
+        ),
+        ('Orange Box Content', {
+            'fields': ('donate_message','donate_message_image',)
+            }
+        ),
+        ('Donation Section', {
+            'fields': ('donate_section_top', 'donation_values', 
+                       'donate_section_bottom',)
+            }
+        ),
+        ('Tell Section', {
+            'fields': ('tell_section',)
+            }
+        ),
+    )
+admin.site.register(Donate, DonateAdmin)
 
 #-------------------------------------------------------------------------------
 #   :: StripeCustomer (fullstack labs)

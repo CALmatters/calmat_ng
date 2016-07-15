@@ -1,11 +1,12 @@
+{% load static %}
 
-            <link rel="stylesheet" media="all" href="{{ STATIC_URL }}theme/frontend/css/bootstrap.min.css">
-            <link rel="stylesheet" media="all" href="{{ STATIC_URL }}theme/frontend/css/font-awesome-4.5.0/css/font-awesome.min.css">
-            <link rel="stylesheet" media="all" href="{{ STATIC_URL }}theme/frontend/css/general.css">
-            <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}theme/frontend/css/style.css?version=1.4.7">
-            <link rel="stylesheet" media="print" href="{{ STATIC_URL }}theme/frontend/css/print.css?version=1.4.7">
+            <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/bootstrap.min.css' %}">
+            <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/font-awesome-4.5.0/css/font-awesome.min.css' %}">
+            <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/general.css' %}">
+            <link rel="stylesheet" media="screen" href="{% static 'css/style.css?version=1.4.7' %}">
+            <link rel="stylesheet" media="print" href="{% static 'theme/frontend/css/print.css?version=1.4.7' %}">
 
-            <form class="clearfix" method="post" action="/donation/" id="donationForm" data-parsley-validate="">
+            <form class="clearfix" method="post" action="{% url 'donate' %}" id="donationForm" data-parsley-validate="">
                 {% csrf_token %}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -85,9 +86,9 @@
                     
                     <div class="form-group form-group-sm {% if form.stripe_amount.errors %}has-error{% endif %}">
                         <label>DONATION AMOUNT *</label><br/>
-                        <label class="radio-inline"><input {% if amount == '100' %}checked{% endif %}{% if not amount %}checked{% endif %} type="radio" id="id_stripe_amount_0" name="stripe_amount" value="100">$100</label>
-                        <label class="radio-inline"><input {% if amount == '250' %}checked{% endif %} type="radio" id="id_stripe_amount_1" name="stripe_amount" value="250">$250</label>
-                        <label class="radio-inline"><input {% if amount == '1000' %}checked{% endif %} type="radio" id="id_stripe_amount_2" name="stripe_amount" value="1000">$1000</label>
+                        <label class="radio-inline"><input {% if amount == '25' %}checked{% endif %}{% if not amount %}checked{% endif %} type="radio" id="id_stripe_amount_0" name="stripe_amount" value="100">$100</label>
+                        <label class="radio-inline"><input {% if amount == '100' %}checked{% endif %} type="radio" id="id_stripe_amount_1" name="stripe_amount" value="250">$250</label>
+                        <label class="radio-inline"><input {% if amount == '250' %}checked{% endif %} type="radio" id="id_stripe_amount_2" name="stripe_amount" value="1000">$1000</label>
                         <label class="radio-inline"><input {% if amount == 'other' %}checked{% endif %} type="radio" id="id_stripe_amount_3" name="stripe_amount" value="0" class="other">Other</label>
                     </div>
                     
@@ -144,7 +145,14 @@
                 </div>
                     
             </form>
-            
+
+            {# DELETE THESE #}
+            <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+            <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+            <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+            <script type="text/javascript" src="/static/js/parsley.min.js"></script>
+            {# DELETE THESE #}
+
             <script>
                 
                 Stripe.setPublishableKey('{{ publishable_key }}');
@@ -161,7 +169,32 @@
                         select.appendChild(opt);
                     }
                 });
-                
+
+
+
+// TODO: delete the bellow test content - MS 7.14.16
+jQuery(document).ready(function(){
+    $form = jQuery('#donationForm');
+    $form.find('#first_name').val('Test');
+    $form.find('#last_name').val('Testlastname');
+    $form.find('#stripe_email').val('meshores1@gmail.com');
+    $form.find('#phone').val('5555555555')
+    $form.find('#address1').val('555 Street');
+    $form.find('#city').val('Sacramento');
+    $form.find('#state').val('CA');
+    $form.find('#zip_code').val('55555');
+    $form.find('#card').val('4242424242424242');
+    $form.find('#exp_month').val('01');
+    $form.find('#exp_year').val('2018');
+    $form.find('#cvc').val('333');
+});
+
+
+
+
+
+
+
                 // stripe response handler.
                 var stripeResponseHandler = function(status, response) {
                     var $form = $('#donationForm');
@@ -197,13 +230,13 @@
                         return false;
                     });
                 });
-                window.ParsleyValidator
+                window.Parsley
                     .addValidator('phone', function (value, requirement) {
                         var patt = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i;
                         return patt.test(value);
                     }, 32)
                     .addMessage('en', 'phone', 'This value is incorrect');
-                window.ParsleyValidator
+                window.Parsley
                     .addValidator('zipcode', function (value, requirement) {
                         var patt = /^\d{5}(?:[-\s]\d{4})?$/i;
                         return patt.test(value);

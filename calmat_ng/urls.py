@@ -21,8 +21,8 @@ from django.contrib import admin
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
 from calmat_ng.views import search
 from pages.views import (homepage_view, columns, columns_single, project_view,
-                         article_list)
-# from donation.views import StripeCustomerView TODO: turn on donation view -- MS 7.11.16
+                         article_list,)
+from donation.views import DonatePageView, StripeCustomerView
 
 urlpatterns = [
 
@@ -54,7 +54,8 @@ urlpatterns = [
         columns_single,
         name="columns_single"),
     url("^search/$", search, name="search"),
-    # url("^donate/$", StripeCustomerView, name="donate"), TODO: Turn on donations page -- MS 7.11.16
+    url("^donate/(?P<amount>[a-zA-Z0-9\-\_]+)/$", StripeCustomerView.as_view(), name="donation_form"),
+    url("^donate/$", DonatePageView, name="donate"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
