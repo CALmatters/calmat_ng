@@ -50,10 +50,7 @@
 
                 <div class="date">{{ article.publish_date|date:"m.d.Y" }}</div>
             </div>
-            {%  comment %}
-                TODO: show_follow_button=True, when working
-            {%  endcomment %}
-            {% include 'includes/social_buttons.html' with show_follow_button=False %}
+            {% include 'includes/social_buttons.html' with show_follow_button=True %}
         </div>
         {% if article.partners %}
         <div class="partner-author">

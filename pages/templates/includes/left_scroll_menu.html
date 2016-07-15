@@ -10,16 +10,12 @@
                                 <li class="home-link" style="border-top:none; border-bottom: 1px solid #221f1f;"><a href="/">HOME</a></li>
                             </ul>
                         </div>
-                        <h3 class="story" style="padding-top:9px; padding-bottom:0px; line-height:30px;">STORIES</h3>
+                        <h3 class="story" style="padding-top:9px; padding-bottom:0px; line-height:30px;">PROJECTS</h3>
                         <div class="info info-home" style="max-height:175px; overflow-y:scroll; padding-left:10px;">
                             <ul>
-                                {% comment %}
-                                {% get_all_stories as breadcrumb_stories %}
-                                {% for loop_story in breadcrumb_stories %}
-                                    <li class="columns-link"><a href="/stories/{{ loop_story.slug }}/">{{ loop_story.title }}</a></li>
-                                {% endfor %}
-                                {% endcomment %}
-                                <li class="columns-link"><a href="/stories/{{ loop_story.slug }}/">Stories Coming</a></li>
+                                {% for project in projects %}
+                                    <li class="columns-link"><a href="/project/{{ project.slug }}/">{{ project.title }}</a></li>
+                                {% endfor %}                             
                             </ul>
                         </div>
                         <div class="info info-home" style="display:block; padding-top:5px;">
@@ -31,7 +27,7 @@
                             {% endcomment %}
                                 <li class="about-link"><a href="/about/">ABOUT</a></li>
                                 <li class="contact-link"><a href="/contact/">CONTACT US</a></li>
-                                <li class="support-us-link"><a href="/support-us/">SUPPORT US</a></li>
+                                <li class="support-us-link"><a href="/support-us/">DONATE</a></li>
                             </ul>
                         </div>
                     </div>
@@ -49,8 +45,7 @@
                     </div>
                     <div class="form-widget subscribe">
                         <h4>SIGN UP FOR THE WEEKLY EMAIL</h4>
-                        <form action="/" method="POST" onsubmit="newsletter_ajax_submit(this);">
-                        {% comment %}<form action="{% url 'subscribe' %}" method="POST" onsubmit="newsletter_ajax_submit(this);">{% endcomment %}
+                        <form action="{% url 'subscribe' %}" method="POST" onsubmit="subscribe_submit(this); return true;">
                             <input placeholder="Enter your email" type="email" name="email">
                             <button type="submit">SUBMIT</button>
                         </form>
