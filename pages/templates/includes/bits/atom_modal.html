@@ -11,10 +11,10 @@
                 Todo:  Clean the atom text in a menthod on Atom
                 {%  endcomment %}
                 {% if atom.modal_layout == 'featured_left' %}
-                    <img src="{{ atom.featured_image.url }}"
+                    <img src="{{ atom.image.file.url }}"
                          alt="{{ atom.headline }}"
-                         width="{{ atom.featured_image.width }}"
-                         height="{{ atom.featured_image.height }}">
+                         width="{{ atom.image.file.width }}"
+                         height="{{ atom.image.file.height }}">
                 {% elif atom.modal_layout == 'content_left' %}
                     {{ atom.content|safe }}
                 {% elif atom.modal_layout == 'content_html_left' %}
@@ -30,7 +30,9 @@
                 {% if atom.modal_layout_right == 'desc_right' %}
                     {{ atom.description }}
                 {% elif atom.modal_layout_right == 'content_right' %}
-{#                    atom.content|richtext_filters|safe#}
+                    {% comment %}
+                        atom.content|richtext_filters|safe
+                    {%  endcomment %}
                     {{ atom.content|safe }}
                 {% elif atom.modal_layout_right == 'empty_right' %}
                 

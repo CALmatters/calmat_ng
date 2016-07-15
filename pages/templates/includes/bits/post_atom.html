@@ -1,20 +1,20 @@
-{% if display_type == 'image' and atom.featured_image %}
+{% if display_type == 'image' and atom.image %}
 
     <div>
 
     {% if MEDIA_URL %}
-        <a href="{{ atom.featured_image.url }}"
+        <a href="{{ atom.image.file.url }}"
            title="{{ atom.headline }}"
            class="magnific" data-mfp-src="#atompop_{{ atom.id }}">
-            <img src="{{ atom.featured_image.url }}"
+            <img src="{{ atom.image.file.url }}"
                  alt="{{ atom.headline }}"
-                 width="{{ atom.featured_image.width }}"
-                 height="{{ atom.featured_image.height }}">
+                 width="{{ atom.image.file.width }}"
+                 height="{{ atom.image.file.height }}">
         </a>
     {% else %}
-        <a href="{{ atom.featured_image.url }}"
+        <a href="{{ atom.image.file.url }}"
            title="{{ atom.headline }}" class="magnific" data-mfp-src="#atompop_{{ atom.id }}">
-            <img src="{{ atom.featured_image.url }}" alt="{{ atom.headline }}">
+            <img src="{{ atom.image.file.url }}" alt="{{ atom.headline }}">
         </a>
     {% endif %}
     

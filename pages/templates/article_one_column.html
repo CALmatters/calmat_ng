@@ -2,7 +2,9 @@
 {% load static from staticfiles %}
 
 
-{% block meta_title %}{{ article.meta_title }}{% endblock %}
+{% block meta_title %}
+    {{ article.meta_title }}
+{% endblock %}
 
 {%  comment %}
 {% block meta_keywords %}{% metablock %}
@@ -13,6 +15,7 @@
 {%  endcomment %}
 
 {% block extra_head %}
+    <!-- ONE COLUMN -->
     {% include 'includes/twitter_card.html' %}
     {% include 'includes/facebook_open_graph.html' %}
 {% endblock %}
