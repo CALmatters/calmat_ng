@@ -5,6 +5,7 @@
 {%  block extra_head %}
     {% include 'includes/twitter_card_home.html' %}
     {% include 'includes/facebook_open_graph.html' %}
+    <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
 {%  endblock %}
 
 {% block 'home_breadcrumb' %}
@@ -108,11 +109,29 @@
 
     <div id="news_partners_basics">
         <div id="news_partners">
+
             <div class="newsletter">
                 <h2>Sign up for more</h2>
                 <div class="form_holder">
-                    <form  action="/subscribe/" onsubmit="newsletter_ajax_submit(this);" id="id-subscribe-form" method="post" ><div class="form-group" ><label for="id_email" class="control-label  requiredField">
-                    Email<span class="asteriskField">*</span></label><div class="controls "><div class="input-group"><input class="textinput textInput form-control" id="id_email" name="email" placeholder="Enter your email" type="email" /> <span class="input-group-btn"><button  type="submit" class="btn">SUBMIT</button> </span></div></div></div></form>
+
+                    <form  action="/subscribe/"
+                           onsubmit="subscribe_submit(this); return true;"
+                           id="id-subscribe-form"
+                           method="post">
+                        <div class="form-group" >
+                            <label for="id_email" class="control-label  requiredField">
+                                Email<span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls ">
+                                <div class="input-group">
+                                    <input class="textinput textInput form-control" id="id_email" name="email" placeholder="Enter your email" type="email" />
+                                    <span class="input-group-btn"><button  type="submit" class="btn">SUBMIT</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>  
             </div>
 
@@ -255,6 +274,8 @@
         </div>
     </div>
 
+    {# Partner Map #}
+    {% include "includes/home_partner_map.html" %}
 
     <div class="recent-stories articles">
 
@@ -299,4 +320,9 @@
                 </div><!-- .container -->
             </div><!-- .body -->
 
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+    <script type="text/javascript" src="{% static 'theme/frontend/js/home_partner_map.js' %}"></script>
 {% endblock %}

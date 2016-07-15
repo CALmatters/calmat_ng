@@ -2,6 +2,8 @@ from copy import copy
 
 from django.contrib import admin
 from django import forms
+from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 
 from categories.mixins import AdminCatListMixin
 from fkchooser.admin import FKChooserAdminMixin
@@ -58,8 +60,8 @@ class AtomAdminForm(forms.ModelForm):
         exclude = ()
 
 
-class AtomAdmin(
-    AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin, admin.ModelAdmin):
+class AtomAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
+                admin.ModelAdmin):
 
     form = AtomAdminForm
 
@@ -84,12 +86,13 @@ class AtomAdmin(
         'default_display_type',
         'admin_thumb_reference',
         'category_list',
-        # 'admin_link',
+        'view_url'
     )
     filter_horizontal = ('categories',)
     list_filter = ("categories",)
     list_editable = ('status', 'default_display_type',)
     search_fields = ('title', 'headline', 'content')
+    readonly_fields = ('view_url', )
 
     # inlines = (RelatedAtomsInline,)
 
@@ -97,6 +100,7 @@ class AtomAdmin(
         ('Content', {"fields": (
             "title",
             "headline",
+            "view_url",
             'description',
         )}),
         ('Featured Image', {'fields': (

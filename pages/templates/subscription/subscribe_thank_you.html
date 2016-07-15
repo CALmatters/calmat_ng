@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{%  load staticfiles %}
+
+{% block meta_title %}Thank You{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+
+        <div class="stories">
+            <h1>Thank You.</h1>
+            <br />
+            <p class="ffmeta">You'll receive an email to complete your subscription.</p>
+            <br />
+            <a class="btn-primary" href="/">&laquo; Home</a>
+
+        </div>
+        <br /><br /><br /><br />
+
+        {% if more_stories %}
+        <div class="more-stories">
+                
+            <div class="content">
+                <h2>Most Popular Articles</h2>
+
+                <section>
+                    {% for story in more_stories %}
+                        <article>
+                            <div class="image">
+                                <a href="{{ story.get_absolute_url }}">
+                                    {% if story.image %}
+                                        <img src="{{ story.image.file.thumbnail.158x111 }}" />
+                                    {% else %}
+                                        <img src="{% static story.DEFAULT_ARTICLE_IMAGE %}" />
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="wrap">
+                                <div class="meta">
+                                </div>
+                                <h3><a href="{{ story.get_absolute_url }}">{{ story.title }}</a></h3>
+
+                                {% if story.get_authors %}
+                                    <p class="by">by {{ story.get_authors|safe }}</p>
+                                {% endif %}
+
+                            </div>
+                        </article>
+                    {% endfor %}
+
+                </section>
+            </div><!-- .content -->
+        </div><!-- .more-stories -->
+        {% endif %}
+
+    </div>
+
+{% endblock %}

@@ -29,6 +29,8 @@ ATOM_MODAL_LAYOUT_RIGHT = (
 
 class Atom(Named, Publishable, OptionalContentContainer, TimeStamped):
 
+    reverse_name = 'atom_detail'
+
     headline = models.CharField(
         max_length=200,
         blank=True,

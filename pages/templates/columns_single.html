@@ -37,11 +37,11 @@
                                     <div class="meta">
 
                                             {%  if  blog_post.news_analysis %}
-                                                <a href="/pages/category/news-analysis/">
+                                                <a href="/category/news-analysis/">
                                                 POLITICS
                                                 </a>
                                             {%  else %}
-                                                <a href="/pages/articles/{{ blog_post.custom_post_type }}/all">
+                                                <a href="/articles/{{ blog_post.custom_post_type }}/all">
                                                     {{ blog_post.get_custom_post_type_title|upper }}
                                                 </a>
                                             {%  endif  %}
@@ -83,7 +83,7 @@
         <div class="right-c-s">
             <div class="staff minibio">
                 <div class="image">
-                    <img src="{{ bio.profile_image.url }}" alt="">
+                    <img src="{{ bio.image.file.url }}" alt="">
                 </div>
                 <h2>{{ full_name }}</h2>
                 <ul class="links">

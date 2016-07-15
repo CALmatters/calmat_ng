@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+	<div class="pin-holder mission">
+
+		<aside class="sidebar">
+			<div class="stories">
+	            <h1 style="padding-top:25px; padding-bottom:25px;">Jobs</h1>
+	        </div>
+		</aside>
+		<!-- / sidebar -->
+
+		<div class="content">
+{#			<h2>Mission</h2>#}
+			<div class="entry">
+				{{jobpage.content|safe}}
+			</div>
+		</div>
+
+	</div>
+	<div class="pin-holder team teams">
+		<div class="content">
+			<h2><span>Opportunities</span></h2>
+				<ul>
+                    {% for job in jobpage.job_listings.all %}
+                        <li>
+                            <a href="{{ job.get_absolute_url }}">
+                                <span class="over">
+                                    <span class="title">{{ job.title }}</span>
+                                </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+				</ul>
+			</div>
+		</div>
+
+
+
+{% endblock %}

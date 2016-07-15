@@ -1,6 +1,5 @@
-{% extends "pages/page.html" %}
+{% extends "base.html" %}
 
-{% load pages_tags mezzanine_tags blog_tags %}
 
 {% block main %}
 
@@ -26,16 +25,16 @@
 
         <div class="logos">
             <ul id="filter-con">
-                {% blog_partners_all as partners %}
                 {% for partner in partners %}
                     <li class="item item-{{ partner.partner_type }}">
 
                         {% if partner.link_to_articles %}
-                            <a href="{% url 'article_list_partner' partner.slug %}" style="background-image: url({{ MEDIA_URL }}{{ partner.featured_image_large }})" title="{{ partner.title }}">
+                            <a href="{% url 'article_list_partner' partner.slug %}"
+                               style="background-image: url({{ partner.image_large.file.url }})" title="{{ partner.title }}">
                                 {{ partner.title }}
                             </a>
                         {% else %}
-                            <span style="background-image: url({{ MEDIA_URL }}{{ partner.featured_image_large }})">
+                            <span style="background-image: url({{ partner.image_large.file.url }})">
                                 {{ partner.title }}
                             </span>
                         {% endif %}

@@ -19,6 +19,16 @@ class PersonAdminForm(forms.ModelForm):
 
 class PersonAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
 
+    class Media:
+        js = (
+            'https://cdn.tinymce.com/4/tinymce.min.js',
+            'theme/js/tinymce_ng_specific_text_areas.js'
+        )
+        css = {
+            'all': (
+                )
+        }
+
     form = PersonAdminForm
 
     list_display = [
@@ -35,19 +45,34 @@ class PersonAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
     list_display_links = ('username', 'first_name','last_name')
     list_editable = ['staff_member', 'director_board_member', 'advisory_board',]
 
-    readonly_fields = ('email', 'slug', 'full_name',)
+    readonly_fields = ('full_name',)
     fieldsets = (
-        ('General', {
+        ('Idenfication', {
             'fields': (
                 'user',
+                'first_name',
+                'last_name',
+                'email',
                 'full_name',
+                'slug',
+            )}),
+        ('Details', {
+            'fields': (
                 'job_title',
                 'image',
-                'email',
                 'staff_member',
                 'director_board_member',
                 'advisory_board',
+                'exerpt',
             )}),
+        ('Content', {
+            'fields': (
+                'content',
+            ),
+            'classes': (
+                "tinymce-editable",
+            )
+        }),
         ('Social',
          {'fields': (
              'twitter',

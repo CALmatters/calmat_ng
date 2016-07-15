@@ -1,3 +1,5 @@
+from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -42,8 +44,10 @@ class Named(models.Model):
     description = models.TextField(
         "Description (135 Chars)", max_length=135, blank=True, default='')
 
+    reverse_name = None
+
     slug = models.CharField(
-        _("URL"),
+        "Slug",
         max_length=2000,
         blank=True,
         null=True,
@@ -79,13 +83,28 @@ class Named(models.Model):
         raise NotImplementedError("The model %s does not have "
                                   "get_absolute_url defined" % name)
 
-    def save(self, *args, **kwargs):
+    def view_url(self):
+        """Admin function for list_display or fieldsets"""
+
+        if self.slug:
+            url = reverse(self.reverse_name, kwargs=dict(slug=self.slug))
+            return mark_safe(
+                "<a href={url} target='_blank'>"
+                "<i class='fa fa-open'></i>{slug}</a>".format(
+                    url=url, slug="CLICK TO VIEW"))
+        else:
+            return ""
+    view_url.short_description = "View in browser"
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
         """
         If no slug is provided, generates one before saving.
         """
         if not self.slug:
             self.slug = self.generate_unique_slug()
-        super(Named, self).save(*args, **kwargs)
+        super(Named, self).save(
+            force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return self.title

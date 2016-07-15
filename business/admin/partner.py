@@ -11,6 +11,7 @@ class PartnerAdminForm(forms.ModelForm):
         widgets = {
             'image': PopupSelect(),
             'image_large': PopupSelect(),
+            'map_thumbnail': PopupSelect(),
         }
         exclude = ()
 
@@ -35,7 +36,9 @@ class PartnerAdmin(admin.ModelAdmin):
         'partner_type',
         'link_to_articles',
         'partner_owner',
-        'featured')
+        'featured',
+        'show_on_map',
+        'map_partner_type',)
 
     search_fields = ("title", )
     list_editable = ("featured", )
@@ -57,10 +60,16 @@ class PartnerAdmin(admin.ModelAdmin):
             "fields": (
                 "categories", )
         }),
+        ("Map", {
+            "fields": (
+                "show_on_map", "map_partner_type", "latitude", "longitude",
+                "short_description", "map_thumbnail", )
+        }),
     )
     filter_horizontal = ('categories',)
 
     # filters in right column
-    list_filter = ("categories", "featured", "partner_type", "owner")
+    list_filter = ("categories", "featured", "partner_type", "owner",
+                   "show_on_map", "map_partner_type")
 
 admin.site.register(Partner, PartnerAdmin)

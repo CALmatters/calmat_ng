@@ -3,6 +3,7 @@ from copy import copy
 
 import time
 from django.utils.timezone import now
+from django.conf import settings
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -323,9 +324,9 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
                            kwargs={'custom_post_type': self.custom_post_type})
         else:
             if self.news_analysis:
-                return '/pages/articles/category/news-analysis/'
+                return '/category/news-analysis/'
             else:
-                return '/pages/articles/'
+                return '/articles/'
 
     def get_social_title(self):
         """
@@ -396,7 +397,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
         # Process named shortcodes
 
         #  Todo:  Reimplement when subscription is added back in
-        # content = self.process_shortcode_subscription_form(content)
+        content = self.process_shortcode_subscription_form(content)
 
         # Process atom shortcodes.
         content = self.process_atom_shortcodes(content)
@@ -405,27 +406,25 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
     processed_content = property(get_processed_content)
 
     #  Todo:  Reimplement when subscription is added back in
-    # def process_shortcode_subscription_form(self, text):
-    #
-    #     # we need a subscription object for the template below
-    #     from subscription.forms import SubscribeForm
-    #     subscribe = SubscribeForm(None, article_slug=self.slug)
-    #
-    #     # replace the shortcode, sending in the variables needed
-    #     found, text = self.process_shortcode(
-    #         text,
-    #         'subscription_form',
-    #         'blog/includes/bits/shortcode_subscription_form.html', {
-    #             'settings': settings,
-    #             'subscribe': subscribe
-    #     })
-    #
-    #     # if found in the content, don't show at bottom of page
-    #     if found:
-    #         self.show_subscription_form = False
-    #
-    #     return text
+    def process_shortcode_subscription_form(self, text):
 
+        # we need a subscription object for the template below
+        # from subscription.forms import SubscribeForm
+        # subscribe = SubscribeForm(None, article_slug=self.slug)
+
+        # replace the shortcode, sending in the variables needed
+        found, text = self.process_shortcode(
+            text,
+            'subscription_form',
+            'subscription/shortcode_subscription_form.html',
+            dict(article_slug=self.slug)
+        )
+
+        # if found in the content, don't show at bottom of page
+        if found:
+            self.show_subscription_form = False
+
+        return text
 
     @staticmethod
     def process_shortcode(text, code_name, template_path, context_dict=None):

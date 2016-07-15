@@ -15,7 +15,8 @@ from django.core.exceptions import PermissionDenied
 from business.models import Partner, Person
 from categories.models import Category
 from pages.models import HomePage, Article, Atom, Project, About
-from pages.models.homepage import RelatedAtom
+from pages.models.about import AboutPartner
+from pages.models.homepage import RelatedAtom, HomePartnerMap
 from pages.models.project import (
     ProjectSortableQuotes, ProjectSortablePartners,
     ProjectSortableFeaturedArticle, ProjectSortableRelatedArticle,
@@ -42,10 +43,16 @@ def homepage_view(request, homepage_id=None, template='home.html'):
 
     related_atoms = RelatedAtom.objects.filter(homepage=homepage_obj)
 
+    # Partner Mapbox map
+    partner_map = HomePartnerMap()
+
     context = {
         'home': homepage_obj,
         'related_atoms': related_atoms,
+        'partner_map': partner_map,
     }
+
+    print(partner_map)
 
     return render(request, template, context)
 
@@ -189,7 +196,7 @@ def columns(request):
 
     first_published_columnist_author = None
     authors = Person.objects.all().order_by(
-        'user__last_name', 'user__first_name')
+        'last_name', 'first_name')
 
     for author in authors:
         #  Todo:  Refactor into column object.  Column.getArticles()
@@ -224,7 +231,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     # require unique together on first/last
 
     if not slug:
-        return HttpResponseRedirect('/newsanalysis/')
+        return HttpResponseRedirect('/')
 
     first_name = slug.split('-', 1)[0]  # first half of split a -
     first_name = first_name.capitalize()
@@ -235,7 +242,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     columnist = columnist[0] if columnist else False
 
     if not columnist:
-        return HttpResponseRedirect('/newsanalysis/')
+        return HttpResponseRedirect('/politics/')
 
     # Todo:  Refactor into column object.  Column.getArticles()
     articles = Article.objects.published().filter(
@@ -247,7 +254,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     # need to fix the prev-next links first to filter out "unpublished"
     # columnists before uncommenting the next lines
     # if not articles:
-    #    return HttpResponseRedirect('/newsanalysis/')
+    #    return HttpResponseRedirect('/politics/')
 
     paginator = Paginator(articles, settings.ARTICLES_PER_PAGE)
 
@@ -266,7 +273,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
     bio = columnist
 
     if not bio:
-        return HttpResponseRedirect('/newsanalysis/')
+        return HttpResponseRedirect('/politics/')
 
     # Get prev/next columnists that have written newsanalysis articles
     authors = Person.objects.filter(
@@ -440,16 +447,97 @@ def project_view(request, slug=None, template='project.html'):
     return render(request, template, context)
 
 
+def atom_detail(request, slug, template="atom_post_detail.html"):
+
+    atom_post = Atom.objects.get(slug=slug)
+
+    if not atom_post:
+        return Http404
+
+    more_atoms = atom_post.related.all()
+
+    context = {
+        'this_view_name': 'atom_detail',
+        'atom': atom_post,
+        'editable_obj': atom_post,
+        'CURRENT_HOST': request.get_host(),
+        'more_atoms': more_atoms,
+    }
+
+    return render(request, template, context)
+
+
 def about_view(request, template='pages/about.html'):
 
     about_instance = About.objects.all().order_by("-created")[0]
     recent_press = Article.objects.published().filter(
         custom_post_type="press").order_by("-publish_date")[:3]
+    partner_logos = AboutPartner.objects.filter(about=about_instance)
+    partner_logos = partner_logos.order_by('_order')
+
     context = dict(
         about=about_instance,
         recent_press=recent_press,
+        partner_logos=partner_logos,
         staff=Person.objects.filter(staff_member=True),
         directors=Person.objects.filter(director_board_member=True),
         advisors = Person.objects.filter(advisory_board=True))
+
+    return render(request, template, context)
+
+
+def about_partners_list(request, template='pages/about/partners.html'):
+
+    partners = Partner.objects.all()
+
+    context = dict(partners=partners)
+
+    return render(request, template, context)
+
+
+def team_list(request,
+              team_filter,
+              individual = None,
+              template='pages/about/team/includes/list.html'):
+
+    people = None
+    articles = None
+    if individual:
+        people = Person.objects.filter(slug=individual)
+        recent_articles = Article.objects.published().filter(
+            authors=people).order_by('-publish_date')
+
+        print(recent_articles)
+
+        paginator = Paginator(recent_articles, 5)
+        try:
+            articles = paginator.page(request.GET.get("page", 1))
+        except PageNotAnInteger:
+            articles = paginator.page(1)
+        except EmptyPage:
+            articles = paginator.page(paginator.num_pages)
+
+        template = 'pages/bio.html'
+
+    if team_filter == 'staff':
+        if not people:
+            people = Person.objects.filter(staff_member=True)
+        title = "Staff"
+    elif team_filter == 'board-of-directors':
+        if not people:
+            people = Person.objects.filter(director_board_member=True)
+        title = 'Board of Directors'
+    elif team_filter == 'advisory-board':
+        if not people:
+            people = Person.objects.filter(advisory_board=True)
+        title = 'Advisory Board'
+    else:
+        title = team_filter
+
+    context = dict(
+        people=people,
+        title=title,
+        team_filter=team_filter,
+        recent_articles=articles)
 
     return render(request, template, context)

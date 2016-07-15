@@ -55,6 +55,11 @@ class CustomIndexDashboard(Dashboard):
             models=('django.contrib.*',),
         ))
 
+        self.children.append(modules.ModelList(
+            _('Jobs'),
+            models=('employment.*',),
+        ))
+
         # append a recent actions module
         # self.children.append(modules.RecentActions(_('Recent Actions'), 5))
 

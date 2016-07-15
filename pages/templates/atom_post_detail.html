@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% load site_tags %}
+
+{% block meta_title %}{{ atom.meta_title }}{% endblock %}
+
+{% block meta_description %}
+    {{ atom.description }}
+    {% comment %}
+        {% metablock %}
+        {% endmetablock %}
+    {%  endcomment %}
+{% endblock %}
+
+{% block title %}{{ atom.headline }}{% endblock %}
+
+{% comment %}
+    {% block breadcrumb_menu %}
+        {% for category in atom.categories.all %}
+            <li class="active"><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+        {% endfor %}
+    {% endblock %}
+{%  endcomment %}
+
+
+{% block article_detail_featured_image %}
+    <div class="post-image type-2">
+        <div class="container">
+            <h1>{{ atom.headline }}</h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block main %}
+
+    <div class="content">
+        <div class="post-meta">
+            <div class="author">
+                <div class="date">{{ atom.publish_date|date:"m.d.Y" }}</div>
+            </div>
+            {% include 'includes/social_buttons.html' with show_follow_button=False %}
+        </div>
+        
+        <div class="entry">
+            {{ atom.content|safe }}
+            {{ atom.embedded_content|safe }}
+        </div>
+
+        {% if atom.partners.all %}
+        <div class="partner-author">
+            <p>IN PARTNERSHIP WITH</p>
+            {% for partner in atom.partners.all %}
+                {% if partner.link_to_articles %}
+                    <a href="{{ partner.get_absolute_url }}">
+                        <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
+                    </a>
+                {% else %}
+                    <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
+                {% endif %}
+
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <!-- / content -->
+
+
+    {% comment %}
+        From Article.atom.related_name
+    {%  endcomment %}
+    {% if atom.blogposts.all %}
+    <div class="pin-holder separate">
+        <aside class="sidebar">
+            <div class="related-side">
+                <h4>RELATED STORIES</h4>
+                {% for post in atom.blogposts.all|slice:':3' %}
+                <article>
+                    {% if post.image %}
+                    <div class="image">
+                        <img src="{{ post.image.file.thumbnail.60x60 }}" alt="">
+                    </div>
+                    {% endif %}
+                    <div class="wrap">
+                        <div class="meta">
+                            <a href="#">{{ post.get_custom_post_type_title|upper }}</a> {{ post.publish_date|date:'m.d.Y' }}
+                        </div>
+                        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+
+                        {% if post.get_authors %}
+                        <p class="by">by {{post.get_authors|safe}}</p>
+                        {% endif %}
+
+                    </div>
+                </article>
+                {% endfor %}
+
+            </div>
+        </aside>
+        <!-- / sidebar -->
+    </div>
+    {% endif %}
+
+    {% if more_atoms %}
+    <div class="pin-holder more-stories">
+        <div class="content">
+            <h2>More Atoms</h2>
+
+            <section>
+                {% for atom in more_atoms %}
+                    <article>
+                        {% if atom.image %}
+                        <div class="image">
+                            <img src="{{ atom.image.file.thumbnail.700x700}}" alt="">
+                        </div>
+                        {% endif %}
+                        <div class="wrap">
+                            <div class="meta"><a href="{{ atom.get_absolute_url }}">ATOM</a> {{ atom.publish_date|date:'m.d.Y' }}</div>
+                            <h3><a href="{{ atom.get_absolute_single_url }}">{{ atom }}</a></h3>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+
+        </div>
+        <!-- / content -->
+    
+        <aside class="sidebar">
+        </aside>
+        <!-- / sidebar -->
+    </div>
+    {% endif %}  
+
+{% endblock %}

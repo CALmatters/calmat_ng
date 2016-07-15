@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'pages',
     'business',
     'donation',
+    'employment',
     'media_manager',
     'debug_toolbar',
 ]
@@ -194,6 +195,11 @@ ARTICLES_PER_PAGE = 20
 IMAGES_UPLOADED_MAX_WIDTH_PX = 1200
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+
+SEND_SUBSCRIPTIONS_TO_MAIL_CHIMP = False
+MAILCHIMP_API_KEY = ''
+MAILCHIMP_MAIN_LIST_ID = ''
+MAILCHIMP_GROUPING_ID = 11649  # u'Subject Interest'
 
 try:
     from .local_settings import *
