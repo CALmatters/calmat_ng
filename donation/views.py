@@ -14,6 +14,7 @@ from .models import Donate, StripeCustomer
 from .forms import StripeCustomerForm
 from .mixins import StripeMixin
 
+from business.models import Testimonial
 from pages.models import About
 
 # TODO: import new Subscriber model to add to subscription -- MS 7.11.16
@@ -21,12 +22,14 @@ from pages.models import About
 
 def DonatePageView(request, template='donation/donate.html'):
 
+    # Latest About page object
     about_instance = About.objects.all().order_by("-created")[0]
 
+    # Latest Donation page object
     donate_instance = Donate.objects.all().order_by("-created")[0]
 
-    # TODO: get testimonials (where is it in ng?) - MS 7.14.16
-    testimonials = []
+    # Get published Testimonials
+    testimonials = Testimonial.objects.filter(status=2)
 
     context = dict(
         about=about_instance,
@@ -52,12 +55,13 @@ class StripeCustomerView(StripeMixin, FormView):
         # return the amount and About to the context
         context = super(StripeCustomerView, self).get_context_data(**kwargs)
         context['about'] = About.objects.latest()
+        context['donation_values'] = Donate.objects.latest().donation_values()
+        print(context['donation_values'])
         if 'amount' in self.kwargs:
             context['amount'] = self.kwargs['amount']
         return context
     
     def create_stripe_charge(self):
-        print('create_stripe_charge()')
         # create the Stripe charge. NEED BETTER ERROR HANDELING.
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
@@ -100,7 +104,6 @@ class StripeCustomerView(StripeMixin, FormView):
         return True, subscriber, mc_subscriber_type
     
     def form_valid(self, form):
-        
         stripe.api_key = settings.STRIPE_SECRET_KEY
         
         self.token = form.cleaned_data['stripe_token']

@@ -6,7 +6,7 @@
             <link rel="stylesheet" media="screen" href="{% static 'css/style.css?version=1.4.7' %}">
             <link rel="stylesheet" media="print" href="{% static 'theme/frontend/css/print.css?version=1.4.7' %}">
 
-            <form class="clearfix" method="post" action="{% url 'donate' %}" id="donationForm" data-parsley-validate="">
+            <form class="clearfix" method="post" action="{% url 'donate_form' %}" id="donationForm" data-parsley-validate="">
                 {% csrf_token %}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -86,10 +86,19 @@
                     
                     <div class="form-group form-group-sm {% if form.stripe_amount.errors %}has-error{% endif %}">
                         <label>DONATION AMOUNT *</label><br/>
-                        <label class="radio-inline"><input {% if amount == '25' %}checked{% endif %}{% if not amount %}checked{% endif %} type="radio" id="id_stripe_amount_0" name="stripe_amount" value="100">$100</label>
-                        <label class="radio-inline"><input {% if amount == '100' %}checked{% endif %} type="radio" id="id_stripe_amount_1" name="stripe_amount" value="250">$250</label>
-                        <label class="radio-inline"><input {% if amount == '250' %}checked{% endif %} type="radio" id="id_stripe_amount_2" name="stripe_amount" value="1000">$1000</label>
-                        <label class="radio-inline"><input {% if amount == 'other' %}checked{% endif %} type="radio" id="id_stripe_amount_3" name="stripe_amount" value="0" class="other">Other</label>
+
+                        {% for value in donation_values %}
+                        <label class="radio-inline">
+                            <input {% if amount == value.val %}checked{% endif %}
+                                {% if forloop.first and not amount %}checked{% endif %}
+                                type="radio"
+                                id="id_stripe_amount_{{ forloop.counter }}"
+                                name="stripe_amount"
+                                value="{{ value.val }}">
+                            {{ value.text }}
+                        </label>
+                        {% endfor %}
+
                     </div>
                     
                     <div class="form-group form-group-sm {% if amount != 'other' %}collapse{% endif %} other {% if form.stripe_amount_other.errors %}has-error{% endif %}">
@@ -146,13 +155,6 @@
                     
             </form>
 
-            {# DELETE THESE #}
-            <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-            <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-            <script type="text/javascript" src="/static/js/jquery.form.js"></script>
-            <script type="text/javascript" src="/static/js/parsley.min.js"></script>
-            {# DELETE THESE #}
-
             <script>
                 
                 Stripe.setPublishableKey('{{ publishable_key }}');
@@ -171,13 +173,13 @@
                 });
 
 
-
+{% comment %}
 // TODO: delete the bellow test content - MS 7.14.16
 jQuery(document).ready(function(){
     $form = jQuery('#donationForm');
     $form.find('#first_name').val('Test');
     $form.find('#last_name').val('Testlastname');
-    $form.find('#stripe_email').val('meshores1@gmail.com');
+    $form.find('#stripe_email').val('test@test.com');
     $form.find('#phone').val('5555555555')
     $form.find('#address1').val('555 Street');
     $form.find('#city').val('Sacramento');
@@ -188,11 +190,7 @@ jQuery(document).ready(function(){
     $form.find('#exp_year').val('2018');
     $form.find('#cvc').val('333');
 });
-
-
-
-
-
+{% endcomment %}
 
 
                 // stripe response handler.

@@ -47,10 +47,10 @@
             <br/>
 
             <div class="row">
-                {% for value in donate.donation_values_list %}
+                {% for value in donate.donation_values %}
                     <div class="col-xs-6 col-sm-3">
                         <div class="btn-group btn-group-lg btn-group-justified">
-                            <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donation_form' value.val %}" data-target="#remoteModal">{{ value.text }}</a>
+                            <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' value.val %}" data-target="#remoteModal">{{ value.text }}</a>
                         </div><br/>
                     </div>
                 {% endfor %}
@@ -61,22 +61,22 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-3">
                     <div class="btn-group btn-group-lg btn-group-justified">
-                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donation_form' 25 %}" data-target="#remoteModal">$25</a>
+                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' 25 %}" data-target="#remoteModal">$25</a>
                     </div><br/>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                     <div class="btn-group btn-group-lg btn-group-justified">
-                         <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donation_form' 100 %}" data-target="#remoteModal">$100</a>
+                         <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' 100 %}" data-target="#remoteModal">$100</a>
                     </div><br/>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                     <div class="btn-group btn-group-lg btn-group-justified">
-                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donation_form' 250 %}" data-target="#remoteModal">$250</a>
+                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' 250 %}" data-target="#remoteModal">$250</a>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                     <div class="btn-group btn-group-lg btn-group-justified">
-                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donation_form' 'other' %}" data-target="#remoteModal">Other</a>
+                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' 'other' %}" data-target="#remoteModal">Other</a>
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
         
         <aside class="sidebar">
             <div style="margin-top:80px;">
-                {% include "pages/includes/../subscription/sidebar_subscribe.html" %}
+                {% include "subscription/sidebar_subscribe.html" %}
             </div>
         </aside>
         <!-- / sidebar -->
@@ -139,7 +139,7 @@
                     <div class="item testimonial {% if forloop.first %}active{% endif %}">
                         <div class="row">
                             <div class="col-xs-4 col-sm-3 col-md-4">
-                                <img style="width:100px;" class="img-responsive img-rounded" src="{{ MEDIA_URL }}">
+                                <img style="width:100px;" class="img-responsive img-rounded" src="{{ t.testimonial_image.file.url }}">
                             </div>
                             <div class="col-xs-8 col-sm-9 col-md-8 name-outer">
                                 <div class="name-inner">

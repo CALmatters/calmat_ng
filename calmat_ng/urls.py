@@ -88,8 +88,9 @@ urlpatterns = [
         columns_single,
         name="columns_single"),
     url("^search/$", search, name="search"),
-    url("^donate/(?P<amount>[a-zA-Z0-9\-\_]+)/$", StripeCustomerView.as_view(), name="donation_form"),
     url("^donate/$", DonatePageView, name="donate"),
+    url("^donation/(?P<amount>[a-zA-Z0-9\-\_]+)/$", StripeCustomerView.as_view(), name="donate_amount"),
+    url("^donation/$", StripeCustomerView.as_view(), name="donate_form"),
 
     #  Redirects for existing urls
     url("^stories/$", RedirectView.as_view(pattern_name='projects')),

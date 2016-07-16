@@ -11,6 +11,13 @@ from sites.models import TimeStamped
 
 from .signals import delete_stripe_customer
 
+STRIPE_AMOUNT_CHOICES = (
+    ('25', '$25'),
+    ('100','$100'),
+    ('250','$250'),
+    ('0','Other'),
+)
+
 #-------------------------------------------------------------------------------
 #   :: Donation Page
 #-------------------------------------------------------------------------------
@@ -47,14 +54,6 @@ class Donate(TimeStamped):
         blank=True,
         default="",
         help_text='Content box for the Donate section below the blue links.')
-
-    donation_values = models.CharField(
-        verbose_name='Donation values',
-        max_length=80,
-        blank=True,
-        default="25,100,250,Other",
-        help_text='Enter donation values separated by commas. DO NOT INCLUDE "$". \
-                   Commas will be added to values over $1,000 automatically.')
     
     tell_section = models.TextField(
         verbose_name='Tell your friends',
@@ -73,25 +72,17 @@ class Donate(TimeStamped):
             self.name = 'Main Donate Page Settings'
         super(Donate, self).save(*args, **kwargs)
 
-    def donation_values_list(self):
+    def donation_values(self):
         """
-        Return a list of donation values to be output in the blue buttons on
-        the Donation page. Values >= 1,000 will have commas added by humanize
-        Django tempage tag.
+        Convert STRIPE_AMOUNT_CHOICES to a list of dicts for use as
+        links for donation amounts.
         """
-        values = self.donation_values.split(',')
 
-        values_list = []
-        for v in values:
-            try:
-                val = int(v)
-                text = '${0}'.format(val)
-                values_list.append({'val': val, 'text': text})
-            except ValueError:
-                values_list.append({'val': v.lower(), 'text': v.capitalize()})
+        values = []
+        for c in STRIPE_AMOUNT_CHOICES:
+            values.append({'val': c[0], 'text': c[1]})
 
-        print(values_list)
-        return values_list
+        return values
 
 #-------------------------------------------------------------------------------
 #   :: Stripe Related
@@ -101,12 +92,13 @@ class StripeCustomer(models.Model):
     """
     
     """
-    AMOUNT_CHOICES = [
+    AMOUNT_CHOICES = (
+        ('25','$25'),
         ('100','$100'),
         ('250','$250'),
-        ('1000','$1000'),
         ('0','Other'),
-    ]
+    )
+
     stripe_id = models.CharField('Stripe ID',max_length=140,blank=True,null=True)
     stripe_email = models.EmailField('email')
     
