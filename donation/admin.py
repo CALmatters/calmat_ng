@@ -18,7 +18,7 @@ class DonateAdmin(admin.ModelAdmin):
                 )
         }
 
-    list_display = ('name', 'donation_values',)
+    list_display = ('name',)
     fieldsets = (
         ('Page Title', {
             'fields': ('name',)
@@ -29,8 +29,7 @@ class DonateAdmin(admin.ModelAdmin):
             }
         ),
         ('Donation Section', {
-            'fields': ('donate_section_top', 'donation_values', 
-                       'donate_section_bottom',)
+            'fields': ('donate_section_top', 'donate_section_bottom',)
             }
         ),
         ('Tell Section', {
