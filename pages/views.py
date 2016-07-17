@@ -47,10 +47,13 @@ def homepage_view(request, homepage_id=None, template='home.html'):
     # Partner Mapbox map
     partner_map = HomePartnerMap()
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_default_dict(homepage_obj.get_absolute_url())
+
     context = {
         'home': homepage_obj,
         'related_atoms': related_atoms,
         'partner_map': partner_map,
+        'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
     }
 
     print(partner_map)
@@ -125,6 +128,8 @@ def article_list(
     except EmptyPage:
         articles = paginator.page(paginator.num_pages)
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_default_dict("") #todo: make this share correct page instead of default homepage
+
     context = {
         'this_view_name': 'article_list',
         'articles': articles,
@@ -136,6 +141,7 @@ def article_list(
         'custom_post_type': custom_post_type,
         'atom': atom,
         'partner': partner,
+        'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
     }
     templates.append(template)
     return render(request, templates, context)
@@ -157,11 +163,14 @@ def article_view(request, slug, template="article_two_column.html"):
 
     # subscribe = SubscribeForm(request.POST or None, article_slug=slug)
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_dict(article.title, article.social_title, article.get_absolute_url())
+
     context = {
         'this_view_name': 'article_detail',
         'article': article,
         'editable_obj': article,
         'more_articles': more_articles,
+        'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
         # 'CURRENT_HOST': CURRENT_HOST,
         # 'subscribe': subscribe,
     }
@@ -314,6 +323,8 @@ def columns_single(request, slug=None, template='columns_single.html'):
         next_text = authors[idx]['user__first_name'] + ' ' + authors[idx]['user__last_name']
         next = {'slug': next_slug, 'text': next_text}
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_default_dict("") #todo: make this share correct page instead of default homepage
+
     context = {
         'bio': bio,
         'columnist': columnist,
@@ -321,6 +332,7 @@ def columns_single(request, slug=None, template='columns_single.html'):
         'articles': articles,
         'prev': prev,
         'next': next,
+        'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
     }
 
     return render(request, template, context)
@@ -420,6 +432,8 @@ def project_view(request, slug=None, template='project.html'):
               reader_reactions_articles, updates_articles),
         key=lambda instance: instance.publish_date, reverse=True)
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_dict(project.title, project.title, project.get_absolute_url())
+
     context = {
         'project': project,
         'featured_articles': featured_articles[:3],
@@ -443,6 +457,7 @@ def project_view(request, slug=None, template='project.html'):
         # 'tweets': tweets,
         'prev': prev,
         'next': next,
+        'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
     }
 
     return render(request, template, context)
@@ -457,12 +472,15 @@ def atom_detail(request, slug, template="atom_post_detail.html"):
 
     more_atoms = atom_post.related.all()
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_dict(atom_post.headline, atom_post.get_social_title(), atom_post.get_absolute_url())
+
     context = {
         'this_view_name': 'atom_detail',
         'atom': atom_post,
         'editable_obj': atom_post,
         'CURRENT_HOST': request.get_host(),
         'more_atoms': more_atoms,
+        'formatted_sharing_urls_dict': formatted_sharing_urls_dict,        
     }
 
     return render(request, template, context)
@@ -476,13 +494,17 @@ def about_view(request, template='pages/about.html'):
     partner_logos = AboutPartner.objects.filter(about=about_instance)
     partner_logos = partner_logos.order_by('_order')
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_default_dict("") #todo: make this share correct page instead of default homepage
+
     context = dict(
         about=about_instance,
         recent_press=recent_press,
         partner_logos=partner_logos,
         staff=Person.objects.filter(staff_member=True),
         directors=Person.objects.filter(director_board_member=True),
-        advisors = Person.objects.filter(advisory_board=True))
+        advisors = Person.objects.filter(advisory_board=True),
+        formatted_sharing_urls_dict = formatted_sharing_urls_dict,
+    )
 
     return render(request, template, context)
 
@@ -535,11 +557,15 @@ def team_list(request,
     else:
         title = team_filter
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_default_dict("") #todo: make this share correct page instead of default homepage
+
     context = dict(
         people=people,
         title=title,
         team_filter=team_filter,
-        recent_articles=articles)
+        recent_articles=articles,
+        formatted_sharing_urls_dict = formatted_sharing_urls_dict,    
+    )
 
     return render(request, template, context)
 
@@ -558,3 +584,40 @@ def contact_us(request):
         form = ContactUsForm()
 
     return render(request, 'contact_us.html', {'form': form})
+
+
+
+# todo: move this to a utils file or something?  it's just a helper function used by multiple views
+def get_formatted_sharing_urls_default_dict(url):
+    return get_formatted_sharing_urls_dict("CALmatters", "A nonprofit, nonpartisan media venture explaining California's policies and politics", url)
+
+def get_formatted_sharing_urls_dict(title, social_title, url):
+
+    import urllib
+
+    # clean up non-urlencode-able input values
+    title = urllib.parse.quote_plus(title.encode("utf-8"))
+    social_title = urllib.parse.quote_plus(social_title.encode("utf-8"))
+    url = urllib.parse.quote_plus("https://calmatters.org" + url) # hard code to live site
+
+    # set output
+    return {
+        "facebook": "http://facebook.com/sharer.php?u=" + url + "&t=via%40CALmatters%20" + social_title,
+        "twitter": "http://twitter.com/home?status=" + social_title + "%20via%20%40CALmatters%20" + url,
+        "email": "mailto:?subject=" + title + "&body=" + social_title + " via CALmatters%0A%0A" + url,
+    }
+
+# todo: move this to a utils file or something?  it's just a helper function used by multiple views
+def debug_print_to_output(text):
+
+    print ("******************************************************************************")
+    
+    for x in range(0, 30):
+        print ("*")
+    
+    print (text)
+
+    for x in range(0, 30):
+        print ("*")
+    print ("******************************************************************************")
+    

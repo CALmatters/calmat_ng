@@ -43,13 +43,9 @@
                        title="{{ atom.headline }}">View More</a>
                     <div class="atomshare">
                         <div class="text">SHARE</div>
-                        {% comment %}
-                        Todo:  Make this work.
-                        {%  endcomment %}
-{#                        get_formatted_sharing_urls atom.headline atom.headline atom.get_absolute_url as sharing_urls#}
-{#                        <a href="{{ sharing_urls.facebook }}" class="st-icon-facebook st-icon-square" target="_blank">Facebook</a>#}
-{#                        <a href="{{ sharing_urls.twitter }}" class="st-icon-twitter st-icon-square" target="_blank">Twitter</a>#}
-{#                        <a href="{{ sharing_urls.email }}" class="st-icon-email st-icon-square" target="_blank">Email</a>#}
+                        <a href="{{ atom.get_formatted_sharing_urls_dict.facebook }}" class="st-icon-facebook st-icon-square" target="_blank">Facebook</a>
+                        <a href="{{ atom.get_formatted_sharing_urls_dict.twitter }}" class="st-icon-twitter st-icon-square" target="_blank">Twitter</a>
+                        <a href="{{ atom.get_formatted_sharing_urls_dict.email }}" class="st-icon-email st-icon-square" target="_blank">Email</a>
                     </div>
                 </div>
 
