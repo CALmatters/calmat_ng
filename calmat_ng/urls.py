@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 from business.views import subscribe
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
@@ -25,7 +25,7 @@ from calmat_ng.views import search
 from employment.views import jobs_view, jobs_listing_view
 from pages.views import (homepage_view, columns, columns_single, project_view,
                          article_list, article_view, about_view, team_list,
-                         about_partners_list, atom_detail)
+                         about_partners_list, atom_detail, contact_us)
 from donation.views import DonatePageView, StripeCustomerView
 
 urlpatterns = [
@@ -101,6 +101,11 @@ urlpatterns = [
         RedirectView.as_view(pattern_name='columns_single')),
 
     url('subscribe/$', subscribe, name='subscribe'),
+    url('contact_us/$', contact_us, name='contact_us'),
+    url('privacy-policy/$',
+        TemplateView.as_view(template_name="privacy_policy.html")),
+    url('terms-conditions/$',
+        TemplateView.as_view(template_name="terms_conditions.html")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

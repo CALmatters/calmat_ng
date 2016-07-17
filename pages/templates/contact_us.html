@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{%  block main %}
+<div class="pin-holder team teams contacts">
+    <div class="pin-wrapper" style="height: 554px;">
+        <aside class="sidebar" style="">
+            <h1>Contact</h1>
+            <div class="about">
+                <p>CALmatters is a nonprofit, nonpartisan media venture dedicated to explaining California policies and politics.</p>
+            </div>
+            <div class="jobs">
+                <h4>CALmatters Email Updates</h4>
+                <p>Sign up for new stories, and updates on the ones you care about, as they are released. You will receive one or two emails a week.</p>
+                <form action="/subscribe/" method="POST" id="form_id_sidebar_subscribe" style="margin:0px;" onsubmit="newsletter_ajax_submit(this);">
+                    <input placeholder="Enter your email" type="email" name="email" style="margin-bottom:10px;
+                        height: 35px;
+                        padding: 5px 10px;
+                        font-size: 16px;
+                        border:none;
+                        color: #777;
+                        " class="placeholder">
+                    <button type="submit" class="btn-primary">SUBSCRIBE</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <div class="content">
+        <h2>Contact Us</h2>
+        <div class="">
+            <div class="entry">
+                <p>Tell us what you think! We would love to hear your thoughts on the reporting we’ve done, or ideas on stories you think we should take on.</p>
+            </div>
+        </div>
+
+        <div class="pics" style="font-size:inherit;">
+
+            {% if form.errors %}
+                <div class="form-errors">
+                    <div class="alert alert-danger field-error">Please correct the errors below.</div>
+                    {{ form.non_field_errors }}
+                </div>
+            {%  endif %}
+
+            <form action="/contact_us/" class="mezzanine-form contact_page_form"  method="post">
+                {% csrf_token %}
+                <div class="form-group input_id_field_5 charfield">
+                    {{ form.first_name.errors }}
+                    <label class="control-label" for="id_field_5">
+                        First Name<span style="color: #f47522;">*</span>
+                    </label>
+                    {{ form.first_name }}
+                </div>
+
+                <div class="form-group input_id_field_6 charfield">
+                    {{ form.last_name.errors }}
+                    <label class="control-label" for="id_field_6">
+                        Last Name<span style="color: #f47522;">*</span>
+                    </label>
+                    {{ form.last_name }}
+                </div>
+
+                <div class="form-group input_id_field_7 emailfield">
+                    {{ form.email.errors }}
+                    <label class="control-label" for="id_field_7">
+                        Email<span style="color: #f47522;">*</span>
+                    </label>
+                    {{ form.email }}
+                </div>
+
+                <div class="form-group input_id_field_8 choicefield">
+                    {{ form.about.errors }}
+                    <label class="control-label" for="id_field_8">
+                        I am writing about<span style="color: #f47522;">*</span>
+                    </label>
+                    {{ form.about }}
+                </div>
+
+                <div class="form-group input_id_field_9 charfield">
+                    {{ form.message.errors }}
+                    <label class="control-label" for="id_field_9">
+                        Message<span style="color: #f47522;">*</span>
+                    </label>
+                    {{ form.message }}
+                </div>
+
+                <input type="submit" class="form-actions" value="Submit" />
+            </form>
+
+       </div>
+    </div>
+</div>
+{%  endblock %}

@@ -14,7 +14,8 @@ from django.core.exceptions import PermissionDenied
 
 from business.models import Partner, Person
 from categories.models import Category
-from pages.models import HomePage, Article, Atom, Project, About
+from pages.forms.contact_us import ContactUsForm
+from pages.models import HomePage, Article, Atom, Project, About, ContactUs
 from pages.models.about import AboutPartner
 from pages.models.homepage import RelatedAtom, HomePartnerMap
 from pages.models.project import (
@@ -541,3 +542,19 @@ def team_list(request,
         recent_articles=articles)
 
     return render(request, template, context)
+
+
+def contact_us(request):
+
+    if request.method == 'POST':
+
+        form = ContactUsForm(request.POST)
+
+        if form.is_valid():
+            ContactUs.objects.create(**form.cleaned_data)
+
+            return render(request, 'contact_us_thankyou.html', {'form': form})
+    else:
+        form = ContactUsForm()
+
+    return render(request, 'contact_us.html', {'form': form})
