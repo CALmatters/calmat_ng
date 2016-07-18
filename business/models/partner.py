@@ -179,7 +179,7 @@ class Partner(Named, TimeStamped):
             return ""
 
     @staticmethod
-    def partners():
+    def _partners(limit_to_article=None):
         """Randomly choose 3 partners, return as tuple.
 
         1.  Chosen from featured=True partners
@@ -190,22 +190,57 @@ class Partner(Named, TimeStamped):
         all 3 partners distinct.
         """
 
-        featured_partner = Partner.objects.filter(
-            featured=True).order_by('?')[0]
-
         from business.models.partner_article import PartnerArticle
 
-        radio_partner = PartnerArticle.objects.filter(
-            radio_broadcast=True).exclude(
-            partner=featured_partner).select_related().order_by('?')[0].partner
+        #  First get featured partner, either over all, or related to article
+        #  and, collect the pool of remaining partners
+        if limit_to_article is None:
+            featured_partner = Partner.objects.filter(
+                featured=True).order_by('?')[0]
+            partner_article_pool_qs = PartnerArticle.objects.all()
+        else:
+            featured_partner = limit_to_article.partners.all().order_by(
+                '?')[0]
+            partner_article_pool_qs = PartnerArticle.objects.filter(
+                article=limit_to_article)
 
-        recent_partner = PartnerArticle.objects.filter(
-            date_published__gt=date.today()-timedelta(days=30)
-        ).exclude(
-            partner=featured_partner).exclude(
-            partner=radio_partner).order_by('?')[0].partner
+        try:
+            radio_partner = partner_article_pool_qs.filter(
+                radio_broadcast=True).exclude(
+                partner=featured_partner
+            ).select_related().order_by('?')[0].partner
+        except IndexError:
+            radio_partner = None
 
-        return featured_partner, radio_partner, recent_partner
+        try:
+            recent_partner = partner_article_pool_qs.filter(
+                date_published__gt=date.today()-timedelta(days=30)
+            ).exclude(
+                partner=featured_partner).exclude(
+                partner=radio_partner).order_by('?')[0].partner
+
+        except IndexError:
+            recent_partner = None
+
+
+        chosen_partners = [
+            p for p in (featured_partner, radio_partner, recent_partner) if p]
+        other_partners = partner_article_pool_qs.exclude(
+            partner__in=[featured_partner, radio_partner, recent_partner])
+
+        return_dict = dict(
+            chosen_partners=chosen_partners,
+            other_partners=other_partners,
+            other_partners_len=len(other_partners))
+
+        print(featured_partner, radio_partner, recent_partner)
+        print(return_dict)
+
+        return return_dict
+
+    @staticmethod
+    def partners():
+        return Partner._partners()
 
     class Meta:
         verbose_name = _("Partner")
