@@ -240,6 +240,10 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
 
         return _clone
 
+
+    def partners_limited(self):
+        return Partner._partners(self)
+
     def get_custom_post_type_title(self):
         if self.news_analysis:
             return "Politics"

@@ -56,7 +56,17 @@
                         {% endif %}
                 </p>
 				<hr class="main_article_rule">
-				<p class="article_partners">Our partners: Contra Costa Times, Daily Breeze, 89.3 KPCC, and 22 others</p>
+				<p class="article_partners">Our partners:
+                    {%  with partners=home.primary_article.partners_limited %}
+                        {% for partner in partners.chosen_partners %}
+                            {% if partner != None %}
+                                {{ partner.title }}{%  if not forloop.last %},{% endif %}
+                            {%  endif %}
+                        {% endfor %}
+                        {% if partners.other_partners_len > 0 %}
+                            and {{ partners.other_partners_len }} other{{partners.other_partners_len|pluralize }}
+                        {%  endif %}
+                    {%  endwith %}
             </div>
         </div>
         <div class="sub_articles">
@@ -138,7 +148,7 @@
             <div class="partners">
                 <div id="partners_text" class="text"><p>We publish with over 50 partners including:</p></div>
                     <div class="partner_logos">
-                        {% for partner in home.partners %}
+                        {% for partner in home.partners.chosen_partners %}
                             <a target="_blank" href="{{ partner.get_absolute_url }}">
                                 <img class="partner_img" src="{{ partner.image.file.url}}"
                                      alt="{{ partner.title }}"></a>

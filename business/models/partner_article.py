@@ -2,7 +2,6 @@ from django.db import models
 
 from business.models import Partner
 from fkchooser.fields import PopupForeignKey
-from pages.models import Article
 
 FULL_OR_MENTION_CHOICES = (
     ('Not Specified', 'Not Specified'),
@@ -19,7 +18,7 @@ class PartnerArticle(models.Model):
         unique_together = ('article', 'partner', 'date_published', 'notes')
         ordering = ('order', )
 
-    article = PopupForeignKey(Article)
+    article = PopupForeignKey("pages.Article")
 
     partner = models.ForeignKey(Partner)
 
