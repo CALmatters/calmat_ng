@@ -8,19 +8,18 @@
                     <span></span>
                 </div>
 
-
                 <ul class="follow">
                     {% if blog_post or story %}
                         <li class="rss"><a class="custom_follow_element"></a></li>
                     {% endif %}
                     <li class="facebook">
-                        <a href="{{ sharing_url_facebook }}" onclick="trackOutboundLink('{{ sharing_url_facebook }}'); return false;" target="_blank"><i class="fa fa-facebook"></i></a>
+                        <a href="{{ formatted_sharing_urls_dict.facebook }}" onclick="trackOutboundLink('{{ formatted_sharing_urls_dict.facebook }}'); return false;" target="_blank"><i class="fa fa-facebook"></i></a>
                     </li>
                     <li class="twitter">
-                        <a href="{{ sharing_url_twitter }}" onclick="trackOutboundLink('{{ sharing_url_twitter }}'); return false;" target="_blank"><i class="fa fa-twitter"></i></a>
+                        <a href="{{ formatted_sharing_urls_dict.twitter }}" onclick="trackOutboundLink('{{ formatted_sharing_urls_dict.twitter }}'); return false;" target="_blank"><i class="fa fa-twitter"></i></a>
                     </li>
                     <li class="mail">
-                        <a href="{{ sharing_url_email }}" onclick="trackOutboundLink('{{ sharing_url_email }}'); return false;" target="_blank"><i class="fa fa-envelope"></i></a>
+                        <a href="{{ formatted_sharing_urls_dict.email }}" onclick="trackOutboundLink('{{ formatted_sharing_urls_dict.email }}'); return false;" target="_blank"><i class="fa fa-envelope"></i></a>
                     </li>
                 </ul>
             </div>
@@ -100,7 +99,7 @@
                             </li>
 
                             <li class="{% if request.path|slice:":7" == "/about/" %}active{% endif %}"><a href="/about/">ABOUT</a></li>
-                            <li class="{% if request.path|slice:":9" == "/contact/" %}active{% endif %}"><a href="/contact/">CONTACT US</a></li>
+                            <li class="{% if request.path|slice:":9" == "/contact_us/" %}active{% endif %}"><a href="/contact_us/">CONTACT US</a></li>
                             <li class="{% if request.path|slice:":12" == "/donate/" %}active{% endif %}"><a href="/donate/">DONATE</a></li>
                         </ul>
 

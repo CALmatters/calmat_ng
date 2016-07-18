@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block main %}
+<div class="pin-holder">
+    <div class="pin-wrapper" style="height: 178px;">
+        <aside class="sidebar">
+			<div class="stories">
+	            <h1 style="padding-top:0">
+                    {%  block sidebar-title %}
+
+                    {% endblock %}
+                </h1>
+	        </div>
+		</aside>
+    </div>
+    <div class="content">
+        <div class="entry">
+            {%  block flat-body %}
+            {%  endblock %}
+        </div>
+    </div>
+</div>
+{%  endblock %}

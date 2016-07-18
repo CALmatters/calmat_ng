@@ -111,6 +111,23 @@ class Atom(Named, Publishable, OptionalContentContainer, TimeStamped):
         else:
             return self.title
 
+    # todo: this function is a duplicate!  find other with same name and move to named.py  Also make it so modal.html doesn't call this 3 times?
+    def get_formatted_sharing_urls_dict(self):
+        
+        import urllib
+
+        # clean up non-urlencode-able input values
+        title = urllib.parse.quote_plus(self.headline.encode("utf-8"))
+        social_title = urllib.parse.quote_plus(self.get_social_title().encode("utf-8"))
+        url = urllib.parse.quote_plus("https://calmatters.org" + self.get_absolute_url()) # hard code to live site
+
+        # set output
+        return {
+            "facebook": "http://facebook.com/sharer.php?u=" + url + "&t=via%40CALmatters%20" + social_title,
+            "twitter": "http://twitter.com/home?status=" + social_title + "%20via%20%40CALmatters%20" + url,
+            "email": "mailto:?subject=" + title + "&body=" + social_title + " via CALmatters%0A%0A" + url,
+        }
+
     def save(self, *args, **kwargs):
         if not self.headline:
             self.headline = self.title

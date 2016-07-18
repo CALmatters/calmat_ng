@@ -8,6 +8,7 @@ from .project import ProjectAdmin
 from .onramp import OnRampAdmin
 from .quote import QuoteAdmin
 from .about import AboutAdmin
+from .contact_us import ContactUsAdmin
 
 admin.site.site_header = u"{} Administration".format(settings.PROJECT_NAME)
 # admin.site.disable_action('delete_selected')

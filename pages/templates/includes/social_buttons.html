@@ -3,13 +3,13 @@
             <a class="custom_follow_element" title="You can get updates to this story as it develops in the political process.">
                 <i class="fa fa-rss"></i>FOLLOW THIS STORY</a>
         {% endif %}
-        <a href="{{ sharing_url_facebook }}" onclick="trackOutboundLink('{{ sharing_url_facebook }}'); return false;" class="btn-success btn-social" target="_blank">
+        <a href="{{ formatted_sharing_urls_dict.facebook }}" onclick="trackOutboundLink('{{ formatted_sharing_urls_dict.facebook }}'); return false;" class="btn-success btn-social" target="_blank">
             <i class="fa fa-facebook"></i>
         </a>
-        <a href="{{ sharing_url_twitter }}" onclick="trackOutboundLink('{{ sharing_url_twitter }}'); return false;" class="btn-success btn-social" target="_blank">
+        <a href="{{ formatted_sharing_urls_dict.twitter }}" onclick="trackOutboundLink('{{ formatted_sharing_urls_dict.twitter }}'); return false;" class="btn-success btn-social" target="_blank">
             <i class="fa fa-twitter"></i>
         </a>
-        <a href="{{ sharing_url_email }}" onclick="trackOutboundLink('{{ sharing_url_email }}'); return false;" class="btn-success btn-social" target="_blank">
+        <a href="{{ formatted_sharing_urls_dict.email }}" onclick="trackOutboundLink('{{ formatted_sharing_urls_dict.email }}'); return false;" class="btn-success btn-social" target="_blank">
             <i class="fa fa-envelope"></i>
         </a>
         <a href="#" class="btn-success btn-social pr" target="_blank">
