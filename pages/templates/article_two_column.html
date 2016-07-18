@@ -49,18 +49,20 @@
         </div>
         {% if article.partners %}
         <div class="partner-author">
-            <p>IN PARTNERSHIP WITH</p>
-            {% for partner in article.partners.all %}
+            {% if article.partners.exists %}
+                <p>IN PARTNERSHIP WITH</p>
+                {% for partner in article.partners.all %}
 
-                {% if partner.link_to_articles %}
-                    <a href="{{ partner.get_absolute_url }}">
+                    {% if partner.link_to_articles %}
+                        <a href="{{ partner.get_absolute_url }}">
+                            <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
+                        </a>
+                    {% else %}
                         <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
-                    </a>
-                {% else %}
-                    <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
-                {% endif %}
+                    {% endif %}
 
-            {% endfor %}
+                {% endfor %}
+            {%  endif %}
         </div>
         {% endif %}
         <div class="entry">

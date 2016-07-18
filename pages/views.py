@@ -562,7 +562,7 @@ def team_list(request,
     context = dict(
         people=people,
         title=title,
-        team_filter=team_filter,
+        team_filter=team_filter.capitalize(),
         recent_articles=articles,
         formatted_sharing_urls_dict = formatted_sharing_urls_dict,    
     )
