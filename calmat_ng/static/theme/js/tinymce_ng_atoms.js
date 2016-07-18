@@ -1,5 +1,5 @@
 tinymce.init({
-  selector: 'textarea',
+  selector: 'fieldset.tinymce-editable textarea',
   height: 500,
   plugins: [
     'atoms advlist autolink lists link image imagetools charmap print preview anchor',

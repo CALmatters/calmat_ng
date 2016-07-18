@@ -63,6 +63,8 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
             'theme/js/atom_chooser_plugin.js',
             'theme/js/image_file_picker.js',
             'theme/js/tinymce_ng_atoms.js',
+            'theme/js/tinymce_ng_specific_text_areas.js'
+
         )
         css = {
             'all': (
@@ -116,12 +118,6 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
                 "view_url",
                 "news_analysis",
                 ("status", "publish_date"),
-            )
-        }),
-
-        ("Description", {
-            "classes": ("collapse",),
-            "fields": (
                 "description",
             )
         }),
