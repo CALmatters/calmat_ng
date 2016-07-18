@@ -3953,6 +3953,10 @@ input:-moz-placeholder { font-size: 1em !important; }
     float: left;
     padding: 0.5em 0 0 1em;
 }
+.politics_img img {
+    max-width: 100%;
+    height: auto;
+}
 
 .politics_quote {
     font-family: "ff-meta-serif-web-pro", serif;
