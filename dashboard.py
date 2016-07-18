@@ -44,11 +44,6 @@ class CustomIndexDashboard(Dashboard):
             models=('categories.*',),
         ))
 
-        self.children.append(modules.ModelList(
-            _('Business Data'),
-            models=('business.*',),
-        ))
-
         # append an app list module for "Administration"
         self.children.append(modules.ModelList(
             _('Administration'),
@@ -56,8 +51,18 @@ class CustomIndexDashboard(Dashboard):
         ))
 
         self.children.append(modules.ModelList(
+            _('Business Data'),
+            models=('business.*',),
+        ))
+
+        self.children.append(modules.ModelList(
             _('Jobs'),
             models=('employment.*',),
+        ))
+
+        self.children.append(modules.ModelList(
+            _('Donations'),
+            models=('donation.*',),
         ))
 
         # append a recent actions module

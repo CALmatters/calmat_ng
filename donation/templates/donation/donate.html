@@ -47,6 +47,7 @@
             <br/>
 
             <div class="row">
+                {# Generate donate buttons #}
                 {% for value in donate.donation_values %}
                     <div class="col-xs-6 col-sm-3">
                         <div class="btn-group btn-group-lg btn-group-justified">
@@ -55,32 +56,6 @@
                     </div>
                 {% endfor %}
             </div>
-
-            {% comment %}
-            {# Hard coded version, can be deleted likely -- MS 7.15.16 #}
-            <div class="row">
-                <div class="col-xs-6 col-sm-3">
-                    <div class="btn-group btn-group-lg btn-group-justified">
-                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' 25 %}" data-target="#remoteModal">$25</a>
-                    </div><br/>
-                </div>
-                <div class="col-xs-6 col-sm-3">
-                    <div class="btn-group btn-group-lg btn-group-justified">
-                         <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' 100 %}" data-target="#remoteModal">$100</a>
-                    </div><br/>
-                </div>
-                <div class="col-xs-6 col-sm-3">
-                    <div class="btn-group btn-group-lg btn-group-justified">
-                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' 250 %}" data-target="#remoteModal">$250</a>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-3">
-                    <div class="btn-group btn-group-lg btn-group-justified">
-                        <a class="btn btn-primary btn-lg donate-btn" data-toggle="modal" href="{% url 'donate_amount' 'other' %}" data-target="#remoteModal">Other</a>
-                    </div>
-                </div>
-            </div>
-            {% endcomment %}
 
             <br/>
             <div class="entry">
@@ -132,7 +107,8 @@
                     </a>
                 </div>
             </div>
-            
+
+            {# Sidebar Testimonials #}
             <div id="fs-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
                 <div class="carousel-inner" role="listbox">
                     {% for t in testimonials %}
