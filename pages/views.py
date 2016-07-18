@@ -555,14 +555,14 @@ def team_list(request,
             people = Person.objects.filter(advisory_board=True)
         title = 'Advisory Board'
     else:
-        title = team_filter
+        title = "Staff"
 
     formatted_sharing_urls_dict = get_formatted_sharing_urls_default_dict("") #todo: make this share correct page instead of default homepage
 
     context = dict(
         people=people,
         title=title,
-        team_filter=team_filter.capitalize(),
+        team_filter=team_filter,
         recent_articles=articles,
         formatted_sharing_urls_dict = formatted_sharing_urls_dict,    
     )

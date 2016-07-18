@@ -12,7 +12,7 @@
 
             {%  with person=people|first %}
             <div class="content">
-                <h2>{{ team_filter }}</h2>
+                <h2>{{ title }}</h2>
                 {% if person.image %}
                     <img src="{{ person.image.file.url }}" alt="" align="right" class="bio_style2_image" />
                 {% endif %}
