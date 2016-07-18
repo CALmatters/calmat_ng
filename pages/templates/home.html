@@ -13,24 +13,22 @@
 {% endblock %}
 
 {% block main %}
-    <div id="body">
-        <div class="container">
 
-        {%  if home.has_in_the_works %}
-            <div id="itw_full" class="intheworks">
-                <div class="text">
-                    <p class="itw_title">IN THE WORKS</p>
-                    <div class="itw_list">
-                        <div class="itw_links">
-                            {%  for itw_block in home.yield_in_the_works_titles %}
-                                <a href="{{  itw_block.url }}" target="_blank">{{  itw_block.label }}</a>
-                                {%  if not forloop.last %}&nbsp;&nbsp;|&nbsp;&nbsp;{%  endif %}
-                            {% endfor %}
-                        </div>
+    {%  if home.has_in_the_works %}
+        <div id="itw_full" class="intheworks">
+            <div class="text">
+                <p class="itw_title">IN THE WORKS</p>
+                <div class="itw_list">
+                    <div class="itw_links">
+                        {%  for itw_block in home.yield_in_the_works_titles %}
+                            <a href="{{  itw_block.url }}" target="_blank">{{  itw_block.label }}</a>
+                            {%  if not forloop.last %}&nbsp;&nbsp;|&nbsp;&nbsp;{%  endif %}
+                        {% endfor %}
                     </div>
                 </div>
-            </div><!-- In the Works Section Full Site-->
-        {%  endif %}
+            </div>
+        </div><!-- In the Works Section Full Site-->
+    {%  endif %}
 
     
     <div id="upper_articles">
@@ -60,8 +58,7 @@
             </div>
         </div>
         <div class="sub_articles">
-            <div id="second_article" class="featured-intr">
-                <img class="secondary_article_imgs" src="{{ home.secondary_article_left.image.file.thumbnail.385x255 }}" alt="Featured background two" />
+            <div id="second_article" class="featured-intr" style="background-image: url({{ home.secondary_article_left.image.file.thumbnail.484x320 }});">
                 <div id="second_article_text" class="text">
                     <h2>
                         {% if home.secondary_article_left.custom_post_type == 'external' %}
@@ -73,8 +70,7 @@
                 </div>
             </div>
         
-            <div id="third_article"  class="featured-intr">
-                <img class="secondary_article_imgs" src="{{ home.secondary_article_right.image.file.thumbnail.385x255 }}" alt="Featured background three" />
+            <div id="third_article"  class="featured-intr" style="background-image: url({{ home.secondary_article_right.image.file.thumbnail.484x320 }});">
                 <div id="third_article_text" class="text">
                     <h2>
                         
@@ -208,8 +204,8 @@
     {%  if home.politics_author %}
         <div class="politics">
             <div class="politics_heading">Politics</div>
-            <a href="{{ home.politics_author.get_absolute_url }}">
-                <img class="politics_img" src="{{ home.politics_author.image.file.url }}" alt="Politic author image">
+            <a class="politics_img" href="{{ home.politics_author.get_absolute_url }}">
+                <img src="{{ home.politics_author.image.file.crop.690x460 }}" alt="Politics author image">
             </a>
             <div class="columnist col">
                 <ul>
@@ -314,11 +310,6 @@
 
         </div><!-- .content -->
     </div><!-- .recent-stories.articles -->
-
-
-
-                </div><!-- .container -->
-            </div><!-- .body -->
 
 {% endblock %}
 
