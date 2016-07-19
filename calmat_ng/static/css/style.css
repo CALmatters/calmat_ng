@@ -8022,7 +8022,6 @@ display:none;
 .atoms .slide .carousel-inner .left-col img,
 .atoms .slide .carousel-inner .left-col iframe {
     width:100% !important;
-    height:auto;
 }
 
 .atoms .slide .carousel-inner .item {
