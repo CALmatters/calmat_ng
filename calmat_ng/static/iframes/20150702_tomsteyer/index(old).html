@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tom Steyer Spending</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+    <style>
+
+      /* Normalize */
+      html{cursor:default;font-size:100%;overflow-y:scroll;-webkit-tap-highlight-color:transparent;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body,form,input,button,select,textarea{font-size:100%;margin:0}a,a:active,a:hover{outline:none}a:focus{outline:thin dotted}b,strong{font-weight:bold}audio[controls],canvas,video{display:inline-block;*display:inline}audio{display:none;_display:expression(this.controls ? 'inline':'none');*zoom:1}audio[controls]{display:inline-block}img{border:0;-ms-interpolation-mode:bicubic}svg:not(:root){overflow:hidden}legend{*margin-left:-7px}button,input,select,textarea{-webkit-appearance:none;border-radius:0;vertical-align:baseline;*vertical-align:middle}button,input{line-height:normal;_overflow:expression(this.type == 'button|reset|submit' ? 'visible':'')}button,input[type="button"]{overflow:visible}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}*:focus{outline:0 !important;}
+      body{
+          background: white;
+          color:black;
+          font-family:"Open Sans", sans-serif;
+      }
+      #data{
+        display: none;
+      }
+      #chart{
+        position: relative;
+        overflow:visible;
+        width:100%;
+        height:100%;
+        background: white;
+      }
+      #title{
+        position:absolute;
+        top:30%;
+        left:50%;
+        width:60%;
+        margin: 0;
+        text-align: center;
+        -webkit-transform:translate(-50%, -50%);
+                transform:translate(-50%, -50%);
+          
+      }
+      #detail{
+        margin: 0;
+        background:rgb(255,255,255);
+      }
+      #title h1{
+        font:700 25px/29px "Open Sans", Helvetica, sans-serif;
+        text-align: center;
+        text-transform: uppercase;
+        margin: 0;
+        padding: 5px;
+      }
+      #title p{
+        font:400 14px/19px "Open Sans", Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      #next{
+        background: #efefef;
+        color:#0000000;
+        border: 3px solid #444;
+        padding: 15px 0;
+        font:400 16px/12px "Open Sans", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        cursor: pointer;
+        display: block;
+        width:30%;
+        margin:15px auto;
+      }
+      #title button:hover{
+        background: #222;
+          color:#ccc;
+      }
+
+      .notations{
+          position:absolute;
+          z-index:1000;
+      }
+        
+      /*** Chart Specific ***/
+      .bars{
+        stroke:none;
+        fill: #565656;
+      }
+      .circle{
+        fill: rgba(50,50,50,0.7);
+      }
+      .axis path{
+        fill:none;
+        stroke:#000;
+        stroke-width: 1px;
+      }
+      .y.axis path{
+        stroke:none;
+      }
+      .y.axis text {
+        font: 10px sans-serif;
+        fill: black;
+      }
+      .x.axis text{
+        font:10px sans-serif;
+        fill:#000000;
+      }
+      .x.axis text.outsideofbar{
+        fill:#000000;
+      }
+      .axis line {
+/*      shape-rendering: crispEdges;*/
+        stroke: #000;
+      }
+      .y.axis line {
+        stroke: #eee;
+        stroke-width:1px;
+        stroke-dasharray: 2,2;
+      }
+      .values{
+        font:9px sans-serif;
+        fill:white;
+      }
+        
+      .nextgenx path, .nextgeny path{
+          fill: none;
+          stroke: #000;
+          stroke-width: 1px;
+      }
+      .nextgenx text, .nextgeny text{
+          font:10px "Open Sans", sans-serif;
+          stroke:none;
+          fill:#000;
+      }
+      .hide{
+        opacity:0;
+      }
+      .dark{
+          fill:#000;
+      }
+      #tooltip{
+            position: absolute;
+            top:0px;
+            left:0px;
+            font:400 14px/16px sans-serif;
+            -webkit-transform:translate(-50%, -125%);
+                    transform:translate(-50%, -125%);
+            max-width: 200px;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #333;
+            z-index: 9999;
+            pointer-events:none;
+            opacity: 0;
+            box-shadow: 0px 0px 5px 0px #ccc;
+        }
+        #tooltip:after{
+            top:100%;
+            left:50%;
+            border:solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            border-top-color:black;
+            pointer-events:none;
+            border-width: 9px;
+            margin-left:-9px;
+        }
+        #tooltip:before{
+            top:100%;
+            left:50%;
+            border:solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            z-index: 99999;
+            border-top-color:white;
+            pointer-events:none;
+            border-width: 9px;
+            margin-top: -1px;
+            margin-left:-9px;
+        }
+        #tooltip.left{
+            -webkit-transform:translate(-20%, -125%);
+                    transform:translate(-20%, -125%);
+        }
+        #tooltip.left:before{
+            left:20%;
+        }
+        #tooltip.left:after{
+            left:20%;
+        }
+        #tooltip.right{
+            -webkit-transform:translate(-80%, -125%);
+                    transform:translate(-80%, -125%);
+        }
+        #tooltip.right:before{
+            left:80%;
+        }
+        #tooltip.right:after{
+            left:80%;
+        }
+
+    </style>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<!-- analytics -->
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+    <script type="text/javascript">(function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
+        mixpanel.init("a1972c6c0498dccec6f3d999d7b2fce9");
+    </script>
+
+    <script type="text/javascript">
+        window.heap=window.heap||[],heap.load=function(t,e){window.heap.appid=t,window.heap.config=e;var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+t+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(t){return function(){heap.push([t].concat(Array.prototype.slice.call(arguments,0)))}},p=["clearEventProperties","identify","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+        heap.load("2084127977");
+    </script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-59722930-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script src="/iframes/jquery.scrolldepth.min.js"></script>
+    <script>
+    jQuery(document).ready(function(){
+            /* google analytics plugin */
+            jQuery(function() {
+              jQuery.scrollDepth();
+            });
+      });
+    </script>
+<!-- /analytics -->
+
+  </head>
+  <body>
+    <div id="chart">
+        <div id="tooltip"></div>
+        <div id="title">
+            <div id="detail">
+                <h1>Tom Steyer's political spending in California</h1>
+                <p>With a net worth of $1.6 billion, former hedge fund manager Tom Steyer has spent generously on Democratic campaigns around the country. This interactive feature takes a closer look at his political activity in his home state of California.</p>
+                <button id="next">Begin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- D3 js -->
+    <script src="d3.min.js" charset="utf-8"></script>
+    <script>
+    var data = [
+        {"name":"Yes on Proposition 39","type":"prop", "sum":29580000,"outcome":"Win","year":2012,"id":1},
+        {"name":"No on Proposition 23","type":"prop", "sum":5049000,"outcome":"Win","year":2010,"id":2},
+        {"name":"California Democratic Party","type":"org", "sum":1245000,"outcome":"n/a","year":2010,"id":3},
+        {"name":"Senate Democrats voter outreach","type":"org", "sum":1000000,"outcome":"n/a","year":2014,"id":4},
+        {"name":"No on Proposition 26","type":"prop", "sum":1000000,"outcome":"Lose","year":2010,"id":5},
+        {"name":"No on Proposition 32","type":"prop", "sum":500000,"outcome":"Win","year":2012,"id":6},
+        {"name":"Assembly Democrats voter outreach","type":"org", "sum":300000,"outcome":"n/a","year":2014,"id":7},
+        {"name":"Consumer Watchdog (precursor to Prop 45)","type":"prop", "sum":200000,"outcome":"Lose","year":2012,"id":8},
+        {"name":"Californians for Fair Election Reform","type":"org", "sum":174317,"outcome":"Win","year":2007,"id":9},
+        {"name":"Opposing Steve Glazer","type":"person", "sum":150000,"outcome":"Lose","year":2015,"id":10},
+        {"name":"California Labor Federation political committee","type":"org", "sum":100000,"outcome":"n/a","year":2008,"id":11},
+        {"name":"Yes on Propositions 1 and 2","type":"prop", "sum":50000,"outcome":"Win","year":2014,"id":12},
+        {"name":"Richard Riordan for Governor","type":"person", "sum":50000,"outcome":"Lose","year":2001,"id":13},
+        {"name":"Gov. Jerry Brown re-election","type":"person", "sum":27200,"outcome":"Win","year":2014,"id":14},
+        {"name":"Yes on Proposition 2","type":"prop", "sum":25000,"outcome":"Win","year":2008,"id":15},
+        {"name":"Leadership California/Don Perata","type":"org", "sum":20000,"outcome":"n/a","year":2007,"id":16},
+        {"name":"Betty Yee for Controller","type":"person", "sum":13600,"outcome":"Win","year":2014,"id":17},
+        {"name":"Antonio Villaraigosa for LA mayor","type":"person", "sum":7000,"outcome":"Lose","year":2001,"id":18},
+        {"name":"Noreen Evans for Assembly","type":"person", "sum":3600,"outcome":"Win","year":2008,"id":19},
+        {"name":"Janet Reilly for Assembly","type":"person", "sum":3300,"outcome":"Lose","year":2006,"id":20},
+        {"name":"Phil Polakoff for Assembly","type":"person", "sum":3000,"outcome":"Lose","year":2008,"id":21},
+        {"name":"Dem CCC","type":"org", "sum":521,"outcome":"n/a","year":2002,"id":22},
+        {"name":"Kamala Harris for Atty. General","type":"person", "sum":500,"outcome":"Win","year":2010,"id":23}
+    ];
+        
+    var nextGenData = [
+        {"session": "2014 (Q1)", amount: 6000,  "bills":["AB 2420", "SB 1017", "SB 1132"]},
+        {"session": "2014 (Q2)", amount: 36000, "bills":["AB 69", "AB 2420", "SB 1017", "SB 861", "SB 1132", "SB 1281", "SB 1319", "State Budget", "Legislature: gas extraction policy, oil severance tax", "Governor: AB 32 and oil fee/oil spill prevention issues", "Legislative Counsel: 2/3 voter approval requirement for fracking"]},
+        {"session": "2014 (Q3)", amount: 36000, "bills":["AB 69", "Legislature: gas extraction policy", "oil severance tax", "cap and trade"]},
+        {"session": "2014 (Q4)", amount: 36000, "bills":["Legislature: energy, environment, oil extraction policy, oil severance tax", "Governor: oil extraction policy oil severance tax"]},
+        {"session": "2015 (Q1)", amount: 30000, "bills":["AB 645", "AB 692", "SB 32", "SB 180", "SB 350", "Legislature", "Governor: oil extraction policy", "Air Resources Board: sustainable freight strategy, low carbon fuels standard"]},
+    ];
+
+    
+        
+    /**
+     * Bubble Bar Chart - Jeremy Rue
+     *
+     *
+     */
+    var bubbleBarChart = {
+
+        width               : 770,
+        height              : 600,
+        margin              : {top:20, right:55, bottom:170, left:35},
+        data                : data,
+        svg                 : {},
+        g                   : {},
+        bars                : {},
+        barSpacer           : .1,
+        bubbleSpacer        : 25, //number of pixels above bar
+        delayBtwnSections   : 4000,
+        currentStep         : 0,
+        stepFunctions       : [],
+        itemsForRemoval     : [], //a list of dom elements to remove before each transition
+
+        xScale              : d3.scale.ordinal(),
+        powerScale          : d3.scale.pow(),
+        colorScale          : d3.scale.pow(),
+        winLoseScale        : d3.scale.ordinal(),
+        typeScale           : d3.scale.ordinal(),
+
+        xAxis               : d3.svg.axis(),
+        yAxis               : d3.svg.axis(),
+
+        init : function(){
+
+            //local reference to this
+            var _that = this;
+            
+            //
+            d3.selection.prototype.wrap = this.wrap;
+
+            //create SVG
+            this.svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", "100%")
+                .attr("height", "100%")
+                .attr("preserveAspectRatio", "xMinYMin")
+                .attr("viewBox", "0 0 " + this.width + " " + this.height);
+            
+            
+            //readjust margins for convenience
+            this.width  = this.width - this.margin.left - this.margin.right;
+            this.height = this.height - this.margin.top - this.margin.bottom;
+
+
+            //the x ordinal scale of each bar
+            this.xScale 
+                .domain(this.data.sort(function(a,b){return a.id - b.id; }).map(function(d){ return d.name; }))
+                .rangeRoundBands([0, this.width], this.barSpacer);
+
+            //power scale for drawing graph 
+            this.powerScale
+                .exponent(1)
+                .rangeRound([0, this.height])
+                .domain([d3.max(this.data, function(d){ return d.sum; }), 0])
+                .clamp(true)
+                .nice();
+
+            //initial color scale
+            this.colorScale
+                .exponent(.3)
+                .range(["#7ba9ab", "#2f7580"])//"#96c3c5", 
+                .domain([0, d3.max(this.data, function(d){ return d.sum; })]);
+            
+            //ordinal scale by year
+            this.typeScale
+                .range(["#5C9C9C", "#949D7A",  "#9C8380"])
+                .domain(["Proposition", "Organization", "Candidate"]);
+
+            
+            //for labeling win lose
+            this.winLoseScale
+                .range(["#47807b", "#6d4444", "#bbb"])
+                .domain(["Win", "Lose", "n/a"]);
+
+            //minor tick axis
+            this.yAxis.orient("left")
+                .scale(this.powerScale)
+                .ticks(20)
+                .tickSize(-this.width)
+                .tickFormat(function(d){ return d3.format(">-$.0f")(d/1e6) + " mil"; });
+
+            //add y scale with labels
+            this.xAxis.orient("bottom")
+                .outerTickSize(0)
+                .scale(this.xScale);
+
+            //x axis underneath
+            this.addYAxis();
+
+            //create grouping for chart
+            this.g = this.svg.append("g")
+                .attr("class", "thechart")
+                .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
+            this.makeChart();
+            this.addXAxis();
+
+            
+            this.stepFunctions = [this.stepOne, this.stepTwo, this.stepThree, this.stepFour];
+            
+            d3.select("#next")
+              .on("click", function(){ 
+                
+                  d3.select("#title")
+                    .transition()
+                    .duration(500)
+                    .styleTween('top', function (d, i, a) {
+                        var from = "30%",   // 50% 
+                              to = "-100%"; // -100%
+                        return d3.interpolateString(from, to);
+                     })
+                    .each("end", function(){
+                        d3.select(this).remove();
+                        _that.addNavigation();
+                        _that.stepOne();
+                    });
+              });
+            
+            this.svg.append("g")
+              .attr("class", "credit")
+              .attr("transform", "translate(5," + (this.margin.top + this.height + this.margin.bottom - 5) + ")") 
+              .append("text")
+              .text("Campaign Finance Data California Secretary of State 2015. Graphic by Jeremy Rue for CALMatters.")
+              .style({"font":"8px sans-serif", "fill":"#767676"});
+
+
+
+        },
+        
+
+        makeChart: function(){
+
+            var _that = this;
+
+            this.bars = this.g.selectAll(".bars")
+                .data(this.data)
+                .enter();
+
+            this.bars.append("rect")
+                .attr("x", function(d){ return _that.xScale(d.name); })
+                .attr("y", function(d){ return _that.powerScale(d.sum); })
+                .attr("width", function(d){ return _that.xScale.rangeBand(); })
+                .attr("height", function(d){ return _that.height - _that.powerScale(d.sum); })
+                .style("fill", function(d){ return "#5e959a";/* _that.colorScale(d.sum); */ })
+                .attr("class", "bars")
+                .on("mouseover", function(d, i){
+
+
+
+                    var h = _that.svg.node().getBoundingClientRect().height,
+                        w = _that.svg.node().getBoundingClientRect().width,
+                        wOffset = w/(_that.width + _that.margin.left + _that.margin.right),
+                        hOffset = h/(_that.height + _that.margin.top + _that.margin.bottom);
+
+                    var rect = d3.select(this).node().getBBox();
+
+                    d3.select(this)
+                        .style({"opacity":0.7, "cursor":"pointer"});
+
+
+                    d3.select("#tooltip")
+                      .style({"opacity":1, "top": (_that.margin.top + (rect.y + (rect.height/2)) * hOffset) + "px", "left": ((_that.margin.left + (rect.x + (rect.width/2))) * wOffset) + "px" })
+                      .html("<strong>" + d.name + "</strong><br><br><strong>Sum:</strong> " + d3.format("$,2")(d.sum) + "<br>")
+                      .classed("left", function(){ return data.indexOf(d) < 5 ? true : false; })
+                      .classed("right", function(){ return data.indexOf(d) > 13 ? true : false; });
+                    
+                })
+                .on("mouseout", function(d, i){
+                
+                    d3.select(this)
+                        .style("opacity", 1);
+
+                    d3.select("#tooltip")
+                        .style("opacity", 0);
+
+                    
+                });
+
+            this.addBubbleText();
+
+        },
+        
+        redrawGraph: function(tickformat, colorScale, ticks){
+            
+            var _that = this;
+            var colorScale = colorScale || function(d){ return _that.colorScale(d.sum); }
+            var ticks = ticks || 20;
+            
+            d3.select(".thechart")
+                .transition()
+                .duration(800)
+                .style("opacity", 1);
+                
+            
+            d3.selectAll(".bars")
+                .transition()
+                .duration(800)
+                .attr("y", function(d){ return _that.powerScale(d.sum); })
+                .attr("height", function(d){ return _that.height - _that.powerScale(d.sum); })
+                .delay(function(d, i){ return i * 10; })
+                .attr("x", function(d){ return _that.xScale(d.name);})
+                .style("fill", colorScale);
+
+            d3.selectAll(".values")
+                .transition()
+                .duration(800)
+                .attr("y", function(d){ return _that.powerScale(d.sum) - 5; })
+                .delay(function(d, i){ return i * 10; })
+                .attr("x", function(d){ return _that.xScale(d.name) + (_that.xScale.rangeBand()/2); })
+
+            d3.selectAll(".y")
+                .transition()
+                .duration(800)
+                .style("opacity", 1)
+                .call(this.yAxis.tickFormat(tickformat).ticks(ticks))
+                .selectAll("text")
+                .style({"text-anchor":"end"})
+                .attr("x", 0)
+                .attr("y", 0);
+            
+             d3.selectAll(".x.axis")
+                .transition()
+                .duration(800)
+                .style("opacity", 1)
+                .delay(function(d, i){return i * 10;})
+                .call(this.xAxis)
+                .selectAll("text")
+                .style({"text-anchor":"start"})
+                .attr("transform", "translate(-10,3)rotate(48)")
+                .attr("y", -3)
+                .attr("x", 10);
+
+        },
+
+        addBubbleText: function(){
+
+            var _that = this;
+
+            this.bars.append("text")
+                .attr("class", "values dark")
+                .attr("x", function(d){ return _that.xScale(d.name) + (_that.xScale.rangeBand()/2) ;  })
+                .attr("y", function(d){ return _that.powerScale(d.sum) - 5;})
+                .text(function(d){ return d3.format("$.2s")(d.sum);})
+//                .each(function(d, i){
+//                    
+//                    var elm = d3.select(this);
+//                          y = elm.attr("y");
+//                
+//                    if(_that.height - _that.powerScale(d.sum) < elm.node().getBBox().height){
+//                           elm.attr("y", y - 20).classed("dark", true);
+//                    }
+//                })
+                .attr("text-anchor", "middle");
+
+        },
+
+        addXAxis: function(){
+
+            var _that = this;
+
+            //adding Y axis
+            this.svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(" + this.margin.left + "," + (this.height + this.margin.top) + ")")
+                .call(this.xAxis)
+                .selectAll("text")
+                .style("opacity", 1)
+                .each(function(d, i){
+
+//                    var elm = d3.select(this);
+//                    var barheight = parseInt(d3.select(".bars:nth-child(" + (i + 1) + ")").attr("height"));
+//
+//                    //hide text if it's shorter than the bar
+//                    if(parseInt(elm.style("width"), 10) > barheight){
+//                        barheight = barheight + 10;
+//                        elm.attr("transform", "translate(0,-" + (barheight) + ")");
+//                    } else {
+//                        elm.attr("transform", "translate(" + (_that.xScale.rangeBand()/2) + ",-" + (_that.height/2) + ")");
+//                    }
+
+                })
+                .style({"text-anchor":"start"})
+                .attr("transform", function(d){ 
+                    //var s = d3.select(this).attr("transform") || ""; 
+                    return "translate(-10,3)rotate(48)"; 
+                })
+                .attr("y", -3)
+                .attr("x", 10);
+            
+
+        },
+
+        addYAxis: function(){
+
+            this.svg.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(" + this.margin.left + ", " + this.margin.top + ")")
+                .call(this.yAxis)
+                .selectAll("text")
+                .style({"text-anchor":"end"})
+                .attr("x", 0)
+                .attr("y", 0);
+
+        },
+        
+        addNavigation: function(){
+            
+           var _that = this;
+            
+           var x = this.width - (this.stepFunctions.length * 30);
+            
+           var nav = this.svg.append("g")
+                .attr("class", "navigation")
+                .attr("transform", "translate(" + x + "," + this.margin.top + ")");
+                
+           var circle = nav.selectAll("circle")
+                .data(this.stepFunctions)
+                .enter();
+            
+            circle.append("circle")
+                .attr("cx", function(d, i){ return i * 25})
+                .attr("cy", 15)
+                .attr("r", 10)
+                .style({"fill":"#aaa", "cursor":"pointer"})
+                .on("click", function(d, i){
+                
+                    d.call(_that); 
+                    _that.currentStep = i; 
+                    _that.setNavActive();
+                });
+            
+            circle.append("text")
+                .attr("x", function(d, i){ return i * 25})
+                .attr("y", 19)
+                .text(function(d, i){ return i + 1; })
+                .attr("text-anchor", "middle")
+                .style({"font-family":"sans-serif", "fill":"#ccc", "font-size":"11px", "pointer-events":"none"});
+            
+            nav.append("circle")
+                .attr("cx", this.stepFunctions.length * 25)
+                .attr("cy", 15)
+                .attr("r", 10)
+                .style({"fill":"#aaa", "cursor":"pointer"})
+                .on("click", function(d, i){
+
+                    _that.currentStep == _that.stepFunctions.length - 1 ? _that.currentStep = 0 : _that.currentStep++; 
+                    _that.stepFunctions[_that.currentStep].call(_that);
+                    _that.setNavActive();
+                });
+            
+            
+            nav.append("text")
+                .attr("x", this.stepFunctions.length * 23)
+                .attr("y", 22)
+                .attr("text-anchor", "start")
+                .html("&#65515;")
+                .style({"font-family":"'Open Sans', sans-serif", "font-size":"28px", "font-weight":"700","pointer-events":"none"});
+            
+            this.setNavActive();
+            
+        },
+        
+        setNavActive: function(){
+            
+            
+            var _that = this;
+            
+            d3.selectAll(".navigation circle")
+                .style("fill", "#aaa");
+            
+            d3.select(".navigation circle:nth-child(" + (_that.currentStep + 1) + ")")
+                .style("fill", "#423c43");
+            
+        },
+        
+        removeElements: function(){
+            
+          this.itemsForRemoval.forEach(function(obj, i){
+              obj.remove();
+          });
+            
+          this.itemsForRemoval.length = 0;
+            
+        },
+        
+        stepOne: function(){
+            
+            
+           var duration = 300,
+               _that    = this;
+            
+           //reset chart if coming back from a later step
+           this.removeElements();
+           this.powerScale.exponent(1).rangeRound([0, this.height]).domain([d3.max(this.data, function(d){ return d.sum; }), 0]).clamp(true).nice();
+           this.xScale.domain(this.data.sort(function(a,b){return a.id - b.id; }).map(function(d){ return d.name; }));
+           this.redrawGraph(function(d){ return d3.format(">-$.0f")(d/1e6) + " mil"; }, function(d){ return d.sum > 2000000 ? "#2c3b3d" : "#5e959a"; }, 20); 
+            
+           var text = ["The bulk of Steyer's political spending in California has gone to to efforts related ",
+                       "to his fight against climate change — supporting Proposition 39 and opposing ",
+                       "Proposition 23.",
+                       " ",
+                       "Proposition 39 raised taxes on out-of-state companies doing business in California ",
+                       "and devoted the money to making energy efficiency upgrades in public schools. ",
+                       "Steyer and California Sen. Kevin de León led the campaign for Proposition 39, which ",
+                       "voters approved in 2012.",
+                       " ",
+                       "Proposition 23 was paid for largely by oil companies that are supposed to cut their ",
+                       "greenhouse gas emissions under California's landmark climate-change law, AB 32. The ",
+                       "measure would have suspended AB 32, but voters rejected it in 2010."];
+            
+            
+            
+            
+           var notations = this.svg.append("g")
+                .attr("class", "stepone-notations")
+                .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+                .style("pointer-events", "none");
+            
+           notations.append("path")
+                .attr("d", "M" + this.xScale.rangeBand() + "," + (this.height * .42) + " h100 M" + (this.xScale.rangeBand()*2) + "," + (this.height * .85) + "h140 v-" + (this.height * .15))
+                .style({"stroke":"#000", "stroke-width":"1px", "stroke-dasharray":"2,2", "fill":"none"});
+          
+           notations.append("text")
+                .attr("x", 130)
+                .attr("y", this.height * .2)
+                .call(function(d){
+               
+                    var lineHeight = 1.3,
+                        x = this.attr("x"),
+                        y = this.attr("y");
+               
+                    text.forEach(function(obj, i){
+                        d.append("tspan")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("dy", (i * lineHeight) + "em")
+                            .text(text[i]);
+                    })
+                })
+                .style({"font-family":"'Open Sans', sans-serif", "font-size":"13px", "fill":"black"});
+                
+            //queue up notations for remove in other steps
+            this.itemsForRemoval.push(notations);
+            
+        },
+        
+        stepTwo:function(){
+            
+            var _that = this;
+            
+            this.removeElements();
+            this.powerScale.exponent(.6).rangeRound([0, this.height]).domain([2000000, 0]).clamp(true).nice();
+            this.xScale.domain(this.data.sort(function(a,b){return a.id - b.id; }).map(function(d){ return d.name; }));
+            this.redrawGraph(d3.format(">-$s"), function(d){ return d.sum > 2000000 ? "#eee" : "#5e959a"; }, 20);
+            
+            
+            var text = ["But zooming into the graph, we see Steyer has spent ",
+                        "relatively little on individual politicians in California ",
+                        "and efforts to influence the Legislature. His spending was ",
+                        "mostly on ballot measures or to broader efforts within the ",
+                        "Democratic party."];
+            
+            var notations = this.svg.append("g")
+                .attr("class", "steptwo-notations")
+                .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+                .style("pointer-events", "none");
+            
+            notations.append("text")
+                .attr("x", this.width - 360)
+                .attr("y", 60)
+                .call(function(d){
+               
+                    var lineHeight = 1.3,
+                        x = this.attr("x"),
+                        y = this.attr("y");
+               
+                    text.forEach(function(obj, i){
+                        d.append("tspan")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("dy", (i * lineHeight) + "em")
+                            .text(text[i]);
+                    })
+                })
+                .style({"font-family":"'Open Sans', sans-serif", "font-size":"13px", "fill":"black"});
+            this.itemsForRemoval.push(notations);
+        },
+        
+        stepThree:function(){
+
+            var _that = this;
+
+            this.removeElements();
+            this.powerScale.exponent(.4).rangeRound([200, this.height]).domain([30000000, 0]).clamp(true).nice();
+            
+            this.xScale
+                //.domain(this.groupArrayByCat(this.data, "year").map(function(d){ return d.name; }));
+                .domain(this.data.sort(function(a,b){return a.year - b.year; }).map(function(d){ return d.name; }))
+            this.redrawGraph(d3.format(">-$s"), function(d){ return _that.typeScale(d.type); }, 4);
+            
+            //d3.selectAll(".y.axis .tick:nth-child(1), .y.axis .tick:nth-child(2)").remove();
+            
+            var text = ["That began to change last year. In 2014, he gave the maximum allowable donations to two ",
+                        "statewide candidates (Gov. Jerry Brown and Controller Betty Yee) and gave $1.3 million to ",
+                        "legislative campaign efforts. In 2015, he gave $150,000 to a labor-backed group engaged in a ",
+                        "Dem-on-Dem race for state Senate. "];
+
+            
+            var notations = this.svg.insert("g", ".thechart")
+                .attr("class", "stepthree-notations")
+                .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+                .style("pointer-events", "none");
+            
+            notations.append("text")
+                .attr("x", this.width * .05)
+                .attr("y", 50)
+                .call(function(d){
+               
+                    var lineHeight = 1.3,
+                        x = this.attr("x"),
+                        y = this.attr("y");
+               
+                    text.forEach(function(obj, i){
+                        d.append("tspan")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("dy", (i * lineHeight) + "em")
+                            .text(text[i]);
+                    })
+                })
+                .style({"font-family":"'Open Sans', sans-serif", "font-size":"13px", "fill":"black"});
+            
+            var arr = [], counts = {};
+            this.data.forEach(function(obj, i){
+                counts[obj.year] = (counts[obj.year] || 0) + 29;
+            });
+            
+            for(var prop in counts){
+                arr.push({year: prop, size: counts[prop]});
+            }
+            
+            arr.sort(function(a, b){ return a.year - b.year;});
+            
+            //manally eyeballing the bar steps for now.
+            for(var i=0,k=6.5; i < arr.length; i++){
+                
+                notations.append("rect")
+                    .attr("x", k)
+                    .attr("y", _that.height * .4)
+                    .attr("width", arr[i].size)
+                    .attr("height",  _that.height * .6)
+                    .style({"fill":"#eee", "stroke":"black", "stroke-width":"1px"});
+                
+                notations.append("text")
+                    .attr("x", k + (arr[i].size * .5))
+                    .attr("y", _that.height * .4 + 15)
+                    .text(arr[i].year)
+                    .attr("text-anchor", "middle")
+                    .style({"font-family":"'Open Sans', sans-serif", "font-size":"10px"});
+                
+                k += arr[i].size;
+                
+            }
+            
+            var legend = notations.append("g")
+                .attr("transform", "translate(125,130)");
+                
+            var legendItems = legend.selectAll(".legend")
+                .data(["Proposition", "Organization", "Candidate"])
+                .enter();
+            
+            var legendItem = legendItems.append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d,i){ return "translate(" + (i * 100) + ",0)"})
+            
+            legendItem.append("rect")
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("width", 15)
+                .attr("height", 15)
+                .attr("fill", function(d){ return _that.typeScale(d);});
+            
+            legendItem.append("text")
+                .attr("x", 18)
+                .attr("y", 12)
+                .attr("text-anchor", "start")
+                .text(function(d){ return d; })
+                .style({"font-family":"'Open Sans', sans-serif", "font-size":"10px"});              
+            
+            this.itemsForRemoval.push(notations);
+
+        },
+        
+        stepFour: function(){
+            
+            var _that = this;
+             
+            this.removeElements();
+            
+            var nextGenYScale = d3.scale.linear(),
+                nextGenXScale = d3.scale.ordinal(),
+                nextGenYAxis  = d3.svg.axis(),
+                nextGenXAxis  = d3.svg.axis();
+
+            nextGenData.forEach(function(d){
+              var size = 0;
+              d.bills.forEach(function(d){
+                size += d.length;
+              });
+              d.size = size;
+            });
+
+            
+            nextGenYScale.domain([0, d3.max(nextGenData, function(d){ return d.amount})])
+                .range([this.height, this.height * .4]);
+            
+            nextGenXScale.domain(nextGenData.map(function(d){ return d.session; }))
+                .rangeRoundBands([0, this.width], .1);
+            
+            nextGenYAxis.scale(nextGenYScale).orient("left").tickFormat(d3.format("$.1s"));
+            nextGenXAxis.scale(nextGenXScale).orient("bottom");
+                
+            
+            
+            d3.selectAll(".thechart, .x, .y")
+                .style("opacity", 0);
+            
+            
+            var nextGen = this.svg.append("g")
+                .attr("class", "nextGenGraphic")
+                .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+                .selectAll(".nextgenGraph")
+                .data(nextGenData)
+                .enter();
+            
+            nextGen.append("rect")
+                .attr("x", function(d){ return nextGenXScale(d.session); })
+                .attr("width", function(d){ return nextGenXScale.rangeBand(); })
+                .attr("y", this.height)
+                .attr("height", 0)
+                .style({"fill":"#395E5E", "cursor":"pointer"})
+                .on("mouseover", function(d, i){
+
+                    var h = _that.svg.node().getBoundingClientRect().height,
+                        w = _that.svg.node().getBoundingClientRect().width,
+                        wOffset = w/(_that.width + _that.margin.left + _that.margin.right),
+                        hOffset = h/(_that.height + _that.margin.top + _that.margin.bottom);
+
+                    d3.select(this)
+                        .style("fill", "#609F9F");
+
+                    d3.select("#tooltip")
+                      .style({"opacity":1, "top": ((nextGenYScale(d.amount) + 50) * hOffset) + "px", "left": ((_that.margin.left + nextGenXScale(d.session) + (nextGenXScale.rangeBand()/2)) * wOffset) + "px" })
+                      .html("<strong>BILLS/AGENCIES LOBBIED</strong><br><br>" + d.bills.join(", "))
+                      .classed("left", function(){ return nextGenData.indexOf(d) === 0 ? true : false; })
+                      .classed("right", function(){ return nextGenData.indexOf(d) === 4 ? true : false; });
+                    
+                })
+                .on("mouseout", function(d, i){
+                
+                    d3.select(this)
+                        .style("fill", "#395E5E");
+
+                    d3.select("#tooltip")
+                        .style("opacity", 0);
+
+                    
+                })
+                .transition()
+                .duration(800)
+                .attr("y", function(d){ return nextGenYScale(d.amount); })
+                .attr("height", function(d){ return _that.height - nextGenYScale(d.amount); });
+            
+            nextGen.append("text")
+                .style({"font":"10px sans-serif", "font-size":"12px", "pointer-events":"none"})
+                .attr("x", function(d){ return nextGenXScale(d.session) + (nextGenXScale.rangeBand()/2); })
+                .attr("y", this.height - 3)
+                .attr("text-anchor", "middle")
+                .text(function(d){ return d3.format("$.2s")(d.amount); })
+                .transition()
+                .duration(800)
+                .attr("y", function(d){ return nextGenYScale(d.amount) - 3; });
+            
+            
+            var nextYAxis = this.svg.append("g")
+                .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+                .attr("class", "nextgeny")
+                .call(nextGenYAxis);
+            
+            var nextXAxis = this.svg.append("g")
+                .attr("transform", "translate(" + this.margin.left + "," + (this.height + this.margin.top) + ")")
+                .attr("class", "nextgenx")
+                .call(nextGenXAxis)
+                .selectAll("text")
+                .attr("text-anchor", "middle")
+                .style({"font":"11px sans-serif"})
+                //.attr("transform", "rotate(45)");
+            
+            
+            var text = ["Also last year, Steyer's nonprofit organization began lobbying the California Legislature. ",
+                        " ",
+                        "NextGen Climate Action registered to lobby in California in 2014 and now has contracts with", 
+                        "three Sacramento lobbying firms. It's urging lawmakers to pass a package of climate-change ",
+                        "related bills championed by Senate leader Kevin de León."];
+
+            
+            var notations = this.svg.insert("g", ".thechart")
+                .attr("class", "stepfour-notations")
+                .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+                .style("pointer-events", "none");
+            
+            notations.append("text")
+                .attr("x", this.width * .05)
+                .attr("y", 50)
+                .call(function(d){
+               
+                    var lineHeight = 1.3,
+                        x = this.attr("x"),
+                        y = this.attr("y");
+               
+                    text.forEach(function(obj, i){
+                        d.append("tspan")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("dy", (i * lineHeight) + "em")
+                            .text(text[i]);
+                    })
+                })
+                .style({"font-family":"'Open Sans', sans-serif", "font-size":"13px", "fill":"black"});
+            
+             this.itemsForRemoval.push(notations);
+             this.itemsForRemoval.push(d3.selectAll(".nextGenGraphic"))
+             this.itemsForRemoval.push(nextXAxis);
+             this.itemsForRemoval.push(nextYAxis);
+
+            
+        },
+
+        stepFive: function(){
+
+            var _that = this;
+
+            this.xScale
+                .domain(this.groupArrayByCat(this.data, "outcome").map(function(d){ return d.name; }));
+
+            //change the text
+            d3.select("#detail")
+                .html("<p>But not all of them have been successful...</p>")
+                .style("opacity", 0)
+                .transition()
+                .duration(1000)
+                .style("opacity", 1);
+
+            //move the bubbles
+            d3.selectAll("circle")
+                .transition()
+                .duration(1000)
+                .delay(function(d, i){
+                    return i * 10;
+                })
+                .attr("cy", function(d){ return _that.xScale(d.name) + _that.xScale.rangeBand()/2;});
+
+            //move the values inside bubbles
+            d3.selectAll(".values")
+                .transition()
+                .duration(1000)
+                .delay(function(d, i){
+                    return i * 10;
+                })
+                .attr("y", function(d){ return _that.xScale(d.name) + (_that.xScale.rangeBand()/2) + 2; })
+
+            //move the bars now
+             d3.selectAll(".bars")
+                .transition()
+                .duration(1000)
+                .delay(function(d, i){
+                    return i * 10;
+                })
+                .attr("y", function(d){ return _that.xScale(d.name);})
+                .style("fill", function(d){ return _that.winLoseScale(d.outcome);});
+
+            //and don't forget the axis labels
+            d3.selectAll(".y.axis")
+                .transition()
+                .duration(1000)
+                .delay(function(d, i){
+                    return i * 10;
+                })
+                .call(this.yAxis.scale(this.xScale))
+                .selectAll("text")
+                .style({"text-anchor":"start"})
+                .attr("y", 0)
+                .attr("x", 10);
+
+        },
+        
+
+        groupArrayByCat: function(arr, cat){
+
+            var i, hashTable = {}, newarr = Object.create(arr);
+
+            for(i=0; i < arr.length; i++){
+                arr[i].index = i;
+            }
+
+            return arr.sort(function(b,a){
+                if(hashTable[a[cat]] === undefined){
+                    hashTable[a[cat]] = a.index;
+                }
+                if(hashTable[b[cat]] === undefined){
+                    hashTable[b[cat]] = b.index;
+                }
+                return (hashTable[a[cat]] !== hashTable[b[cat]]) ? (hashTable[a[cat]] - hashTable[b[cat]]) : (a.sum - b.sum);
+            });
+
+        },
+        
+        //function to wrap text
+        wrap: function(width, lineHeight) {
+            
+            var words = this.text().split(/\s+/).reverse(),
+                word,
+                line = [],
+                lineNumber = 0,
+                y = this.attr("y"),
+                x = this.attr("x"),
+                dy = parseFloat(this.attr("dy") || 0),
+                tspan = this.text(null)
+                    .append("tspan")
+                    .attr("x", x)
+                    .attr("y", y)
+                    .attr("dy", dy + "em");
+            
+                while (word = words.pop()) {
+                  line.push(word);
+                  tspan.text(line.join(" "));
+                  if (tspan.node().getComputedTextLength() > width) {
+                    line.pop();
+                    tspan.text(line.join(" "));
+                    line = [word];
+                    tspan = this.append("tspan")
+                        .attr("x", x)
+                        .attr("y", y)
+                        .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                        .text(word);
+                  }
+                }
+        }
+
+
+    };
+
+    //shim for Object create in older browsers
+    if (!Object.create)
+    Object.create = function(proto) {
+        function F(){}
+        F.prototype = proto;
+        return new F;
+    }
+    
+    
+//    function resizeChart(){
+//        //make sure #chart is correct size
+//        var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+//            h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+//            box = Math.min(w, h);
+//        d3.select("#chart").style({width:box + "px", height:box + "px"});
+//    }
+//    resizeChart();
+//
+//        
+//    d3.select(window).on("resize", resizeChart);
+        
+    window.bubbleBarChart.init();
+    
+    </script>
+  </body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
+  <script src="data.js"></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="http://calmatters.org/static/theme/frontend/css/style.css?version=1.4.0">
+  <link rel="stylesheet" href="http://calmatters.org/static/theme/frontend/css/general.css">
+
+  <style>
+    html,body { height: auto !important; margin: 0px; padding: 0px;}
+    #map {
+      height: 500px;
+      max-width: 450px;
+      margin: 30px 0;
+      border: 1px solid black;
+    }
+    #home-button {
+      position: absolute;
+      top: 70px;
+      left: 10px;
+    }
+    .legend div {
+      width: 100%; height: 10px;
+      border: 1px solid black;
+    }
+    table#cost-legend {
+      display: none;
+    }
+    table#table-container {
+      display: none;
+      max-width: 700px;
+      margin: 0px auto;
+    }
+    table#table-container tr td{
+      text-align: right;
+    }
+    table.legend {
+      border-collapse: collapse;
+      max-width: 500px;
+      margin: 0px auto;
+    }
+    table.legend tr td {
+      text-align: right;
+      font-family: "Neusa", sans-serif;
+    }
+    table#table-container tr td:nth-of-type(1){
+      text-align: left;
+    }
+    form#var-form {
+      width: 165px;
+      margin: 0px auto 10px auto;
+    }
+    input[type="radio"]{display:none;}
+    img.var-btn {
+      cursor: pointer;
+      padding-bottom: 5px;
+      border-bottom: 2px;
+      border-bottom-color: -webkit-link;
+    }
+    a.chosen-single {
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+    div.chosen-text {
+      display: inline;
+      line-height: 2;
+    }
+    div.chosen-text p {display: inherit;}
+    @media (max-width: 500px) {
+      #map {
+        height: 200px;
+      }
+    }
+    div#map-container {
+      font-family: "ff-meta-serif-web-pro";
+      max-width: 450px;
+      margin: 0px auto;
+    }
+    div#map-container a.chosen-single {
+      background: #FCEEA3;
+      border-radius: 0px;
+      border: 1px solid black;
+    }
+    select.chosen-select {
+      font-size: 0.8em;
+    }
+    div#map-container .chosen-results li.highlighted {
+      background-color: #FCEEA3;
+      background-image: none;
+      color: black;
+    }
+    div#credit p {
+       font-family: "Neusa", sans-serif;
+    }
+    p#legend-text { text-align: center; margin-bottom: 2px;}
+
+/*------------------------------------------------------------------------------
+    :: Fonts
+------------------------------------------------------------------------------*/
+
+  @font-face {
+      font-family: 'GearedSlab';
+      src: url('../fonts/gearedslab-light-webfont.eot');
+      src: url('../fonts/gearedslab-light-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/gearedslab-light-webfont.woff2') format('woff2'), url('../fonts/gearedslab-light-webfont.woff') format('woff'), url('../fonts/gearedslab-light-webfont.ttf') format('truetype'), url('../fonts/gearedslab-light-webfont.svg#geared_slabthin') format('svg');
+      font-weight: 300;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'GearedSlab';
+      src: url('../fonts/gearedslab-extrabold-webfont.eot');
+      src: url('../fonts/gearedslab-extrabold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/gearedslab-extrabold-webfont.woff2') format('woff2'), url('../fonts/gearedslab-extrabold-webfont.woff') format('woff'), url('../fonts/gearedslab-extrabold-webfont.ttf') format('truetype'), url('../fonts/gearedslab-extrabold-webfont.svg#geared_slabextrabold') format('svg');
+      font-weight: 900;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'GearedSlab';
+      src: url('../fonts/gearedslab-bold-webfont.eot');
+      src: url('../fonts/gearedslab-bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/gearedslab-bold-webfont.woff2') format('woff2'), url('../fonts/gearedslab-bold-webfont.woff') format('woff'), url('../fonts/gearedslab-bold-webfont.ttf') format('truetype'), url('../fonts/gearedslab-bold-webfont.svg#geared_slabbold') format('svg');
+      font-weight: bold;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'GearedSlab';
+      src: url('../fonts/GearedSlab.eot');
+      src: url('../fonts/GearedSlab.eot') format('embedded-opentype'), url('../fonts/GearedSlab.woff2') format('woff2'), url('../fonts/GearedSlab.woff') format('woff'), url('../fonts/GearedSlab.ttf') format('truetype'), url('../fonts/GearedSlab.svg#GearedSlab') format('svg');
+      font-weight: normal;
+  }
+  @import url("//hello.myfonts.net/count/2de805");
+
+  /* medium */
+  @font-face {font-family: 'Neusa';src: url('../fonts/2DE805_1_0.eot');src: url('../fonts/2DE805_1_0.eot?#iefix') format('embedded-opentype'),url('../fonts/2DE805_1_0.woff2') format('woff2'),url('../fonts/2DE805_1_0.woff') format('woff'),url('../fonts/2DE805_1_0.ttf') format('truetype');}
+  </style>
+</head>
+<body>
+  <div>
+    <form id="var-form" action="">
+      <input type="radio" name="var-form" value="congestion_delay" checked=true><img class="var-btn" src="img/hours-active.png" data-var="congestion_delay" data-img="hours" style="border-bottom-style: solid;">
+      <input type="radio" name="var-form" value="congestion_cost"><img class="var-btn"
+class="var-btn" src="img/cost.png" data-var="congestion_cost" data-img="cost">
+      <input type="radio" name="var-form" value="table"><img class="var-btn" src="img/table.png" data-var="table" data-img="table">
+    </form>
+    <table id="table-container">
+      <thead>
+        <tr>
+          <th>Metro area</th><th>Annual traffic delay cost per driver</th><th>Annual traffic delay per driver (hours)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-title="Metro area">Los Angeles-Long Beach-Santa Ana</td><td data-title="Traffic delay cost">$1,711</td><td data-title="Traffic delay">80</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">San Francisco-Oakland</td><td data-title="Traffic delay cost">$1,675</td><td data-title="Traffic delay">78</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">San Jose</td><td data-title="Traffic delay cost">$1,422</td><td data-title="Traffic delay">67</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Riverside-San Bernadino</td><td data-title="Traffic delay cost">$1,316</td><td data-title="Traffic delay">59</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Sacramento</td><td data-title="Traffic delay cost">$958</td><td data-title="Traffic delay">43</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">San Diego</td><td data-title="Traffic delay cost">$887</td><td data-title="Traffic delay">42</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Concord</td><td data-title="Traffic delay cost">$752</td><td data-title="Traffic delay">35</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Mission Viejo</td><td data-title="Traffic delay cost">$590</td><td data-title="Traffic delay">28</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Thousand Oaks</td><td data-title="Traffic delay cost">$527</td><td data-title="Traffic delay">25</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Oxnard</td><td data-title="Traffic delay cost">$494</td><td data-title="Traffic delay">23</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Fresno</td><td data-title="Traffic delay cost">$495</td><td data-title="Traffic delay">23</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Santa Cruz</td><td data-title="Traffic delay cost">$444</td><td data-title="Traffic delay">21</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Vallejo</td><td data-title="Traffic delay cost">$456</td><td data-title="Traffic delay">21</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Santa Barbara</td><td data-title="Traffic delay cost">$434</td><td data-title="Traffic delay">20</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Santa Rosa</td><td data-title="Traffic delay cost">$407</td><td data-title="Traffic delay">19</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Bakersfield</td><td data-title="Traffic delay cost">$512</td><td data-title="Traffic delay">19</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Stockton</td><td data-title="Traffic delay cost">$516</td><td data-title="Traffic delay">18</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Modesto</td><td data-title="Traffic delay cost">$421</td><td data-title="Traffic delay">18</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Lancaster-Palmdale</td><td data-title="Traffic delay cost">$349</td><td data-title="Traffic delay">17</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Camarillo</td><td data-title="Traffic delay cost">$368</td><td data-title="Traffic delay">17</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Livermore</td><td data-title="Traffic delay cost">$358</td><td data-title="Traffic delay">16</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Redding</td><td data-title="Traffic delay cost">$345</td><td data-title="Traffic delay">16</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Antioch</td><td data-title="Traffic delay cost">$347</td><td data-title="Traffic delay">15</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Santa Clarita</td><td data-title="Traffic delay cost">$341</td><td data-title="Traffic delay">15</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Fairfield</td><td data-title="Traffic delay cost">$303</td><td data-title="Traffic delay">14</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Gilroy-Morgan Hill</td><td data-title="Traffic delay cost">$311</td><td data-title="Traffic delay">14</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Watsonville</td><td data-title="Traffic delay cost">$315</td><td data-title="Traffic delay">14</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Napa</td><td data-title="Traffic delay cost">$290</td><td data-title="Traffic delay">13</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Santa Maria</td><td data-title="Traffic delay cost">$299</td><td data-title="Traffic delay">13</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Seaside-Monterey</td><td data-title="Traffic delay cost">$287</td><td data-title="Traffic delay">13</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Victorville-Hesperia-Apple Valley</td><td data-title="Traffic delay cost">$292</td><td data-title="Traffic delay">12</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Salinas</td><td data-title="Traffic delay cost">$233</td><td data-title="Traffic delay">10</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">San Luis Obispo</td><td data-title="Traffic delay cost">$218</td><td data-title="Traffic delay">10</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Merced</td><td data-title="Traffic delay cost">$218</td><td data-title="Traffic delay">9</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Petaluma</td><td data-title="Traffic delay cost">$201</td><td data-title="Traffic delay">9</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Yuba City</td><td data-title="Traffic delay cost">$227</td><td data-title="Traffic delay">9</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Chico</td><td data-title="Traffic delay cost">$179</td><td data-title="Traffic delay">8</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Lodi</td><td data-title="Traffic delay cost">$179</td><td data-title="Traffic delay">8</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Visalia</td><td data-title="Traffic delay cost">$190</td><td data-title="Traffic delay">8</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Temecula-Murrieta</td><td data-title="Traffic delay cost">$162</td><td data-title="Traffic delay">7</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Davis</td><td data-title="Traffic delay cost">$169</td><td data-title="Traffic delay">7</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Manteca</td><td data-title="Traffic delay cost">$177</td><td data-title="Traffic delay">7</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Vacaville</td><td data-title="Traffic delay cost">$143</td><td data-title="Traffic delay">7</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Indio-Cathedral City-Palm Springs</td><td data-title="Traffic delay cost">$149</td><td data-title="Traffic delay">6</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Lompoc</td><td data-title="Traffic delay cost">$126</td><td data-title="Traffic delay">6</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Simi Valley</td><td data-title="Traffic delay cost">$110</td><td data-title="Traffic delay">5</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">El Centro-Calexico</td><td data-title="Traffic delay cost">$87</td><td data-title="Traffic delay">4</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">El Paso de Robles-Atascadero</td><td data-title="Traffic delay cost">$106</td><td data-title="Traffic delay">4</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Madera</td><td data-title="Traffic delay cost">$87</td><td data-title="Traffic delay">4</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Hemet</td><td data-title="Traffic delay cost">$62</td><td data-title="Traffic delay">3</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Porterville</td><td data-title="Traffic delay cost">$73</td><td data-title="Traffic delay">3</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Hanford</td><td data-title="Traffic delay cost">$37</td><td data-title="Traffic delay">1</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Tracy</td><td data-title="Traffic delay cost">$38</td><td data-title="Traffic delay">1</td>
+        </tr>
+        <tr>
+          <td data-title="Metro area">Turlock</td><td data-title="Traffic delay cost">$31</td><td data-title="Traffic delay">1</td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="map-container">
+      <p id="legend-text">Annual traffic delay per driver (hours)</p>
+      <table class="legend" id="poor-legend">
+        <tr>
+          <td><div style="background-color:#ffffd4;"></div></td>
+          <td><div style="background-color:#fed98e;"></div></td>
+          <td><div style="background-color:#fe9929;"></div></td>
+          <td><div style="background-color:#cc4c02;"></div></td>
+        </tr>
+        <tr>
+          <td width="70">20</td>
+          <td width="70">40</td>
+          <td width="70">60</td>
+          <td width="70">80</td>
+        </tr>
+      </table>
+      <table class="legend" id="cost-legend">
+        <tr>
+          <td><div style="background-color:#b2e2e2;"></div></td>
+          <td><div style="background-color:#66c2a4;"></div></td>
+          <td><div style="background-color:#2ca25f;"></div></td>
+          <td><div style="background-color:#006d2c;"></div></td>
+        </tr>
+        <tr>
+          <td width="70">$450</td>
+          <td width="70">$900</td>
+          <td width="70">$1,350</td>
+          <td width="70">$1,800</td>
+        </tr>
+      </table>
+      <div>
+        <select class="chosen-select">
+          <option selected="selected" value="" disabled="disabled">Select a metro area</option>
+          <option value="Antioch">Antioch</option>
+          <option value="Bakersfield">Bakersfield</option>
+          <option value="Camarillo">Camarillo</option>
+          <option value="Chico">Chico</option>
+          <option value="Concord">Concord</option>
+          <option value="Davis">Davis</option>
+          <option value="El Centro-Calexico">El Centro-Calexico</option>
+          <option value="El Paso de Robles-Atascadero">El Paso de Robles-Atascadero</option>
+          <option value="Fairfield">Fairfield</option>
+          <option value="Fresno">Fresno</option>
+          <option value="Gilroy-Morgan Hill">Gilroy-Morgan Hill</option>
+          <option value="Hanford">Hanford</option>
+          <option value="Hemet">Hemet</option>
+          <option value="Indio-Cathedral City-Palm Springs">Indio-Cathedral City-Palm Springs</option>
+          <option value="Lancaster-Palmdale">Lancaster-Palmdale</option>
+          <option value="Livermore">Livermore</option>
+          <option value="Lodi">Lodi</option>
+          <option value="Lompoc">Lompoc</option>
+          <option value="Los Angeles-Long Beach-Santa Ana">Los Angeles-Long Beach-Santa Ana</option>
+          <option value="Madera">Madera</option>
+          <option value="Manteca">Manteca</option>
+          <option value="Merced">Merced</option>
+          <option value="Mission Viejo">Mission Viejo</option>
+          <option value="Modesto">Modesto</option>
+          <option value="Napa">Napa</option>
+          <option value="Oxnard">Oxnard</option>
+          <option value="Petaluma">Petaluma</option>
+          <option value="Porterville">Porterville</option>
+          <option value="Redding">Redding</option>
+          <option value="Riverside-San Bernadino">Riverside-San Bernadino</option>
+          <option value="Sacramento">Sacramento</option>
+          <option value="Salinas">Salinas</option>
+          <option value="San Diego">San Diego</option>
+          <option value="San Francisco-Oakland">San Francisco-Oakland</option>
+          <option value="San Jose">San Jose</option>
+          <option value="San Luis Obispo">San Luis Obispo</option>
+          <option value="Santa Barbara">Santa Barbara</option>
+          <option value="Santa Clarita">Santa Clarita</option>
+          <option value="Santa Cruz">Santa Cruz</option>
+          <option value="Santa Maria">Santa Maria</option>
+          <option value="Santa Rosa">Santa Rosa</option>
+          <option value="Seaside-Monterey">Seaside-Monterey</option>
+          <option value="Simi Valley">Simi Valley</option>
+          <option value="Stockton">Stockton</option>
+          <option value="Temecula-Murrieta">Temecula-Murrieta</option>
+          <option value="Thousand Oaks">Thousand Oaks</option>
+          <option value="Tracy">Tracy</option>
+          <option value="Turlock">Turlock</option>
+          <option value="Vacaville">Vacaville</option>
+          <option value="Vallejo">Vallejo</option>
+          <option value="Victorville-Hesperia-Apple Valley">Victorville-Hesperia-Apple Valley</option>
+          <option value="Visalia">Visalia</option>
+          <option value="Watsonville">Watsonville</option>
+          <option value="Yuba City">Yuba City</option>
+        </select>
+        <div class="chosen-text"><p></p></div>
+      </div>
+      <div id="map"></div>
+    </div>
+    <div id="credit">
+      <p>Source: Texas A&amp;M Transportation Institute</p>
+    </div>
+  </div>
+<script>
+(function(){
+  var MapView = {
+    map: null,
+    geojson: null,
+    variable: "congestion_delay",
+
+    updateStyle: function(val, cat) {
+      var fill = null;
+      if (cat === "congestion_delay") {
+        fill = (val > 60) ? "#cc4c02" :
+                (val > 40) ? "#fe9929" :
+                (val > 20) ? "#fed98e" : "#ffffd4";
+      }
+      if (cat === "congestion_cost") {
+        fill = (val > 1350) ? "#006d2c" :
+                (val > 900) ? "#2ca25f" :
+                (val > 450) ? "#66c2a4" : "#b2e2e2";
+      }
+      return {
+        radius: 5,
+        color: "#3d3d3d",
+        fillColor: fill,
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 1
+      };
+    },
+
+    updateLegend: function(cat) {
+      if (cat === "congestion_delay") {
+        $("#cost-legend").hide();
+        $("#poor-legend").show();
+      }
+      if (cat === "congestion_cost") {
+        $("#poor-legend").hide();
+        $("#cost-legend").show();
+      }
+    },
+
+    initialize: function() {
+      L.mapbox.accessToken = 'pk.eyJ1IjoiZGFuaGlsbHJlcG9ydHMiLCJhIjoiVDJLWXBBOCJ9.07HUumI9hUVZSLIeJEcUXQ';
+
+      var Stamen_TonerBackground = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.{ext}', {
+        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        subdomains: 'abcd',
+        minZoom: 0,
+        maxZoom: 20,
+        ext: 'png'
+      });
+
+      this.map = L.map('map', {
+        scrollWheelZoom: false,
+        center: [35.67514743608467, -119.970703125],
+        layers: Stamen_TonerBackground,
+        maxBounds: L.latLngBounds(
+          L.latLng(31, -128),
+          L.latLng(42, -112)
+        ),
+        minZoom: 4,
+        maxZoom: 8,
+        zoom: $(window).width() < 500 ? 5: 6
+      });
+
+      var that = this;
+
+      this.geojson = L.geoJson(roadData, {
+        onEachFeature: that.onEachFeature,
+
+        pointToLayer: function(feature, latlng) {
+          return L.circleMarker(latlng);
+        },
+
+        style: function(feature) {
+          return MapView.updateStyle(feature.properties.congestion_delay, MapView.variable);
+        }
+      }).addTo(that.map);
+
+      this.clickEvent();
+      $(".chosen-select").chosen();
+    },
+
+    clickEvent: function() {
+      $(".var-btn").on("click", function() {
+        if ($(this).data("var") === "table") {
+          $("#map-container").hide();
+          $("table#table-container").show();
+        } else {
+          $("#map-container").show();
+          $("table#table-container").hide();
+          MapView.variable = $(this).data("var");
+
+          MapView.updateLegend(MapView.variable);
+          if (MapView.variable === "congestion_delay") {
+            $("#legend-text").text("Annual traffic delay per driver (hours)");
+          } else {
+            $("#legend-text").text("Annual cost of traffic delays per driver");
+          }
+          $("#var-form input").change();
+        }
+        $(this)
+          .attr("src", "img/" + $(this).data("img") + "-active.png")
+          .css("border-bottom-style", "solid");
+        $.each($(this).siblings("img"), function() {
+          $(this).attr(
+            "src",
+            "img/" + $(this).data("img") + ".png")
+          .css("border-bottom-style", "none");
+        });
+      });
+    },
+
+    onEachFeature: function(feature, layer) {
+      layer.on({
+        click: MapView.clickCity
+      });
+      $(".chosen-select").change(function() {
+        if (feature.properties.City === $(this).val()) {
+          MapView.highlightFeature(feature, layer);
+        } else {
+          layer.setStyle({
+            radius: 5
+          });
+        }
+      });
+
+      $("#var-form input").on("change", function(e) {
+        layer.setStyle(MapView.updateStyle(feature.properties[MapView.variable], MapView.variable));
+      });
+    },
+
+    clickCity: function(e) {
+      $(".chosen-select").val(e.target.feature.properties.City).change();
+      $(".chosen-select").trigger("chosen:updated");
+    },
+
+    highlightFeature: function(feature, layer) {
+      layer.setStyle({
+        radius: 10
+      });
+      layer.bringToFront();
+      MapView.map.panTo(layer.getLatLng());
+      var properties = feature.properties;
+      $(".chosen-text p").html("drivers spend $" + MapView.intComma(properties.congestion_cost) + " annually being delayed " + properties.congestion_delay + " hour(s) due to traffic.");
+    },
+
+    intComma: function(d) {
+      return d.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  };
+
+  $(document).ready(function() { MapView.initialize(); });
+}());
+</script>
+</body>
+</html>

@@ -123,9 +123,11 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
         }),
 
         (_("Content"), {
-
             "fields": (
                 "content",
+            ),
+            'classes': (
+                "tinymce-editable",
             )
         }),
 

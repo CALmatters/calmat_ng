@@ -124,9 +124,6 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
             'fields': (
                 "embedded_content",
             ),
-            'classes': (
-                "tinymce-editable",
-            )
         }),
         ('Meta', {'fields': (
             'status',

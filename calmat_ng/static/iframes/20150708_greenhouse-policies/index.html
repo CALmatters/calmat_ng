@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A look at environmental policies in California</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <style>
+        
+        /* Colors: 
+        
+        #5b71c4 -purple
+        #65a31e - green
+        #dc4144 - red
+        #866e44 - brown
+        #ec6723 - orange
+        #55e9e7 - turquoise
+        #d837da - pink
+        #c8b390 - light brown
+        
+        */
+        
+        body{
+            font-family:"Open Sans", Helvetica, sans-serif;
+            background-color: #f5f5f5;
+        }
+        h1{
+            font-weight: 700;
+        }
+        
+        h2:before{
+            content:"";
+            width:50px;
+            height:50px;
+            display: block;
+            border:1px solid #aaa;
+            border-radius: 50%;
+            padding: 28px;
+            margin:0 auto 10px;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        h2.vehicle:before{
+            background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTM3Ljg0IDEyLjAyYy0uNDEtMS4xOC0xLjUzLTIuMDItMi44NC0yLjAyaC0yMmMtMS4zMSAwLTIuNDMuODQtMi44NCAyLjAybC00LjE2IDExLjk4djE2YzAgMS4xLjkgMiAyIDJoMmMxLjExIDAgMi0uOSAyLTJ2LTJoMjR2MmMwIDEuMS45IDIgMiAyaDJjMS4xMSAwIDItLjkgMi0ydi0xNmwtNC4xNi0xMS45OHptLTI0Ljg0IDE5Ljk4Yy0xLjY2IDAtMy0xLjM0LTMtM3MxLjM0LTMgMy0zIDMgMS4zNCAzIDMtMS4zNCAzLTMgM3ptMjIgMGMtMS42NiAwLTMtMS4zNC0zLTNzMS4zNC0zIDMtMyAzIDEuMzQgMyAzLTEuMzQgMy0zIDN6bS0yNS0xMGwzLTloMjJsMyA5aC0yOHoiLz48cGF0aCBkPSJNMCAwaDQ4djQ4aC00OHoiIGZpbGw9Im5vbmUiLz48L3N2Zz4=");
+        }
+        
+        h2.electricity:before{
+            background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNDAgMTAwIj48cG9seWdvbiBwb2ludHM9IjI2LjcsODMuMyAzMy44LDc5LjQgMTkuOCw5OS45IDE0LjksNzUuNyAyMC4yLDgyLjIgMjUuMyw0NiAwLDYwLjMgMTUuMywwLjEgMzIuNywwIDEyLjcsNDQuNSAzOS44LDMwICIvPjwvc3ZnPg==");
+        }
+        
+        h2.industry:before{
+            background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDIwLjggMjAuOCI+PHBvbHlnb24gcG9pbnRzPSIyMC44LDIwLjggMTkuNCwwIDE1LjksMCAxNC40LDE1LjIgMTQuNCw5LjggMTIuOCw5LjggMTIuOCw2LjEgNi42LDEwLjEgNi42LDYgMCwxMC4xIDAsMjAuOCAzLjEsMjAuOCAzLjEsMTcuNyAyLjQsMTcuNyAyLjQsMTEuMiA0LDExLjIgNCwxNy43IDMuMSwxNy43IDMuMSwyMC44IDcsMjAuOCA3LDE3LjcgNi40LDE3LjcgNi40LDExLjIgNy45LDExLjIgNy45LDE3LjcgNywxNy43IDcsMjAuOCAxMC44LDIwLjggMTAuOCwxNy43IDEwLjQsMTcuNyAxMC40LDExLjIgMTEuOSwxMS4yIDExLjksMTcuNyAxMC44LDE3LjcgMTAuOCwyMC44ICIvPjwvc3ZnPg==");
+            background-size:80%;
+        }
+        
+        h2.building:before{
+            background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNjYuNjY3IDEwMCI+PHBhdGggZD0iTTAsMHYxMDBoMjYuNjY3VjgwSDQwdjIwaDI2LjY2NlYwSDB6IE0yMCw2My4zMzNINi42Njd2LTIwSDIwVjYzLjMzM3ogTTIwLDMwSDYuNjY3VjEwSDIwVjMweiBNNDAsNjMuMzMzSDI2LjY2N3YtMjBINDAgIFY2My4zMzN6IE00MCwzMEgyNi42NjdWMTBINDBWMzB6IE02MCw2My4zMzNINDYuNjY3di0yMEg2MFY2My4zMzN6IE02MCwzMEg0Ni42NjdWMTBINjBWMzB6Ij48L3BhdGg+PC9zdmc+");
+            background-size:50%;
+        }
+        
+        h2.law:before{
+            background-image:url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAxMDAgOTQuNyI+Cjxwb2x5Z29uIGlkPSJYTUxJRF82XyIgcG9pbnRzPSI1MCwwIDEwLjUsMjYuMyA4OS41LDI2LjMgIi8+PHBhdGggaWQ9IlhNTElEXzJfIiBkPSJNODkuNSw3My43VjMxbC03OC45LDAuNnY0Mi4xTDAsOTQuN2wyMS4xLDBsMC0xNi43VjQ3LjRsNS4zLTUuM2w1LjMsNS4zdjMxLjZIMjEuMWwwLDE1LjhsMjQuOSwwaDI1LjRWNzguOWgtMi45VjQ3LjRsNS4zLTUuM2w1LjMsNS4zdjMxLjZoLTcuNnYxNS44SDEwMEw4OS41LDczLjd6IE01NS4zLDc4LjlINDQuN1Y0Ny40bDUuMy01LjN2MGw1LjMsNS4zVjc4Ljl6Ii8+PC9zdmc+");
+            background-size:70%;
+        }
+
+        h2.bills:before{
+            background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDEwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTg2Ljg0MiwwSDEzLjE1OGMtMi44OTQsMC01LjI2NCwyLjM2OC01LjI2NCw1LjI2M3Y4OS40NzRjMCwyLjg5MywyLjM3LDUuMjYzLDUuMjY0LDUuMjYzaDczLjY4NCAgYzIuODk2LDAsNS4yNjQtMi4zNyw1LjI2NC01LjI2M1Y1LjI2M0M5Mi4xMDUsMi4zNjgsODkuNzM4LDAsODYuODQyLDB6IE04NC4yMTEsOTIuMTA1SDE1Ljc4OVY3Ljg5NWg2OC40MjJWOTIuMTA1eiI+PC9wYXRoPjxyZWN0IHg9IjI3Ljg5NSIgeT0iMjIuMTA1IiB3aWR0aD0iNDQuMjExIiBoZWlnaHQ9IjUuMjYzIj48L3JlY3Q+PHJlY3QgeD0iNjQuNzM3IiB5PSIzOC45NDciIHdpZHRoPSI3LjM2OCIgaGVpZ2h0PSI1LjI2NCI+PC9yZWN0PjxyZWN0IHg9IjY0LjczNyIgeT0iNTUuNzg5IiB3aWR0aD0iNy4zNjgiIGhlaWdodD0iNS4yNjQiPjwvcmVjdD48cmVjdCB4PSI2NC43MzciIHk9IjcyLjYzMiIgd2lkdGg9IjcuMzY4IiBoZWlnaHQ9IjUuMjYzIj48L3JlY3Q+PHJlY3QgeD0iMjcuODk1IiB5PSIzOC45NDciIHdpZHRoPSIzMS41NzkiIGhlaWdodD0iNS4yNjQiPjwvcmVjdD48cmVjdCB4PSIyNy44OTUiIHk9IjU1Ljc4OSIgd2lkdGg9IjMxLjU3OSIgaGVpZ2h0PSI1LjI2NCI+PC9yZWN0PjxyZWN0IHg9IjI3Ljg5NSIgeT0iNzIuNjMyIiB3aWR0aD0iMzEuNTc5IiBoZWlnaHQ9IjUuMjYzIj48L3JlY3Q+PC9zdmc+");
+            background-size:70%;
+        }
+
+        h2.order:before{
+            background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cmVjdCB4PSIzMi4yIiB5PSI3Ni40IiB3aWR0aD0iMzUuNyIgaGVpZ2h0PSIzLjIiPjwvcmVjdD48cmVjdCB4PSIyOC45IiB5PSI4MS4yIiB3aWR0aD0iNDIuMiIgaGVpZ2h0PSIzLjIiPjwvcmVjdD48cmVjdCB4PSI2MyIgeT0iNTAuNCIgd2lkdGg9IjMuMiIgaGVpZ2h0PSIyOC40Ij48L3JlY3Q+PHJlY3QgeD0iNTMuMiIgeT0iNTAuNCIgd2lkdGg9IjMuMiIgaGVpZ2h0PSIyOC40Ij48L3JlY3Q+PHJlY3QgeD0iNDMuNSIgeT0iNTAuNCIgd2lkdGg9IjMuMiIgaGVpZ2h0PSIyOC40Ij48L3JlY3Q+PHJlY3QgeD0iMzMuOCIgeT0iNTAuNCIgd2lkdGg9IjMuMiIgaGVpZ2h0PSIyOC40Ij48L3JlY3Q+PHJlY3QgeD0iNDcuNiIgeT0iMTYuMyIgd2lkdGg9IjMuMiIgaGVpZ2h0PSIxOC43Ij48L3JlY3Q+PHBhdGggZD0iTTY0LjYsMjYuOWgtMTdWMTUuNWgxN1YyNi45eiBNNTAuOCwyMy42aDEwLjV2LTQuOUg1MC44VjIzLjZ6Ij48L3BhdGg+PHBhdGggZD0iTTcwLjIsNTIuOEgzMGwwLjItMS44YzEuMS0xMCw5LjgtMTcuOSwxOS45LTE3LjljMTAsMCwxOC44LDcuOCwxOS45LDE3LjlMNzAuMiw1Mi44eiBNMzMuNyw0OS42aDMyLjcgYy0xLjctNy41LTguNS0xMy4yLTE2LjQtMTMuMlMzNS40LDQyLjEsMzMuNyw0OS42eiI+PC9wYXRoPjwvc3ZnPgo=");
+            background-size: 100%;
+        }
+    
+        .row{
+            margin-bottom: 10px;
+        }
+        
+        .type{
+            background-position:left top;
+            background-size:25px 25px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color:#5d70c3;
+        }
+        .type.vehicle{
+            color:#5d70c3;
+        }
+        .type.electricity{
+            color:#866e44;
+        }
+        .type.industry{
+            color:#65a31e;
+        }
+        .type.building{
+            color:#dc4144;
+        }
+        .type.law, .type.bills, .type.order{
+            color:#ec6723;
+        }
+/*        .type.bills{
+            color:#55e9e7;
+        }*/
+        
+        
+        .box{
+            position: relative;
+            background-color: #ffffff;
+/*            border:1px solid #d7d7d7;*/
+            padding:5px 10px;
+            min-height: 600px;
+        }
+        
+        .box.vehicle{
+            border-top:4px solid #5d70c3;
+        }
+        .box.electricity{
+            border-top:4px solid #866e44;
+        }
+        .box.industry{
+            border-top:4px solid #65a31e;
+        }
+        .box.building{
+            border-top:4px solid #dc4144;
+        }
+        .box.law, .box.bills, .box.order{
+            border-top:4px solid #ec6723;   
+        }
+/*        .box.bills{
+            border-top:4px solid #55e9e7;
+        }*/
+        
+        .innerbox{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding:10px;
+            color:#aaa;
+            font-size:0.8em;
+            text-align: center;
+        }
+        .bill{
+            margin-top: 10px;
+            font-size:0.85em;
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            text-indent: 10px;
+        }
+        .year{
+            margin: 0 0 5px;
+            font-size:0.9em;
+        }
+        .description{
+            font-size:1em;
+            line-height: 1.6em;
+        }
+        
+        h2{
+
+            font-weight:700;
+            font-size:1.1em;
+            line-height: 1.4em;
+            margin: 10px 0 0;
+            text-align: center;
+            height: 115px; /**** Possibly change this for three lines ***/
+            overflow: hidden;
+        }
+        h2 a, h2 a:visited{
+            color:black;
+        }
+        h3{
+            font-size:0.8em;
+            margin: 10px 0 20px;
+            color:#aaa;
+            text-align: center;
+        }
+        .box h3{
+            display: none;
+        }
+        
+        /* Small devices (tablets, 768px and up) */
+        div[class^="col"]{padding-left:5px; padding-right:5px; margin-bottom: 10px;}
+        
+        /* Medium devices (desktops, 992px and up) */
+        @media (min-width: 992px) 
+        {   
+            div[class^="col"]{padding-left:10px; padding-right:10px; margin-bottom:20px;}
+        }
+
+        /* Large devices (large desktops, 1200px and up) */
+        @media (min-width: 1200px) 
+        {   
+            /*default so you don't need this*/
+            div[class^="col"]{padding-left:15px; padding-right:15px; margin-bottom:30px;}
+        }
+    </style>
+
+
+<!-- analytics -->
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+    <script type="text/javascript">(function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
+        mixpanel.init("a1972c6c0498dccec6f3d999d7b2fce9");
+    </script>
+
+    <script type="text/javascript">
+        window.heap=window.heap||[],heap.load=function(t,e){window.heap.appid=t,window.heap.config=e;var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+t+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(t){return function(){heap.push([t].concat(Array.prototype.slice.call(arguments,0)))}},p=["clearEventProperties","identify","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+        heap.load("2084127977");
+    </script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-59722930-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <script src="/iframes/jquery.scrolldepth.min.js"></script>
+    <script>
+    jQuery(document).ready(function(){
+            /* google analytics plugin */
+            jQuery(function() {
+              jQuery.scrollDepth();
+            });
+      });
+    </script>
+<!-- /analytics -->
+
+
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="subhead">
+            <h1>A snapshot of climate policies in California</h1>
+            <p>California has established ambitious greenhouse gas reduction goals, and regulators have crafted a broad array of rules to meet them. Here are some of the most important programs and goals for combating climate change.</p>
+        </div>
+        <div class="row">
+            
+            <!-- Clean Cars Bill -->
+<!--             <div class="col-xs-6 col-sm-3">
+                <div class="box vehicle">
+                    <div class="type vehicle">Vehicle</div>
+                    <a target="_top" href="http://www.arb.ca.gov/cc/ccms/ccms.htm"><h2 class="vehicle">Clean Cars Bill (Pavley)</h2></a>
+                    <h3>Assembly Bill 1493</h3>
+                    <div class="year"><strong>Approved:</strong> 2002</div>
+                    <div class="description vehicle">A law that required the reduction of greenhouse gas emissions from cars. Similar national regulations took effect in 2010.</div>
+                    <div class="bill"><a target="_top" href="http://www.leginfo.ca.gov/pub/01-02/bill/asm/ab_1451-1500/ab_1493_bill_20020722_chaptered.pdf">AB 1493 Bill (PDF) <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div> -->
+            
+            <!-- Low Carbon Fuel Standard -->
+            <div class="col-xs-6 col-sm-3">
+                <div class="box vehicle">
+                    <div class="type">Vehicles</div>
+                    <a target="_top" href="http://www.arb.ca.gov/fuels/lcfs/lcfs.htm"><h2 class="vehicle">Low Carbon Fuel Standard (LCFS)</h2></a>
+                    <h3>Executive Order S-1-07</h3>
+                    <div class="year"><strong>Approved:</strong> 2007</div>
+                    <div class="description vehicle">A program to reduce the carbon intensity of gasoline and other fuels in the state (by 10% by 2020). The program began requiring carbon reductions in 2011.</div>
+                    <div class="bill"><a target="_top" href="http://www.arb.ca.gov/fuels/lcfs/eos0107.pdf">Executive Order (PDF) <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div>
+            
+            <!-- Zero Emission Vehicle Program -->
+<!--             <div class="col-xs-6 col-sm-3">
+                <div class="box vehicle">
+                    <div class="type">Vehicle</div>
+                    <a target="_top" href="http://www.arb.ca.gov/msprog/zevprog/zevprog.htm"><h2 class="vehicle">Zero Emission Vehicle program (ZEV)</h2></a>
+                    <h3>Air Resources Board Program</h3>
+                    <div class="year"><strong>Enacted:</strong> 1990</div>
+                    <div class="description vehicle">A program aimed at increasing the number of vehicles that use little or no gasoline on the road. First enacted in 1990, with increasing targets.</div>
+                    <div class="bill"><a target="_top" href="http://www.arb.ca.gov/msprog/zevprog/zevprog.htm">More info on program website <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div> -->
+            
+            <!-- Renewable Portfolio Standard -->
+            <div class="col-xs-6 col-sm-3">
+                <div class="box electricity">
+                    <div class="type electricity">Electricity</div>
+                    <a target="_top" href="http://www.cpuc.ca.gov/PUC/energy/Renewables/"><h2 class="electricity">Renewable Portfolio Standard </h2></a>
+                    <h3>Senate Bill 1078</h3>
+                    <div class="year"><strong>Created:</strong> 2002</div>
+                    <div class="description electricity">A requirement that California’s electricity providers get 33 percent of their energy from renewable sources by 2020. (The state's three major utilities are all above 20 percent currently.) SB 350, under consideration in the Legislature, would raise that requirement to 50 percent by 2030.</div>
+                    <div class="bill"><a target="_top" href="http://www.cpuc.ca.gov/PUC/energy/Renewables/">Renewable Portfolio Standard<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div>
+            
+            <!-- Cap-and-trade -->
+            <div class="col-xs-6 col-sm-3">
+                <div class="box industry">
+                    <div class="type industry">Industry</div>
+                    <a target="_top" href="http://www.arb.ca.gov/cc/capandtrade/capandtrade.htm"><h2 class="industry">Cap-and-trade</h2></a>
+                    <h3>Assembly Bill 32 program</h3>
+                    <div class="year"><strong>Began:</strong> 2013</div>
+                    <div class="description vehicle">A program born out of AB 32 that gives large polluters a target for greenhouse gas emissions reductions, and allows them to buy permission to pollute through an auction process, or by trading with other companies. In 2015, transportation fuels, such as gasoline, were added to the program, which now covers 85 percent of California’s emissions.</div>
+                    <div class="bill"><a target="_top" href="http://www.arb.ca.gov/cc/ab32/ab32.htm">More info on AB32 <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div>
+            
+            <!-- Energy Efficiency -->
+            <div class="col-xs-6 col-sm-3">
+                <div class="box building">
+                    <div class="type building">Buildings</div>
+                    <a target="_top" href="http://www.energy.ca.gov/releases/2014_releases/2014-07-01_new_title24_standards_nr.html"><h2 class="building">Energy Efficiency</h2></a>
+                    <h3>Title 24</h3>
+                    <div class="year"><strong>Rules Drafted:</strong> 2008, 2013</div>
+                    <div class="description vehicle">California is continually tightening its building standards; the latest ones require residential buildings to use 25 percent less energy than prior rules. SB 350, currently under consideration in the Legislature, seeks to double the energy efficiency in buildings.</div>
+                    <div class="bill"><a target="_top" href="http://www.energy.ca.gov/title24/">Title 24 program <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div>
+            
+            <!-- California also aims to have all new buildings consume no energy, on net, by 2020, meaning that the buildings would also produce energy through means like solar panels, even as they consume it. -->
+            
+            <!-- sustainable communities -->
+<!--             <div class="col-xs-6 col-sm-3">
+                <div class="box communities">
+                    <div class="type communities">Communities</div>
+                    <a target="_top" href="http://www.arb.ca.gov/cc/sb375/sb375.htm"><h2 class="building">Sustainable Communities</h2></a>
+                    <h3>Senate Bill 375</h3>
+                    <div class="year"><strong>Passed:</strong> 2008</div>
+                    <div class="description vehicle">California requires major metropolitan areas to plan for better public transit and reduced use of cars. This sprang out of a 2008 bill, SB 375.</div>
+                    <div class="bill"><a target="_top" href="http://www.leginfo.ca.gov/pub/07-08/bill/sen/sb_0351-0400/sb_375_bill_20080930_chaptered.pdf">SB 375 (PDF) <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div> -->
+
+            <!-- AB 32 -->
+            <div class="col-xs-6 col-sm-3">
+                <div class="box law">
+                    <div class="type law">Law</div>
+                    <a target="_top" href="http://www.leginfo.ca.gov/pub/05-06/bill/asm/ab_0001-0050/ab_32_bill_20060927_chaptered.pdf"><h2 class="law">Assembly Bill 32</h2></a>
+                    <h3>AB 32</h3>
+                    <div class="year"><strong>Passed:</strong> 2006</div>
+                    <div class="description vehicle">A landmark law that requires California to reduce its greenhouse gas emissions to 1990 levels by 2020. The law, known as California Global Warming Solutions Act of 2006, laid the foundation for the cap-and-trade program as well as the low-carbon fuel standard and a host of other policies.</div>
+                    <div class="bill"><a target="_top" href="http://www.leginfo.ca.gov/pub/05-06/bill/asm/ab_0001-0050/ab_32_bill_20060927_chaptered.pdf">AB 32 <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div>
+            
+            <!-- Jerry Brown’s Executive Order -->
+            <div class="col-xs-6 col-sm-3">
+                <div class="box order">
+                    <div class="type order">Rule</div>
+                    <a target="_top" href="http://gov.ca.gov/news.php?id=18938"><h2 class="order">Executive Order</h2></a>
+                    <h3>Executive Order B-30-15</h3>
+                    <div class="year"><strong>Issued:</strong> April 2015</div>
+                    <div class="description vehicle">Gov. Jerry Brown has ordered that the state reduce greenhouse gas emissions to 40 percent below 1990 levels by 2030. By extending the current targets beyond 2020, this clarifies the path to getting to 80 percent reductions by 2050.</div>
+                    <div class="bill"><a target="_top" href="http://gov.ca.gov/news.php?id=18938">Executive Order Text <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div>
+
+            <!-- SB 350 -->
+            <div class="col-xs-6 col-sm-3">
+                <div class="box bills">
+                    <div class="type bills">Bill</div>
+                    <a target="_top" href="http://www.leginfo.ca.gov/cgi-bin/postquery?bill_number=sb_350&amp;sess=CUR&amp;house=S"><h2 class="bills">Senate Bill 350</h2></a>
+                    <h3>SB 350</h3>
+                    <div class="year"><strong>Introduced:</strong> 2015 (pending)</div>
+                    <div class="description vehicle">A bill that aims to cut California’s energy use by 2030. Specifically, the bill calls for a reduction of petroleum use in motor vehicles by 50 percent; a doubling of the energy efficiency in buildings; and a requirement for California utilities to get 50 percent of their energy from renewable sources by 2030. The Senate passed the bill in June. The Assembly is now evaluating it.</div>
+                    <div class="bill"><a target="_top" href="http://www.leginfo.ca.gov/cgi-bin/postquery?bill_number=sb_350&amp;sess=CUR&amp;house=S">Senate Bill Documents <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div>
+
+            <!-- SB 32 -->
+            <div class="col-xs-6 col-sm-3">
+                <div class="box bills">
+                    <div class="type bills">Bill</div>
+                    <a target="_top" href="http://www.leginfo.ca.gov/cgi-bin/postquery?bill_number=sb_32&amp;sess=CUR&amp;house=S"><h2 class="bills">Senate Bill 32</h2></a>
+                    <h3>SB 32</h3>
+                    <div class="year"><strong>Introduced:</strong> 2014 (pending)</div>
+                    <div class="description vehicle">This bill aims to cut greenhouse gas emissions in California by 80 percent below 1990 levels by 2050. That target was originally established in 2005, by an executive order signed by then-Governor Arnold Schwarzenegger, and SB 32 would codify it into law. The Senate passed the bill in June, and it awaits action by the Assembly.</div>
+                    <div class="bill"><a target="_top" href="http://www.leginfo.ca.gov/cgi-bin/postquery?bill_number=sb_32&amp;sess=CUR&amp;house=S">Senate Bill Documents <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></div>
+                </div>
+            </div>
+
+        </div>
+        <div id="credit">Graphic by Jeremy Rue for CALMatters</div>
+    </div>
+</body>
+</html>
