@@ -465,10 +465,10 @@ def project_view(request, slug=None, template='project.html'):
 
 def atom_detail(request, slug, template="atom_post_detail.html"):
 
-    atom_post = Atom.objects.get(slug=slug)
-
-    if not atom_post:
-        return Http404
+    try:
+        atom_post = Atom.objects.get(slug=slug)
+    except Atom.DoesNotExist:
+        raise Http404
 
     more_atoms = atom_post.related.all()
 
