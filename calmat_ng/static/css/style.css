@@ -3617,7 +3617,9 @@ input:-moz-placeholder { font-size: 1em !important; }
     margin: 0px 0% 35px;
 }
 .entry.column_post .newsletter_as_shortcode .newsletter {
-    margin: 30px 13% 35px;
+    width: 80%;
+    margin: 30px auto 35px;
+    /*margin: 30px 13% 35px;*/
 }
 .newsletter_in_article .newsletter,
 .newsletter_in_column .newsletter {
@@ -3791,15 +3793,17 @@ input:-moz-placeholder { font-size: 1em !important; }
 @media screen and (max-width: 1000px) {
 
     .entry.column_post .newsletter_as_shortcode .newsletter {
-        margin: 30px 0% 35px 13%;
+        width: auto;
+        padding-left: 113px;
+        margin-left: 112px;
     }
 
 }
 @media screen and (max-width: 990px) {
     .newsletter {
-        margin: 0px 0 65px;
+        margin: 0 0 65px;
         padding: 5px 20px 20px;
-        width: 87%;
+        width: 100%;
     }
 
     .newsletter h2 {
@@ -3835,7 +3839,12 @@ input:-moz-placeholder { font-size: 1em !important; }
     .newsletter_as_shortcode .newsletter .form_holder form {
         margin-left: 0%;
     }
-
+    .entry.column_post .newsletter_as_shortcode .newsletter {
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        padding-left: 14%;
+    }
 }
 @media screen and (max-width: 570px){
     .newsletter_as_shortcode .newsletter {
