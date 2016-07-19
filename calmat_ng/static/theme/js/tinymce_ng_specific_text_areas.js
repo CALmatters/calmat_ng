@@ -2,6 +2,7 @@
 //  Todo:  use this selector across full site, and configure what fields in admin
 tinymce.init({
   selector: 'fieldset.tinymce-editable textarea',
+  extended_valid_elements:'script[language|type|src]',
   height: 500,
   plugins: [
     'advlist autolink lists link image imagetools charmap print preview anchor',
