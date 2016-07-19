@@ -290,16 +290,6 @@ body.active-left > .mask {
     body {
         padding-top: 54px
     }
-/*    .container {
-        margin: 0;
-    }
-*/    #body > .container {
-        margin: 25px;
-    }
-
-    div#body {
-        padding-top: 0;
-    }
 }
 
 /*------------------------------------------------------------------------------
@@ -1582,13 +1572,29 @@ a.button-bordered:hover {
 ------------------------------------------------------------------------------*/
 
 #body {
-    padding: 20px 0;
+    padding: 40px 0;
+}
+body.home #body {
+    padding: 32px 0;
 }
 
 .content {
     float: left;
     position: relative;
     width: 771px;
+}
+
+@media screen and (max-width: 767px){
+    #body > .container {
+        margin: 25px;
+    }
+
+    div#body {
+        padding-top: 13px;
+    }
+    body.home #body {
+        padding: 20px 0;
+    }
 }
 
 .content h2 {
