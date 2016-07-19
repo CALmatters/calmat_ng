@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>The Future Energy Home</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes" />
+	
+	
+</head>
+<body>
+	<link rel="stylesheet" type="text/css" href="css/calmatters_styles.css">
+	
+	<style type="text/css">
+	
+	body {
+		font-family: arial, helvetica, sans-serif;
+	}
+	
+	.hotspot {
+		outline: none;
+		pointer-events: none;
+		cursor: pointer;
+	}
+	
+	#base_image {
+	}
+
+	</style>
+		
+	<img id="base_image" name="emp" src="energy_home_hq.jpg" usemap="#ep">
+		
+	<map name="ep">
+		
+		<area shape="rect" class="hotspot" alt="Roofing" coords="381,330,406,355" href="energy_home_roof_tiles.jif" onMouseOver="showRoofTiles()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="High-Efficiency Windows" coords="617,444,642,469" href="energy_home_windows.jif" onMouseOver="showWindows()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="Hot Water Heater" coords="617,504,642,529" href="energy_home_hot_water.jif" onMouseOver="showHotWater()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="Tablet" coords="269,504,294,529" href="energy_home_apps.jif" onMouseOver="showApps()" onClick="return false" onMouseOut="returnHQ()">
+				
+		<area shape="rect" class="hotspot" alt="Attic" coords="726,237,751,262" href="energy_home_attic.jif" onMouseOver="showAttic()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="Living Room Lamp" coords="462,444,487,469" href="energy_home_light_bulbs.jif" onMouseOver="showLightBulbs()" onClick="return false"  onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="Washer/Dryer" coords="725,444,750,469" href="energy_home_washer_dryer.jif" onMouseOver="showWasherDryer()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="HVAC System" coords="815,299,840,324" href="energy_home_hvac.jif" onMouseOver="showHVAC()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="Garage" coords="618,154,642,179" href="energy_home_garage.jif" onMouseOver="showGarage()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="Shower Head" coords="617,284,642,309" href="energy_home_shower.jif" onMouseOver="showShower()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="Kitchen Faucet" coords="617,381,642,406" href="energy_home_gray_water.jif" onMouseOver="showGrayWater()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="rect" class="hotspot" alt="Solar Panel" coords="462,348,487,373" href="energy_home_solar.jif" onMouseOver="showSolar()" onClick="return false" onMouseOut="returnHQ()">
+		
+		<area shape="default" nohref>
+		</map>
+	
+	
+	<script type="text/javascript">
+
+		HQ = new Image(600,900)
+		HQ.src = "energy_home_hq.jpg"
+
+		RoofTiles = new Image(600,900)
+		RoofTiles.src = "energy_home_roof_tiles.jpg"
+
+		Windows = new Image(600,900)
+		Windows.src = "energy_home_windows.jpg"
+
+		HotWater = new Image(600,900)
+		HotWater.src = "energy_home_hot_water.jpg"
+		
+		Apps = new Image(600,900)
+		Apps.src = "energy_home_apps.jpg" 
+		
+		Attic = new Image(600,900)
+		Attic.src = "energy_home_attic.jpg" 
+		
+		LightBulbs = new Image(600,900)
+		LightBulbs.src = "energy_home_light_bulbs.jpg" 
+		
+		WasherDryer = new Image(600,900)
+		WasherDryer.src = "energy_home_washer_dryer.jpg" 
+		
+		HVAC = new Image(600,900)
+		HVAC.src = "energy_home_hvac.jpg" 
+		
+		Garage = new Image(600,900)
+		Garage.src = "energy_home_garage.jpg" 
+		
+		Shower = new Image(600,900)
+		Shower.src = "energy_home_shower.jpg" 
+		
+		GrayWater = new Image(600,900)
+		GrayWater.src = "energy_home_gray_water.jpg" 
+		
+		Solar = new Image(600,900)
+		Solar.src = "energy_home_solar.jpg" 
+		 
+
+	</script>
+	
+	<script type="text/javascript">
+	
+		function showRoofTiles() {
+		document.emp.src = RoofTiles.src; return true;
+		}
+
+		function showWindows() {
+		document.emp.src = Windows.src; return true;
+		}
+
+		function showHotWater() {
+		document.emp.src = HotWater.src; return true;
+		}
+		
+		function showApps() {
+		document.emp.src = Apps.src; return true;
+		}
+		
+		function showAttic() {
+		document.emp.src = Attic.src; return true;
+		}
+		
+		function showLightBulbs() {
+		document.emp.src = LightBulbs.src; return true;
+		}
+		
+		function showWasherDryer() {
+		document.emp.src = WasherDryer.src; return true;
+		}
+		
+		function showHVAC() {
+		document.emp.src = HVAC.src; return true;
+		}
+		
+		function showGarage() {
+		document.emp.src = Garage.src; return true;
+		}
+		
+		function showShower() {
+		document.emp.src = Shower.src; return true;
+		}
+		
+		function showGrayWater() {
+		document.emp.src = GrayWater.src; return true;
+		}
+		
+		function showSolar() {
+		document.emp.src = Solar.src; return true;
+		}
+
+		function returnHQ() {
+		document.emp.src = HQ.src; return true; 
+		}
+		
+	</script>
+	
+</body>
+</html>

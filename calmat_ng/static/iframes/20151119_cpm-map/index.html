@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name='viewport' content='width=device-width,initial-scale=1' />
+  <script src="js/jquery-1.11.1.min.js"></script>
+  <script src='js/d3.min.js'></script>
+  <script src='js/topojson.min.js'></script>
+  <script src='data.js'></script>
+  <link rel="stylesheet" href="http://calmatters.org/static/theme/frontend/css/style.css?version=1.4.0">
+  <link rel="stylesheet" href="http://calmatters.org/static/theme/frontend/css/general.css">
+
+  <style>
+    html, body {
+      height: auto !important;
+      padding: 0px;
+    }
+    div.int-container {
+      margin-left: 10px;
+    }
+    div#map-container {
+        text-align: center;
+    }
+    #map {
+      height: 260px;
+      width: 100%;
+    }
+    h2 {
+      font-family: "GearedSlab";
+      letter-spacing: 1.2px;
+      font-size: 34px;
+    }
+    p.intro-text {
+      font-family: "ff-meta-serif-web-pro";
+      line-height: 26px;
+    }
+    .county {
+      stroke: #3d3d3d;
+      cursor: pointer;
+    }
+    .legend div {
+      width: 100%; height: 10px;
+      border: 1px solid black;
+    }
+    table.legend {
+      border-collapse: collapse;
+      margin: 0px auto;
+    }
+    table.legend tr td {
+      text-align: right;
+      padding: 0px;
+    }
+    select#map-select {
+      margin-bottom: 16px;
+      font-size: 0.9em;
+      height: 2rem;
+      font-family: "ff-meta-serif-web-pro";
+    }
+    input[type="radio"]{display:none;}
+    img.var-btn {
+      cursor: pointer;
+      padding-bottom: 5px;
+      border-bottom: 2px;
+      border-bottom-color: -webkit-link;
+    }
+    div.chosen-text { display: inline-block; }
+    div.chosen-text p {display: inherit;}
+    #tooltip{
+            position: absolute;
+            top:100px;
+            left:100px;
+            font:400 13px/14px sans-serif;
+            -webkit-transform:translate(-50%, -50%);
+                    transform:translate(-50%, -50%);
+            max-width: 200px;
+            padding: 5px;
+            background: #fff;
+            border: 1px solid #333;
+            z-index: 9999;
+            pointer-events:none;
+            opacity: 0;
+            box-shadow: 0px 0px 5px 0px #ccc;
+            font-family: "ff-meta-serif-web-pro";;
+        }
+    #footer-tip {
+      width: 100%;
+      position: static;
+      display: none;
+      text-align: left;
+    }
+
+/*------------------------------------------------------------------------------
+    :: Fonts
+------------------------------------------------------------------------------*/
+
+  @font-face {
+      font-family: 'GearedSlab';
+      src: url('fonts/gearedslab-light-webfont.eot');
+      src: url('fonts/gearedslab-light-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/gearedslab-light-webfont.woff2') format('woff2'), url('fonts/gearedslab-light-webfont.woff') format('woff'), url('fonts/gearedslab-light-webfont.ttf') format('truetype'), url('fonts/gearedslab-light-webfont.svg#geared_slabthin') format('svg');
+      font-weight: 300;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'GearedSlab';
+      src: url('fonts/gearedslab-extrabold-webfont.eot');
+      src: url('fonts/gearedslab-extrabold-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/gearedslab-extrabold-webfont.woff2') format('woff2'), url('fonts/gearedslab-extrabold-webfont.woff') format('woff'), url('fonts/gearedslab-extrabold-webfont.ttf') format('truetype'), url('fonts/gearedslab-extrabold-webfont.svg#geared_slabextrabold') format('svg');
+      font-weight: 900;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'GearedSlab';
+      src: url('fonts/gearedslab-bold-webfont.eot');
+      src: url('fonts/gearedslab-bold-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/gearedslab-bold-webfont.woff2') format('woff2'), url('fonts/gearedslab-bold-webfont.woff') format('woff'), url('fonts/gearedslab-bold-webfont.ttf') format('truetype'), url('fonts/gearedslab-bold-webfont.svg#geared_slabbold') format('svg');
+      font-weight: bold;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'GearedSlab';
+      src: url('fonts/GearedSlab.eot');
+      src: url('fonts/GearedSlab.eot') format('embedded-opentype'), url('fonts/GearedSlab.woff2') format('woff2'), url('fonts/GearedSlab.woff') format('woff'), url('fonts/GearedSlab.ttf') format('truetype'), url('fonts/GearedSlab.svg#GearedSlab') format('svg');
+      font-weight: normal;
+  }
+  @import url("//hello.myfonts.net/count/2de805");
+
+  /* regular
+
+  @font-face {font-family: 'Neusa';src: url('../fonts/2DE805_0_0.eot');src: url('../fonts/2DE805_0_0.eot?#iefix') format('embedded-opentype'),url('../fonts/2DE805_0_0.woff2') format('woff2'),url('../fonts/2DE805_0_0.woff') format('woff'),url('../fonts/2DE805_0_0.ttf') format('truetype');}
+
+  */
+
+  /* medium */
+  @font-face {font-family: 'Neusa';src: url('fonts/2DE805_1_0.eot');src: url('fonts/2DE805_1_0.eot?#iefix') format('embedded-opentype'),url('fonts/2DE805_1_0.woff2') format('woff2'),url('fonts/2DE805_1_0.woff') format('woff'),url('fonts/2DE805_1_0.ttf') format('truetype');}
+  </style>
+</head>
+<body>
+  <div class="int-container">
+  <div>
+    <div>
+      <h2>Staying above poverty</h2>
+      <p class="intro-text">The map below shows the hourly wage one full-time worker would need to make, by county, to keep a family of four above the California Poverty Measure, a new way of measuring poverty that accounts for regional costs of living and was developed by the Public Policy Institute of California and the Stanford Center on Poverty and Inequality.</p>
+    </div>
+    <div id="map-container">
+      <select id="map-select">
+        <option disabled selected>Select a county</option>
+        <option val="Alameda">Alameda</option>
+        <option val="Alpine">Alpine</option>
+        <option val="Amador">Amador</option>
+        <option val="Butte">Butte</option>
+        <option val="Calaveras">Calaveras</option>
+        <option val="Colusa">Colusa</option>
+        <option val="Contra Costa">Contra Costa</option>
+        <option val="Del Norte">Del Norte</option>
+        <option val="El Dorado">El Dorado</option>
+        <option val="Fresno">Fresno</option>
+        <option val="Glenn">Glenn</option>
+        <option val="Humboldt">Humboldt</option>
+        <option val="Imperial">Imperial</option>
+        <option val="Inyo">Inyo</option>
+        <option val="Kern">Kern</option>
+        <option val="Kings">Kings</option>
+        <option val="Lake">Lake</option>
+        <option val="Lassen">Lassen</option>
+        <option val="Los Angeles">Los Angeles</option>
+        <option val="Madera">Madera</option>
+        <option val="Marin">Marin</option>
+        <option val="Mariposa">Mariposa</option>
+        <option val="Mendocino">Mendocino</option>
+        <option val="Merced">Merced</option>
+        <option val="Modoc">Modoc</option>
+        <option val="Mono">Mono</option>
+        <option val="Monterey">Monterey</option>
+        <option val="Napa">Napa</option>
+        <option val="Nevada">Nevada</option>
+        <option val="Orange">Orange</option>
+        <option val="Placer">Placer</option>
+        <option val="Plumas">Plumas</option>
+        <option val="Riverside">Riverside</option>
+        <option val="Sacramento">Sacramento</option>
+        <option val="San Benito">San Benito</option>
+        <option val="San Bernardino">San Bernardino</option>
+        <option val="San Diego">San Diego</option>
+        <option val="San Francisco">San Francisco</option>
+        <option val="San Joaquin">San Joaquin</option>
+        <option val="San Luis Obispo">San Luis Obispo</option>
+        <option val="San Mateo">San Mateo</option>
+        <option val="Santa Barbara">Santa Barbara</option>
+        <option val="Santa Clara">Santa Clara</option>
+        <option val="Santa Cruz">Santa Cruz</option>
+        <option val="Shasta">Shasta</option>
+        <option val="Sierra">Sierra</option>
+        <option val="Siskiyou">Siskiyou</option>
+        <option val="Solano">Solano</option>
+        <option val="Sonoma">Sonoma</option>
+        <option val="Stanislaus">Stanislaus</option>
+        <option val="Sutter">Sutter</option>
+        <option val="Tehama">Tehama</option>
+        <option val="Trinity">Trinity</option>
+        <option val="Tulare">Tulare</option>
+        <option val="Tuolumne">Tuolumne</option>
+        <option val="Ventura">Ventura</option>
+        <option val="Yolo">Yolo</option>
+        <option val="Yuba">Yuba</option>
+      </select>
+      <table class="legend">
+      <tr>
+        <td><div style="background-color:#ffffcc;"></div></td>
+        <td><div style="background-color:#a9db8e;"></div></td>
+        <td><div style="background-color:#48ae60;"></div></td>
+        <td><div style="background-color:#006837;"></div></td>
+      </tr>
+      <tr>
+        <td width="70">$12</td>
+        <td width="70">$14</td>
+        <td width="70">$16</td>
+        <td width="70">$18</td>
+      </tr>
+    </table>
+      <div id="map"></div>
+      <div id="tooltip" class="ffmeta"></div>
+      <div id="footer-tip" class="ffmeta"></div>
+    </div>
+  </div>
+  <div>
+    <p>For more information, see: <a href="http://www.ppic.org/main/home.asp">Public Policy Institute of California</a></p>
+    <p>Credit: Dan Hill for CALmatters</p>
+  </div>
+  </div>
+<script>
+(function(){
+  var MapView = {
+    map: null,
+    geojson: null,
+
+    initialize: function() {
+      this.plotMap();
+      this.addEvents();
+    },
+
+    addEvents: function() {
+      var windowWidth = document.documentElement.clientWidth;
+      $(window).mousemove( function(e) {
+        mouseY = e.pageY;
+        mouseX = (e.pageX < 150) ? 150 : (e.pageX > windowWidth-150) ? windowWidth-150 : e.pageX;
+        d3.select("#tooltip").style("top",mouseY-$("#tooltip").height()+"px").style("left",mouseX+"px");
+      });
+
+      $("#map-select").change(function() {
+        MapView.highlightFeature($(this).val(), true);
+      });
+    },
+
+    plotMap: function() {
+      var width = $(window).width() > 750 ? 750 : $(window).width(),
+          height = width * (13/15);
+      $("#map").height(height);
+      MapView.svg = d3.select("#map")
+        .append("svg")
+        .attr({
+          "width": width,
+          "height": height
+        })
+        .append("g");
+
+      d3.select("#map-container")
+        .append("div")
+        .attr("id", "text-container");
+
+      MapView.projection = d3.geo.mercator()
+                        .scale(width * 4)
+                        .center([-119.3, 37.5])
+                        .translate([width/2, height/2]);
+      MapView.path = d3.geo.path().projection(MapView.projection);
+
+      MapView.map = MapView.svg.insert("g", ":first-child")
+          .attr("class", "map")
+        .selectAll("path")
+          .data(topojson.feature(countyData,
+                                 countyData.objects.data).features)
+        .enter().append("path")
+          .attr("class", "county")
+          .attr("d", MapView.path)
+          .attr("stroke-width", 1)
+          .attr("fill", function(d) {
+            return MapView.getWage(d) > 16 ? "#006837" :
+              MapView.getWage(d) > 14 ? "#48ae60" :
+              MapView.getWage(d) > 12 ? "#a9db8e" : "#ffffcc";
+          })
+          .on("mouseover", function(d) {
+            $("#map-select").val(d.properties.name).change();
+            MapView.highlightFeature(d.properties.name, false);
+          })
+          .on("mouseout", function() {
+            $("#tooltip")
+              .text("")
+              .css("opacity", 0);
+            $("#footer-tip").css("display", "none");
+            d3.selectAll(".county")
+              .attr("stroke-width", 1);
+          });
+    },
+
+    highlightFeature: function(val, selected) {
+      $("#footer-tip").css("display", "none");
+      var data = null;
+      d3.selectAll(".county")
+        .attr("stroke-width", function(d) {
+          if (d.properties.name === val) {
+            data = d;
+            return 3;
+          } else {
+            return 1;
+          }
+        });
+      if (document.documentElement.clientWidth < 450 || selected) {
+        $("#footer-tip")
+          .css("display", "block")
+          .html(function() {return MapView.getText(data);});
+      } else {
+        $("#tooltip")
+        .css("opacity", 1)
+        .html(function() {return MapView.getText(data);});
+      }
+    },
+
+    getWage: function(d) {
+      return d3.round(parseFloat(d.properties.wage), 2);
+    },
+
+    getText: function(d) {
+      return "<p>In <strong>" + d.properties.name + " County</strong>, a family of four must earn <strong>$" + MapView.intComma(
+          d3.round(parseFloat(d.properties.inf), 2)
+        ) + "</strong> in a year, or <strong>$" + MapView.getWage(d) + "</strong> per hour in a full-time job, to stay out of poverty.</p>";
+    },
+
+    intComma: function(d) {
+      return d.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  };
+
+  $(document).ready(function() {
+    MapView.initialize();
+    $(window).resize(function() {
+      $("#map").empty();
+      MapView.initialize();
+    });
+  });
+}());
+</script>
+</body>
+</html>
