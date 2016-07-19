@@ -1,6 +1,6 @@
     <div class="btns">
         {% if show_follow_button %}
-            <a class="custom_follow_element" title="You can get updates to this story as it develops in the political process.">
+            <a href="/subscribe/" id="follow_btn" class="custom_follow_element" title="You can get updates to this story as it develops in the political process.">
                 <i class="fa fa-rss"></i>FOLLOW THIS STORY</a>
         {% endif %}
         <a href="{{ formatted_sharing_urls_dict.facebook }}" onclick="trackOutboundLink('{{ formatted_sharing_urls_dict.facebook }}'); return false;" class="btn-success btn-social" target="_blank">
@@ -16,17 +16,3 @@
             <i class="fa fa-print"></i>
         </a>
     </div>
-
-    {% block extra_js %}
-
-        {% if show_follow_button %}
-            <script type="application/javascript">
-
-                django.jQuery('a.custom_follow_element').click(function(evt){
-
-                    django.jQuery(this).html("<form><input type='text' name='email'/></form>");
-
-                });
-            </script>
-        {% endif %}
-    {% endblock %}

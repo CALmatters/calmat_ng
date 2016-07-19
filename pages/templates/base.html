@@ -16,7 +16,6 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'rss_article_feed' %}" >
     <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url 'atom_article_feed' %}" >
 
-
         <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/bootstrap.min.css' %}">
         <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/stackicons/css/stackicons-social-minimal.min.css' %}">
         <link rel="stylesheet" media="all" href="{% static 'theme/frontend/css/font-awesome-4.5.0/css/font-awesome.min.css' %}">
@@ -33,6 +32,8 @@
 
     <script src="//use.typekit.net/let5ryr.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
+
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 
     {% block extra_head %}
         {% include 'includes/analytics.html' %}
@@ -103,7 +104,7 @@
     {% include 'includes/footer.html' %}
 
     {# jQuery cannot be compressed by Django-Compressor! #}
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
 {#  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>#}
     {%  include 'includes/base_javascript.html' %}
 
