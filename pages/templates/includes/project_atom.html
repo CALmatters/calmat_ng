@@ -9,7 +9,7 @@
 {% elif project.atom_layout == 'image-headline' %}
 
     <a href="{{ project.atom.get_absolute_url }}" title="View {{ project.atom.headline }}">
-        <img src="{{ project.atom.image.url }}" alt="{{ project.atom.headline }}" width="{{ project.atom.image.width }}"
+        <img src="{{ project.atom.image.file.url }}" alt="{{ project.atom.headline }}" width="{{ project.atom.image.width }}"
             height="{{ project.atom.image.height }}" style="max-width:100%;">
     </a>
     <div class="caption"><p>{{ project.atom.headline }}</p></div>
