@@ -14,9 +14,9 @@
                           <!-- image atom -->
                           <img src="{{ atom.image.file.url }}" alt="{{  atom.image.file.alt_tag }}">
                           <!-- image atom end-->
-                      {% elif elated_atom.atom_layout == 'embedded' %}
+                      {% elif related_atom.atom_layout == 'embedded' %}
                            <!-- embedded atom -->
-                          {{ atom.embedded_content|safe }}
+                          {{ atom.embedded_content|safe}}
                           <!-- embedded atom end -->
                       {% endif %}
 
