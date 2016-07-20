@@ -45,6 +45,7 @@ class ArticleAdminForm(forms.ModelForm):
         widgets = {
             'image': PopupSelect(),
             'facebook_image': PopupSelect(),
+            'description': forms.Textarea(attrs={'cols': 80, 'rows': 2}),
         }
         exclude = ()
 

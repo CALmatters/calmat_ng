@@ -1,9 +1,7 @@
 import re
 from copy import copy
 
-import time
 from django.utils.timezone import now
-from django.conf import settings
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse

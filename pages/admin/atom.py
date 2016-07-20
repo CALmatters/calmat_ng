@@ -56,6 +56,7 @@ class AtomAdminForm(forms.ModelForm):
         model = Atom
         widgets = {
             'image': PopupSelect(),
+            'description': forms.Textarea(attrs={'cols': 80, 'rows': 2}),
         }
         exclude = ()
 

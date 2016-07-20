@@ -8043,6 +8043,7 @@ display:none;
 .atoms .carousel-header,
 .atoms .carousel-body {
     font-family: "ff-meta-serif-web-pro", serif;
+    padding: 1em 0 0 0;
 }
 .atoms .carousel-header {
     font-weight: 700;

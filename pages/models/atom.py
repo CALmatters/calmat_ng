@@ -1,11 +1,9 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
-# from versatileimagefield.fields import VersatileImageField
-
 from categories.models import Category
 from media_manager.models import MediaItem
-from sites.models import Named, Publishable, TimeStamped, ContentContainer
+from sites.models import Named, Publishable, TimeStamped
 from sites.models.content_container import OptionalContentContainer
 
 ATOM_DEFAULT_DISPLAY_TYPE_CHOICES = (
