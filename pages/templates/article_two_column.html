@@ -99,13 +99,13 @@
         {% include 'includes/bits/sidebar_atom.html' with display_type=atom.atom_display_type %}
     {% endfor %}
 
-    {% if article.related_posts.count %}
+    {% if more_articles %}
     <!-- Sidebar (dynamic height) Related Stories version: -->
     <div class="pin-holder separate dynamic-height desktop-only">
         <aside class="sidebar">
             <div class="related-side">
                 <h4>RELATED STORIES</h4>
-                {% for post in article.related_posts.all %}
+                {% for post in more_articles %}
                     <article>
                     <div class="image">
                         {% if post.image %}
