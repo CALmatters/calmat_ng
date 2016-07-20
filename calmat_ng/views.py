@@ -55,8 +55,8 @@ def search(request, template='search.html'):
 
     # concat lists and sort
     main_results = main_results + author_results
-    main_results = sorted(
-        main_results, key=lambda result: result.publish_date, reverse=True)
+    main_results = list(set(sorted(
+        main_results, key=lambda result: result.publish_date, reverse=True)))
 
     paginator = Paginator(main_results, settings.ARTICLES_PER_PAGE)
 
