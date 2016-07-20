@@ -57,7 +57,7 @@
                 </p>
 				<hr class="main_article_rule">
 				<p class="article_partners">Our partners:
-                    {%  with partners=home.primary_article.partners_limited %}
+                    {% with partners=home.primary_article.partners_limited %}
                         {% for partner in partners.chosen_partners %}
                             {% if partner != None %}
                                 {{ partner.title }}{%  if not forloop.last %},{% endif %}

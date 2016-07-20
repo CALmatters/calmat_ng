@@ -210,7 +210,10 @@ class Partner(Named, TimeStamped):
                 partner=featured_partner
             ).select_related().order_by('?')[0].partner
         except IndexError:
-            radio_partner = None
+            try:
+                radio_partner = next(iter(partner_article_pool_qs)).partner
+            except StopIteration:
+                radio_partner = None
 
         try:
             recent_partner = partner_article_pool_qs.filter(
@@ -218,15 +221,16 @@ class Partner(Named, TimeStamped):
             ).exclude(
                 partner=featured_partner).exclude(
                 partner=radio_partner).order_by('?')[0].partner
-
         except IndexError:
-            recent_partner = None
-
+            try:
+                recent_partner = next(iter(partner_article_pool_qs)).partner
+            except StopIteration:
+                recent_partner = None
 
         chosen_partners = [
             p for p in (featured_partner, radio_partner, recent_partner) if p]
         other_partners = partner_article_pool_qs.exclude(
-            partner__in=[featured_partner, radio_partner, recent_partner])
+            partner__in=chosen_partners)
 
         return_dict = dict(
             chosen_partners=chosen_partners,
