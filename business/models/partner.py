@@ -239,8 +239,8 @@ class Partner(Named, TimeStamped):
             other_partners=other_partners,
             other_partners_len=len(other_partners))
 
-        print(feat_partner, radio_partner, recent_partner)
-        print(return_dict)
+        # print(feat_partner, radio_partner, recent_partner)
+        # print(return_dict)
 
         return return_dict
 
