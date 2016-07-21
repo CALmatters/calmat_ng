@@ -20,5 +20,5 @@ MAILCHIMP_MAIN_LIST_ID = '2df804b292'
 # MAILCHIMP_MAIN_LIST_ID = 'faa7be558d'  #  Main List CALMatters
 
 # live Stripe API Keys for CALmatters
-STRIPE_SECRET_KEY = 'sk_test_B3VfIQVHvi0a9EJWO4aw7W5e'
-STRIPE_PUBLIC_KEY = 'pk_test_iuuzfWtajuRHCDcGQZBQDEzy'
+STRIPE_PUBLIC_KEY = 'pk_live_Yq6s9UTUS4jPAFC2M0A3OxO5'
+STRIPE_SECRET_KEY = 'sk_live_UvlyLbiquDqE97n8vuYgCMnj'

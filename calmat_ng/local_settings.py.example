@@ -16,10 +16,22 @@ MAILCHIMP_MAIN_LIST_ID = '2df804b292'
 #  Enable to relax password checker for testing
 # AUTH_PASSWORD_VALIDATORS = []
 
-# Stripe API Keys CALMatters test keys
-STRIPE_PUBLIC_KEY = 'pk_test_iuuzfWtajuRHCDcGQZBQDEzy'
-STRIPE_SECRET_KEY = 'sk_test_B3VfIQVHvi0a9EJWO4aw7W5e'
+# Shores keys
+# STRIPE_SECRET_KEY = 'sk_test_zaQg1oB9QzLvU4M1jcV4wkO1'
+# STRIPE_PUBLIC_KEY = 'pk_test_OQ60th2VFcDtRwCHU5H0MdbU'
 
-# Stripe API Keys
-# STRIPE_SECRET_KEY = 'sk_test_zaQg1oB9QzLvU4M1jcV4wkO1' # MS test account
-# STRIPE_PUBLIC_KEY = 'pk_test_OQ60th2VFcDtRwCHU5H0MdbU' # MS test account
+#  Some other Test account??
+STRIPE_SECRET_KEY = 'sk_test_B3VfIQVHvi0a9EJWO4aw7W5e'
+STRIPE_PUBLIC_KEY = 'pk_test_iuuzfWtajuRHCDcGQZBQDEzy'
+
+#  Libby's Keys
+#STRIPE_PUBLIC_KEY = 'pk_test_iuuzfWtajuRHCDcGQZBQDEzy'
+#STRIPE_SECRET_KEY = 'sk_test_B3VfIQVHvi0a9EJWO4aw7W5e'
+
+#  Terry's Keys
+#STRIPE_PUBLIC_KEY = 'pk_test_RmjKb0U6cijKpagymbsXXQ8k'
+#STRIPE_SECRET_KEY = 'sk_test_ojsV47po7cciwX8ub6BGbIPO'
+
+# old live Stripe API Keys for CALmatters
+STRIPE_PUBLIC_KEY = 'pk_live_Yq6s9UTUS4jPAFC2M0A3OxO5'
+STRIPE_SECRET_KEY = 'sk_live_UvlyLbiquDqE97n8vuYgCMnj'
