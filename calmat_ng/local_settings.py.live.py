@@ -1,5 +1,5 @@
 DEBUG = False
-ALLOWED_HOSTS = ('ng.calmatters.org', )
+ALLOWED_HOSTS = ('calmatters.org', )
 
 DATABASES = {
     'default': {
