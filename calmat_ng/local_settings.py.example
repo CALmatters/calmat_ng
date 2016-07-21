@@ -15,3 +15,11 @@ MAILCHIMP_MAIN_LIST_ID = '2df804b292'
 
 #  Enable to relax password checker for testing
 # AUTH_PASSWORD_VALIDATORS = []
+
+# Stripe API Keys CALMatters test keys
+STRIPE_PUBLIC_KEY = 'pk_test_iuuzfWtajuRHCDcGQZBQDEzy'
+STRIPE_SECRET_KEY = 'sk_test_B3VfIQVHvi0a9EJWO4aw7W5e'
+
+# Stripe API Keys
+# STRIPE_SECRET_KEY = 'sk_test_zaQg1oB9QzLvU4M1jcV4wkO1' # MS test account
+# STRIPE_PUBLIC_KEY = 'pk_test_OQ60th2VFcDtRwCHU5H0MdbU' # MS test account

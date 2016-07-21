@@ -196,14 +196,13 @@ IMAGES_UPLOADED_MAX_WIDTH_PX = 1200
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 
-# Stripe API Keys
-STRIPE_SECRET_KEY = 'sk_test_zaQg1oB9QzLvU4M1jcV4wkO1' # MS test account
-STRIPE_PUBLIC_KEY = 'pk_test_OQ60th2VFcDtRwCHU5H0MdbU' # MS test account
-
 SEND_SUBSCRIPTIONS_TO_MAIL_CHIMP = False
 MAILCHIMP_API_KEY = ''
 MAILCHIMP_MAIN_LIST_ID = ''
 MAILCHIMP_GROUPING_ID = 11649  # u'Subject Interest'
+
+STRIPE_PUBLIC_KEY = ''
+STRIPE_SECRET_KEY = ''
 
 try:
     from .local_settings import *
