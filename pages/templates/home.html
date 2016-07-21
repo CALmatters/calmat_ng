@@ -56,11 +56,18 @@
                         {% endif %}
                 </p>
 				<hr class="main_article_rule">
-				<p class="article_partners">Our partners:
+				<p class="article_partners">
                     {% with partners=home.primary_article.partners_limited %}
+                        {% if partners %}
+                            Our partners:
+                        {%  endif %}
                         {% for partner in partners.chosen_partners %}
                             {% if partner != None %}
                                 {{ partner.title }}{%  if not forloop.last %},{% endif %}
+                            {%  endif %}
+                        {% empty %}
+                            {% if not home.can_go_live %}
+                                This home page is offline, and has no partners to show.  Create distributions or this will be blank when live.
                             {%  endif %}
                         {% endfor %}
                         {% if partners.other_partners_len > 0 %}

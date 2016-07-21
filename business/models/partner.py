@@ -195,19 +195,21 @@ class Partner(Named, TimeStamped):
         #  First get featured partner, either over all, or related to article
         #  and, collect the pool of remaining partners
         if limit_to_article is None:
-            featured_partner = Partner.objects.filter(
-                featured=True).order_by('?')[0]
             partner_article_pool_qs = PartnerArticle.objects.all()
         else:
-            featured_partner = limit_to_article.partners.all().order_by(
-                '?')[0]
             partner_article_pool_qs = PartnerArticle.objects.filter(
                 article=limit_to_article)
 
         try:
+            feat_partner = partner_article_pool_qs.order_by('?')[0].partner
+        except IndexError:
+            #  If no partners at all, the rest of this code is pointless.
+            return []
+
+        try:
             radio_partner = partner_article_pool_qs.filter(
                 radio_broadcast=True).exclude(
-                partner=featured_partner
+                partner=feat_partner
             ).select_related().order_by('?')[0].partner
         except IndexError:
             try:
@@ -219,7 +221,7 @@ class Partner(Named, TimeStamped):
             recent_partner = partner_article_pool_qs.filter(
                 date_published__gt=date.today()-timedelta(days=30)
             ).exclude(
-                partner=featured_partner).exclude(
+                partner=feat_partner).exclude(
                 partner=radio_partner).order_by('?')[0].partner
         except IndexError:
             try:
@@ -228,7 +230,7 @@ class Partner(Named, TimeStamped):
                 recent_partner = None
 
         chosen_partners = [
-            p for p in (featured_partner, radio_partner, recent_partner) if p]
+            p for p in (feat_partner, radio_partner, recent_partner) if p]
         other_partners = partner_article_pool_qs.exclude(
             partner__in=chosen_partners)
 
@@ -237,7 +239,7 @@ class Partner(Named, TimeStamped):
             other_partners=other_partners,
             other_partners_len=len(other_partners))
 
-        print(featured_partner, radio_partner, recent_partner)
+        print(feat_partner, radio_partner, recent_partner)
         print(return_dict)
 
         return return_dict
