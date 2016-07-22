@@ -466,7 +466,7 @@ def project_view(request, slug=None, template='project.html'):
 def atom_detail(request, slug, template="atom_post_detail.html"):
 
     try:
-        atom_post = Atom.objects.get(slug=slug)
+        atom_post = Atom.objects.published().get(slug=slug)
     except Atom.DoesNotExist:
         raise Http404
 
