@@ -213,7 +213,8 @@ class Partner(Named, TimeStamped):
             ).select_related().order_by('?')[0].partner
         except IndexError:
             try:
-                radio_partner = next(iter(partner_article_pool_qs)).partner
+                radio_partner = next(iter(partner_article_pool_qs.exclude(
+                    partner=feat_partner))).partner
             except StopIteration:
                 radio_partner = None
 
@@ -225,7 +226,8 @@ class Partner(Named, TimeStamped):
                 partner=radio_partner).order_by('?')[0].partner
         except IndexError:
             try:
-                recent_partner = next(iter(partner_article_pool_qs)).partner
+                recent_partner = next(iter(partner_article_pool_qs.exclude(
+                    partner=feat_partner))).partner
             except StopIteration:
                 recent_partner = None
 
