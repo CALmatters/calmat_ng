@@ -7,11 +7,15 @@ from categories.models import Category
 
 class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
 
-    list_display = ("title", "slug")
+    list_display = ("title", "slug", "preferred")
 
+    list_editable = ("preferred", )
     readonly_fields = ("slug", )
     fieldsets = ((None,
                   {"fields": (
-                      "title", "slug")}),)
+                      "title",
+                      "slug",
+                      "preferred")
+                  }),)
 
 admin.site.register(Category, CategoryAdmin)
