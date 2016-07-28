@@ -227,7 +227,8 @@ class Partner(Named, TimeStamped):
         except IndexError:
             try:
                 recent_partner = next(iter(partner_article_pool_qs.exclude(
-                    partner=feat_partner))).partner
+                    partner=feat_partner).exclude(
+                        partner=radio_partner))).partner
             except StopIteration:
                 recent_partner = None
 
