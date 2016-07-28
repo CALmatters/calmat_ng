@@ -241,8 +241,9 @@ class HomePage(Named, TimeStamped):
         through='RelatedAtom')
 
     politics_author = models.ForeignKey(Person, blank=True, null=True)
-
     politics_quote = models.TextField(max_length=500, default='', blank=True)
+    politics_quote_attribution = models.CharField(
+        max_length=135, default='', blank=True)
 
     def recent_politics_articles(self):
         """Return most recent 3 published politics articles"""

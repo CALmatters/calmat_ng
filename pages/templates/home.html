@@ -237,9 +237,11 @@
                 <div class="politics_quote">
                     {{ home.politics_quote }}
                 </div>
-                <div class="quote_cred">
-                    {{ home.politics_author.full_name }}
-                </div>
+                {% if home.politics_quote_attribution %}
+                    <div class="quote_cred">
+                        {{ home.politics_quote_attribution }}
+                    </div>
+                {% endif %}
             </div>
         </div>
       <div style="clear:both;"></div>
