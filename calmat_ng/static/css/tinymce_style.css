@@ -1,0 +1,5 @@
+a {
+    text-decoration: underline;
+    text-decoration-color: royalblue;
+    -moz-text-decoration-color: royalblue;
+}

@@ -14,8 +14,7 @@ tinymce.init({
   contextmenu: "image atoms",
   toolbar: 'atoms insertfile undo redo | styleselect | forecolor backcolor |  bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
   content_css: [
-    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-    '//www.tinymce.com/css/codepen.min.css'
+    '/static/css/tinymce_style.css'
   ],
   textcolor_map: [
     "000000", "Black",
