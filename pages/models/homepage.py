@@ -74,6 +74,7 @@ class HomePageManager(models.Manager):
 
         objs = self.filter(
             can_go_live=True,
+            go_live_on_date__isnull=False,
             go_live_on_date__lt=n).order_by('-go_live_on_date')
 
         return objs[0]
@@ -91,7 +92,9 @@ class HomePage(Named, TimeStamped):
     can_go_live = models.BooleanField(default=False)
     go_live_on_date = models.DateTimeField(
         help_text="Times are in {}".format(settings.TIME_ZONE),
-        unique=True)
+        unique=True,
+        null=True,
+        blank=True)
 
     masthead_copy = models.CharField(
         max_length=125,
@@ -265,14 +268,19 @@ class HomePage(Named, TimeStamped):
         _clone.pk = None
         _clone.title = "{} copy".format(self.title)
         _clone.can_go_live = False
-        _clone.go_live_on_date = now()
+        _clone.go_live_on_date = None
         _clone.created = None
         _clone.updated = None
         _clone.slug = None
 
         _clone.save()
 
-        #  Todo:  Copy M2M records
+        rel_models = [RelatedHeadlineArticle, RelatedAtom]
+        for rel_model in rel_models:
+            for rel in rel_model.objects.filter(homepage=self):
+                rel = copy(rel)
+                rel.homepage = _clone
+                rel.save()
 
         return _clone
     clone.short_description = "Duplicate"

@@ -130,7 +130,7 @@ class HomePageAdmin(admin.ModelAdmin):
             return ""
         elif live_obj and obj == live_obj:
             return 'CURRENT LIVE HOMEPAGE'
-        elif obj.go_live_on_date < now():
+        elif not obj.go_live_on_date or obj.go_live_on_date < now():
             return ""
         elif obj.go_live_on_date > now():
             dt = obj.go_live_on_date - now()
