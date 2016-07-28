@@ -1,9 +1,10 @@
 from django.contrib import admin
 
 from business.models.partner_article import PartnerArticle
+from sites.mixins.exportable import AdminCSVExport
 
 
-class PartnerArticleAdmin(admin.ModelAdmin):
+class PartnerArticleAdmin(AdminCSVExport, admin.ModelAdmin):
 
     list_display = (
         'article',
