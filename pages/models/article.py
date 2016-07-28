@@ -144,7 +144,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped):
 
     authors = models.ManyToManyField(
         Person,
-        verbose_name="By Person",
+        verbose_name="Person",
         blank=True,
         related_name="authors_articles",
         help_text='Choices limited to users who are staff (is_staff=True).')

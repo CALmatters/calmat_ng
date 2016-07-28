@@ -89,13 +89,11 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
     readonly_fields = ('view_url', )
 
     list_filter = (
+        "categories",
         "status",
-        # "keywords__keyword",
         "custom_post_type",
         "news_analysis",
-        "authors",
-        "atoms",
-        "partners")
+        "authors",)
 
     search_fields = ('title', )
 

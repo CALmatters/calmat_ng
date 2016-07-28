@@ -22,7 +22,7 @@ class CustomIndexDashboard(Dashboard):
     Custom index dashboard for calmat_ng.
     """
 
-    columns = 2
+    columns = 3
 
     def init_with_context(self, context):
         site_name = get_admin_site_name(context)
@@ -66,7 +66,7 @@ class CustomIndexDashboard(Dashboard):
         ))
 
         # append a recent actions module
-        # self.children.append(modules.RecentActions(_('Recent Actions'), 5))
+        self.children.append(modules.RecentActions(_('Recent Actions'), 25))
 
         # append a feed module
         # self.children.append(modules.Feed(
