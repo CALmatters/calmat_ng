@@ -591,6 +591,7 @@ def contact_us(request):
 def get_formatted_sharing_urls_default_dict(url):
     return get_formatted_sharing_urls_dict("CALmatters", "A nonprofit, nonpartisan media venture explaining California's policies and politics", url)
 
+# todo: this function is a duplicate!  find other with same name and move to named.py  
 def get_formatted_sharing_urls_dict(title, social_title, url):
 
     import urllib
@@ -603,7 +604,7 @@ def get_formatted_sharing_urls_dict(title, social_title, url):
     # set output
     return {
         "facebook": "http://facebook.com/sharer.php?u=" + url + "&t=via%40CALmatters%20" + social_title,
-        "twitter": "http://twitter.com/home?status=" + social_title + "%20via%20%40CALmatters%20" + url,
+        "twitter": "https://twitter.com/intent/tweet?original_referer=" + url + "&ref_src=twsrc%5Etfw&text=" + social_title + "%20via%20%40CALmatters&tw_p=tweetbutton&url=" + url,
         "email": "mailto:?subject=" + title + "&body=" + social_title + " via CALmatters%0A%0A" + url,
     }
 

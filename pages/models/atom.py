@@ -109,7 +109,8 @@ class Atom(Named, Publishable, OptionalContentContainer, TimeStamped):
         else:
             return self.title
 
-    # todo: this function is a duplicate!  find other with same name and move to named.py  Also make it so modal.html doesn't call this 3 times?
+    # todo: this function is a duplicate!  find other with same name and move to named.py  
+    # Also make it so pages/templates/includes/bits/atom_modal.html doesn't call this 3 times??
     def get_formatted_sharing_urls_dict(self):
         
         import urllib
@@ -122,7 +123,7 @@ class Atom(Named, Publishable, OptionalContentContainer, TimeStamped):
         # set output
         return {
             "facebook": "http://facebook.com/sharer.php?u=" + url + "&t=via%40CALmatters%20" + social_title,
-            "twitter": "http://twitter.com/home?status=" + social_title + "%20via%20%40CALmatters%20" + url,
+            "twitter": "https://twitter.com/intent/tweet?original_referer=" + url + "&ref_src=twsrc%5Etfw&text=" + social_title + "%20via%20%40CALmatters&tw_p=tweetbutton&url=" + url,
             "email": "mailto:?subject=" + title + "&body=" + social_title + " via CALmatters%0A%0A" + url,
         }
 
