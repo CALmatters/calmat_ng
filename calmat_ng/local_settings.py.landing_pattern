@@ -1,0 +1,24 @@
+#  LANDING PATTERN IS THE SERVER THAT STAGES CHANGES FOR LIVE
+DEBUG = True
+ALLOWED_HOSTS = ('landing-pattern.calmatters.org', )
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'calmat_ng',
+        'USER': 'calmatters',
+        'PASSWORD': 'calmatters_db1',
+        'HOST': 'localhost',
+    }
+}
+
+SEND_SUBSCRIPTIONS_TO_MAIL_CHIMP = True
+
+#  Sandbox Test List
+MAILCHIMP_API_KEY = '3a8ed455e09e98a38499fb79e00c781c-us11'
+MAILCHIMP_MAIN_LIST_ID = '2df804b292'
+MAILCHIMP_GROUPING_ID = 11649
+
+# Libby's test keys
+STRIPE_PUBLIC_KEY = 'pk_test_iuuzfWtajuRHCDcGQZBQDEzy'
+STRIPE_SECRET_KEY = 'sk_test_B3VfIQVHvi0a9EJWO4aw7W5e'
