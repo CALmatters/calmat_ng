@@ -49,4 +49,12 @@ class Publishable(models.Model):
         blank=True,
         null=True)
 
+    @property
+    def is_published(self):
+        published_by_date = self.publish_date and self.publish_date < now()
+        published_by_flag = self.status == CONTENT_STATUS_PUBLISHED
+        print(published_by_date)
+        print(published_by_flag)
+        return published_by_date or published_by_flag
+
     objects = PublishableManager()

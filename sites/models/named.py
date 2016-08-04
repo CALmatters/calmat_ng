@@ -51,7 +51,8 @@ class Named(models.Model):
         max_length=2000,
         blank=True,
         null=True,
-        help_text=_("Will be auto-generated from the title."))
+        help_text=_("Auto-generated from the title when blank.  "
+                    "slug is used in the url that relates to this content"))
 
     def generate_unique_slug(self):
         """
