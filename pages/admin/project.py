@@ -91,7 +91,6 @@ class ProjectAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
     list_display = (
         'title', 'slug', 'status', 'publish_date', 'admin_thumb_reference')
     filter_horizontal = ('categories', 'partners')
-    readonly_fields = ('slug', )
 
     # filters in right column
     list_filter = ("categories",)
@@ -99,7 +98,7 @@ class ProjectAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
     fieldsets = (
         ('Title',
          {'fields': (
-             'title', 'status', 'publish_date', 'image')}),
+             'title', 'slug', 'status', 'publish_date', 'image')}),
         ('Content', {'fields': ('description',)}),
         ('OnRamp and Atom', {'fields': ('onramp', 'atom', 'atom_layout',)}),
         ('Categories', {'fields': ('categories',)}),
@@ -113,7 +112,9 @@ class ProjectAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
         if not request.user.has_perm('pages.can_change_project_status'):
             extra_ro = ('status', 'publish_date')
 
-        return self.readonly_fields + extra_ro
+        if not obj or obj.is_published:
+            extra_ro = extra_ro + ('slug',)
 
+        return self.readonly_fields + extra_ro
 
 admin.site.register(Project, ProjectAdmin)

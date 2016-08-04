@@ -100,9 +100,12 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
     fieldsets = (
         ('Content', {"fields": (
             "title",
+            "slug",
             "headline",
             "view_url",
             'description',
+            'status',
+            'publish_date',
         )}),
         ('Featured Image', {'fields': (
             "image",
@@ -126,13 +129,17 @@ class AtomAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
                 "embedded_content",
             ),
         }),
-        ('Meta', {'fields': (
-            'status',
-            'publish_date',
-        )}),
     )
 
     admin_thumb_ref = "image"
     admin_thumb_field = 'file'
+
+    def get_readonly_fields(self, request, obj=None):
+        extra_ro = ()
+
+        if not obj or obj.is_published:
+            extra_ro = extra_ro + ('slug',)
+
+        return self.readonly_fields + extra_ro
 
 admin.site.register(Atom, AtomAdmin)

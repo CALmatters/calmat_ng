@@ -50,6 +50,7 @@ class ArticleAdminForm(forms.ModelForm):
         exclude = ()
 
 
+
 #  Todo:  Twitter support
 class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
 
@@ -110,6 +111,7 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
             "classes": ("wide",),
             "fields": (
                 "title",
+                "slug",
                 "social_title",
                 "layout",
                 "custom_post_type",
@@ -176,6 +178,9 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
         extra_ro = ()
         if not request.user.has_perm('pages.can_change_article_status'):
             extra_ro = ('status', 'publish_date')
+
+        if not obj or obj.is_published:
+            extra_ro = extra_ro + ('slug',)
 
         return self.readonly_fields + extra_ro
 
