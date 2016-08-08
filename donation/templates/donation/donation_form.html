@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <h1>{{ amount }}</h1>
                     <div class="form-group form-group-sm {% if form.stripe_amount.errors %}has-error{% endif %}">
                         <label>DONATION AMOUNT *</label><br/>
 
@@ -100,8 +100,8 @@
                         {% endfor %}
 
                     </div>
-                    
-                    <div class="form-group form-group-sm {% if amount != 'other' %}collapse{% endif %} other {% if form.stripe_amount_other.errors %}has-error{% endif %}">
+
+                    <div id="input_for_other" class="form-group form-group-sm {% if amount != '0' %}collapse{% endif %} other {% if form.stripe_amount_other.errors %}has-error{% endif %}">
                         <input placeholder="ENTER A CUSTOM AMOUNT" type="number" id="stripe_amount_other" name="stripe_amount_other" class="form-control" data-parsley-errors-messages-disabled data-parsley-type="integer" />
                     </div>
                                     
@@ -244,9 +244,21 @@ jQuery(document).ready(function(){
             
                 // when other is selected, show the other amount input field.
                 $('input[type=radio]').on('change', function () {
-                    if (!this.checked) return
-                    $('.collapse').not($('div.' + $(this).attr('class'))).slideUp();
-                    $('.collapse.' + $(this).attr('class')).slideDown();
+                    if (!this.checked) return;
+                    var $this = jQuery(this);
+                    $input_for_other = $('#input_for_other');
+                    // If 'Other' is selected
+                    if( $this.val() == 0 ){
+                        // show field
+                        $input_for_other.slideDown(function(){
+                            $input_for_other.removeClass('collapse');
+                        });
+                    } else {
+                        // hide field
+                        $input_for_other.slideUp(function(){
+                            $input_for_other.addClass('collapse');
+                        });
+                    }
                 });
                 
                 // Submit the form using jquery.forms.js
