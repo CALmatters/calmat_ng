@@ -8,7 +8,7 @@ from django.db import models
 from business.models.partner_owner import PartnerOwner
 from categories.models import Category
 from media_manager.models import MediaItem
-from sites.models import Named, TimeStamped
+from cmskit.models import Named, TimeStamped
 
 PARTNER_TYPES = (
     ('distribution', 'Distribution'),

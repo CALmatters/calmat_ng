@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from django.utils.safestring import mark_safe
 from media_manager.models import MediaItem, MediaSource
-from sites.mixins.admin_thumb import AdminThumbMixin
+from cmskit.mixins.admin_thumb import AdminThumbMixin
 
 
 def _fb_file_link(obj):

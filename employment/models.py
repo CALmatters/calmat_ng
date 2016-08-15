@@ -1,6 +1,6 @@
 from django.db import models
 
-from sites.models import Named, ContentContainer, Publishable, TimeStamped
+from cmskit.models import Named, ContentContainer, Publishable, TimeStamped
 
 
 class JobListing(Named, Publishable, ContentContainer, TimeStamped):

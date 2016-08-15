@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from media_manager.models import MediaItem
-from sites.models import Named, TimeStamped
-from sites.models.content_container import OptionalContentContainer
+from cmskit.models import Named, TimeStamped
+from cmskit.models.content_container import OptionalContentContainer
 
 
 class Person(Named, TimeStamped, OptionalContentContainer):

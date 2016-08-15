@@ -1,11 +1,9 @@
-from django import forms
 from django.contrib import admin
 
 from adminsortable2.admin import SortableAdminMixin
 
 from business.models import Testimonial
-from media_manager.widgets import PopupSelect
-from sites.mixins.admin_thumb import AdminThumbMixin
+from cmskit.mixins.admin_thumb import AdminThumbMixin
 
 
 class TestimonialAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):

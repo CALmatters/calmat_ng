@@ -17,8 +17,8 @@ from .atom import Atom
 from business.models import Partner, Person
 
 from categories.models import Category
-from sites.models import Named, Publishable, TimeStamped, ContentContainer
-from sites.models.publishable import CONTENT_STATUS_DRAFT, \
+from cmskit.models import Named, Publishable, TimeStamped, ContentContainer
+from cmskit.models.publishable import CONTENT_STATUS_DRAFT, \
     CONTENT_STATUS_PUBLISHED
 
 CUSTOM_POST_TYPE_CHOICES = (

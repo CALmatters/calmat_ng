@@ -1,4 +1,4 @@
-from sites.models import Named, TimeStamped
+from cmskit.models import Named, TimeStamped
 
 
 class PartnerOwner(Named, TimeStamped):

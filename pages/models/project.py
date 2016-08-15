@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 
 from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
-from sites.models import Named, TimeStamped, Publishable
+from cmskit.models import Named, TimeStamped, Publishable
 
 from business.models import Partner
 from categories.models import Category

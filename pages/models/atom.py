@@ -3,8 +3,8 @@ from django.db import models
 
 from categories.models import Category
 from media_manager.models import MediaItem
-from sites.models import Named, Publishable, TimeStamped
-from sites.models.content_container import OptionalContentContainer
+from cmskit.models import Named, Publishable, TimeStamped
+from cmskit.models.content_container import OptionalContentContainer
 
 ATOM_DEFAULT_DISPLAY_TYPE_CHOICES = (
     ('image', 'Image Only'),

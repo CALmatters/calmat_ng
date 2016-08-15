@@ -10,7 +10,7 @@ class CategoryAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ("title", "slug", "preferred")
 
     list_editable = ("preferred", )
-    readonly_fields = ("slug", )
+    readonly_fields = ()
     fieldsets = ((None,
                   {"fields": (
                       "title",

@@ -1,5 +1,6 @@
 from django.utils.safestring import mark_safe
 
+
 class AdminThumbMixin(object):
     """Provides a 50x50 thumbnail for VersitalImageFields.
 

@@ -1,6 +1,6 @@
 from django.db import models
 
-from sites.models import TimeStamped
+from cmskit.models import TimeStamped
 
 
 class ContactUs(TimeStamped):

@@ -1,7 +1,7 @@
 from django.db import models
 
-from sites.models import Named
-from sites.models import TimeStamped
+from cmskit.models import Named
+from cmskit.models import TimeStamped
 
 
 class Category(Named, TimeStamped):

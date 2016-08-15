@@ -1,13 +1,10 @@
 from __future__ import unicode_literals
 
-import stripe
 from django.db import models
-from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import post_delete
 from media_manager.models import MediaItem
-from sites.models import TimeStamped
+from cmskit.models import TimeStamped
 
 from .signals import delete_stripe_customer
 

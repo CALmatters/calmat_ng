@@ -3,7 +3,7 @@ from django.db import models
 # from versatileimagefield.fields import VersatileImageField
 
 from media_manager.models import MediaItem
-from sites.models import Named, Publishable, TimeStamped
+from cmskit.models import Named, Publishable, TimeStamped
 
 
 class Author(Named, Publishable, TimeStamped):

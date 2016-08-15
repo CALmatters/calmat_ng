@@ -13,7 +13,7 @@ from pages.models.project import (Project, ProjectSortableFeaturedArticle,
                                   ProjectSortableExpertPerspectivesArticle,
                                   ProjectSortableReaderReactionsArticle,
                                   ProjectSortableUpdatesArticles)
-from sites.mixins.admin_thumb import AdminThumbMixin
+from cmskit.mixins.admin_thumb import AdminThumbMixin
 
 PROJECT_RELATED_ARTICLE_COUNT = 100
 
