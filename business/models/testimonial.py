@@ -1,7 +1,7 @@
 from django.db import models
 
 from media_manager.models import MediaItem
-from sites.models import TimeStamped, Publishable
+from cmskit.models import TimeStamped, Publishable
 
 class Testimonial(Publishable, TimeStamped):
     

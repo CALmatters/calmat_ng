@@ -13,7 +13,7 @@ from fkchooser.admin import FKChooserAdminMixin
 from media_manager.widgets import PopupSelect
 from pages.models import Article
 from pages.models.article import RelatedArticle
-from sites.mixins.admin_thumb import AdminThumbMixin
+from cmskit.mixins.admin_thumb import AdminThumbMixin
 
 
 def clone(modeladmin, request, queryset):

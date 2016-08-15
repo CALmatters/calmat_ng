@@ -5,7 +5,7 @@ from adminsortable2.admin import SortableAdminMixin
 
 from business.models import Person
 from media_manager.widgets import PopupSelect
-from sites.mixins.admin_thumb import AdminThumbMixin
+from cmskit.mixins.admin_thumb import AdminThumbMixin
 
 
 class PersonAdminForm(forms.ModelForm):

@@ -1,7 +1,7 @@
 from django.db import models
 
 from business.models import Partner, Person
-from sites.models import TimeStamped
+from cmskit.models import TimeStamped
 
 
 class AboutPartner(models.Model):

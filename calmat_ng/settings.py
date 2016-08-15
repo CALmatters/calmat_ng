@@ -14,6 +14,8 @@ import os
 
 PROJECT_NAME = "CALmatters"
 
+SITE_ID = 1
+
 MASTHEAD_DEFAULT = ("A nonprofit, nonpartisan media venture producing "
                     "compelling stories on policies, personalities and "
                     "money in Sacramento.")
@@ -47,12 +49,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.redirects',
     'versatileimagefield',
+    'cmskit',
     'adminsortable2',
     'fkchooser',
     'categories',
     'calmat_ng',
-    'sites',
     'pages',
     'business',
     'donation',
@@ -70,6 +74,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware'
 ]
 
 ROOT_URLCONF = 'calmat_ng.urls'

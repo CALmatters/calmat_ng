@@ -12,7 +12,7 @@ from pages.models import Atom
 
 
 # Todo:  Generalize clone completely
-from sites.mixins.admin_thumb import AdminThumbMixin
+from cmskit.mixins.admin_thumb import AdminThumbMixin
 
 
 def duplicate_atom(modeladmin, request, queryset):

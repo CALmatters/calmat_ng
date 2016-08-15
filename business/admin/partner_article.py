@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from business.models.partner_article import PartnerArticle
-from sites.mixins.exportable import AdminCSVExport
+from cmskit.mixins.exportable import AdminCSVExport
 
 
 class PartnerArticleAdmin(AdminCSVExport, admin.ModelAdmin):

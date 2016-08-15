@@ -12,7 +12,7 @@ from django.db.models import Q
 from business.models import Partner, Person
 from fkchooser.fields import PopupForeignKey
 from pages.models import Article, Atom
-from sites.models import Named, TimeStamped
+from cmskit.models import Named, TimeStamped
 
 HOME_ATOM_LAYOUT_CHOICES = (
     ('image', 'Image Layout'),

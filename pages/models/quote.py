@@ -1,6 +1,6 @@
 from django.db import models
 
-from sites.models import ContentContainer, Named
+from cmskit.models import ContentContainer, Named
 
 
 class Quote(Named, ContentContainer):
