@@ -1,6 +1,10 @@
+from django import forms
 from django.core.checks import messages
 from django.contrib import admin
 from django.contrib.admin import TabularInline
+from django.core.exceptions import ValidationError
+from django.template import TemplateDoesNotExist
+from django.template.loader import get_template
 from django.utils.timezone import now
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
@@ -36,7 +40,22 @@ class RelatedAtomInline(SortableInlineAdminMixin, TabularInline):
     extra = 0
 
 
+class HomePageAdminForm(forms.ModelForm):
+
+    def clean_template_filename(self):
+        potential_homepage_templ = self.cleaned_data['template_filename']
+        try:
+            get_template(potential_homepage_templ)
+        except TemplateDoesNotExist:
+            raise ValidationError(
+                'Template does not exist.')
+        else:
+            return potential_homepage_templ
+
+
 class HomePageAdmin(admin.ModelAdmin):
+
+    form = HomePageAdminForm
 
     class Media:
         js = ()
@@ -51,6 +70,7 @@ class HomePageAdmin(admin.ModelAdmin):
         "can_go_live",
         "go_live_on_date",
         "current_live",
+        "template_filename",
         "preview"
     ]
     readonly_fields = ('slug',)
@@ -75,6 +95,7 @@ class HomePageAdmin(admin.ModelAdmin):
         ("General", {
             "fields": (
                 "masthead_copy",
+                "template_filename"
             )
         }),
         ("In the Works", {
@@ -108,7 +129,6 @@ class HomePageAdmin(admin.ModelAdmin):
                 "politics_quote_attribution",
             )
         }),
-
     )
 
     def preview(self, obj):
@@ -129,7 +149,7 @@ class HomePageAdmin(admin.ModelAdmin):
         if not obj.can_go_live:
             return ""
         elif live_obj and obj == live_obj:
-            return 'CURRENT LIVE HOMEPAGE'
+            return '** LIVE **'
         elif not obj.go_live_on_date or obj.go_live_on_date < now():
             return ""
         elif obj.go_live_on_date > now():

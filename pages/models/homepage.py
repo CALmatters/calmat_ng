@@ -1,3 +1,5 @@
+import logging
+
 import json, decimal # to encode python decimal into json
 import operator # reduce Q statements
 from copy import copy
@@ -19,6 +21,7 @@ HOME_ATOM_LAYOUT_CHOICES = (
     ('embedded', 'Embedded HTML')
 )
 
+logger = logging.getLogger(__name__)
 
 class RelatedAtom(models.Model):
 
@@ -86,6 +89,11 @@ class HomePage(Named, TimeStamped):
     The HomePage may change dailing.  Only one HomePage at a time can
     be published.  Any number can be draft (not published).
     """
+
+    class Meta:
+        verbose_name = _("Home Page")
+        verbose_name_plural = _("Home Pages")
+        ordering = ("-go_live_on_date", )
 
     objects = HomePageManager()
 
@@ -248,6 +256,13 @@ class HomePage(Named, TimeStamped):
     politics_quote_attribution = models.CharField(
         max_length=135, default='', blank=True)
 
+    template_filename = models.CharField(
+        max_length=255,
+        default='home.html',
+        help_text="Can provide an alternative home page template to use.  "
+                  "If you aren't sure what to do, then do not change this "
+                  "value.")
+
     def recent_politics_articles(self):
         """Return most recent 3 published politics articles"""
 
@@ -320,25 +335,34 @@ class HomePage(Named, TimeStamped):
         return [a.article for a in RelatedHeadlineArticle.objects.filter(
             homepage=self).select_related('article')]
 
-
-    @staticmethod
-    def yield_recent_projects():
+    @classmethod
+    def recent_projects(clazz):
         """Iterate out the top five most recent projects"""
 
         from pages.models import Project
 
-        for p in Project.objects.all().order_by('-publish_date')[:5]:
-            yield p
+        projects = getattr(clazz, 'projects', [])
+
+        if not projects:
+            for p in Project.objects.all().order_by('-publish_date'):
+                projects.append(p)
+            clazz.projects = projects
+            logger.debug("cache miss on projects")
+
+        return projects
 
 
     @property
     def partners(self):
         return Partner.partners()
 
-    class Meta:
-        verbose_name = _("Home Page")
-        verbose_name_plural = _("Home Pages")
-        ordering = ("-go_live_on_date", )
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+
+        self.projects = None
+
+        super(HomePage, self).save(
+            force_insert, force_update, using,update_fields)
 
 #-------------------------------------------------------------------------------
 #   :: Home Map / Mapbox
