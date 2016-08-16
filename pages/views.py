@@ -29,8 +29,10 @@ from pages.models.article import CUSTOM_POST_TYPE_CHOICES
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_HOME_PAGE_TEMPLATE = 'home.html'
 
-def homepage_view(request, homepage_id=None, template='home.html'):
+
+def homepage_view(request, homepage_id=None):
 
     if homepage_id:
         if request.user.is_staff:
@@ -41,6 +43,8 @@ def homepage_view(request, homepage_id=None, template='home.html'):
     else:
         #  anyone viewing single published home page
         homepage_obj = HomePage.objects.get_live_object()
+
+    template = homepage_obj.template_filename
 
     related_atoms = RelatedAtom.objects.filter(homepage=homepage_obj)
 
