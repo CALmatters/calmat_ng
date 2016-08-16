@@ -3,6 +3,7 @@
 {% load static from staticfiles %}
 
 {%  block extra_head %}
+    {{ block.super }}
     {% include 'includes/twitter_card_home.html' %}
     {% include 'includes/facebook_open_graph.html' %}
     <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
