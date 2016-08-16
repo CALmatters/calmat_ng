@@ -15,7 +15,7 @@
 {%  endcomment %}
 
 {% block extra_head %}
-    <!-- ONE COLUMN -->
+    {{ block.super }}
     {% include 'includes/twitter_card.html' %}
     {% include 'includes/facebook_open_graph.html' %}
 {% endblock %}
