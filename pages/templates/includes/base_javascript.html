@@ -31,11 +31,6 @@
             /* bootstrap popover (tooltips) */
             jQuery('[data-toggle="popover"]').popover();
 
-            /* google analytics plugin */
-            jQuery(function() {
-              jQuery.scrollDepth();
-            });
-
             /* responsive videos */
             {% comment %}
                 TODO: remove calmatters 'players' once iframes get figured out
@@ -68,10 +63,6 @@
                     $(this).attr("target", "_blank");
                 }
               });
-
-            /* custom follow for internal */
-            /* track all follow elements */
-            idm_GA_FollowEventTracker.init();
 
         });
 
