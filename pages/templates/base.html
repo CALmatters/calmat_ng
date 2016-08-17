@@ -45,6 +45,16 @@
 
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
 
+  {% comment %}
+    The subscription system will look here for categories to bind with a mail chimp email
+    Any view that wants to publish categories with a subscription should put the cats
+    in the categories list.   In the future, we ought to tie this into the subscription framework
+    so that if subscription functionality is given all the is needed is supplied.
+  {%  endcomment %}
+  {%  if categories %}
+      <span id="categories" style="display:block">{% for cat in categories %}{{ cat.id }},{% endfor %}</span>
+  {% endif %}
+
   {% include 'includes/google_tag_manager.html' %}
 
   <div id="fb-root"></div>
@@ -62,9 +72,7 @@
 	<div class="main-wrapper">
         <div class="inner-wrapper">
 
-
             {% include 'includes/left_scroll_menu.html' %}
-
 
             {% include 'includes/navigations.html' %}
 
