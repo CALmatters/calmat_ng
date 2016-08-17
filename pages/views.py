@@ -440,6 +440,7 @@ def project_view(request, slug=None, template='project.html'):
 
     context = {
         'project': project,
+        'categories': categories,
         'featured_articles': featured_articles[:3],
         #  referenced directly in the template
         # 'onramp': project.onramp,

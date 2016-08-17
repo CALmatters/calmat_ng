@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 
 # from business.subscriptions import subscribe_to_mail_chimp
 from business.subscriptions import subscribe_to_mail_chimp
+from categories.models import Category
 from pages.models import Article, Project
 
 logger = logging.getLogger(__name__)
@@ -22,8 +23,13 @@ def subscribe(request, template="subscription/subscribe.html"):
         email = email.lower()
         print(email)
 
-        # Todo: Capture categories
-        categories = ()
+        categories = []
+        # Cats need to put on the page id=categories body of element ids
+        category_ids = request.POST.get('cats', None)
+        if category_ids:
+            for cat_id_str in category_ids.split(','):
+                cat = Category.objects.get(pk=cat_id_str)
+                categories.append(cat)
 
         if settings.SEND_SUBSCRIPTIONS_TO_MAIL_CHIMP:
             logger.debug(
