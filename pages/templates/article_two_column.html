@@ -5,6 +5,10 @@
     {{ article.meta_title }}
 {% endblock %}
 
+{% block meta_description %}
+    {{ article.description }}
+{% endblock %}
+
 
 {% block extra_head %}
     {{ block.super }}

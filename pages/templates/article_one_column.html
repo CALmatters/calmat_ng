@@ -6,13 +6,9 @@
     {{ article.meta_title }}
 {% endblock %}
 
-{%  comment %}
-{% block meta_keywords %}{% metablock %}
-{% keywords_for blog_post as tags %}{% for tag in tags %}{% if not forloop.first %}, {% endif %}{{ tag }}{% endfor %}
-{% endmetablock %}{% endblock %}
-
-{% block meta_description %}{% metablock %}{{ blog_post.description }}{% endmetablock %}{% endblock %}
-{%  endcomment %}
+{% block meta_description %}
+    {{ article.description }}
+{% endblock %}
 
 {% block extra_head %}
     {{ block.super }}
@@ -20,7 +16,7 @@
     {% include 'includes/facebook_open_graph.html' %}
 {% endblock %}
 
-{% block title %}{{ blog_post.title }}{% endblock %}
+{% block title %}{{ article.title }}{% endblock %}
 
 {% block breadcrumb_menu %}
 
