@@ -11,9 +11,9 @@
 <meta property="og:description" content="{{ article.description|truncatewords_html:30|safe }}" />
 
 {% if article.facebook_share_image %}
-    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}{{  article.facebook_share_image.thumbnail.1200x630 }}">
+    <meta property="og:image" content="https://calmatters.org{{ article.facebook_share_image.file.thumbnail.1200x630 }}">
 {% elif article.image %}
-    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}{{ article.image.thumbnail.1200x630 }}">
+    <meta property="og:image" content="https://calmatters.org{{ article.image.file.thumbnail.1200x630 }}">
 {% else %}
     <meta property="og:image" content="https://calmatters.org/static/img/logo_social.png">
 {% endif %}
