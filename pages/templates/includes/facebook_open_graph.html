@@ -3,17 +3,17 @@
 <!-- Facebook Opengraph -->
 <meta property="og:site_name" content="CALmatters"/>
 <meta property="og:app_id" content="" />
-<meta property="og:url" content="{{ blog_post.get_absolute_url }}" />
-<meta property="og:title" content="{{ blog_post.title }}" />
+<meta property="og:url" content="{{ article.get_absolute_url }}" />
+<meta property="og:title" content="{{ article.title }}" />
 <meta property="og:type" content="website" />
-<meta property="og:description" content="{{ blog_post.description|truncatewords_html:30|safe }}" />
+<meta property="og:description" content="{{ article.description|truncatewords_html:30|safe }}" />
 
 {% if blog_post.facebook_share_image %}
-    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}{{  blog_post.facebook_share_image.thumbnail.1200x630 }}">
+    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}{{  article.facebook_share_image.thumbnail.1200x630 }}">
 {% elif blog_post.image %}
-    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}{{ blog_post.featured_image.thumbnail.1200x630 }}">
+    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}{{ article.featured_image.thumbnail.1200x630 }}">
 {% else %}
-    <meta property="og:image" content="https://calmatters.org/static/img/logo_social.png">
+    <meta property="og:image" content="https://calmatters.org{{ MEDIA_URL }}img/logo_social.png">
 {% endif %}
 
 {% if facebook_author_url  %}
