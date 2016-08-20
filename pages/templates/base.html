@@ -47,12 +47,14 @@
 
   {% comment %}
     The subscription system will look here for categories to bind with a mail chimp email
-    Any view that wants to publish categories with a subscription should put the cats
-    in the categories list.   In the future, we ought to tie this into the subscription framework
-    so that if subscription functionality is given all the is needed is supplied.
+    Any view that wants to publish categories with a MC subscription should put the cats
+    in the context as a list named mc_categories.   In the future, we ought to DRY this into the
+    subscription code, so that if subscription functionality is given all that is needed is supplied.
   {%  endcomment %}
-  {%  if categories %}
-      <span id="categories" style="display:block">{% for cat in categories %}{{ cat.id }},{% endfor %}</span>
+  {%  if mc_categories %}
+      <span id="categories" style="display:none">
+          {% for cat_id in mc_categories %} {{ cat_id }} {% if not forloop.last %},{% endif %}{% endfor %}
+      </span>
   {% endif %}
 
   {% include 'includes/google_tag_manager.html' %}

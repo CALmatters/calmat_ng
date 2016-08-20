@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 
+from categories.mixins import CategoryMixin
 from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
 from .atom import Atom
@@ -70,7 +71,7 @@ class RelatedArticle(models.Model):
         ordering = ('order', )
 
 
-class Article(Named, Publishable, ContentContainer, TimeStamped):
+class Article(Named, Publishable, ContentContainer, TimeStamped, CategoryMixin):
 
     DEFAULT_ARTICLE_IMAGE = "theme/frontend/img/featured-image-default.jpg"
 

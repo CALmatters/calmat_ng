@@ -175,6 +175,7 @@ def article_view(request, slug, template="article_two_column.html"):
         'editable_obj': article,
         'more_articles': more_articles,
         'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
+        'mc_categories': article.get_category_ids(preferred_only=True),
         # 'CURRENT_HOST': CURRENT_HOST,
         # 'subscribe': subscribe,
     }
@@ -395,7 +396,6 @@ def project_view(request, slug=None, template='project.html'):
             # no next
 
     exclude = []
-    categories = project.get_category_ids()
 
     # Get Quotes
     quotes = ProjectSortableQuotes.objects.ordered_for_project(project)
@@ -440,7 +440,7 @@ def project_view(request, slug=None, template='project.html'):
 
     context = {
         'project': project,
-        'categories': categories,
+        'mc_categories': project.get_category_ids(preferred_only=True),
         'featured_articles': featured_articles[:3],
         #  referenced directly in the template
         # 'onramp': project.onramp,

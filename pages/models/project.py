@@ -2,6 +2,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from categories.mixins import CategoryMixin
 from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
 from cmskit.models import Named, TimeStamped, Publishable
@@ -18,7 +19,7 @@ PROJECT_ATOM_LAYOUT_CHOICES = (
 )
 
 
-class Project(Named, Publishable, TimeStamped):
+class Project(Named, Publishable, TimeStamped, CategoryMixin):
 
     # featured_image = VersatileImageField(
     #     verbose_name="Old Featured Image",
@@ -152,20 +153,6 @@ class Project(Named, Publishable, TimeStamped):
         verbose_name = 'Project'
         verbose_name_plural = 'Projects'
         ordering = ('order', '-publish_date',)
-
-    def get_category_ids(self):
-        """
-        Return a list of category IDs
-        """
-        cats = self.categories.all()
-        cat_ids = [c.id for c in cats]
-        if cat_ids:
-            return cat_ids
-        else:
-            # get all category ids
-            cat_ids = Category.objects.all().values('id')
-            cat_ids = [c['id'] for c in cat_ids]
-            return cat_ids
 
     def get_absolute_url(self):
         url_name = "project_detail"

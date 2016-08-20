@@ -3341,6 +3341,13 @@ input:-moz-placeholder { font-size: 1em !important; }
     box-shadow: 0 0 3px rgba(0, 0, 0, .5);
     line-height: 32px;
 }
+
+.follow_email_textbox {
+    color: white;
+    height: 22px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+}
+
 .btns a.custom_follow_element span {
     font-size: 14px;
     pointer-events: none;
