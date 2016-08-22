@@ -231,10 +231,10 @@ class Partner(Named, TimeStamped):
             except StopIteration:
                 recent_partner = None
 
-        chosen_partners = [
-            p for p in (feat_partner, radio_partner, recent_partner) if p]
-        other_partners = partner_article_pool_qs.exclude(
-            partner__in=chosen_partners)
+        chosen_partners = set(
+            p for p in (feat_partner, radio_partner, recent_partner) if p)
+        other_partners = set(partner_article_pool_qs.exclude(
+            partner__in=chosen_partners))
 
         return_dict = dict(
             chosen_partners=chosen_partners,
