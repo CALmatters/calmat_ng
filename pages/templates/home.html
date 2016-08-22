@@ -183,7 +183,7 @@
             <p class="itw_title">RECENT PROJECTS</p>
             <div class="itw_list">
                 <div class="itw_links">
-                {%  for project in home.yield_recent_projects %}
+                {%  for project in home.recent_projects|slice:":4" %}
                     <a href="{{  project.get_absolute_url }}">{{  project.title }}</a>
                     {%  if not forloop.last %}&nbsp;&nbsp;|&nbsp;&nbsp;{%  endif %}
                 {% endfor %}
