@@ -1,10 +1,6 @@
-import random
-
 from datetime import date, timedelta
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-# from versatileimagefield.fields import VersatileImageField
-
 from business.models.partner_owner import PartnerOwner
 from categories.models import Category
 from media_manager.models import MediaItem
@@ -191,13 +187,16 @@ class Partner(Named, TimeStamped):
         """
 
         from business.models.partner_article import PartnerArticle
+        from business.models.partner_article import FULL_OR_MENTION_CHOICES
 
         #  First get featured partner, either over all, or related to article
         #  and, collect the pool of remaining partners
         if limit_to_article is None:
-            partner_article_pool_qs = PartnerArticle.objects.all()
+            partner_article_pool_qs = PartnerArticle.objects.filter(
+                fulltext_or_mention=FULL_OR_MENTION_CHOICES[1][0])
         else:
             partner_article_pool_qs = PartnerArticle.objects.filter(
+                fulltext_or_mention=FULL_OR_MENTION_CHOICES[1][0],
                 article=limit_to_article)
 
         try:

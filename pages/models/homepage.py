@@ -319,7 +319,6 @@ class HomePage(Named, TimeStamped):
     def get_absolute_url(self):
         return "/"
 
-
     def has_in_the_works(self):
         return any(bool(d['label'] and d['url'])
                    for d in self.yield_in_the_works_titles())
