@@ -11,6 +11,7 @@ from django.utils.safestring import mark_safe
 
 from adminsortable2.admin import SortableInlineAdminMixin
 
+from media_manager.widgets import PopupSelect
 from pages.models import HomePage
 
 from pages.models.homepage import RelatedHeadlineArticle, RelatedAtom
@@ -41,6 +42,13 @@ class RelatedAtomInline(SortableInlineAdminMixin, TabularInline):
 
 
 class HomePageAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = HomePage
+        widgets = {
+            'image': PopupSelect(),
+        }
+        exclude = ()
 
     def clean_template_filename(self):
         potential_homepage_templ = self.cleaned_data['template_filename']
@@ -125,7 +133,7 @@ class HomePageAdmin(admin.ModelAdmin):
         ("Politics", {
             "fields": (
                 "politics_author",
-                "politics_alternate_image",
+                "image",
                 "politics_quote",
                 "politics_quote_attribution",
             )

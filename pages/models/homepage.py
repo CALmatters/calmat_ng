@@ -253,7 +253,10 @@ class HomePage(Named, TimeStamped):
         through='RelatedAtom')
 
     politics_author = models.ForeignKey(Person, blank=True, null=True)
-    politics_alternate_image = PopupForeignKey(
+    #  Limitation with popup image chooser is that image must be named 'image'
+    #  this restriction is found in popup_v1.js.
+    # Todo:  allow for more than one image per page.
+    image = models.ForeignKey(
         MediaItem,
         verbose_name="Politics Image",
         null=True,
