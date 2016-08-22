@@ -504,7 +504,6 @@ class Article(Named, Publishable, ContentContainer, TimeStamped, CategoryMixin):
 
         return text
 
-
-
-
+    def filterd_partners(self):
+        return set(self.partners.all())
 
