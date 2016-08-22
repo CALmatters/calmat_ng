@@ -281,7 +281,7 @@ class HomePage(Named, TimeStamped):
         return Article.objects.published().filter(news_analysis=True)[:3]
 
     def politics_image(self):
-        return self.politics_alternate_image or (
+        return self.image or (
             self.politics_author and self.politics_author.image)
 
     def recent_articles(self):
