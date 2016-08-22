@@ -164,6 +164,7 @@
                 </div>
             </div>
 
+        {%  block the_basics %}
         <div class="thebasics">
             <div class="basics_title">The Basics</div>
             {%  for article in home.yield_the_basics %}
@@ -175,10 +176,13 @@
             </div>
             {%  endfor %}
         </div>
+        {%  endblock %}
     </div>
     <div style="clear:both;"></div>
 
+    {%  block the_recents %}
     <div id="recent_projects" class="intheworks">
+
         <div class="text">
             <p class="itw_title">RECENT PROJECTS</p>
             <div class="itw_list">
@@ -192,6 +196,7 @@
             </div>
         </div>
     </div>
+    {%  endblock %}
 
     <div class="mid_section_links">
         <div id="education_box">
@@ -225,7 +230,7 @@
         <div class="politics">
             <div class="politics_heading">Politics</div>
             <a class="politics_img" href="{{ home.politics_author.get_absolute_url }}">
-                <img src="{{ home.politics_author.image.file.crop.690x460 }}" alt="Politics author image">
+                <img src="{{ home.politics_image.file.crop.690x460 }}" alt="Politics author image">
             </a>
             <div class="columnist col">
                 <ul>

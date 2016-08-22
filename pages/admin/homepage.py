@@ -125,6 +125,7 @@ class HomePageAdmin(admin.ModelAdmin):
         ("Politics", {
             "fields": (
                 "politics_author",
+                "politics_alternate_image",
                 "politics_quote",
                 "politics_quote_attribution",
             )

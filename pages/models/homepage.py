@@ -13,6 +13,7 @@ from django.db.models import Q
 
 from business.models import Partner, Person
 from fkchooser.fields import PopupForeignKey
+from media_manager.models import MediaItem
 from pages.models import Article, Atom
 from cmskit.models import Named, TimeStamped
 
@@ -252,6 +253,14 @@ class HomePage(Named, TimeStamped):
         through='RelatedAtom')
 
     politics_author = models.ForeignKey(Person, blank=True, null=True)
+    politics_alternate_image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Politics Image",
+        null=True,
+        blank=True,
+        related_name="homepage_with_politics_image",
+        help_text="Show this image instead of the author's image.")
+
     politics_quote = models.TextField(max_length=500, default='', blank=True)
     politics_quote_attribution = models.CharField(
         max_length=135, default='', blank=True)
@@ -267,6 +276,10 @@ class HomePage(Named, TimeStamped):
         """Return most recent 3 published politics articles"""
 
         return Article.objects.published().filter(news_analysis=True)[:3]
+
+    def politics_image(self):
+        return self.politics_alternate_image or (
+            self.politics_author and self.politics_author.image)
 
     def recent_articles(self):
         """Return most recent 3 published politics articles"""
@@ -302,6 +315,7 @@ class HomePage(Named, TimeStamped):
 
     def get_absolute_url(self):
         return "/"
+
 
     def has_in_the_works(self):
         return any(bool(d['label'] and d['url'])
