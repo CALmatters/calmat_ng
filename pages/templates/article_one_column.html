@@ -55,7 +55,7 @@
         <div class="partner-author">
             {% if article.partners.exists %}
                 <p>IN PARTNERSHIP WITH</p>
-                {% for partner in article.filtered_partners.chosen_partners %}
+                {% for partner in article.filtered_partners %}
 
                     {% if partner.link_to_articles %}
                         <a href="{{ partner.get_absolute_url }}">

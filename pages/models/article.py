@@ -505,5 +505,6 @@ class Article(Named, Publishable, ContentContainer, TimeStamped, CategoryMixin):
         return text
 
     def filtered_partners(self):
-        return Partner._partners(self)
-
+        partner_dict = Partner._partners(self)
+        return partner_dict['chosen_partners'].union(
+            set(pa.partner for pa in partner_dict['other_partners']))
