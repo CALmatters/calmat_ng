@@ -253,7 +253,7 @@ class HomePage(Named, TimeStamped):
         through='RelatedAtom')
 
     politics_author = models.ForeignKey(Person, blank=True, null=True)
-    politics_alternate_image = models.ForeignKey(
+    politics_alternate_image = PopupForeignKey(
         MediaItem,
         verbose_name="Politics Image",
         null=True,
