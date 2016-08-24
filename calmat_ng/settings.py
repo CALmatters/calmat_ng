@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.redirects',
+    'django.contrib.sitemaps',
     'versatileimagefield',
     'cmskit',
     'adminsortable2',
@@ -88,7 +89,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [ADMIN_TEMPLATES, ],
-        # 'APP_DIRS': True,
+        #  Can't have this True, and loaders specified below
+        #  Adding django.template.loaders.app_directories.Loader below is same
+        #'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

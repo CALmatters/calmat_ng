@@ -17,10 +17,12 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.views.generic import RedirectView, TemplateView
 
 from business.views import subscribe
 from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
+from calmat_ng.sitemaps import NewsSitemap
 from calmat_ng.views import search
 from employment.views import jobs_view, jobs_listing_view
 from pages.views import (homepage_view, columns, columns_single, project_view,
@@ -107,5 +109,12 @@ urlpatterns = [
     url('terms-conditions/$',
         TemplateView.as_view(template_name="terms_conditions.html")),
 
+    # url(r'^sitemap\.xml$', sitemap, {'sitemaps': CALmattersSitemap},
+    #     name='django.contrib.sitemaps.views.sitemap')
+
+    url(r'^news-sitemap\.xml$', sitemap, {
+        'sitemaps': {'news': NewsSitemap},
+        'template_name': 'news_sitemap.xml'
+    }),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
