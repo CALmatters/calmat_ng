@@ -9,6 +9,7 @@ class NewsSitemap(Sitemap):
 
     changefreq = 'daily'
     priority = 0.5
+    protocol = 'https'
 
     def items(self):
         return Article.objects.published()
