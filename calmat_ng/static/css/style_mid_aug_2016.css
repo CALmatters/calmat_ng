@@ -1,0 +1,95 @@
+
+#basics_text1 {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    margin: auto;
+    color: white;
+}
+
+#basics_text2 {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    margin: auto;
+    color: white;
+}
+
+#basics_text3 {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    margin: auto;
+    color: white;
+}
+
+#basics_text4 {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    margin: auto;
+    color: white;
+}
+
+#basic1{
+    position: relative;
+    height: 102px;
+    width: auto;
+}
+
+#basic2{
+    position: relative;
+    height: 102px;
+    width: auto;
+}
+
+#basic3{
+    position: relative;
+    height: 102px;
+    width: auto;
+}
+
+#basic4{
+    position: relative;
+    height: 102px;
+    width: auto;
+}
+
+#basic1:before,
+#basic2:before,
+#basic3:before,
+#basic4:before {
+content: "";
+display: block;
+position: absolute;
+top: 0;
+bottom: -10px;
+left: 0;
+right: 0;
+background: rgba(0, 0, 0, .4);
+transition: background .3s linear;
+}
+
+#basic1,
+#basic2,
+#basic3,
+#basic4 {
+border-top:solid 1px white;
+margin-bottom:10px;
+}
+
+#basics_text1,
+#basics_text2,
+#basics_text3,
+#basics_text4 {
+font-size:24px !important;
+letter-spacing:0.5px;
+}
+
+
+@media (min-width: 320px) and (max-width: 960px){
+#basics_text2 {
+font-size:26px !important;
+/*margin:0 11%;*/
+}
+}

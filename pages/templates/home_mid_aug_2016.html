@@ -1,5 +1,12 @@
 {% extends "home.html" %}
 
+{% load static from staticfiles %}
+
+{%  block extra_head %}
+    <link rel="stylesheet" media="screen" href="{% static 'css/style_mid_aug_2016.css'  %}">
+    {{ block.super }}
+{%  endblock %}
+
 {%  block the_basics %}
     {%  comment %}
         The Basics and Recent Project were switched.   Note that the dynamic data
