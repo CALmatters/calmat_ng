@@ -4,6 +4,7 @@ from django import forms
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
 from django.contrib.admin import TabularInline
 
+from cmskit.mixins.cloneable import Cloneable
 from media_manager.widgets import PopupSelect
 from pages.models.project import (Project, ProjectSortableFeaturedArticle,
                                   ProjectSortableRelatedArticle,
@@ -73,7 +74,7 @@ class ProjectAdminForm(forms.ModelForm):
         exclude = ()
 
 
-class ProjectAdmin(SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
+class ProjectAdmin(Cloneable, SortableAdminMixin, AdminThumbMixin, admin.ModelAdmin):
 
     form = ProjectAdminForm
 
