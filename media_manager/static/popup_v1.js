@@ -17,7 +17,7 @@ var file_glue = (function(){
             insertImgUrlIntoInput(imgID, imgUrl, thumb);
             closeMedia_ManagerWindow();
         }
-    }
+    };
 
     //  Removes left menu, headers, and add button, so it's just a image
     //  selection dialog.  Needed for popup version, but should not be used,
@@ -81,6 +81,21 @@ var file_glue = (function(){
             django.jQuery(opener.document.querySelector(preview_link_selector)).show();
             django.jQuery(opener.document.querySelector(clear_id_selector)).show();
             django.jQuery(opener.document.querySelector(preview_img_selector)).show();
+
+            //  When user chooses a person in the media item dialog for the featured image
+            //  this code will find the media item, and insert the description and credit
+            //  as defaults.   Note that this ajax call is synchronous, because if the window
+            //  dialog closes before the function returns it doesn't set the values.   So,
+            //  this code will block, waiting for a response, and then allow the window to be closed.
+            //  Todo:   DRY it out - There is code in copy_forward_image_data.js that does the same thing
+            
+            django.jQuery.ajax({
+                url:'/media_lookup/'+imgID+'/',
+                async: false,
+                success: function( data ) {
+                    opener.document.querySelector("#id_featured_image_description").value = data.desc;
+                    opener.document.querySelector("#id_featured_image_credit").value = data.credit;
+                }});
         }
     }
     
@@ -94,7 +109,7 @@ var file_glue = (function(){
             //  When the opener is anything else - is this OK?
             window.close();
         }
-    };
+    }
     
     // API
     return {

@@ -25,6 +25,7 @@ from calmat_ng.feeds import RssArticleFeed, AtomArticleFeed
 from calmat_ng.sitemaps import NewsSitemap
 from calmat_ng.views import search
 from employment.views import jobs_view, jobs_listing_view
+from media_manager.views import media_lookup
 from pages.views import (homepage_view, columns, columns_single, project_view,
                          article_list, article_view, about_view, team_list,
                          about_partners_list, atom_detail, contact_us)
@@ -116,5 +117,8 @@ urlpatterns = [
         'sitemaps': {'news': NewsSitemap},
         'template_name': 'news_sitemap.xml'
     }),
+    url(r'^media_lookup/(\d+)/$', media_lookup),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
