@@ -11,8 +11,8 @@ function ImageLibraryPicker(callback, value, meta) {
         inline : "yes",
         close_previous : "no"
     }, {
-          oninsert: function (url) {
-            callback(url);
+          oninsert: function (url, desc) {
+            callback(url,  {alt: desc});
           }
         }
     );

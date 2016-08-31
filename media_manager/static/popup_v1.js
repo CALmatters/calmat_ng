@@ -63,10 +63,24 @@ var file_glue = (function(){
     // Inserts the image url into the 'Image URL' input field in the 'Insert/Edit Image' popup window.
     function insertImgUrlIntoInput(imgID, imgUrl, thumb){
 
+        //  When user chooses a person in the media item dialog for the featured image
+        //  this code will find the media item, and insert the description and credit
+        //  as defaults.   Note that this ajax call is synchronous, because if the window
+        //  dialog closes before the function returns it doesn't set the values.   So,
+        //  this code will block, waiting for a response, and then allow the window to be closed.
+        //  Todo:   DRY it out - There is code in copy_forward_image_data.js that does the same thing
+
+        var data;
+        django.jQuery.ajax({
+            url:'/media_lookup/'+imgID+'/',
+            async: false,
+            success: function( _data ) {
+                data = _data;
+            }});
 
         if(!opener) {
             //  When launch from inside TinyMCE
-            top.tinymce.activeEditor.windowManager.getParams().oninsert(imgUrl);
+            top.tinymce.activeEditor.windowManager.getParams().oninsert(imgUrl, data.desc);
         } else {
             //  When launched from popup_launcher for fields of PopupSelect
             var input_id_selector = "#id_image";
@@ -82,20 +96,8 @@ var file_glue = (function(){
             django.jQuery(opener.document.querySelector(clear_id_selector)).show();
             django.jQuery(opener.document.querySelector(preview_img_selector)).show();
 
-            //  When user chooses a person in the media item dialog for the featured image
-            //  this code will find the media item, and insert the description and credit
-            //  as defaults.   Note that this ajax call is synchronous, because if the window
-            //  dialog closes before the function returns it doesn't set the values.   So,
-            //  this code will block, waiting for a response, and then allow the window to be closed.
-            //  Todo:   DRY it out - There is code in copy_forward_image_data.js that does the same thing
-            
-            django.jQuery.ajax({
-                url:'/media_lookup/'+imgID+'/',
-                async: false,
-                success: function( data ) {
-                    opener.document.querySelector("#id_featured_image_description").value = data.desc;
-                    opener.document.querySelector("#id_featured_image_credit").value = data.credit;
-                }});
+            opener.document.querySelector("#id_featured_image_description").value = data.desc;
+            opener.document.querySelector("#id_featured_image_credit").value = data.credit;
         }
     }
     
