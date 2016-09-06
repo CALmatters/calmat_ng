@@ -119,21 +119,11 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
                 "view_url",
                 "news_analysis",
                 ("status", "publish_date"),
-                "description",
+
             )
         }),
-
-        (_("Content"), {
-            "fields": (
-                "content",
-            ),
-            'classes': (
-                "tinymce-editable",
-            )
-        }),
-
         (_("Featured Image"), {
-            "classes": ("collapse",),
+            "classes": ("collapse-open",),
             "fields": (
                 "headline_layout",
                 "image",
@@ -143,6 +133,20 @@ class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
                 "featured_image_title_shade",
                 "facebook_image",
             )
+        }),
+        (_("Content"), {
+            "fields": (
+
+                "content",
+            ),
+            'classes': (
+                "tinymce-editable",
+            )
+        }),
+        (_("Description"), {
+            "fields": (
+                "description",
+            ),
         }),
         (_("Authors"), {
             "classes": ("collapse-open",),
