@@ -15,6 +15,29 @@ lifted and added to this project.
 The front end is stand post/response with some, but very little javascript async comms back to the server.  
 jQuery is used mostly for dynamic frontend code
 
+
+
+Development Workflow
+====================
+
+*  Developers install a working environment to run the project, including cloning the source
+git@github.com:idmloco/calmat_ng.git
+(Note, SSH public key needs to be installed in github account.)
+*  To begin work on an issue, the developer pulls from the
+git repo
+*  Once the issue is resolved, the dev can push commits to master
+*  The dev or admin can then pull from the master branch on the Landing Path system (code staging)
+*  The admin needs to collect the static files and/or restart the python environment
+$ ./manage.py collectstatic --noinput
+$ sudo service uwsgi restart
+*  At this point, product owners and stakeholders can view the changes on http://landingpath.calmatters.org/
+*  Once the changes are reviewed, and approved, the admin can merge the changes to production
+*  The admin logs into the production system, and resets the production branch to match master
+(The assuption is that anything on master can safely be in production, and that that production should hold no special state.)
+$  git checkout <production_branch>
+$  git reset --hard master
+
+
 DEV Environment
 ===============
 
@@ -33,10 +56,6 @@ You'll also need a superuser:  ./manage.py createsuperuser
 At this point, try starting the application:  ./manage.py runserver
 http://localhost:8000/
 http://localhost:8000/admin
-
-LIVE Environment
-================
-TBD
 
 
 
