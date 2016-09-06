@@ -300,43 +300,49 @@
     {# Partner Map #}
     {% include "includes/home_partner_map.html" %}
 
-    <div class="recent-stories articles">
+    {%  if home.additional_articles  %}
 
-        <div class="content">
-            <h2>Articles</h2>
+        <div class="recent-stories articles">
 
-            <section>
-                {% for article in home.recent_articles %}
-                    <article>
-                        <div class="image">
-                            {% if article.image %}
-                                <img src="{{ article.image.file.thumbnail.310x220 }}" alt="">
-                            {% else %}
-                                <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
-                            {% endif %}
-                        </div>
-                        <div class="wrap">
-                            <div class="meta"><a href="{{ article.get_post_type_url }}">{{article.get_custom_post_type_title|upper}}</a> {{ article.publish_date|date:"m.d.Y" }}</div>
-                            <h3>
-                                {% if article.custom_post_type == 'external' %}
-                                    <a href="{{ article.custom_link }}" target="_blank"> {{ article.title }} </a>
-                                {% else %}
-                                    <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-                                {% endif %}
-                            </h3>
-                            <p>{{ article.description|truncatewords_html:20|safe }}</p>
+            <div class="content">
+                <h2>Articles</h2>
 
-                            {% if article.get_authors %}
-                            <p class="by">by {{ article.get_authors|safe }}</p>
-                            {% endif %}
+                <section>
+                    {% for additional_article in home.additional_articles %}
 
-                        </div>
-                    </article>
-                {% endfor %}
-            </section>
+                        {% with article=additional_article.article %}
+                            <article>
+                                <div class="image">
+                                    {% if article.image %}
+                                        <img src="{{ article.image.file.thumbnail.310x220 }}" alt="">
+                                    {% else %}
+                                        <img src="{% static article.DEFAULT_ARTICLE_IMAGE %}">
+                                    {% endif %}
+                                </div>
+                                <div class="wrap">
+                                    <div class="meta"><a href="{{ article.get_post_type_url }}">{{article.get_custom_post_type_title|upper}}</a> {{ article.publish_date|date:"m.d.Y" }}</div>
+                                    <h3>
+                                        {% if article.custom_post_type == 'external' %}
+                                            <a href="{{ article.custom_link }}" target="_blank"> {{ article.title }} </a>
+                                        {% else %}
+                                            <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                                        {% endif %}
+                                    </h3>
+                                    <p>{{ article.description|truncatewords_html:20|safe }}</p>
 
-        </div><!-- .content -->
-    </div><!-- .recent-stories.articles -->
+                                    {% if article.get_authors %}
+                                    <p class="by">by {{ article.get_authors|safe }}</p>
+                                    {% endif %}
+
+                                </div>
+                            </article>
+                        {%  endwith %}
+                    {% endfor %}
+                </section>
+
+            </div><!-- .content -->
+        </div><!-- .recent-stories.articles -->
+    {%  endif %}
 
 {% endblock %}
 

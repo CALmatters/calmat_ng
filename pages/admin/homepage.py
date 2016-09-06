@@ -14,7 +14,8 @@ from adminsortable2.admin import SortableInlineAdminMixin
 from media_manager.widgets import PopupSelect
 from pages.models import HomePage
 
-from pages.models.homepage import RelatedHeadlineArticle, RelatedAtom
+from pages.models.homepage import RelatedHeadlineArticle, RelatedAtom, \
+    AdditionalHomePageArticle
 
 
 def clone(modeladmin, request, queryset):
@@ -39,6 +40,14 @@ class RelatedAtomInline(SortableInlineAdminMixin, TabularInline):
     fields = ('atom', 'atom_layout', 'order')
     exlude= ('article', )
     extra = 0
+
+
+class AdditionalHomePageArticlesInline(SortableInlineAdminMixin, TabularInline):
+    model = AdditionalHomePageArticle
+    exlude= ('article', 'order')
+    max_num = 3
+    min_num = 0
+    extra = 3
 
 
 class HomePageAdminForm(forms.ModelForm):
@@ -90,7 +99,9 @@ class HomePageAdmin(admin.ModelAdmin):
 
     actions = (clone, )
 
-    inlines = (RelatedHeadlineArticleInline, RelatedAtomInline)
+    inlines = (RelatedHeadlineArticleInline,
+               RelatedAtomInline,
+               AdditionalHomePageArticlesInline)
 
     fieldsets = (
         (None, {
@@ -167,17 +178,5 @@ class HomePageAdmin(admin.ModelAdmin):
                 dt.days, int(dt.seconds / 3600), dt.seconds % 60)
 
     current_live.short_description = "Live Status"
-
-    # def category_list(self, obj):
-    #     """Used in list_display above."""
-    #     return ', '.join([c.title for c in obj.categories.all()])
-    # category_list.short_description = "Categories"
-
-    # def save_form(self, request, form, change):
-    #     """
-    #     Super class ordering is important here - user must get saved first.
-    #     """
-    #     OwnableAdmin.save_form(self, request, form, change)
-    #     return DisplayableAdmin.save_form(self, request, form, change)
 
 admin.site.register(HomePage, HomePageAdmin)

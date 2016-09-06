@@ -67,6 +67,24 @@ class RelatedHeadlineArticle(models.Model):
         ordering = ('order', )
 
 
+class AdditionalHomePageArticle(models.Model):
+
+    homepage = models.ForeignKey(
+        "pages.HomePage", related_name='addition_hp_articles_as_homepage')
+    article = PopupForeignKey(
+        "pages.Article", related_name='addition_hp_articles_as_homepage')
+
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    def __str__(self):
+        return u''
+
+    class Meta:
+        verbose_name = _("Additional Article")
+        verbose_name_plural = _("Addiitonal Articles")
+        ordering = ('order', )
+
+
 class HomePageManager(models.Manager):
 
     def in_go_live_order(self):
@@ -275,7 +293,8 @@ class HomePage(Named, TimeStamped):
                   "If you aren't sure what to do, then do not change this "
                   "value.")
 
-    def recent_politics_articles(self):
+    @staticmethod
+    def recent_politics_articles():
         """Return most recent 3 published politics articles"""
 
         return Article.objects.published().filter(news_analysis=True)[:3]
@@ -284,15 +303,9 @@ class HomePage(Named, TimeStamped):
         return self.image or (
             self.politics_author and self.politics_author.image)
 
-    def recent_articles(self):
-        """Return most recent 3 published politics articles"""
+    def additional_articles(self):
 
-        return Article.objects.published().exclude(
-            news_analysis=True).exclude(
-            custom_post_type='readerreactions').exclude(
-            custom_post_type='press').exclude(
-            custom_post_type='external').exclude(
-            custom_post_type='basics')[:3]
+        return AdditionalHomePageArticle.objects.filter(homepage=self)
 
     def clone(self):
         _clone = copy(self)
