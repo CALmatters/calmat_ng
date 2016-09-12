@@ -10,6 +10,8 @@ class Category(Named, TimeStamped):
 
     preferred = models.BooleanField(default=False)
 
+    as_menu = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"

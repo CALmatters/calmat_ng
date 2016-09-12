@@ -80,7 +80,9 @@
                                     {% endfor %}
                                 </ul>
                             </li>
-
+                            {%  for menu in category_menus %}
+                                <li><a href="{{ menu.get_absolute_url }}">{{ menu.title|upper }}</a></li>
+                            {%  endfor %}
                             <li class="{% if request.path|slice:":7" == "/about/" %}active{% endif %}"><a href="/about/">ABOUT</a></li>
                             <li class="{% if request.path|slice:":9" == "/contact_us/" %}active{% endif %}"><a href="/contact_us/">CONTACT US</a></li>
                             <li class="{% if request.path|slice:":12" == "/donate/" %}active{% endif %}"><a href="/donate/">DONATE</a></li>

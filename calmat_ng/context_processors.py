@@ -1,11 +1,13 @@
 from categories.models import Category
 
-# Todo:  move these to the apps they reference
 from pages.models import Project
 
 
 def categories(request):
-    return dict(categories=Category.get_display_categories())
+    data = dict(
+        categories=Category.get_display_categories(),
+        category_menus=Category.objects.filter(as_menu=True))
+    return data
 
 
 def projects(request):
