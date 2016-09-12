@@ -24,33 +24,72 @@
 {% endblock %}
 
 {% block article_detail_featured_image %}
-    <div class="prop-image "
-        style="background-image: url({{ proposition.image.file.thumbnail.1200x500 }})">
+    <div class="post-image type-2">
         <div class="container">
-            <h1 class="">{{ proposition.title }}</h1>
+            <h1>{% if proposition.image %}<img src="{{ proposition.image.file.thumbnail.100x150 }}" /> {% endif %}{{ proposition.title }}</h1>
         </div>
     </div>
-
-
-    {%  comment %}
-        {% include 'includes/article_header_title.html' %}
-    {%  endcomment %}
 {% endblock %}
 
 {% block main %}
 
     <div class="content dynamic-height-container">
-        <div class="entry">
+        <div class="post-meta">
+            <div class="author">
 
-            {{ proposition.content|safe }}
+                {% if article.get_authors %}
+                <p>by {{ article.get_authors|safe }}</p>
+                {% endif %}
 
-            <img src="{{ proposition.atom.image.file.url }}" alt="{{ atom.headline }}">
+                <div class="date">{{ article.publish_date|date:"m.d.Y" }}</div>
 
-            <b>More information:</b>
-            <div class="prop-more-info">
-                {{ proposition.more_information|safe }}
             </div>
+            {% include 'includes/social_buttons.html' with show_follow_button=True %}
+        </div>
+        {% if article.partners %}
+        <div class="partner-author">
+            {% if article.partners.exists %}
+                <p>IN PARTNERSHIP WITH</p>
+                {% for partner in article.filtered_partners %}
 
+                    {% if partner.link_to_articles %}
+                        <a href="{{ partner.get_absolute_url }}">
+                            <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
+                        </a>
+                    {% else %}
+                        <img src="{{ partner.image.file.url }}" class="partner_logo_in_content" />
+                    {% endif %}
+
+                {% endfor %}
+            {%  endif %}
+        </div>
+        {% endif %}
+        <div class="entry">
+            {{ proposition.content|safe }}
+            <div class="row">
+                <div class="col-md-6" style="margin-top: 15px;">
+                    <h3>Supporters:</h3>
+                    {% for supporter in proposition.supporters.all %}
+                        <div style="margin-bottom: 20px;">
+                            <img src="{{ supporter.image.file.thumbnail.60x60 }}" style="margin: 0px 10px 10px 0px;" />
+                            {{ supporter.title }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-6" style="margin-top: 15px;">
+                    <h3>Opponents:</h3>
+                    {% for opponent in proposition.opponents.all %}
+                        <div style="margin-bottom: 20px;">
+                            <img src="{{ opponent.image.file.thumbnail.60x60 }}" style="margin: 0px 10px 10px 0px;" />
+                            {{ opponent.title }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if proposition.more_information %}
+                <h3 style="margin-top: 50px;">More information:</h3>
+                {{ proposition.more_information|safe }}
+            {% endif %}
         </div>
     </div>
     <!-- / content -->

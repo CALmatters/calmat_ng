@@ -71,7 +71,7 @@ class Proposition(Named, ContentContainer, TimeStamped, CategoryMixin):
 
     image = models.ForeignKey(
         MediaItem,
-        verbose_name="Title background image",
+        verbose_name="Icon Image",
         null=True,
         blank=True,
         related_name="props_with_image")
