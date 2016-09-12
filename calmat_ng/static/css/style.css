@@ -3195,6 +3195,31 @@ input:-moz-placeholder { font-size: 1em !important; }
     }
 }
 
+/*  Proposition detail*/
+.prop-image {
+    background-size: cover;
+    background-repeat: norepeat;
+}
+
+.prop-image h1 {
+    margin: 0;
+    color: #221f1f;
+    font-weight: 600;
+    font-family: "GearedSlab";
+    font-size: 50px;
+    max-width: 100%;
+    line-height: 50px;
+    letter-spacing: 2.2px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 1);
+    padding: 50px 50px 50px 0;
+    margin: 0 0 0 100px;
+}
+
+.prop-more-info {
+    font-size: .75em;
+    line-height: 2.25em;
+}
+
 /*------------------------------------------------------------------------------
     :: Post / .post-image .post-meta
 ------------------------------------------------------------------------------*/

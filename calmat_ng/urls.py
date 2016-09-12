@@ -28,7 +28,8 @@ from employment.views import jobs_view, jobs_listing_view
 from media_manager.views import media_lookup
 from pages.views import (homepage_view, columns, columns_single, project_view,
                          article_list, article_view, about_view, team_list,
-                         about_partners_list, atom_detail, contact_us)
+                         about_partners_list, atom_detail, contact_us,
+                         proposition_view)
 from donation.views import DonatePageView, StripeCustomerView
 
 urlpatterns = [
@@ -72,6 +73,11 @@ urlpatterns = [
     url("^project/(?P<slug>[a-zA-Z0-9\-\_]+)/$",
         project_view,
         name="project_detail"),
+
+    url("^proposition/(?P<slug>[a-zA-Z0-9\-\_]+)/$",
+        proposition_view,
+        name="proposition_detail"),
+
 
     url("^atom/(?P<slug>[A-Za-z0-9\-\_]+)$",
         atom_detail,
