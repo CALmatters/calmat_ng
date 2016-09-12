@@ -18,4 +18,5 @@ from pages.views import article_list
 
 urlpatterns = [
     url('$', article_list, name='article_list'),
+    url('proposition/$', proposition_list, name='proposition_list'),
 ]

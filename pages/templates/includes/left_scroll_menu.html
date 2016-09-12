@@ -10,7 +10,21 @@
                                 <li class="home-link" style="border-top:none; border-bottom: 1px solid #221f1f;"><a href="/">HOME</a></li>
                             </ul>
                         </div>
-                        <h3 class="story" style="padding-top:9px; padding-bottom:0px; line-height:30px;">POLICY</h3>
+                        {%  if live_voter_guide %}
+                            <h3 class="story" style="padding-top:9px; padding-bottom:0px; line-height:30px;">{{ live_voter_guide.title }}</h3>
+                            <div class="info info-home" style="max-height:175px; overflow-y:scroll; padding-left:10px;">
+                                <ul>
+                                    {% for proposition in live_voter_guide.related_propositions.all %}
+                                        <li class="columns-link"><a href="{{ proposition.get_absolute_url }}">{{ proposition.title }}</a></li>
+                                    {% endfor %}
+                                    {% for category in categories %}
+                                        <li class="columns-link"><a href="{{ category.url }}">{{ category.display_name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {%  endif %}
+
+                        <h3 class="story" style="padding-top:9px; padding-bottom:0px; line-height:30px; border-top: 1px solid #221f1f;">POLICY</h3>
                         <div class="info info-home" style="max-height:175px; overflow-y:scroll; padding-left:10px;">
                             <ul>
                                 {% for category in categories %}

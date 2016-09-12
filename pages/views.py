@@ -26,6 +26,7 @@ from pages.models.project import (
     ProjectSortableVisualizations)
 
 from pages.models.article import CUSTOM_POST_TYPE_CHOICES
+from pages.models.proposition import Proposition
 
 logger = logging.getLogger(__name__)
 
@@ -149,6 +150,96 @@ def article_list(
     }
     templates.append(template)
     return render(request, templates, context)
+
+
+def proposition_list(
+        request, tag=None, year=None, month=None, username=None,
+        custom_post_type=None, atom=None, partner=None, keyplayer=None,
+        category=None, template="article_list.html"):
+    """
+    Display a list of blog posts that are filtered by tag, year, month,
+    author or category. Custom templates are checked for using the name
+    ``blog/article_list_XXX.html`` where ``XXX`` is either the
+    category slug or author's username if given.
+    """
+
+    templates = []
+    articles = Article.objects.published()
+    if category is not None:
+        category = get_object_or_404(Category, slug=category)
+        articles = articles.filter(categories=category)
+        templates.append(u"blog/article_list_%s.html" %
+                         str(category.slug))
+    if atom is not None:
+        atom = get_object_or_404(Atom, slug=atom)
+        articles = articles.filter(atoms=atom)
+        templates.append(u"blog/article_list_%s.html" %
+                         str(atom.slug))
+    if partner is not None:
+        partner = get_object_or_404(Partner, slug=partner)
+        articles = articles.filter(partners=partner)
+        templates.append(u"blog/article_list_%s.html" %
+                         str(partner.slug))
+    author = None
+    if username is not None:
+        author = get_object_or_404(User, username=username)
+        articles = articles.filter(user=author)
+        templates.append(u"blog/article_list_%s.html" % username)
+
+    if custom_post_type is not None:
+        # If not a valid custom_post_type, return 404 to move URL matching
+        # to next match in mezzcms.urls
+        cust_p_types = []
+        for c in CUSTOM_POST_TYPE_CHOICES:
+            cust_p_types.append(c[0])
+        print(cust_p_types)
+
+        if custom_post_type not in cust_p_types:
+            print('Raise')
+            raise Http404('Test')
+        else:
+            articles = articles.filter(custom_post_type=custom_post_type)
+            # If no blogposts for the custom post type, 404
+            # this catches any "fake" custom_post_type arguments
+            if not articles:
+                raise Http404()
+    else:
+        articles = articles.exclude(custom_post_type__in=['external', 'press'])
+
+    prefetch = ("categories", "keywords__keyword")
+
+    # prefetch_related(*prefetch)
+    logger.debug("Article count:  {}".format(len(articles)))
+
+    paginator = Paginator(articles, settings.ARTICLES_PER_PAGE)
+
+    try:
+        articles = paginator.page(request.GET.get("page", 1))
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_default_dict(
+        "")  # todo: make this share correct page instead of default homepage
+
+    context = {
+        'this_view_name': 'article_list',
+        'articles': articles,
+        'year': year,
+        'month': month,
+        'tag': tag,
+        'category': category,
+        'author': author,
+        'custom_post_type': custom_post_type,
+        'atom': atom,
+        'partner': partner,
+        'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
+    }
+    templates.append(template)
+    return render(request, templates, context)
+
+
 
 
 def article_view(request, slug, template="article_two_column.html"):
@@ -463,6 +554,17 @@ def project_view(request, slug=None, template='project.html'):
         'prev': prev,
         'next': next,
         'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
+    }
+
+    return render(request, template, context)
+
+
+def proposition_view(request, slug, template="proposition_detail.html"):
+
+    proposition = Proposition.objects.get(slug=slug)
+
+    context = {
+        'proposition': proposition,
     }
 
     return render(request, template, context)

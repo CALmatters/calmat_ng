@@ -100,6 +100,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'calmat_ng.context_processors.categories',
                 'calmat_ng.context_processors.projects',
+                'calmat_ng.context_processors.live_voter_guide',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',

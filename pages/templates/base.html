@@ -56,8 +56,10 @@
           {% for cat_id in mc_categories %} {{ cat_id }} {% if not forloop.last %},{% endif %}{% endfor %}
       </span>
   {% endif %}
+    {%  comment %}
 
   {% include 'includes/google_tag_manager.html' %}
+    {%  endcomment %}
 
   <div id="fb-root"></div>
   <script>(function(d, s, id) {

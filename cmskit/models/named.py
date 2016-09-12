@@ -75,14 +75,11 @@ class Named(models.Model):
         return slugify(self.title, allow_unicode=True)
 
     def get_absolute_url(self):
-        """
-        Raise an error if called on a subclass without
-        ``get_absolute_url`` defined, to ensure all search results
-        contains a URL.
-        """
-        name = self.__class__.__name__
-        raise NotImplementedError("The model %s does not have "
-                                  "get_absolute_url defined" % name)
+        if hasattr(self, 'url_name') and self.url_name:
+            kwargs = {
+                "slug": self.slug,
+            }
+            return reverse(self.url_name, kwargs=kwargs)
 
     def view_url(self):
         """Admin function for list_display or fieldsets"""
