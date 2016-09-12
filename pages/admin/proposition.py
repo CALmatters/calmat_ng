@@ -20,6 +20,9 @@ class PoliticalEntityAdmin(AdminThumbMixin, admin.ModelAdmin):
         "admin_thumb_reference",
     ]
 
+    admin_thumb_ref = "image"
+    admin_thumb_field = 'file'
+
 admin.site.register(PoliticalEntity, PoliticalEntityAdmin)
 
 
