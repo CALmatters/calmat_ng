@@ -59,15 +59,27 @@
                         <ul class="nav navbar-nav">
                             <li><a class="logo" href="/"><img src="{% static "theme/frontend/img/logo.png" %}" alt="CALmatters" width="174" height="42" /></a></li>
                             {%  if live_voter_guide.has_props %}
-                                <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                                        class="dropdown-toggle">{{ live_voter_guide.title }}<span class="caret"></span></a>
-                                        <ul class="dropdown-menu">
-                                            {% for proposition in live_voter_guide.published_propositions %}
-                                                <li><a href="{{ proposition.get_absolute_url }}">{{ proposition.title }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                </li>
+                                {%  if live_voter_guide.category_in_menu %}
+                                    <li class="dropdown">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                            class="dropdown-toggle">{{ live_voter_guide.title }}<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                {% for category in live_voter_guide.published_propositions_categories %}
+                                                    <li><a href="/propositions/{{ category.slug }}/">{{ category.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                    </li>
+                                {%  else %}
+                                    <li class="dropdown">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                            class="dropdown-toggle">{{ live_voter_guide.title }}<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                {% for proposition in live_voter_guide.published_propositions %}
+                                                    <li><a href="{{ proposition.get_absolute_url }}">{{ proposition.title }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                    </li>
+                                {%  endif %}
                             {%  endif %}
 
                             <li class="dropdown">

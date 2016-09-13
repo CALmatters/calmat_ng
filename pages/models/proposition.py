@@ -37,6 +37,12 @@ class VoterGuide(Named, TimeStamped):
 
     objects = VoterGuideManager()
 
+    category_in_menu = models.BooleanField(
+        verbose_name="Category in menus",
+        help_text=("If checked, the main menu will show categories.  "
+                   "If not checked the main menu will show propositions."),
+        default=True)
+
     can_go_live = models.BooleanField(default=False)
     go_live_on_date = models.DateTimeField(
         help_text="Times are in {}".format(settings.TIME_ZONE),
@@ -44,9 +50,21 @@ class VoterGuide(Named, TimeStamped):
         null=True,
         blank=True)
 
-    def published_propositions(self):
+    def published_propositions(self, category=None):
 
-        return self.related_propositions.filter(status=CONTENT_STATUS_PUBLISHED)
+        qs = self.related_propositions.filter(status=CONTENT_STATUS_PUBLISHED)
+        if category:
+            qs = qs.filter(categories=category)
+
+        return qs
+
+    def published_propositions_categories(self):
+        cats = set(
+            [cat for prop in self.related_propositions.filter(
+                    status=CONTENT_STATUS_PUBLISHED)
+                for cat in prop.categories.all()])
+
+        return cats
 
     def has_props(self):
         return self.related_propositions.filter(
@@ -68,7 +86,10 @@ class PoliticalEntity(Named):
 class Proposition(Named, ContentContainer, Publishable, TimeStamped,
                   CategoryMixin):
 
+    DEFAULT_IMAGE = "theme/frontend/img/featured-image-default.jpg"
+
     url_name = "proposition_detail"
+
 
     voter_guide = models.ForeignKey(
         VoterGuide, related_name='related_propositions')

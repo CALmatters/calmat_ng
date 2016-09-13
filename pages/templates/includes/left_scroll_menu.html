@@ -14,9 +14,15 @@
                             <h3 class="story" style="padding-top:9px; padding-bottom:0px; line-height:30px;">{{ live_voter_guide.title }}</h3>
                             <div class="info info-home" style="max-height:175px; overflow-y:scroll; padding-left:10px;">
                                 <ul>
+                                {%  if live_voter_guide.category_in_menu %}
+                                    {% for category in live_voter_guide.published_propositions_categories %}
+                                        <li class="columns-link"><a href="/propositions/{{ category.slug }}/">{{ category.title }}</a></li>
+                                    {% endfor %}
+                                {%  else %}
                                     {% for proposition in live_voter_guide.published_propositions %}
                                         <li class="columns-link"><a href="{{ proposition.get_absolute_url }}">{{ proposition.title }}</a></li>
                                     {% endfor %}
+                                {%  endif %}
                                 </ul>
                             </div>
                         {%  endif %}

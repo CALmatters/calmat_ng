@@ -29,7 +29,7 @@ from media_manager.views import media_lookup
 from pages.views import (homepage_view, columns, columns_single, project_view,
                          article_list, article_view, about_view, team_list,
                          about_partners_list, atom_detail, contact_us,
-                         proposition_view)
+                         proposition_view, proposition_list)
 from donation.views import DonatePageView, StripeCustomerView
 
 urlpatterns = [
@@ -78,6 +78,9 @@ urlpatterns = [
         proposition_view,
         name="proposition_detail"),
 
+    url('^propositions/(?P<category_slug>[a-zA-Z0-9\-\_]*)/$',
+        proposition_list,
+        name='proposition_list'),
 
     url("^atom/(?P<slug>[A-Za-z0-9\-\_]+)$",
         atom_detail,

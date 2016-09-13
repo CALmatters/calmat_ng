@@ -52,6 +52,7 @@ class VoterGuideAdmin(admin.ModelAdmin):
                 "title",
                 "can_go_live",
                 "go_live_on_date",
+                "category_in_menu",
             )
         }),)
 
@@ -129,6 +130,7 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
             "title",
             "slug",
             "image",
+            "description",
             "categories",
             "supporters",
             "opponents",
