@@ -5,8 +5,9 @@ from django.utils.timezone import now
 
 from categories.mixins import CategoryMixin
 from categories.models import Category
-from cmskit.models import Named, ContentContainer
+from cmskit.models import Named, ContentContainer, Publishable
 from cmskit.models import TimeStamped
+from cmskit.models.publishable import CONTENT_STATUS_PUBLISHED
 from media_manager.models import MediaItem
 
 
@@ -43,6 +44,14 @@ class VoterGuide(Named, TimeStamped):
         null=True,
         blank=True)
 
+    def published_propositions(self):
+
+        return self.related_propositions.filter(status=CONTENT_STATUS_PUBLISHED)
+
+    def has_props(self):
+        return self.related_propositions.filter(
+            status=CONTENT_STATUS_PUBLISHED).exists()
+
 
 class PoliticalEntity(Named):
 
@@ -56,7 +65,8 @@ class PoliticalEntity(Named):
         related_name="entities_with_image")
 
 
-class Proposition(Named, ContentContainer, TimeStamped, CategoryMixin):
+class Proposition(Named, ContentContainer, Publishable, TimeStamped,
+                  CategoryMixin):
 
     url_name = "proposition_detail"
 

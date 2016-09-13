@@ -561,13 +561,17 @@ def project_view(request, slug=None, template='project.html'):
 
 def proposition_view(request, slug, template="proposition_detail.html"):
 
-    proposition = Proposition.objects.get(slug=slug)
+    try:
+        proposition = Proposition.objects.published(
+            for_user=request.user).get(slug=slug)
+    except Proposition.DoesNotExist:
+        raise Http404
+    else:
+        context = {
+            'proposition': proposition,
+        }
 
-    context = {
-        'proposition': proposition,
-    }
-
-    return render(request, template, context)
+        return render(request, template, context)
 
 
 def atom_detail(request, slug, template="atom_post_detail.html"):

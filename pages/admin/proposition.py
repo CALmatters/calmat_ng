@@ -109,12 +109,21 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
         'title',
         'category_list',
         'voter_guide',
+        'status',
     )
     filter_horizontal = ('categories', 'supporters', 'opponents')
-    list_filter = ("categories",)
+    list_filter = ("categories","status")
     search_fields = ('title', 'content')
+    list_editable = ('status', )
 
     fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": (
+                ("status", "publish_date"),
+            )
+        }),
+
         ('Content', {"fields": (
             "voter_guide",
             "title",
