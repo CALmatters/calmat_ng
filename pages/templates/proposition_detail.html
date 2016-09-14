@@ -11,11 +11,14 @@
 
 
 {% block extra_head %}
-    {%  comment %}
-    {{ block.super }}
-    {% include 'includes/twitter_card.html' %}
-    {% include 'includes/facebook_open_graph.html' %}
-    {%  endcomment %}
+
+    <style>
+    a.countable-send-video {
+        max-width: 220px;
+        margin: auto;
+    }
+    </style>
+
     <script>
         var Countable={videoReceived:function(){},openCreateVideo:function(){var e="http://www.countable.us/videos/create-video?partner_id=31baa4e2-5c1e-4fde-a3ee-9a7fc46a3711&video_sharing=true";this.popupAndCenter(e,"createVideo",550,630)},popupAndCenter:function(e,t,i,n){var o,a=screen.width/2-i/2,c=screen.height/2-n/2;return o=window.open(e,t,"scrollbars=yes, width="+i+", height="+n+", top="+c+", left="+a),window.focus&&o.focus(),o},receiveMessage:function(e){var t=e.origin||e.originalEvent.origin;t.match(/countable.us/)&&"success"==e.data.status&&this.videoReceived(e.data.video_url)}};window.addEventListener("message",Countable.receiveMessage.bind(Countable),!1);
 
