@@ -48,7 +48,6 @@ class CustomIndexDashboard(Dashboard):
         self.children.append(modules.ModelList(
             _('Administration'),
             models=('django.contrib.*',),
-            exclude_list=('django.contrib.sites',),
         ))
 
         self.children.append(modules.ModelList(

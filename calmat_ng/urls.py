@@ -36,7 +36,9 @@ urlpatterns = [
 
     url(r'^admin_tools/', include('admin_tools.urls')),
     url("^$", homepage_view, name="home"),
+
     url(r'^admin/', admin.site.urls),
+
 
     url('articles/(?P<slug>[a-zA-Z0-9_-]+)/$',
         article_view,
@@ -70,6 +72,7 @@ urlpatterns = [
     url("^projects/$",
         project_view,
         name="projects"),
+
     url("^project/(?P<slug>[a-zA-Z0-9\-\_]+)/$",
         project_view,
         name="project_detail"),
@@ -128,6 +131,10 @@ urlpatterns = [
     }),
     url(r'^media_lookup/(\d+)/$', media_lookup),
 
+    #  Alternate short url to projects.
+    #  Must be at bottom to give all other possible matching
+    #  TODO:  Consider someday the desire to shorten urls to articles
+    url("^(?P<slug>[a-zA-Z0-9\-\_]+)/$", project_view),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
