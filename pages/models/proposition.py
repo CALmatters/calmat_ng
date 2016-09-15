@@ -107,6 +107,26 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         blank=True,
         related_name="props_with_image")
 
+    embedded_content_title = models.CharField(
+        verbose_name="title",
+        max_length=50,
+        default="Here's How I See It",
+        blank=True)
+    embedded_content_content = models.TextField(
+        verbose_name="embedded content",
+        default="",
+        blank=True)
+
+    video_section_title = models.CharField(
+        verbose_name="title",
+        max_length=50,
+        default="Show me the money",
+        blank=True)
+    video_section_embedded_content = models.TextField(
+        verbose_name="embedded video content",
+        default="",
+        blank=True)
+
     more_information = models.TextField(
         "More information", blank=True, null=True)
 

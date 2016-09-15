@@ -143,6 +143,18 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
                 "tinymce-editable",
             )
         }),
+        ('Embedded Content', {
+            'fields': (
+                "embedded_content_title",
+                "embedded_content_content",
+            ),
+        }),
+        ('Video Content', {
+            'fields': (
+                "video_section_title",
+                "video_section_embedded_content",
+            ),
+        }),
         ('More information', {
             'fields': (
                 "more_information",
