@@ -8,6 +8,7 @@ from categories.models import Category
 from cmskit.models import Named, ContentContainer, Publishable
 from cmskit.models import TimeStamped
 from cmskit.models.publishable import CONTENT_STATUS_PUBLISHED
+from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
 
 
@@ -83,6 +84,22 @@ class PoliticalEntity(Named):
         related_name="entities_with_image")
 
 
+#  Todo:  Move this to Article, and make it Generic
+class PropRelatedArticle(models.Model):
+
+    proposition = PopupForeignKey(
+        "pages.Proposition", related_name='prop_related')
+    related_article = PopupForeignKey(
+        "pages.Article", related_name='related_articles')
+
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    class Meta:
+        verbose_name = "Related Article"
+        verbose_name_plural = "Related Articles"
+        ordering = ('order', )
+
+
 class Proposition(Named, ContentContainer, Publishable, TimeStamped,
                   CategoryMixin):
 
@@ -135,12 +152,42 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
     opponents = models.ManyToManyField(
         PoliticalEntity, related_name='props_with_opponents')
 
+    related_articles = models.ManyToManyField(
+        "self",
+        verbose_name="Related Articles",
+        through=PropRelatedArticle,
+        related_name='contained_in_related',
+        symmetrical=False,
+        blank=True)
+
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     class Meta:
         verbose_name = "Proposition"
         verbose_name_plural = "Propositions"
         ordering = ('order', )
+
+    def _get_ordered_related_articles(self, published_only):
+        """Get headlines in order of RelatedHeadlineArticle.order"""
+
+        qs = PropRelatedArticle.objects.filter(
+            proposition=self).select_related('related_article')
+
+        # Todo:  Dry this out, this is duplicated in Publishable.
+        if published_only:
+            qs.filter(
+                Q(proposition__publish_date__lte=now()) |
+                Q(proposition__publish_date__isnull=True),
+                Q(proposition__status=CONTENT_STATUS_PUBLISHED)).order_by(
+                '-publish_date')
+
+        return [prop.related_article for prop in qs.all()]
+
+    def get_published_ordered_related_articles(self):
+        return self._get_ordered_related_articles(published_only=True)
+
+    def get_ordered_related_articles(self):
+        return self._get_ordered_related_articles(published_only=False)
 
     def __str__(self):
         return self.title

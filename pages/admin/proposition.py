@@ -1,6 +1,8 @@
 from adminsortable2.admin import SortableInlineAdminMixin
 from django.contrib import admin
 from django import forms
+from django.contrib.admin import TabularInline
+from django.contrib.contenttypes.admin import GenericTabularInline
 from django.utils.timezone import now
 
 from categories.mixins import AdminCatListMixin
@@ -10,7 +12,8 @@ from pages.models import Atom
 
 # Todo:  Generalize clone completely
 from cmskit.mixins.admin_thumb import AdminThumbMixin
-from pages.models.proposition import Proposition, VoterGuide, PoliticalEntity
+from pages.models.proposition import Proposition, VoterGuide, PoliticalEntity, \
+    PropRelatedArticle
 
 
 class PoliticalEntityAdmin(AdminThumbMixin, admin.ModelAdmin):
@@ -89,6 +92,15 @@ class PropositionAdminForm(forms.ModelForm):
         exclude = ()
 
 
+class RelatedArticleInline(SortableInlineAdminMixin, TabularInline):
+    model = PropRelatedArticle
+    fk_name = 'proposition'
+    fields = (
+        'proposition', 'related_article', 'order')
+    max_num = 3
+    extra = 0
+
+
 class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
                        admin.ModelAdmin):
 
@@ -116,6 +128,7 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
     list_filter = ("categories","status")
     search_fields = ('title', 'content')
     list_editable = ('status', )
+    inlines = (RelatedArticleInline, )
 
     fieldsets = (
         (None, {

@@ -477,8 +477,16 @@ def proposition_view(request, slug, template="proposition_detail.html"):
     except Proposition.DoesNotExist:
         raise Http404
     else:
+        if request.user.is_staff:
+            #  Admin logged in, so show all related articles
+            more_articles = proposition.get_ordered_related_articles()
+        else:
+            #  regular user, probably anonymous, show only published.
+            more_articles = proposition.get_published_ordered_related_articles()
+
         context = {
             'proposition': proposition,
+            'more_articles': more_articles
         }
 
         return render(request, template, context)

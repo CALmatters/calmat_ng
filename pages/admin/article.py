@@ -50,7 +50,6 @@ class ArticleAdminForm(forms.ModelForm):
         exclude = ()
 
 
-
 #  Todo:  Twitter support
 class ArticleAdmin(AdminThumbMixin, FKChooserAdminMixin, admin.ModelAdmin):
 

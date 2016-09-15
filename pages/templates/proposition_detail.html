@@ -14,10 +14,17 @@
 
     <style>
     a.countable-send-video {
-        max-width: 220px;
-        margin: auto;
+        height: 56px;
+        max-height: 56px;
+
+        width: 255px;
+        max-width: 255px;
+
+        color: white;
         font-size: 18px;
+        line-height: 56px;
     }
+
     </style>
 
     <script>
@@ -141,6 +148,14 @@
         {% include 'includes/bits/sidebar_atom.html' with display_type=atom.atom_display_type %}
     {% endfor %}
 
+
+    <div class="pin-holder separate dynamic-height">
+        <aside class="sidebar">
+            <div><a class="btn-success countable-send-video" href="#">SEND VIDEO</a></div>
+        </aside><!-- .sidebar -->
+    </div>
+
+
     {% if more_articles %}
     <!-- Sidebar (dynamic height) Related Stories version: -->
     <div class="pin-holder separate dynamic-height desktop-only">
@@ -182,25 +197,6 @@
             </div>
         </aside><!-- .sidebar -->
     </div>
-    {% endif %}
-    
-    {% if article.related_persons.all %}
-        <div class="pin-holder separate dynamic-height">
-            <aside class="sidebar">
-                <div class="who-side">
-                    <h4>WHO’S INVOLVED</h4>
-                    {% for person in article.related_persons.all %}
-                    <article>
-                        <div class="image">
-                            <img src="{{MEDIA_URL}}{{ person.image.file.thumbnail.105x105 }}" alt="">
-                            <a href="{{person.get_absolute_url}}" class="more"></a>
-                        </div>
-                        <a href="{{person.get_absolute_url}}">{{person.name}}</a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </aside><!-- .sidebar -->
-        </div>
     {% endif %}
 
     {% if more_articles %}

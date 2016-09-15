@@ -1,6 +1,8 @@
 import re
 from copy import copy
 
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.utils.timezone import now
 
 from django.utils.translation import ugettext_lazy as _
