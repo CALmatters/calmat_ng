@@ -148,9 +148,13 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         "More information", blank=True, null=True)
 
     supporters = models.ManyToManyField(
-        PoliticalEntity, related_name='props_with_supporter')
+        PoliticalEntity,
+        blank=True,
+        related_name='props_with_supporter')
     opponents = models.ManyToManyField(
-        PoliticalEntity, related_name='props_with_opponents')
+        PoliticalEntity,
+        blank=True,
+        related_name='props_with_opponents')
 
     related_articles = models.ManyToManyField(
         "self",
