@@ -2,12 +2,13 @@
 
 {% if article.image %}
 
-
+    {# need this to be dynamic #}
         <style>
             .headline_image {
                 background-position-y: 50%;
             }
         </style>
+    {# end todo #}
 
     {# Output image use with FB opengraph #}
     {% if article.facebook_image %}
@@ -18,12 +19,12 @@
 
 
 
-    {% if article.headline_layout == 'over' %}
+    {% if article.headline_layout == 'over' or article.headline_layout == 'over_short'%}
 
-        <div class="post-image {{ article.featured_image_title_position }} {{ article.featured_image_title_shade }}"
+        <div class="post-image {{ article.featured_image_title_position }} {{ article.featured_image_title_shade }} {{ article.headline_layout }}"
             style="background-image: url({{ article.image.file.thumbnail.1200x1200 }})">
             <div class="container">
-                <h1>{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.100x150 }}" /> {% endif %}{{ article.title }}</h1>
+                <h1>{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
             </div>
         </div>
         <div class="post-image headline_off_image">
@@ -41,7 +42,7 @@
 
         <div class="post-image headline_off_image headline_above">
             <div class="container">
-                <h1 class="{{ article.headline_layout }}">{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.100x150 }}" /> {% endif %}{{ article.title }}</h1>
+                <h1 class="{{ article.headline_layout }}">{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
             </div>
             <div class="headline_image" style="background-image: url({{ article.image.file.thumbnail.1200x1200 }})"></div>
             <div class="meta">
@@ -68,7 +69,7 @@
                 </div>
             </div>
             <div class="container">
-                <h1 class="{{ article.headline_layout }}">{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.100x150 }}" /> {% endif %}{{ article.title }}</h1>
+                <h1 class="{{ article.headline_layout }}">{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
             </div>
         </div>
 
@@ -78,7 +79,7 @@
 
     <div class="post-image type-2">
         <div class="container">
-            <h1>{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.100x150 }}" /> {% endif %}{{ article.title }}</h1>
+            <h1>{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
         </div>
     </div>
 
