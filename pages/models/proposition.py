@@ -61,6 +61,13 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         default="/elections/"
     )
 
+    image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Headline image",
+        null=True,
+        blank=True,
+        related_name="voterguides_with_image")
+
     def get_absolute_url(self):
         if self.alternate_url:
             return self.alternate_url

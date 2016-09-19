@@ -37,7 +37,18 @@ class PropositionInline(SortableInlineAdminMixin, admin.StackedInline):
     extra = 0
 
 
-class VoterGuideAdmin(admin.ModelAdmin):
+class VoterGuideAdminForm(forms.ModelForm):
+    class Meta:
+        model = Atom
+        widgets = {
+            'image': PopupSelect(),
+        }
+        exclude = ()
+
+
+class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
+
+    form = VoterGuideAdminForm
 
     list_display = [
         "title",
@@ -45,7 +56,12 @@ class VoterGuideAdmin(admin.ModelAdmin):
         "go_live_on_date",
         "current_live",
         "alternate_url",
+        "admin_thumb_reference",
     ]
+
+    admin_thumb_ref = "image"
+    admin_thumb_field = 'file'
+
     readonly_fields = ('slug',)
     list_editable = ('can_go_live',)
     inlines = (PropositionInline, )
@@ -58,6 +74,7 @@ class VoterGuideAdmin(admin.ModelAdmin):
                 "go_live_on_date",
                 "category_in_menu",
                 "alternate_url",
+                "image",
             )
         }),
         ('Content', {
