@@ -57,7 +57,7 @@
         {% endif %}
         <div class="entry">
             {{ proposition.content|safe }}
-            {%  if proposition.supporters_title and proposition.opponents_title %}
+            {%  if proposition.supporters_title and proposition.opponents_title and proposition.supporters.exists and proposition.opponents.exists%}
                 <div class="row">
                     <div class="col-md-6" style="margin-top: 15px;">
                         <h3>{{ proposition.supporters_title }}:</h3>
