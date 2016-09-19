@@ -3,6 +3,12 @@
 {% if article.image %}
 
 
+        <style>
+            .headline_image {
+                background-position-y: 50%;
+            }
+        </style>
+
     {# Output image use with FB opengraph #}
     {% if article.facebook_image %}
         <img style="position:absolute; left=-9999px;" src="{{ article.facebook_image.file.thumbnail.1200x1200 }}" width="0" height="0">

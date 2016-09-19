@@ -3219,6 +3219,11 @@ input:-moz-placeholder { font-size: 1em !important; }
     border-bottom: 17px solid #221f1f;
 }
 
+.post-image.post-image-short .container {
+    min-height: 300px;
+    max-height: 300px;
+}
+
 .post-image .meta {
     position: absolute;
     bottom: 0;
@@ -3270,6 +3275,11 @@ input:-moz-placeholder { font-size: 1em !important; }
     width: auto;
     max-width: none;
 }
+
+.post-image.post-image-short h1 {
+    max-width: 100%;
+}
+
 
 /*--------------- Post Meta ---------------*/
 

@@ -43,6 +43,7 @@ HEADLINE_LAYOUT_CHOICES = (
     ('below', 'Below Image'),
     ('below_big', 'Below Image - Big'),
     ('over', 'Over Image'),
+    ('over_short', 'Over Image - Short'),
     ('above', 'Above Image'),
 )
 
