@@ -174,10 +174,23 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
     more_information = models.TextField(
         "More information", blank=True, null=True)
 
+    supporters_title = models.CharField(
+        verbose_name="Supporters Title",
+        max_length=50,
+        default="Supporters",
+        blank=True)
+
     supporters = models.ManyToManyField(
         PoliticalEntity,
         blank=True,
         related_name='props_with_supporter')
+
+    opponents_title = models.CharField(
+        verbose_name="Opponents Title",
+        max_length=50,
+        default="Opponents",
+        blank=True)
+
     opponents = models.ManyToManyField(
         PoliticalEntity,
         blank=True,
