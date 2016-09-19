@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from django.conf import settings
@@ -7,6 +8,7 @@ from categories.mixins import CategoryMixin
 from categories.models import Category
 from cmskit.models import Named, ContentContainer, Publishable
 from cmskit.models import TimeStamped
+from cmskit.models.content_container import OptionalContentContainer
 from cmskit.models.publishable import CONTENT_STATUS_PUBLISHED
 from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
@@ -32,7 +34,7 @@ class VoterGuideManager(models.Manager):
             return None
 
 
-class VoterGuide(Named, TimeStamped):
+class VoterGuide(Named, OptionalContentContainer, TimeStamped):
 
     url_name = "voter_guide"
 
@@ -50,6 +52,20 @@ class VoterGuide(Named, TimeStamped):
         unique=True,
         null=True,
         blank=True)
+
+    alternate_url = models.CharField(
+        help_text="i.e. /elections/.  If provided, "
+                  "a LIVE Voter Guide will launch this instead.",
+        max_length=255,
+        blank=True,
+        default="/elections/"
+    )
+
+    def get_absolute_url(self):
+        if self.alternate_url:
+            return self.alternate_url
+        else:
+            return super(VoterGuide, self).get_absolute_url()
 
     def published_propositions(self, category=None):
 

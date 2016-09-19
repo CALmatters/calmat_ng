@@ -495,7 +495,10 @@ def proposition_view(request, slug, template="proposition_detail.html"):
 def proposition_list(request, category_slug=None):
     templates = []
     voter_guide = VoterGuide.objects.get_live_object()
-    category = get_object_or_404(Category, slug=category_slug)
+    try:
+        category = Category.objects.get(slug=category_slug)
+    except Category.DoesNotExist:
+        category = None
     propositions = voter_guide.published_propositions(category=category)
 
     paginator = Paginator(propositions, settings.ARTICLES_PER_PAGE)

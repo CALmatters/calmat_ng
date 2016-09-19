@@ -44,6 +44,7 @@ class VoterGuideAdmin(admin.ModelAdmin):
         "can_go_live",
         "go_live_on_date",
         "current_live",
+        "alternate_url",
     ]
     readonly_fields = ('slug',)
     list_editable = ('can_go_live',)
@@ -56,8 +57,18 @@ class VoterGuideAdmin(admin.ModelAdmin):
                 "can_go_live",
                 "go_live_on_date",
                 "category_in_menu",
+                "alternate_url",
             )
-        }),)
+        }),
+        ('Content', {
+            'fields': (
+                "content",
+            ),
+            'classes': (
+                "tinymce-editable",
+            )
+        }),
+    )
 
     #  TODO:  move current live concept to supoer class/mixin, in homepage too
     def current_live(self, obj):
