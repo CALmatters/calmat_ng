@@ -91,6 +91,52 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         blank=True,
         related_name="voterguides_with_image")
 
+    icon_image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Icon Image",
+        null=True,
+        blank=True,
+        related_name="voterguides_icon_image")
+
+    headline_layout = models.CharField(
+        verbose_name=_("Headline Layout"),
+        max_length=30,
+        choices=HEADLINE_LAYOUT_CHOICES,
+        default='below')
+
+    featured_image_title_position = models.CharField(
+        verbose_name=_("Position"),
+        max_length=30,
+        choices=FEATURED_IMAGE_TITLE_POSITION,
+        default='topleft')
+
+    featured_image_title_shade = models.CharField(
+        verbose_name=_("Shade"),
+        max_length=30,
+        choices=FEATURED_IMAGE_TITLE_SHADE,
+        default='dark')
+
+    featured_image_description = models.CharField(
+        verbose_name=_("Image Description"),
+        max_length=255,
+        default='',
+        blank=True)
+
+    featured_image_credit = models.CharField(
+        verbose_name=_("Image Credit"),
+        max_length=255,
+        default='',
+        blank=True)
+
+    facebook_image = models.ForeignKey(
+        MediaItem,
+        null=True,
+        blank=True,
+        related_name="voterguides_with_facebook_image",
+        help_text='Image size should be 600 x 315 '
+                  'for best results (or 1200 x 630 for high resolution)'
+    )
+
     def get_absolute_url(self):
         if self.alternate_url:
             return self.alternate_url

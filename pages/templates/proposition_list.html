@@ -32,6 +32,15 @@
 {% block breadcrumb_menu %}
 {% endblock %}
 
+{% block article_detail_featured_image %}
+
+    {% with voter_guide as article %}
+        {% include 'includes/article_header_title.html' %}
+    {% endwith %}
+
+{% endblock %}
+
+
 {% block main %}
 
     <div class="blog_list">
