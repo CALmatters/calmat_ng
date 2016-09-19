@@ -51,6 +51,18 @@ class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
 
     form = VoterGuideAdminForm
 
+    # Todo:  Move to Admin super class parallel with ContentContainer is Sites
+    class Media:
+        js = (
+            'https://cdn.tinymce.com/4/tinymce.min.js',
+            'theme/js/image_file_picker.js',
+            'theme/js/tinymce_ng_specific_text_areas.js'
+        )
+        css = {
+            'all': (
+                )
+        }
+
     list_display = [
         "title",
         "can_go_live",
@@ -214,6 +226,12 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
             'fields': (
                 "embedded_content_title",
                 "embedded_content_content",
+            ),
+        }),
+        ('Infogram Content', {
+            'fields': (
+                "infogram_content_title",
+                "infogram_content_content"
             ),
         }),
         ('Video Content', {

@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from django.conf import settings
+from django.db.models import Q
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
@@ -204,7 +205,6 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
 
     url_name = "proposition_detail"
 
-
     voter_guide = models.ForeignKey(
         VoterGuide, related_name='related_propositions')
 
@@ -243,6 +243,16 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
 
     more_information = models.TextField(
         "More information", blank=True, null=True)
+
+    infogram_content_title = models.CharField(
+        verbose_name="Infogram title",
+        max_length=50,
+        default="Here's How I See It",
+        blank=True)
+    infogram_content_content = models.TextField(
+        verbose_name="Infogram title content",
+        default="",
+        blank=True)
 
     supporters_title = models.CharField(
         verbose_name="Supporters Title",

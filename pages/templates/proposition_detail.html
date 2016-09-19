@@ -85,6 +85,11 @@
                 {{ proposition.video_section_embedded_content|safe }}
             {% endif %}
 
+            {% if proposition.infogram_content_content %}
+                <h3 style="margin-top: 50px;">{{ proposition.infogram_content_title }}:</h3>
+                {{ proposition.infogram_content_content|safe }}
+            {% endif %}
+
             {% if proposition.embedded_content_content %}
                 <h3 style="margin-top: 50px;">{{ proposition.embedded_content_title}}:</h3>
                 {{ proposition.embedded_content_content|safe }}
