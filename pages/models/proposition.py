@@ -67,9 +67,13 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         else:
             return super(VoterGuide, self).get_absolute_url()
 
-    def published_propositions(self, category=None):
+    def published_propositions(self, user, category=None):
 
-        qs = self.related_propositions.filter(status=CONTENT_STATUS_PUBLISHED)
+        if user and user.is_staff:
+            qs = self.related_propositions.all()
+        else:
+            qs = self.related_propositions.filter(
+                status=CONTENT_STATUS_PUBLISHED)
         if category:
             qs = qs.filter(categories=category)
 

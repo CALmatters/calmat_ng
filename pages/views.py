@@ -499,9 +499,12 @@ def proposition_list(request, category_slug=None):
         category = Category.objects.get(slug=category_slug)
     except Category.DoesNotExist:
         category = None
-    propositions = voter_guide.published_propositions(category=category)
+    propositions = voter_guide.published_propositions(
+        user = request.user, category=category)
 
-    paginator = Paginator(propositions, settings.ARTICLES_PER_PAGE)
+    #  Currently, no paging, but keeping the code.   Just change 100 to
+    #  something reasonable.
+    paginator = Paginator(propositions, 1000)
 
     try:
         propositions = paginator.page(request.GET.get("page", 1))
