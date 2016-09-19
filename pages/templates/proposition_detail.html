@@ -15,11 +15,11 @@
 {% endblock %}
 
 {% block article_detail_featured_image %}
-    <div class="post-image type-2">
-        <div class="container">
-            <h1>{% if proposition.image %}<img src="{{ proposition.image.file.thumbnail.100x150 }}" /> {% endif %}{{ proposition.title }}</h1>
-        </div>
-    </div>
+
+    {% with proposition as article %}
+        {% include 'includes/article_header_title.html' %}
+    {% endwith %}
+
 {% endblock %}
 
 {% block main %}

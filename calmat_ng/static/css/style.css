@@ -3501,6 +3501,20 @@ input:-moz-placeholder { font-size: 1em !important; }
     border: 0;
 }
 
+/*--------------- title_icon_image ---------------*/
+
+.title_icon_image {
+    vertical-align: bottom;
+    margin-bottom: 20px;
+}
+@media (max-width: 767px){
+    .title_icon_image {
+        max-height: 38px;
+        vertical-align: baseline;
+        margin-bottom: 0px;
+    }
+}
+
 /*------------------------------------------------------------------------------
     :: Left Side / Article / Story
 ------------------------------------------------------------------------------*/

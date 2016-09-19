@@ -2,6 +2,7 @@ from django.db import models
 
 from django.conf import settings
 from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
 
 from categories.mixins import CategoryMixin
 from categories.models import Category
@@ -10,6 +11,28 @@ from cmskit.models import TimeStamped
 from cmskit.models.publishable import CONTENT_STATUS_PUBLISHED
 from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
+
+# copied from article 
+
+HEADLINE_LAYOUT_CHOICES = (
+    ('below', 'Below Image'),
+    ('below_big', 'Below Image - Big'),
+    ('over', 'Over Image'),
+    ('above', 'Above Image'),
+)
+
+FEATURED_IMAGE_TITLE_POSITION = (
+    ('topleft', 'Top-Left'),
+    ('topright', 'Top-Right'),
+    ('bottomleft', 'Bottom-Left'),
+    ('bottomright', 'Bottom-Right'),
+)
+FEATURED_IMAGE_TITLE_SHADE = (
+    ('dark', 'Dark'),
+    ('light', 'Light'),
+)
+
+# end copied from article
 
 
 class VoterGuideManager(models.Manager):
@@ -119,7 +142,7 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
 
     image = models.ForeignKey(
         MediaItem,
-        verbose_name="Icon Image",
+        verbose_name="Featured Image",
         null=True,
         blank=True,
         related_name="props_with_image")
@@ -163,6 +186,52 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         related_name='contained_in_related',
         symmetrical=False,
         blank=True)
+
+    icon_image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Icon Image",
+        null=True,
+        blank=True,
+        related_name="props_icon_image")
+
+    headline_layout = models.CharField(
+        verbose_name=_("Headline Layout"),
+        max_length=30,
+        choices=HEADLINE_LAYOUT_CHOICES,
+        default='below')
+
+    featured_image_title_position = models.CharField(
+        verbose_name=_("Position"),
+        max_length=30,
+        choices=FEATURED_IMAGE_TITLE_POSITION,
+        default='topleft')
+
+    featured_image_title_shade = models.CharField(
+        verbose_name=_("Shade"),
+        max_length=30,
+        choices=FEATURED_IMAGE_TITLE_SHADE,
+        default='dark')
+
+    featured_image_description = models.CharField(
+        verbose_name=_("Image Description"),
+        max_length=255,
+        default='',
+        blank=True)
+
+    featured_image_credit = models.CharField(
+        verbose_name=_("Image Credit"),
+        max_length=255,
+        default='',
+        blank=True)
+
+    facebook_image = models.ForeignKey(
+        MediaItem,
+        null=True,
+        blank=True,
+        related_name="proposition_with_facebook_image",
+        help_text='Image size should be 600 x 315 '
+                  'for best results (or 1200 x 630 for high resolution)'
+    )
 
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 

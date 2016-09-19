@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.admin import TabularInline
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
 
 from categories.mixins import AdminCatListMixin
 from fkchooser.admin import FKChooserAdminMixin
@@ -137,17 +138,28 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
                 ("status", "publish_date"),
             )
         }),
-
         ('Content', {"fields": (
             "voter_guide",
             "title",
             "slug",
-            "image",
             "description",
             "categories",
             "supporters",
             "opponents",
         )}),
+        (_("Featured Image"), {
+            "classes": ("collapse-open",),
+            "fields": (
+                "headline_layout",
+                "image",
+                "featured_image_description",
+                "featured_image_credit",
+                "featured_image_title_position",
+                "featured_image_title_shade",
+                "icon_image",
+                "facebook_image",
+            )
+        }),
         ('Content', {
             'fields': (
                 "content",
