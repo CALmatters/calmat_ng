@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from django.conf import settings
@@ -8,6 +9,7 @@ from categories.mixins import CategoryMixin
 from categories.models import Category
 from cmskit.models import Named, ContentContainer, Publishable
 from cmskit.models import TimeStamped
+from cmskit.models.content_container import OptionalContentContainer
 from cmskit.models.publishable import CONTENT_STATUS_PUBLISHED
 from fkchooser.fields import PopupForeignKey
 from media_manager.models import MediaItem
@@ -55,7 +57,7 @@ class VoterGuideManager(models.Manager):
             return None
 
 
-class VoterGuide(Named, TimeStamped):
+class VoterGuide(Named, OptionalContentContainer, TimeStamped):
 
     url_name = "voter_guide"
 
@@ -74,9 +76,34 @@ class VoterGuide(Named, TimeStamped):
         null=True,
         blank=True)
 
-    def published_propositions(self, category=None):
+    alternate_url = models.CharField(
+        help_text="i.e. /elections/.  If provided, "
+                  "a LIVE Voter Guide will launch this instead.",
+        max_length=255,
+        blank=True,
+        default="/elections/"
+    )
 
-        qs = self.related_propositions.filter(status=CONTENT_STATUS_PUBLISHED)
+    image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Headline image",
+        null=True,
+        blank=True,
+        related_name="voterguides_with_image")
+
+    def get_absolute_url(self):
+        if self.alternate_url:
+            return self.alternate_url
+        else:
+            return super(VoterGuide, self).get_absolute_url()
+
+    def published_propositions(self, user, category=None):
+
+        if user and user.is_staff:
+            qs = self.related_propositions.all()
+        else:
+            qs = self.related_propositions.filter(
+                status=CONTENT_STATUS_PUBLISHED)
         if category:
             qs = qs.filter(categories=category)
 
@@ -170,10 +197,23 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
     more_information = models.TextField(
         "More information", blank=True, null=True)
 
+    supporters_title = models.CharField(
+        verbose_name="Supporters Title",
+        max_length=50,
+        default="Supporters",
+        blank=True)
+
     supporters = models.ManyToManyField(
         PoliticalEntity,
         blank=True,
         related_name='props_with_supporter')
+
+    opponents_title = models.CharField(
+        verbose_name="Opponents Title",
+        max_length=50,
+        default="Opponents",
+        blank=True)
+
     opponents = models.ManyToManyField(
         PoliticalEntity,
         blank=True,

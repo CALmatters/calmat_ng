@@ -81,6 +81,15 @@ urlpatterns = [
         proposition_view,
         name="proposition_detail"),
 
+    #  People will get to it by going to calmatters.org/elections
+    #  (the shortcode we discussed), or navigating to it from the
+    # Propositions 2016 item in the menu.
+    url('^elections/$',
+        proposition_list,
+        name='proposition_list'),
+    url('^propositions/$',
+        proposition_list,
+        name='proposition_list'),
     url('^propositions/(?P<category_slug>[a-zA-Z0-9\-\_]*)/$',
         proposition_list,
         name='proposition_list'),

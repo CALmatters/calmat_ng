@@ -57,26 +57,28 @@
         {% endif %}
         <div class="entry">
             {{ proposition.content|safe }}
-            <div class="row">
-                <div class="col-md-6" style="margin-top: 15px;">
-                    <h3>Supporters:</h3>
-                    {% for supporter in proposition.supporters.all %}
-                        <div style="margin-bottom: 20px;">
-                            <img src="{{ supporter.image.file.thumbnail.60x60 }}" style="margin: 0px 10px 10px 0px;" />
-                            {{ supporter.title }}
-                        </div>
-                    {% endfor %}
+            {%  if proposition.supporters_title and proposition.opponents_title and proposition.supporters.exists and proposition.opponents.exists%}
+                <div class="row">
+                    <div class="col-md-6" style="margin-top: 15px;">
+                        <h3>{{ proposition.supporters_title }}:</h3>
+                        {% for supporter in proposition.supporters.all %}
+                            <div style="margin-bottom: 20px;">
+                                <img src="{{ supporter.image.file.thumbnail.60x60 }}" style="margin: 0px 10px 10px 0px;" />
+                                {{ supporter.title }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6" style="margin-top: 15px;">
+                        <h3>{{ proposition.opponents_title }}:</h3>
+                        {% for opponent in proposition.opponents.all %}
+                            <div style="margin-bottom: 20px;">
+                                <img src="{{ opponent.image.file.thumbnail.60x60 }}" style="margin: 0px 10px 10px 0px;" />
+                                {{ opponent.title }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="col-md-6" style="margin-top: 15px;">
-                    <h3>Opponents:</h3>
-                    {% for opponent in proposition.opponents.all %}
-                        <div style="margin-bottom: 20px;">
-                            <img src="{{ opponent.image.file.thumbnail.60x60 }}" style="margin: 0px 10px 10px 0px;" />
-                            {{ opponent.title }}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+            {%  endif %}
 
             {% if proposition.video_section_embedded_content %}
                 <h3 style="margin-top: 50px;">{{ proposition.video_section_title }}:</h3>

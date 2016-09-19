@@ -38,14 +38,31 @@ class PropositionInline(SortableInlineAdminMixin, admin.StackedInline):
     extra = 0
 
 
-class VoterGuideAdmin(admin.ModelAdmin):
+class VoterGuideAdminForm(forms.ModelForm):
+    class Meta:
+        model = Atom
+        widgets = {
+            'image': PopupSelect(),
+        }
+        exclude = ()
+
+
+class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
+
+    form = VoterGuideAdminForm
 
     list_display = [
         "title",
         "can_go_live",
         "go_live_on_date",
         "current_live",
+        "alternate_url",
+        "admin_thumb_reference",
     ]
+
+    admin_thumb_ref = "image"
+    admin_thumb_field = 'file'
+
     readonly_fields = ('slug',)
     list_editable = ('can_go_live',)
     inlines = (PropositionInline, )
@@ -57,8 +74,19 @@ class VoterGuideAdmin(admin.ModelAdmin):
                 "can_go_live",
                 "go_live_on_date",
                 "category_in_menu",
+                "alternate_url",
+                "image",
             )
-        }),)
+        }),
+        ('Content', {
+            'fields': (
+                "content",
+            ),
+            'classes': (
+                "tinymce-editable",
+            )
+        }),
+    )
 
     #  TODO:  move current live concept to supoer class/mixin, in homepage too
     def current_live(self, obj):
@@ -144,7 +172,9 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
             "slug",
             "description",
             "categories",
+            "supporters_title",
             "supporters",
+            "opponents_title",
             "opponents",
         )}),
         (_("Featured Image"), {

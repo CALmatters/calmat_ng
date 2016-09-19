@@ -66,21 +66,6 @@
         </div>
     </div>
 
-    <div class="pagination">
-        <span class="step-links">
-            {% if propositions.has_previous %}
-                <a href="?page={{ propositions.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ propositions.number }} of {{ propositions.paginator.num_pages }}.
-            </span>
-
-            {% if propositions.has_next %}
-                <a href="?page={{ propositions.next_page_number }}">next</a>
-            {% endif %}
-        </span>
-    </div>
 
 {% endblock %}
 
