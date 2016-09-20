@@ -93,12 +93,14 @@
         {% include 'includes/bits/sidebar_atom.html' with display_type=atom.atom_display_type %}
     {% endfor %}
 
+        {%  comment %}
 
     <div class="pin-holder separate dynamic-height">
         <aside class="sidebar">
             <div><a class="btn-success countable-send-video" href="#">SEND VIDEO</a></div>
         </aside><!-- .sidebar -->
     </div>
+        {%  endcomment %}
 
 
     {% if more_articles %}
