@@ -66,6 +66,7 @@ class VoterGuideManager(models.Manager):
 class VoterGuide(Named, OptionalContentContainer, TimeStamped):
 
     url_name = "voter_guide"
+    slug_name = "voter_guide_slug"
 
     objects = VoterGuideManager()
 
@@ -142,12 +143,6 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         help_text='Image size should be 600 x 315 '
                   'for best results (or 1200 x 630 for high resolution)'
     )
-
-    def get_absolute_url(self):
-        if self.alternate_url:
-            return self.alternate_url
-        else:
-            return super(VoterGuide, self).get_absolute_url()
 
     def published_propositions(self, user, category=None):
 

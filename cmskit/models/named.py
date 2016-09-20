@@ -75,9 +75,13 @@ class Named(models.Model):
         return slugify(self.title, allow_unicode=True)
 
     def get_absolute_url(self):
+        slug_name = "slug"
+        if hasattr(self, 'slug_name') and self.slug_name:
+            slug_name = self.slug_name
+
         if hasattr(self, 'url_name') and self.url_name:
             kwargs = {
-                "slug": self.slug,
+                slug_name: self.slug,
             }
             return reverse(self.url_name, kwargs=kwargs)
 

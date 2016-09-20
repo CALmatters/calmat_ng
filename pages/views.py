@@ -496,15 +496,26 @@ def proposition_view(request, slug, template="proposition_detail.html"):
         return render(request, template, context)
 
 
-def proposition_list(request, category_slug=None):
+def proposition_list(request, voter_guide_slug=None, category_slug=None):
     templates = []
-    voter_guide = VoterGuide.objects.get_live_object()
+    voter_guide = None
+    if request.user.is_staff:
+        if voter_guide_slug:
+            voter_guide = VoterGuide.objects.get(slug=voter_guide_slug)
+
+    if not voter_guide:
+        voter_guide = VoterGuide.objects.get_live_object()
+
     try:
         category = Category.objects.get(slug=category_slug)
     except Category.DoesNotExist:
         category = None
-    propositions = voter_guide.published_propositions(
-        user = request.user, category=category)
+
+    if voter_guide:
+        propositions = voter_guide.published_propositions(
+            user = request.user, category=category)
+    else:
+        raise Http404
 
     #  Currently, no paging, but keeping the code.   Just change 100 to
     #  something reasonable.

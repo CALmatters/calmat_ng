@@ -83,6 +83,7 @@ class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
         (None, {
             "fields": (
                 "title",
+                "slug",
                 "can_go_live",
                 "go_live_on_date",
                 "category_in_menu",
