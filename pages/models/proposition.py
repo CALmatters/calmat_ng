@@ -95,10 +95,17 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
 
     icon_image = models.ForeignKey(
         MediaItem,
-        verbose_name="Icon Image",
+        verbose_name="Light icon image",
         null=True,
-        blank=True,
+        blank=False,
         related_name="voterguides_icon_image")
+
+    dark_icon_image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Dark icon image",
+        null=True,
+        blank=False,
+        related_name="voterguides_dark_icon_image")
 
     headline_layout = models.CharField(
         verbose_name=_("Headline Layout"),
