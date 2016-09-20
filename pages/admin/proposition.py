@@ -99,7 +99,6 @@ class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
                 "featured_image_title_position",
                 "featured_image_title_shade",
                 "icon_image",
-                "dark_icon_image",
                 "facebook_image",
             )
         }),
@@ -212,6 +211,7 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
                 "featured_image_title_position",
                 "featured_image_title_shade",
                 "icon_image",
+                "dark_icon_image",
                 "facebook_image",
             )
         }),
