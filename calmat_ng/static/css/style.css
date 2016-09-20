@@ -1655,7 +1655,7 @@ body.home #body {
     display: block;
 }
 
-.entry p a {
+.entry a {
     text-decoration: none;
     color: inherit;
     border-bottom: 3px solid #0eb8c8;
