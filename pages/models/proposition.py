@@ -21,8 +21,12 @@ HEADLINE_LAYOUT_CHOICES = (
     ('below', 'Below Image'),
     ('below_big', 'Below Image - Big'),
     ('over', 'Over Image'),
-    ('over_short', 'Over Image - Short'),
     ('above', 'Above Image'),
+)
+
+HEADLINE_IMAGE_HEIGHT = (
+    ('tall', 'Tall'),
+    ('short', 'Short'),
 )
 
 FEATURED_IMAGE_TITLE_POSITION = (
@@ -97,7 +101,7 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         MediaItem,
         verbose_name="Icon image",
         null=True,
-        blank=False,
+        blank=True,
         related_name="voterguides_icon_image")
 
     headline_layout = models.CharField(
@@ -303,6 +307,12 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         max_length=30,
         choices=HEADLINE_LAYOUT_CHOICES,
         default='below')
+
+    headline_image_height = models.CharField(
+        verbose_name=_("Headline Image Height"),
+        max_length=30,
+        choices=HEADLINE_IMAGE_HEIGHT,
+        default='tall')
 
     featured_image_title_position = models.CharField(
         verbose_name=_("Position"),

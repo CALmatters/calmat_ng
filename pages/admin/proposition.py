@@ -201,18 +201,24 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
             "opponents_title",
             "opponents",
         )}),
-        (_("Featured Image"), {
+        (_("Images"), {
             "classes": ("collapse-open",),
             "fields": (
-                "headline_layout",
                 "image",
                 "featured_image_description",
                 "featured_image_credit",
-                "featured_image_title_position",
-                "featured_image_title_shade",
                 "icon_image",
                 "dark_icon_image",
                 "facebook_image",
+            )
+        }),
+        (_("Header/Image Layout"), {
+            "classes": ("collapse-open",),
+            "fields": (
+                "headline_layout",
+                "headline_image_height",
+                "featured_image_title_position",
+                "featured_image_title_shade",
             )
         }),
         ('Content', {

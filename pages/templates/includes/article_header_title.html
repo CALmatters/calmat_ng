@@ -1,12 +1,12 @@
-
-
 {% if article.image %}
 
     {# need this to be dynamic #}
         <style>
+        /*
             .headline_image {
                 background-position-y: 50%;
             }
+            */
         </style>
     {# end todo #}
 
@@ -19,12 +19,16 @@
 
 
 
-    {% if article.headline_layout == 'over' or article.headline_layout == 'over_short'%}
+    {% if article.headline_layout == 'over' %}
 
-        <div class="post-image {{ article.featured_image_title_position }} {{ article.featured_image_title_shade }} {{ article.headline_layout }}"
+        <div class="post-image {{ article.featured_image_title_position }} {{ article.featured_image_title_shade }} {{ article.headline_layout }} {{ article.headline_image_height }}"
             style="background-image: url({{ article.image.file.thumbnail.1200x1200 }})">
             <div class="container">
-                <h1>{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
+                {% if article.featured_image_title_shade == 'light' %}
+                    <h1>{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
+                {% else %}
+                    <h1>{% if article.dark_icon_image %}<img class="title_icon_image" src="{{ article.dark_icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
+                {% endif %}
             </div>
         </div>
         <div class="post-image headline_off_image">
@@ -40,9 +44,9 @@
 
     {% elif article.headline_layout == 'above' %}
 
-        <div class="post-image headline_off_image headline_above">
+        <div class="post-image headline_off_image headline_above {{ article.headline_image_height }}">
             <div class="container">
-                <h1 class="{{ article.headline_layout }}">{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
+                <h1 class="{{ article.headline_layout }}">{% if article.dark_icon_image %}<img class="title_icon_image" src="{{ article.dark_icon_image.file.thumbnail.100x100 }}" /> {% endif %}{{ article.title }}</h1>
             </div>
             <div class="headline_image" style="background-image: url({{ article.image.file.thumbnail.1200x1200 }})"></div>
             <div class="meta">
@@ -58,7 +62,7 @@
     {% else %}
 
 
-        <div class="post-image headline_off_image headline_below">
+        <div class="post-image headline_off_image headline_below {{ article.headline_image_height }}">
             <div class="headline_image" style="background-image: url({{ article.image.file.thumbnail.1200x1200 }})"></div>
             <div class="meta">
                 <div class="container">
@@ -69,7 +73,13 @@
                 </div>
             </div>
             <div class="container">
-                <h1 class="{{ article.headline_layout }}">{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
+                <h1 class="{{ article.headline_layout }}">{% if article.dark_icon_image %}<img class="title_icon_image" src="{% spaceless %}
+                        {% if article.headline_layout == 'below_big' %}
+                            {{ article.dark_icon_image.file.thumbnail.130x130 }}
+                        {% else %}
+                            {{ article.dark_icon_image.file.thumbnail.100x100 }}
+                        {% endif %}
+                    {% endspaceless %}" /> {% endif %}{{ article.title }}</h1>
             </div>
         </div>
 
@@ -79,7 +89,7 @@
 
     <div class="post-image type-2">
         <div class="container">
-            <h1>{% if article.icon_image %}<img class="title_icon_image" src="{{ article.icon_image.file.thumbnail.70x70 }}" /> {% endif %}{{ article.title }}</h1>
+            <h1>{% if article.dark_icon_image %}<img class="title_icon_image" src="{{ article.dark_icon_image.file.thumbnail.100x100 }}" /> {% endif %}{{ article.title }}</h1>
         </div>
     </div>
 
