@@ -217,6 +217,7 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
             "fields": (
                 "headline_layout",
                 "headline_image_height",
+                "headline_image_offset",
                 "featured_image_title_position",
                 "featured_image_title_shade",
             )

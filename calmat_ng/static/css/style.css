@@ -3244,11 +3244,11 @@ input:-moz-placeholder { font-size: 1em !important; }
 
 .post-image.light h1 {
     color: #FFFFFF;
-    text-shadow: 0 0 5px rgba(0, 0, 0, .5);
+    text-shadow: 0px 0px 12.75px rgba(0, 0, 0, 0.3);
 }
 .post-image.dark h1 {
     color: #000;
-    text-shadow: 0 0 5px rgba(0, 0, 0, .5);    
+    text-shadow: 0px 0px 12.75px rgba(0, 0, 0, 0.3);
 }
 
 .post-image.topright h1 {
@@ -3275,9 +3275,23 @@ input:-moz-placeholder { font-size: 1em !important; }
     max-width: none;
 }
 
+.post-image.over:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, .4);
+    transition: background .3s linear;
+}
 .post-image.over h1 {
     border-bottom: 8px solid #000;
     padding-bottom: 8px;
+}
+.post-image.light.over:before {
+    background: rgba(0, 0, 0, .4);
 }
 .post-image.light.over h1 {
     border-bottom: 8px solid #fff;

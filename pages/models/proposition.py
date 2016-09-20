@@ -314,6 +314,12 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         choices=HEADLINE_IMAGE_HEIGHT,
         default='tall')
 
+    headline_image_offset = models.CharField(
+        verbose_name=_("Headline Image Offset %"),
+        max_length=2,
+        default='',
+        blank=True)
+
     featured_image_title_position = models.CharField(
         verbose_name=_("Position"),
         max_length=30,

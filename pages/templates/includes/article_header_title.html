@@ -1,14 +1,14 @@
 {% if article.image %}
 
-    {# need this to be dynamic #}
+    {% if article.headline_image_offset %}
         <style>
-        /*
+            .post-image.over,
             .headline_image {
-                background-position-y: 50%;
+                background-position-y: {{ article.headline_image_offset }}% !important;
             }
-            */
         </style>
-    {# end todo #}
+    {% endif %}
+
 
     {# Output image use with FB opengraph #}
     {% if article.facebook_image %}
