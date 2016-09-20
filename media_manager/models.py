@@ -61,21 +61,30 @@ class MediaItem(models.Model):
     creator = models.CharField(
         max_length=255,
         verbose_name="Photographer / creator",
-        blank=False,
+        blank=True,
         null=True)
     image_type = models.CharField(
         max_length=30,
         choices=IMAGE_TYPE_CHOICES,
-        blank=False,
+        blank=True,
         null=True)
     license = models.CharField(
         max_length=30,
         choices=LICENSE_CHOICES,
-        blank=False,
+        blank=True,
         null=True)
-    caption = models.CharField(max_length=255)
-    alt_tag = models.CharField(max_length=255)
-    date = models.DateField(verbose_name="Date taken", null=True, blank=True)
+    caption = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True)
+    alt_tag = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True)
+    date = models.DateField(
+        verbose_name="Date taken",
+        null=True,
+        blank=True)
 
     file = VersatileImageField(upload_to="uploads/")
 
