@@ -484,9 +484,13 @@ def proposition_view(request, slug, template="proposition_detail.html"):
             #  regular user, probably anonymous, show only published.
             more_articles = proposition.get_published_ordered_related_articles()
 
+        formatted_sharing_urls_dict = get_formatted_sharing_urls_dict(proposition.title, proposition.title, proposition.get_absolute_url())
+
+
         context = {
             'proposition': proposition,
-            'more_articles': more_articles
+            'more_articles': more_articles,
+            'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
         }
 
         return render(request, template, context)
@@ -513,9 +517,12 @@ def proposition_list(request, category_slug=None):
     except EmptyPage:
         propositions = paginator.page(paginator.num_pages)
 
+    formatted_sharing_urls_dict = get_formatted_sharing_urls_dict(voter_guide.title, voter_guide.title, voter_guide.get_absolute_url())
+
     context = {
         'voter_guide': voter_guide,
         'propositions': propositions,
+        'formatted_sharing_urls_dict': formatted_sharing_urls_dict,
     }
     templates.append(u"proposition_list.html")
     return render(request, templates, context)
