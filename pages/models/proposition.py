@@ -348,6 +348,12 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
                   'for best results (or 1200 x 630 for high resolution)'
     )
 
+    sidebar_markup = models.TextField(
+        "Sidebar markup",
+        default='<a class="btn-success countable-send-video" href="#">'
+                'SEND VIDEO</a>',
+        blank=True)
+
     order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     class Meta:

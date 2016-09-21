@@ -235,18 +235,11 @@ class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
             'fields': (
                 "embedded_content_title",
                 "embedded_content_content",
-            ),
-        }),
-        ('Infogram Content', {
-            'fields': (
                 "infogram_content_title",
-                "infogram_content_content"
-            ),
-        }),
-        ('Video Content', {
-            'fields': (
+                "infogram_content_content",
                 "video_section_title",
                 "video_section_embedded_content",
+                "sidebar_markup",
             ),
         }),
         ('More information', {
