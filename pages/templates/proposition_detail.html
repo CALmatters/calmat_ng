@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% load static from staticfiles %}
 
+{% block extra_css %}
+    {% comment %} https://github.com/bachors/jQuery-Youtube-Channels-Playlist / {% endcomment %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/ycp.css'  %}" />
+{% endblock %}
+
+
+
 {% block meta_title %}
     {{ article.meta_title }}
 {% endblock %}
@@ -194,4 +201,23 @@
 
 {% block extra_js %}
     <script src="{%  static 'js/subscribe_form.js' %}"></script>
+
+    {%  comment %}
+     Load custom YouTube playlist widget.
+     https://github.com/bachors/jQuery-Youtube-Channels-Playlist
+    {%  endcomment %}
+    <script src="{%  static 'js/ycp.js' %}"></script>
+
+    <script>
+    $(function() {
+
+        $(".video_list").ycp(
+            playlist = 10,
+            autoplay = false,
+            related = false,
+            //  Calmatters YouTube API key
+            apikey = 'AIzaSyBKtdWqJ23dKpC8py5S7qMbnOOG5dp5jnk'
+        );
+    });
+    </script>
 {% endblock %}
