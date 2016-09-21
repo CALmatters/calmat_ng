@@ -41,7 +41,7 @@ $.fn.ycp = function(m, n, p, o) {
             var d = '';
             d += '<div class="vid-top">';
             d += '<span class="tombol vid-prev" title="Previous videos">Previous</span> ';
-            d += '<span class="tombol vid-next" title="Next videos">Next</span><span class="about" title="ycp.js"><a href="http://ibacor.com/labs/jquery-youtube-channels-playlist" target="_BLANK">?</a></span></div><div class="vid-bottom">';
+            d += '<span class="tombol vid-next" title="Next videos">Next</span><span class="about" title="ycp.js"><a href="//ibacor.com/labs/jquery-youtube-channels-playlist" target="_BLANK">?</a></span></div><div class="vid-bottom">';
             $.each(c.items, function(i, a) {
                 var b = c.items[i].snippet.resourceId.videoId;
                 ycp_part(b, i, k, l);
@@ -52,7 +52,7 @@ $.fn.ycp = function(m, n, p, o) {
             $(l + ' .ycp div#ycp_youtube_channels' + k).html(d);
             if (c.prevPageToken == null) {
                 var e = $(l + ' .ycp div#ycp_youtube_channels' + k + ' div.play').attr("data-vvv");
-                $(l + ' .ycp div#ycp_vid_play' + k).html('<iframe src="http://www.youtube.com/embed/' + e + '?rel=' + (p == true ? 1 : 0) + '&amp;autoplay=' + (n == true ? 1 : 0) + '" allowfullscreen="" frameborder="0" class="vid-iframe"></iframe>');
+                $(l + ' .ycp div#ycp_vid_play' + k).html('<iframe src="//www.youtube.com/embed/' + e + '?rel=' + (p == true ? 1 : 0) + '&amp;autoplay=' + (n == true ? 1 : 0) + '" allowfullscreen="" frameborder="0" class="vid-iframe"></iframe>');
                 $(l + ' .ycp div#ycp_youtube_channels' + k + ' div').removeClass('vid-active');
                 $(l + ' .ycp div#ycp_youtube_channels' + k + ' div.play:eq(0)').addClass('vid-active')
             } else {
@@ -72,7 +72,7 @@ $.fn.ycp = function(m, n, p, o) {
                     var a = $(this).attr("data-vvv");
                     $(l + ' .ycp div#ycp_youtube_channels' + k + ' div').removeClass('vid-active');
                     $(this).addClass('vid-active');
-                    $(l + ' .ycp div#ycp_vid_play' + k).html('<iframe src="http://www.youtube.com/embed/' + a + '?rel=' + (p == true ? 1 : 0) + '&amp;autoplay=' + (n == true ? 1 : 0) + '" allowfullscreen="" frameborder="0" class="vid-iframe"></iframe>');
+                    $(l + ' .ycp div#ycp_vid_play' + k).html('<iframe src="//www.youtube.com/embed/' + a + '?rel=' + (p == true ? 1 : 0) + '&amp;autoplay=' + (n == true ? 1 : 0) + '" allowfullscreen="" frameborder="0" class="vid-iframe"></iframe>');
                     return false
                 })
             })
