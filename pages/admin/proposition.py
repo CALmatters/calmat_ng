@@ -1,4 +1,4 @@
-from adminsortable2.admin import SortableInlineAdminMixin
+from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
 from django.contrib import admin
 from django import forms
 from django.contrib.admin import TabularInline
@@ -141,6 +141,8 @@ class PropositionAdminForm(forms.ModelForm):
         model = Atom
         widgets = {
             'image': PopupSelect(),
+            # 'icon_image': PopupSelect(),
+            # 'dark_icon_image': PopupSelect(),
             'description': forms.Textarea(attrs={'cols': 80, 'rows': 2}),
         }
         exclude = ()
@@ -155,7 +157,10 @@ class RelatedArticleInline(SortableInlineAdminMixin, TabularInline):
     extra = 0
 
 
-class PropositionAdmin(AdminThumbMixin, AdminCatListMixin, FKChooserAdminMixin,
+class PropositionAdmin(AdminThumbMixin,
+                       SortableAdminMixin,
+                       AdminCatListMixin,
+                       FKChooserAdminMixin,
                        admin.ModelAdmin):
 
     form = PropositionAdminForm
