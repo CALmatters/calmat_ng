@@ -163,6 +163,12 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
                   'for best results (or 1200 x 630 for high resolution)'
     )
 
+    sidebar_markup = models.TextField(
+        "Sidebar markup",
+        default='<a class="btn-success countable-send-video" href="#">'
+                'SEND VIDEO</a>',
+        blank=True)
+
     def published_propositions(self, user, category=None):
 
         if user and user.is_staff:

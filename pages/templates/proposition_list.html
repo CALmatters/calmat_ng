@@ -56,6 +56,14 @@
         </div>
     </div>
 
+    {%  if voter_guide.sidebar_markup %}
+        <div class="pin-holder separate dynamic-height">
+            <aside class="sidebar">
+                <div>{{  voter_guide.sidebar_markup|safe }}</div>
+            </aside><!-- .sidebar -->
+        </div>
+    {%  endif %}
+
     <div class="blog_list">
         <div class="pin-holder recent-stories se">
             <div class="content" style="float: left ; border-top: thick solid black; border-bottom: thick solid black; ">
@@ -78,6 +86,7 @@
             </div>
         </div>
     </div>
+
 
 
 {% endblock %}

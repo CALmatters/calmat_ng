@@ -43,6 +43,8 @@ class VoterGuideAdminForm(forms.ModelForm):
         model = Atom
         widgets = {
             'image': PopupSelect(),
+            "icon_image": PopupSelect(),
+            "dark_icon_image": PopupSelect(),
         }
         exclude = ()
 
@@ -119,6 +121,12 @@ class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
                 "tinymce-editable",
             )
         }),
+        ('Embedded Content', {
+            'fields': (
+                "sidebar_markup",
+            ),
+        }),
+
     )
 
     #  TODO:  move current live concept to supoer class/mixin, in homepage too

@@ -18,7 +18,10 @@ class PopupSelect(Select):
 
         #  TODO:  DRY out, should be able to pull any object up, or better yet
         #  shouldn't need a DB hit
-        media_obj = MediaItem.objects.get(pk=value)
+        try:
+            media_obj = MediaItem.objects.get(pk=value)
+        except MediaItem.DoesNotExist:
+            media_obj = None
 
         controls = mark_safe(template.render(
             dict(title="Profile Image", media_obj=media_obj, field_name=name)))
