@@ -3,6 +3,10 @@ from django.utils.safestring import mark_safe
 
 
 class FKChooserAdminMixin(admin.ModelAdmin):
+    """FKChooserAdminMixin is mixed into an admin class to be used then the
+    admin class is a popup as part of an PK relationship chooser.
+    In that case, it puts a select button in the list display, and handles
+     inserting the choosen value."""
 
     def _fb_file_link(self, obj):
         fb_link = mark_safe(

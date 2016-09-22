@@ -149,8 +149,8 @@ class PropositionAdminForm(forms.ModelForm):
         model = Atom
         widgets = {
             'image': PopupSelect(),
-            # 'icon_image': PopupSelect(),
-            # 'dark_icon_image': PopupSelect(),
+            'icon_image': PopupSelect(),
+            'dark_icon_image': PopupSelect(),
             'description': forms.Textarea(attrs={'cols': 80, 'rows': 2}),
         }
         exclude = ()

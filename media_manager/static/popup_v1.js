@@ -14,10 +14,17 @@ var file_glue = (function(){
             var imgUrl = getSelectedImgUrl($this);
             var thumb = getSelectedImgThumb($this);
 
-            insertImgUrlIntoInput(imgID, imgUrl, thumb);
+            insertImgUrlIntoInput(imgID, imgUrl, thumb, this.field_name);
             closeMedia_ManagerWindow();
         }
     };
+
+    // function get_target_field(){
+    //     var target_field_id = "#target_field";
+    //     console.log(opener.document.querySelector(target_field_id));
+    //     this.field_name = opener.document.querySelector(target_field_id).innerHTML;
+    //
+    // }
 
     //  Removes left menu, headers, and add button, so it's just a image
     //  selection dialog.  Needed for popup version, but should not be used,
@@ -61,7 +68,7 @@ var file_glue = (function(){
     }
 
     // Inserts the image url into the 'Image URL' input field in the 'Insert/Edit Image' popup window.
-    function insertImgUrlIntoInput(imgID, imgUrl, thumb){
+    function insertImgUrlIntoInput(imgID, imgUrl, thumb, field_name){
 
         //  When user chooses a person in the media item dialog for the featured image
         //  this code will find the media item, and insert the description and credit
@@ -83,10 +90,10 @@ var file_glue = (function(){
             top.tinymce.activeEditor.windowManager.getParams().oninsert(imgUrl, data.desc);
         } else {
             //  When launched from popup_launcher for fields of PopupSelect
-            var input_id_selector = "#id_image";
-            var preview_link_selector = '#preview_image';
-            var preview_img_selector = '#preview_image img';
-            var clear_id_selector = '#clear_image';
+            var input_id_selector = "#id_"+field_name;
+            var preview_link_selector = '#preview_'+field_name;
+            var preview_img_selector = '#preview_'+field_name+ ' img';
+            var clear_id_selector = '#clear_'+field_name;
 
             opener.document.querySelector(preview_img_selector).src = thumb;
             opener.document.querySelector(preview_link_selector).href = imgUrl;
@@ -125,7 +132,18 @@ var file_glue = (function(){
 django.jQuery(document).ready(function(){
     
     file_glue.init();
-    
+
+    //  Get the target field.  Was posted on page by popup_image_chooser_launcher.js
+    //  Once it's pulled, this code removes it, to minimize race conditions
+    //  TODO:  Having the opener page write the field name, and then this
+    //  TODO:  dialog page read it, and then delete is brittle.   Fix it.
+
+    var target_field_id = "#target_field";  // defined in popup launcher
+    var el = opener.document.querySelector(target_field_id);
+    file_glue.field_name = el.innerHTML;
+    el.parentNode.removeChild(el);
+
+
     django.jQuery(".results button").click(function(evt){
         evt.preventDefault();
 

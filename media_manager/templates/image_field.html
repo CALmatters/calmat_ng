@@ -7,10 +7,10 @@
 
 {% load static from staticfiles %}
 
-<a style="padding:5px 16px;" id="choose_image">
+<a style="padding:5px 16px;" id="choose_image" class="choose_image">
     <img src="{% static 'filebrowser_icon_show.gif' %}">
 </a>
 
-<a href="{{ media_obj.file.url }}" target="_blank" id="preview_image">
-    <img id="image_id_profile_image" src="{{  media_obj.file.thumbnail.30x30.url }}" >
+<a href="{{ media_obj.file.url }}" target="_blank" id="preview_{{ field_name }}">
+    <img id="{{ field_name }}_id_profile_image" src="{{  media_obj.file.thumbnail.30x30 }}" >
 </a>

@@ -4,14 +4,17 @@
 
 {% block extrahead %}
     {{ block.super }}
+
     {% if is_popup %}
 
 
-        <script src="{%  static 'popup_v1.js'  %}"></script>
+        <script type="text/javascript" src="{%  static 'popup_v1.js'  %}"></script>
 
         <script type="text/javascript">
+        console.log("loading this fucking thing");
         (function($) {
             $(document).ready(function($) {
+                console.log("in change_list.html");
                 //  Shameless removal of unwanted UX.  Should find away
                 //  to never have rendered these bits.  Todo: See templates
                 $("#header").remove();
