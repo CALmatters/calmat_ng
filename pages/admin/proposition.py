@@ -90,17 +90,25 @@ class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
                 "alternate_url",
             )
         }),
-        (_("Featured Image"), {
+        (_("Images"), {
             "classes": ("collapse-open",),
             "fields": (
-                "headline_layout",
                 "image",
                 "featured_image_description",
                 "featured_image_credit",
+                "icon_image",
+                "dark_icon_image",
+                "facebook_image",
+            )
+        }),
+        (_("Header/Image Layout"), {
+            "classes": ("collapse-open",),
+            "fields": (
+                "headline_layout",
+                "headline_image_height",
+                "headline_image_offset",
                 "featured_image_title_position",
                 "featured_image_title_shade",
-                "icon_image",
-                "facebook_image",
             )
         }),
         ('Content', {

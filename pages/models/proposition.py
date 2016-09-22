@@ -105,11 +105,30 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         blank=True,
         related_name="voterguides_icon_image")
 
+    dark_icon_image = models.ForeignKey(
+        MediaItem,
+        verbose_name="Dark Icon image",
+        null=True,
+        blank=True,
+        related_name="voterguides_dark_icon_image")
+
     headline_layout = models.CharField(
         verbose_name=_("Headline Layout"),
         max_length=30,
         choices=HEADLINE_LAYOUT_CHOICES,
         default='below')
+
+    headline_image_height = models.CharField(
+        verbose_name=_("Headline Image Height"),
+        max_length=30,
+        choices=HEADLINE_IMAGE_HEIGHT,
+        default='tall')
+
+    headline_image_offset = models.CharField(
+        verbose_name=_("Headline Image Offset %"),
+        max_length=2,
+        default='',
+        blank=True)
 
     featured_image_title_position = models.CharField(
         verbose_name=_("Position"),
