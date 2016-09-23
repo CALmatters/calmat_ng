@@ -70,10 +70,14 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
 
     objects = VoterGuideManager()
 
+    show_as_menu = models.BooleanField(
+        help_text=("If checked, the main menus will show a menu "
+                   "of props or categories.  If not checked the main menus will "
+                   "be a link that leads to a list of propositions."),
+        default=False)
     category_in_menu = models.BooleanField(
-        verbose_name="Category in menus",
-        help_text=("If checked, the main menu will show categories.  "
-                   "If not checked the main menu will show propositions."),
+        help_text=("If checked, the main menus will show categories.  "
+                   "If not checked the main menus will show propositions."),
         default=True)
 
     can_go_live = models.BooleanField(default=False)
@@ -82,6 +86,7 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         unique=True,
         null=True,
         blank=True)
+
 
     alternate_url = models.CharField(
         help_text="i.e. /elections/.  If provided, "
@@ -169,7 +174,7 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
                 'SEND VIDEO</a>',
         blank=True)
 
-    def published_propositions(self, user, category=None):
+    def published_propositions(self, user=None, category=None):
 
         if user and user.is_staff:
             qs = self.related_propositions.all()

@@ -58,14 +58,7 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a class="logo" href="/"><img src="{% static "theme/frontend/img/logo.png" %}" alt="CALmatters" width="174" height="42" /></a></li>
-                            {% if live_voter_guide.alternate_url %}
-                                {%  comment %}
-                                    The Voter Guide object may have an alternate_url, which takes precedence over collected proposition.
-                                {%  endcomment %}
-                                <li class="{% if request.path|slice:":7" == "/elections/" %}active{% endif %}">
-                                    <a href="/elections/">{{ live_voter_guide.title }}</a>
-                                </li>
-                            {% else %}
+                            {%  if live_voter_guide.show_as_menu %}
                                 {%  if live_voter_guide.has_props %}
                                     {%  if live_voter_guide.category_in_menu %}
                                         <li class="dropdown">
@@ -89,6 +82,10 @@
                                         </li>
                                     {%  endif %}
                                 {%  endif %}
+                            {% else %}
+                                <li class="{% if request.path|slice:":7" == "/elections/" %}active{% endif %}">
+                                    <a href="/elections/">{{ live_voter_guide.title }}</a>
+                                </li>
                             {%  endif %}
 
                             <li class="dropdown">

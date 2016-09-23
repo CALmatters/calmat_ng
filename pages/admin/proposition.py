@@ -70,7 +70,8 @@ class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
         "can_go_live",
         "go_live_on_date",
         "current_live",
-        "alternate_url",
+        "show_as_menu",
+        "category_in_menu",
         "admin_thumb_reference",
     ]
 
@@ -88,8 +89,8 @@ class VoterGuideAdmin(AdminThumbMixin, admin.ModelAdmin):
                 "slug",
                 "can_go_live",
                 "go_live_on_date",
+                "show_as_menu",
                 "category_in_menu",
-                "alternate_url",
             )
         }),
         (_("Images"), {
