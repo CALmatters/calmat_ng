@@ -35,10 +35,11 @@ def search(request, template='search.html'):
     page_results = []
     if article_results:
         for i, r in enumerate(article_results):
-            if r.custom_post_type == 'external':
-                external_results.append(r)
-            elif r.custom_post_type in ['articles']:
-                main_results.append(r)
+            main_results.append(r)
+            # if r.custom_post_type == 'external':
+            #     external_results.append(r)
+            # elif r.custom_post_type in ['articles']:
+            #     main_results.append(r)
 
     # Search for authors
     author_terms = query.lower().split(' ')
