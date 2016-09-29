@@ -47,7 +47,13 @@ class CustomIndexDashboard(Dashboard):
         # append an app list module for "Administration"
         self.children.append(modules.ModelList(
             _('Administration'),
-            models=('django.contrib.*',),
+            models=('django.contrib.*', ),
+        ))
+
+        # append an app list module for "Administration"
+        self.children.append(modules.ModelList(
+            _('Robots'),
+            models=('robots.*', ),
         ))
 
         self.children.append(modules.ModelList(

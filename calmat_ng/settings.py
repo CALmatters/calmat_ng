@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'employment',
     'media_manager',
     'debug_toolbar',
+    'robots',
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -8,3 +8,4 @@ pytz
 django-admin-tools
 mailchimp
 stripe
+django-robots

@@ -143,6 +143,8 @@ urlpatterns = [
     }),
     url(r'^media_lookup/(\d+)/$', media_lookup),
 
+    url(r'^robots\.txt$', include('robots.urls')),
+
     #  Alternate short url to projects.
     #  Must be at bottom to give all other possible matching
     #  TODO:  Consider someday the desire to shorten urls to articles
