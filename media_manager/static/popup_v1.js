@@ -138,11 +138,13 @@ django.jQuery(document).ready(function(){
     //  TODO:  Having the opener page write the field name, and then this
     //  TODO:  dialog page read it, and then delete is brittle.   Fix it.
 
-    var target_field_id = "#target_field";  // defined in popup launcher
-    var el = opener.document.querySelector(target_field_id);
-    file_glue.field_name = el.innerHTML;
-    el.parentNode.removeChild(el);
-
+    if(opener) {
+        //  This only applies for on-page launches, not TinyMCE ones.
+        var target_field_id = "#target_field";  // defined in popup launcher
+        var el = opener.document.querySelector(target_field_id);
+        file_glue.field_name = el.innerHTML;
+        el.parentNode.removeChild(el);
+    }
 
     django.jQuery(".results button").click(function(evt){
         evt.preventDefault();
