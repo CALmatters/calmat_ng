@@ -39,7 +39,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
 
-    url("^articles/(?P<slug>proposition-[a-zA-Z0-9\-\_]+)/",
+    url("^articles/(?P<slug>proposition[s]*-[a-zA-Z0-9\-\_]+)/",
         RedirectView.as_view(pattern_name='proposition_detail')),
 
     url('articles/(?P<slug>[a-zA-Z0-9_-]+)/$',
