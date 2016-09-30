@@ -39,6 +39,8 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
 
+    url("^articles/(?P<slug>proposition-[a-zA-Z0-9\-\_]+)/",
+        RedirectView.as_view(pattern_name='proposition_detail')),
 
     url('articles/(?P<slug>[a-zA-Z0-9_-]+)/$',
         article_view,
@@ -127,6 +129,7 @@ urlpatterns = [
     url("^newsanalysis/(?P<slug>[a-zA-Z0-9\-\_]+)/$",
         RedirectView.as_view(pattern_name='columns_single')),
 
+
     url('subscribe/$', subscribe, name='subscribe'),
     url('contact_us/$', contact_us, name='contact_us'),
     url('privacy-policy/$',
@@ -143,7 +146,7 @@ urlpatterns = [
     }),
     url(r'^media_lookup/(\d+)/$', media_lookup),
 
-    url(r'^robots\.txt$', include('robots.urls')),
+    url(r'^robots\.txt', include('robots.urls')),
 
     #  Alternate short url to projects.
     #  Must be at bottom to give all other possible matching
