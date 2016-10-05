@@ -49,6 +49,10 @@ urlpatterns = [
         article_list,
         name='article_list_custom_post_type'),
 
+    url('^articles/$',
+        article_list,
+        name='article_list'),
+
     url('homepage/preview/(?P<homepage_id>\d+)/$',
         homepage_view,
         name='home_page_preview'),
