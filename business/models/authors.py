@@ -20,7 +20,11 @@ class Author(Named, Publishable, TimeStamped):
     )
 
     image = models.OneToOneField(
-        MediaItem, null=True, blank=True, related_name="author")
+        MediaItem,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="author")
 
     twitter = models.CharField(
         verbose_name='Twitter @',

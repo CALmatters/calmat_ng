@@ -33,12 +33,14 @@ class Partner(Named, TimeStamped):
         MediaItem,
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="partner_with_image")
 
     image_large = models.ForeignKey(
         MediaItem,
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="partner_with_large_image")
 
     # featured_image = VersatileImageField(
@@ -113,6 +115,7 @@ class Partner(Named, TimeStamped):
         MediaItem,
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="partner_map_tooltip_thumbnail")
 
     def get_geojson_dict(self):

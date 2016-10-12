@@ -30,6 +30,7 @@ class Donate(TimeStamped):
         verbose_name="Donation top box image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="donation_top_box_image")
 
     donate_message = models.TextField(

@@ -101,6 +101,7 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         verbose_name="Headline image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="voterguides_with_image")
 
     icon_image = models.ForeignKey(
@@ -108,6 +109,7 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         verbose_name="Icon image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="voterguides_icon_image")
 
     dark_icon_image = models.ForeignKey(
@@ -115,6 +117,7 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         verbose_name="Dark Icon image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="voterguides_dark_icon_image")
 
     headline_layout = models.CharField(
@@ -163,6 +166,7 @@ class VoterGuide(Named, OptionalContentContainer, TimeStamped):
         MediaItem,
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="voterguides_with_facebook_image",
         help_text='Image size should be 600 x 315 '
                   'for best results (or 1200 x 630 for high resolution)'
@@ -208,6 +212,7 @@ class PoliticalEntity(Named):
         verbose_name="Icon",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="entities_with_image")
 
 
@@ -248,6 +253,7 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         verbose_name="Featured Image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="props_with_image")
 
     embedded_content_title = models.CharField(
@@ -318,6 +324,7 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         verbose_name="Light Icon Image",
         null=True,
         blank=False,
+        on_delete=models.SET_NULL,
         related_name="props_icon_image")
 
     dark_icon_image = models.ForeignKey(
@@ -325,6 +332,7 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         verbose_name="Dark icon image",
         null=True,
         blank=False,
+        on_delete=models.SET_NULL,
         related_name="props_with_dark_icon_image")
 
     headline_layout = models.CharField(
@@ -373,6 +381,7 @@ class Proposition(Named, ContentContainer, Publishable, TimeStamped,
         MediaItem,
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="proposition_with_facebook_image",
         help_text='Image size should be 600 x 315 '
                   'for best results (or 1200 x 630 for high resolution)'

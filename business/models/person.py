@@ -36,7 +36,11 @@ class Person(Named, TimeStamped, OptionalContentContainer):
     )
 
     image = models.OneToOneField(
-        MediaItem, null=True, blank=True, related_name="person")
+        MediaItem,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="person")
 
     twitter = models.CharField(
         verbose_name='Twitter @',

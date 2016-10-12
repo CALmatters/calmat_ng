@@ -17,6 +17,7 @@ class Testimonial(Publishable, TimeStamped):
         verbose_name="Testimonial Image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="testimonial_image")
 
     message = models.TextField(verbose_name='Testimonial Message')

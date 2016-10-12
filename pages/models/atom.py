@@ -49,6 +49,7 @@ class Atom(Named, Publishable, OptionalContentContainer, TimeStamped):
         verbose_name="Featured Image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="atom_with_image")
 
     categories = models.ManyToManyField(

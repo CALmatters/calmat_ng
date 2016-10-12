@@ -33,6 +33,7 @@ class Project(Named, Publishable, TimeStamped, CategoryMixin):
         verbose_name="Featured Image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="aproject_with_image")
 
     # Top featured articles

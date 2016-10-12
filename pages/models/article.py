@@ -171,6 +171,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped, CategoryMixin):
         verbose_name="Featured Image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="article_with_image")
 
     featured_image_title_position = models.CharField(
@@ -201,6 +202,7 @@ class Article(Named, Publishable, ContentContainer, TimeStamped, CategoryMixin):
         MediaItem,
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="article_with_facebook_image",
         help_text='Image size should be 600 x 315 '
                   'for best results (or 1200 x 630 for high resolution)'

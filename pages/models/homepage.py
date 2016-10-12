@@ -279,6 +279,7 @@ class HomePage(Named, TimeStamped):
         verbose_name="Politics Image",
         null=True,
         blank=True,
+        on_delete=models.SET_NULL,
         related_name="homepage_with_politics_image",
         help_text="Show this image instead of the author's image.")
 
